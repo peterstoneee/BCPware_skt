@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\related_work\3DP_related\3DP_powder\program\3MF\lib3mf_sdk_1.8.1\Examples\build\CMakeFiles\a76209aed1e54d2f0187a8ab2161e674\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{173318F5-2E8E-355C-B0EE-19B511D1301A}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

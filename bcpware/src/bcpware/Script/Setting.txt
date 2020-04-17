@@ -1,0 +1,7 @@
+#
+# A line start with # will be ignored
+#
+
+IDLE_SERVICE_INTERVAL_MINS	30
+MIDJOB_PROLOG_NPAGES		0
+MIDJOB_EPILOG_NPAGES		0

@@ -1,0 +1,17 @@
+[Server]
+Port=8080
+
+# The driver name is the model printer pair used for the driver files.
+# e.g. for the Northstar generic driver this MemjetNS
+# substring matches available only e.g. "AcmeNS1|AcmeNS2" matches drivers
+# with the substring of AcmeNS1 or AcmeNS2
+# a maximum of 50 names is allowed
+# not defining matches all memjet printers
+#Driver=MemjetNS
+# client socket connection timeout in ms
+#SocketTimeout=2000
+# ServiceOp logfile option
+#SO_Log=1
+#
+# network redirect. set to 1 to redirect network connections 
+NetRedirect=1

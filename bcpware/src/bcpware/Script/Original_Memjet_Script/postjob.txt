@@ -1,0 +1,34 @@
+{
+ "script": [
+  {
+   "cmd": "Spit",
+   "args": {
+    "ValvePos": "openink",
+    "MaintPos": "cap",
+    "ChanMask": "1f",
+    "NumSpits": 100 
+   }
+  },
+  {
+   "cmd": "Wipe",
+   "args": {
+    "ValvePos": "openink",
+    "StartOffset": 60,
+    "StopOffset": 60,
+    "Speed": 3,
+    "WiperRpm": 60
+   }
+  },
+  { "cmd" : "WiperTransfer", "args" : 
+	{"MaintPos" : "cap"}  },
+  {
+   "cmd": "Spit",
+   "args": {
+    "ValvePos": "openink",
+    "MaintPos": "cap",
+    "ChanMask": "1f",
+    "NumSpits": 50 
+   }
+  }
+ ]
+}

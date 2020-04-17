@@ -1,0 +1,26 @@
+{
+ "script": [
+  { "cmd" : "RunPump", "args" : 
+      { "ValvePos" : "openink", 
+	"MaintPos" : "cap", 
+	"Rpm" : 150, 
+	"Revs" : 10 } },
+  {
+   "cmd": "Spit",
+   "args": {
+    "ValvePos": "openink",
+    "MaintPos": "cap",
+    "ChanMask": "1f",
+    "NumSpits": 1500 
+   }
+  },
+  {
+   "cmd": "Delay",
+   "args": {
+    "ValvePos": "openink",
+    "MaintPos": "print",
+    "Time": 0 
+   }
+  }
+ ]
+}

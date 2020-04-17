@@ -1,0 +1,157 @@
+////////// LP2 - Spit on Spitton & Dynamic Midjob - 2017/08/21
+*Automatic maintenance
+Startup			- After Sirius "Online" & FPGA "Idle"
+Prejob			- Before a print job
+Midjob			- Servicing in a print job(NVM, system default)
+Postjob			- After a print job, Sirius "Online" & FPGA "Idle"
+Idle			- Idle servicing
+Shutdown		- Before shutdown Sirius
+
+*Manual maintenance
+Prime_New_PH		- Install PH, pressure prime 30 revs
+Remove_PH		- Remove PH, remove ink near ph only
+Light_PH_Recovery	- Called maint L1 previously
+Heavy_PH_Recovery	- Called maint L2 previously, pressure prime 30 revs
+
+*Maintenance command
+delay			- Delay
+phprime__STATUS_ONLY	- Set PH state to primed
+phrelease__LATCH_ONLY	- Release PH latch
+pump			- Reservior pump
+sumpPump_ISS		- Waste ink pump
+wipe			- Move wiper
+
+*Oblosete
+Clear_Color_Mix_Level_1
+Clear_Color_Mix_Level_2
+Idle_Servicing_Nios
+Midjob_Prolog		- Servicing in a print job(RAM, during first few pages)
+Midjob_Middle		- Servicing in a print job(RAM, between Prolog and Epilog)
+Middle_Epilog		- Servicing in a print job(RAM, during last few pages)
+
+////////// External
+*Automatic maintenance
+Startup			- After Sirius "Online" & FPGA "Idle"
+Prejob			- Before a print job
+Midjob			- Servicing in a print job(system default)
+Postjob			- After a print job, Sirius "Online" & FPGA "Idle"
+Idle			- Idle servicing
+Shutdown		- Before shutdown Sirius
+
+*Manual maintenance
+Prime_New_PH		- Install PH
+Remove_PH		- Remove PH
+Light_PH_Recovery	- Called maint L1 previously
+Heavy_PH_Recovery	- Called maint L2 previously
+
+*Maintenance command
+delay			- Delay
+phprime__STATUS_ONLY	- Set PH state to primed
+phrelease__LATCH_ONLY	- Release PH latch
+pump			- Reservior pump
+sumpPump_ISS		- Waste ink pump
+wipe			- Move wiper
+
+*Oblosete
+Clear_Color_Mix_Level_1
+Clear_Color_Mix_Level_2
+Idle_Servicing_Nios
+Midjob_Prolog		- Servicing in a print job
+Midjob_Middle		- Servicing in a print job
+Middle_Epilog		- Servicing in a print job
+
+
+////////// LP1.5 - Spit on Spitton & Dynamic Midjob - 2017/05/08
+*Automatic maintenance
+Startup			- After Sirius "Online" & FPGA "Idle"
+Prejob			- Before a print job
+Midjob			- Servicing in a print job(NVM, system default)
+Midjob_Prolog		- Servicing in a print job(RAM, during first few pages)
+Midjob_Middle		- Servicing in a print job(RAM, between Prolog and Epilog)
+Middle_Epilog		- Servicing in a print job(RAM, during last few pages)
+Postjob			- After a print job, Sirius "Online" & FPGA "Idle"(same as Heavy_PH_Recovery)
+Idle			- Idle servicing
+Shutdown		- Before shutdown Sirius
+
+*Manual maintenance
+Prime_New_PH		- Install PH
+Remove_PH		- Remove PH
+Light_PH_Recovery	- Called maint L1 previously
+Heavy_PH_Recovery	- Called maint L2 previously
+
+*Maintenance command
+delay			- Delay
+phprime__STATUS_ONLY	- Set PH state to primed
+phrelease__LATCH_ONLY	- Release PH latch
+pump			- Reservior pump
+sumpPump_ISS		- Waste ink pump
+wipe			- Move wiper
+
+*Oblosete
+Clear_Color_Mix_Level_1
+Clear_Color_Mix_Level_2
+Idle_Servicing_Nios
+
+
+////////// LP1 - Pressure Pump - 2017/03/16
+*Automatic maintenance
+Startup			- After Sirius "Online" & FPGA "Idle"
+Prejob			- Before a print job
+Midjob			- Servicing in a print job
+Postjob			- After a print job, Sirius "Online" & FPGA "Idle"
+Idle			- Idle servicing
+Shutdown		- Before shutdown Sirius
+
+*Manual maintenance
+Prime_New_PH		- Install PH
+Remove_PH		- Remove PH
+Light_PH_Recovery	- Called maint L1 previously
+Heavy_PH_Recovery	- Called maint L2 previously
+
+*Maintenance command
+delay			- Delay
+phprime__STATUS_ONLY	- Set PH state to primed
+phrelease__LATCH_ONLY	- Release PH latch
+pump			- Reservior pump
+sumpPump_ISS		- Waste ink pump
+wipe			- Move wiper
+
+*Oblosete
+Clear_Color_Mix_Level_1
+Clear_Color_Mix_Level_2
+
+
+////////// BB3
+*Prejob		Maint_Level_1.txt
+*Postjob	Maint_Level_1.txt
+*Midjob		midjob.txt
+
+*Power on
+	Check around the machine and the tube, see whether there's something wrong.
+	Print some pages, see whether color mixing or nozzle missing.
+	Based on the result, if color mix, to run Clear Color Mix(Better remove rum pump on the starting of script) 
+		Clear_Color_Mix_Level_1.txt
+		Clear_Color_Mix_Level_2.txt
+	Based on the result, if no color mixing, but nozzle's missing, to run 
+		Maint_Level_1.txt
+		Maint_Level_2.txt
+
+*Between print job, if the print quality is not good, do maint
+		Maint_Level_1.txt
+		Maint_Level_2.txt
+
+*To change print head
+		system_deprime__w_phrelease.txt
+
+*To install print head
+		PH_Priming.txt
+
+
+//////////
+Memjet Original Script - Needed
+*Delay				delay.txt
+*Set PH state to primed		phprime__STATUS_ONLY.txt
+*Release PH latch		phrelease__LATCH_ONLY.txt
+*Pump				pump.txt
+*Pump waste ink			sumpPump_ISS.txt
+*Wipe				wipe.txt

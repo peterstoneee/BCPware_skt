@@ -27,3 +27,6 @@ bcpware/src/common/x64/Release
 bcpware/src/distrib/plugins
 *.sdf
 *.db
+bcpware/src/distrib
+bcpware/src/distrib_de
+bcpware/src/Picasso_.v12.suo.orig

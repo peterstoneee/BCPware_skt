@@ -1,0 +1,9 @@
+--- comm3dp.log
++++ comm3dp.log
+@@ -1,5 +1,1 @@
+-Bytes received: 3
+-a complete response is collected
+-Response is catched completely
+- DATA:
+-OK
++connect socket with error: 10061.

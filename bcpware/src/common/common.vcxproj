@@ -1,0 +1,435 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F8587123-832F-324E-91C8-75C9601CB4D6}</ProjectGuid>
+    <RootNamespace>common</RootNamespace>
+    <Keyword>Qt4VSv1.0</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <PlatformToolSet>v140</PlatformToolSet>
+    <OutputDirectory>..\distrib\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <IntermediateDirectory>release\</IntermediateDirectory>
+    <PrimaryOutput>common</PrimaryOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <PlatformToolSet>v120</PlatformToolSet>
+    <OutputDirectory>..\distrib\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <IntermediateDirectory>release\</IntermediateDirectory>
+    <PrimaryOutput>common</PrimaryOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <PlatformToolSet>v140</PlatformToolSet>
+    <OutputDirectory>..\distrib\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <IntermediateDirectory>debug\</IntermediateDirectory>
+    <PrimaryOutput>common</PrimaryOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <PlatformToolSet>v120</PlatformToolSet>
+    <OutputDirectory>..\distrib\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <IntermediateDirectory>debug\</IntermediateDirectory>
+    <PrimaryOutput>common</PrimaryOutput>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\distrib\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">common</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">common</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IgnoreImportLibrary>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</IgnoreImportLibrary>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\distrib\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">common</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">common</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</IgnoreImportLibrary>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>..\distrib_de\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>..\distrib\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>"..\..";"..\..\..\vcglib";"..\external\glew-1.7.0\include";".";"..\external\jhead-2.95";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore";"release";C:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>release\</AssemblerListingLocation>
+      <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;MESHLAB_SCALAR=float;NOMINMAX;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;QT_NO_DEBUG;QT_OPENGL_LIB;QT_XMLPATTERNS_LIB;QT_WIDGETS_LIB;QT_SCRIPT_LIB;QT_NETWORK_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;NDEBUG;QT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;MESHLAB_SCALAR=float;NOMINMAX;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;QT_NO_DEBUG;QT_OPENGL_LIB;QT_XMLPATTERNS_LIB;QT_WIDGETS_LIB;QT_SCRIPT_LIB;QT_NETWORK_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ResourceOutputFileName>$(OutDir)\$(InputName).res</ResourceOutputFileName>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>"..\..";"..\..\..\vcglib";"..\external\glew-1.7.0\include";".";"..\external\jhead-2.95";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore";"release";C:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>release\</AssemblerListingLocation>
+      <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;PALETTE_SCALAR=float;NOMINMAX;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;QT_NO_DEBUG;QT_OPENGL_LIB;QT_XMLPATTERNS_LIB;QT_WIDGETS_LIB;QT_SCRIPT_LIB;QT_NETWORK_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;NDEBUG;QT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
+      <OpenMPSupport>false</OpenMPSupport>
+    </ClCompile>
+    <Link>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;MESHLAB_SCALAR=float;NOMINMAX;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;QT_NO_DEBUG;QT_OPENGL_LIB;QT_XMLPATTERNS_LIB;QT_WIDGETS_LIB;QT_SCRIPT_LIB;QT_NETWORK_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ResourceOutputFileName>$(OutDir)\$(InputName).res</ResourceOutputFileName>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>"..\..";"..\..\..\vcglib";"..\external\glew-1.7.0\include";".";"..\external\jhead-2.95";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore";"debug";C:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>debug\</AssemblerListingLocation>
+      <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;MESHLAB_SCALAR=float;NOMINMAX;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;QT_OPENGL_LIB;QT_XMLPATTERNS_LIB;QT_WIDGETS_LIB;QT_SCRIPT_LIB;QT_NETWORK_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;QT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;MESHLAB_SCALAR=float;NOMINMAX;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;QT_OPENGL_LIB;QT_XMLPATTERNS_LIB;QT_WIDGETS_LIB;QT_SCRIPT_LIB;QT_NETWORK_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ResourceOutputFileName>$(OutDir)\$(InputName).res</ResourceOutputFileName>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>"..\..";"..\..\..\vcglib";"..\external\glew-1.7.0\include";".";"..\external\jhead-2.95";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui";"C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore";"debug";C:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>debug\</AssemblerListingLocation>
+      <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;PALETTE_SCALAR=float;NOMINMAX;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;QT_OPENGL_LIB;QT_XMLPATTERNS_LIB;QT_WIDGETS_LIB;QT_SCRIPT_LIB;QT_NETWORK_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;QT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <OpenMPSupport>false</OpenMPSupport>
+    </ClCompile>
+    <Link>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;MESHLAB_SCALAR=float;NOMINMAX;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;QT_OPENGL_LIB;QT_XMLPATTERNS_LIB;QT_WIDGETS_LIB;QT_SCRIPT_LIB;QT_NETWORK_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ResourceOutputFileName>$(OutDir)\$(InputName).res</ResourceOutputFileName>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Debug\moc_filterscript.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_GLLogStream.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_interfaces.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_meshmodel.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_scriptinterface.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_scriptsyntax.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="define_some_parameter.h" />
+    <ClCompile Include="GLLogStream.cpp" />
+    <ClCompile Include="construction_groove.cpp" />
+    <ClCompile Include="filterparameter.cpp" />
+    <ClCompile Include="filterscript.cpp" />
+    <ClCompile Include="..\external\glew-1.7.0\src\glew.c" />
+    <ClCompile Include="interfaces.cpp" />
+    <ClCompile Include="meshlabdocumentbundler.cpp" />
+    <ClCompile Include="meshlabdocumentxml.cpp" />
+    <ClCompile Include="meshmodel.cpp" />
+    <ClCompile Include="mlapplication.cpp" />
+    <ClCompile Include="picaApplication.cpp" />
+    <ClCompile Include="picaException.cpp" />
+    <ClCompile Include="pluginmanager.cpp" />
+    <ClCompile Include="Release\moc_filterscript.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Release\moc_GLLogStream.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Release\moc_interfaces.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Release\moc_meshmodel.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Release\moc_scriptinterface.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Release\moc_scriptsyntax.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="scriptinterface.cpp" />
+    <ClCompile Include="scriptsyntax.cpp" />
+    <ClCompile Include="searcher.cpp" />
+    <ClCompile Include="slice_program_setting.cpp" />
+    <ClCompile Include="xmlfilterinfo.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="GLLogStream.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\release" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\release" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing GLLogStream.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing GLLogStream.h...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\debug" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\debug" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing GLLogStream.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing GLLogStream.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+    </CustomBuild>
+    <ClInclude Include="binPacking.h" />
+    <ClInclude Include="construction_groove.h" />
+    <ClInclude Include="filterparameter.h" />
+    <CustomBuild Include="filterscript.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\release" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\release" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing filterscript.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing filterscript.h...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\debug" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\debug" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing filterscript.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing filterscript.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="interfaces.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\release" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\release" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing interfaces.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing interfaces.h...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\debug" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\debug" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing interfaces.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing interfaces.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+    </CustomBuild>
+    <ClInclude Include="log.h" />
+    <ClInclude Include="Logger_test.h" />
+    <ClInclude Include="meshlabdocumentxml.h" />
+    <CustomBuild Include="meshmodel.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\release" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\release" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing meshmodel.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing meshmodel.h...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\debug" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\debug" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing meshmodel.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing meshmodel.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+    </CustomBuild>
+    <ClInclude Include="mlapplication.h" />
+    <ClInclude Include="mlexception.h" />
+    <ClInclude Include="NodeBVH.h" />
+    <ClInclude Include="pack3D.h" />
+    <ClInclude Include="picaApplication.h" />
+    <ClInclude Include="pluginmanager.h" />
+    <CustomBuild Include="scriptinterface.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\release" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\release" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing scriptinterface.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing scriptinterface.h...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\debug" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\debug" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing scriptinterface.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing scriptinterface.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="scriptsyntax.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\release" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\release" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing scriptsyntax.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing scriptsyntax.h...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\debug" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\debug" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing scriptsyntax.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing scriptsyntax.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+    </CustomBuild>
+    <ClInclude Include="relatedGL.h" />
+    <ClInclude Include="Result.h" />
+    <ClInclude Include="searcher.h" />
+    <ClInclude Include="slice_program_setting.h" />
+    <ClInclude Include="..\..\..\vcglib\wrap\gl\trimesh.h" />
+    <ClInclude Include="spatial.h" />
+    <ClInclude Include="xmlfilterinfo.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" Qt5Version_x0020_Win32="msvc2013_64_opengl" Qt5Version_x0020_x64="5_3_2" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

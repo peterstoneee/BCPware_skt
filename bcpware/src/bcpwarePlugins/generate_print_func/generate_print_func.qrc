@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/myImage">
+        <file alias="generate_slice_img.jpg">image/slice2.jpg</file>
+        <file alias="dummy.png">image/dummy.png</file>
+    </qresource>
+</RCC>

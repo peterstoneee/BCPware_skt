@@ -1,0 +1,6 @@
+{
+ "script": [
+	{ "cmd" : "WiperTransfer", "args" : 
+		{"MaintPos" : "cap"}  }
+ ]
+}

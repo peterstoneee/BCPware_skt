@@ -1,0 +1,66 @@
+{ "script": [
+	{ "cmd": "Spit", "args":
+		{ "ValvePos": "openink",
+		"MaintPos": "wipe",
+		"ChanMask": "1f",
+		"NumSpits": 1000 } },
+	{ "cmd": "Wipe", "args" : 
+		{ "ValvePos": "openink", 
+		"StartOffset": 60, 
+		"StopOffset": 60, 
+		"Speed": 3, 
+		"WiperRpm": 50 } },
+
+	{ "cmd": "RunPump", "args" : 
+		{ "ValvePos": "openink", 
+		"MaintPos": "cap", 
+		"Rpm": 110,
+		"Revs": 150 } },
+	{ "cmd": "Spit", "args":
+		{ "ValvePos": "openink",
+		"MaintPos": "wipe",
+		"ChanMask": "1f",
+		"NumSpits": 1000 } },
+	{ "cmd": "Wipe", "args" : 
+		{ "ValvePos" : "openink", 
+		"StartOffset": 60, 
+		"StopOffset": 60, 
+		"Speed": 3, 
+		"WiperRpm": 50,
+		"WiperRevs": 10 } },
+ 	{ "cmd" : "Delay", "args" :
+ 		{ "ValvePos" : "openink",
+ 		"MaintPos" : "cap", 
+		"Time":0 } },
+
+	{ "cmd": "Spit" , "args":
+		{ "ValvePos": "openink",
+    		"MaintPos": "wipe",
+    		"ChanMask": "04",
+    		"NumSpits": 200 } }, 
+	{ "cmd": "Spit", "args":
+		{ "ValvePos": "openink",
+    		"MaintPos": "wipe",
+   		"ChanMask": "10",
+    		"NumSpits": 400 } },
+	{ "cmd": "Spit", "args":
+		{ "ValvePos": "openink",
+    		"MaintPos": "wipe",
+   		"ChanMask": "01",
+    		"NumSpits": 400 } },
+	{ "cmd": "Spit", "args" :
+		{ "ValvePos": "openink",
+		"MaintPos": "wipe",    
+		"ChanMask": "0a",
+		"NumSpits": 800 } },
+
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "1F", 
+		"Volume":72
+		} },
+		
+	{ "cmd": "RunSumpPumpIss", "args":
+		{"rpms": 100,
+		"numRevs": 50} }
+	]
+}

@@ -1,0 +1,9 @@
+<<<<<<< local
+connect socket with error: 10061.
+=======
+Bytes received: 3
+a complete response is collected
+Response is catched completely
+ DATA:
+OK
+>>>>>>> other

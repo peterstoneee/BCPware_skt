@@ -1,0 +1,9 @@
+{
+ "script": [
+  { "cmd": "RunSumpPumpIss", "args": 
+	{ "rpms": 100,
+    	"numRevs": 100
+   	}
+  }
+ ]
+}

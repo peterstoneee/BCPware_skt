@@ -1,0 +1,386 @@
+#include "printerJobInfo.h"
+#include "skt_function.h"
+#include <QLayout>
+#include <QPushButton>
+#include <QFileDialog>
+
+PrinterJobInfo::PrinterJobInfo(QWidget* p, MeshDocument *md, float *_cmyUsage) :QDialog(p), CMYUsage(_cmyUsage)
+{
+	te1 = new QTextEdit;
+	frame1 = new QFrame;
+	mdd = md;
+	initPJI();
+	createframe();
+	setWindowTitle("Print Estimation");
+	//mdd->p_setting.getbuildheight().value;
+
+	te1->setReadOnly(true);
+}
+
+void PrinterJobInfo::createframe()
+{
+	QGridLayout *qd1 = new QGridLayout(frame1);
+	qd1->addWidget(te1);
+	te1->setMinimumSize(QSize(300, 300));
+	//te1->setseze(QSize(300, 300));
+	QTextDocument *document = te1->document();
+
+	QTextCharFormat charFormat;// = it.fragment().charFormat();
+	charFormat.setFont(QFont("Arial", 10, QFont::Bold));	
+	QTextCharFormat charFormat2;// = it.fragment().charFormat();
+	charFormat2.setFont(QFont("Arial", 10, QFont::Normal));
+	//document->set
+	QTextCursor cursor(te1->textCursor());
+
+
+	/*QTextTableFormat tableFormat;
+	tableFormat.setBorder(1);
+	tableFormat.setCellPadding(2);
+	tableFormat.setAlignment(Qt::AlignCenter);
+	cursor.insertTable(1, 1, tableFormat);*/
+
+
+	//document->setMaximumBlockCount(10);
+	//***regular information
+	/*cursor.insertText(pJI.currenttime.label);
+	cursor.insertText(" : ");
+	cursor.insertText(pJI.currenttime.currenttime.toString(QString("yyyy/MM/dd hh:mm:ss")));
+	cursor.insertBlock();
+	cursor.insertText("=================================");
+	cursor.insertBlock();*/
+
+	//***mesh information
+	cursor.setCharFormat(charFormat2);
+	cursor.insertText(pJI.modelNumber.label);
+	//cursor.insertText(" : ");
+	cursor.setCharFormat(charFormat);
+	cursor.insertText(QString::number(pJI.modelNumber.value));
+	cursor.insertText(pJI.modelNumber.unit);
+	cursor.insertBlock();
+	
+
+	//***printJobInformation
+	cursor.setCharFormat(charFormat2);
+	cursor.insertText(pJI.title.label);
+	cursor.insertText(pJI.estimatedBuildTime.label);
+	//cursor.insertText(" : ");
+	cursor.setCharFormat(charFormat);
+	cursor.insertText(pJI.estimatedBuildTime.time.toString(QString("hh:mm:ss")));
+	cursor.insertBlock();	
+
+	//
+	cursor.setCharFormat(charFormat2);
+	cursor.insertText(pJI.numoflayer.label);
+	//cursor.insertText(" : ");
+	cursor.setCharFormat(charFormat);
+	cursor.insertText(QString::number(pJI.numoflayer.value));
+	cursor.insertText(pJI.numoflayer.unit);
+	cursor.insertBlock();
+	
+
+	cursor.setCharFormat(charFormat2);
+	cursor.insertText(pJI.layerThickness.label);
+	//cursor.insertText(" : ");
+	cursor.setCharFormat(charFormat);
+	cursor.insertText(QString::number(pJI.layerThickness.value));
+	cursor.insertText(pJI.layerThickness.unit);
+	cursor.insertBlock();
+	
+	cursor.setCharFormat(charFormat2);
+	cursor.insertText(pJI.estimatedBinderUsage.label);
+	//cursor.insertText(" : ");
+	cursor.setCharFormat(charFormat);
+	cursor.insertText(QString::number(pJI.estimatedBinderUsage.value, 'f', 3));
+	cursor.insertText(pJI.estimatedBinderUsage.unit);
+	cursor.insertBlock();
+	
+
+	cursor.setCharFormat(charFormat2);
+	cursor.insertText(pJI.estimated_cyan.label);
+	//cursor.insertText(" : ");
+	cursor.setCharFormat(charFormat);
+	cursor.insertText(QString::number(pJI.estimated_cyan.value, 'f', 3));
+	cursor.insertText(pJI.estimated_cyan.unit);
+	cursor.insertBlock();
+	
+	cursor.setCharFormat(charFormat2);
+	cursor.insertText(pJI.estimated_magenta.label);
+	//cursor.insertText(" : ");
+	cursor.setCharFormat(charFormat);
+	cursor.insertText(QString::number(pJI.estimated_magenta.value, 'f', 3));
+	cursor.insertText(pJI.estimated_magenta.unit);
+	cursor.insertBlock();
+	
+	cursor.setCharFormat(charFormat2);
+	cursor.insertText(pJI.estimated_yellow.label);
+	//cursor.insertText(" : ");
+	cursor.setCharFormat(charFormat);
+	cursor.insertText(QString::number(pJI.estimated_yellow.value, 'f', 3));
+	cursor.insertText(pJI.estimated_yellow.unit);
+	cursor.insertBlock();
+	
+
+
+	//cursor.insertText("=================================");
+	cursor.insertText("                                 ");
+	cursor.insertBlock();
+
+	cursor.setCharFormat(charFormat2);
+	cursor.insertText(pJI.volumn.label);
+	//cursor.insertText(" : ");
+	cursor.setCharFormat(charFormat);
+	cursor.insertText(QString::number(pJI.volumn.value, 'f', 2));
+	//cursor.insertText(pJI.volumn.unit);
+	cursor.insertHtml(" "+QString(" <font face=\"Arial\"size=\"3\"><b>cm<sup>3</sup></b></font>"));
+	cursor.insertBlock();
+
+	cursor.setCharFormat(charFormat2);
+	cursor.insertText(pJI.area.label);
+	//cursor.insertText(" : ");
+	cursor.setCharFormat(charFormat);
+	cursor.insertText(QString::number(pJI.area.value, 'f', 2));
+	//cursor.insertText(pJI.area.unit);
+	cursor.insertHtml(" "+QString("<font face=\"Arial\"size=\"3\"><b>cm<sup>2</sup></b></font>"));
+	cursor.insertBlock();
+
+	cursor.setCharFormat(charFormat2);
+	cursor.insertText(pJI.totalNumOfFacet.label);
+	//cursor.insertText(" : ");
+	cursor.setCharFormat(charFormat);
+	cursor.insertText(QString::number(pJI.totalNumOfFacet.value));
+	cursor.insertText(pJI.totalNumOfFacet.unit);
+	cursor.insertBlock();
+
+
+	cursor.setCharFormat(charFormat2);
+	cursor.insertText(pJI.totalNumOfVertices.label);
+	//cursor.insertText(" : ");
+	cursor.setCharFormat(charFormat);
+	cursor.insertText(QString::number(pJI.totalNumOfVertices.value));
+	cursor.insertText(pJI.totalNumOfVertices.unit);
+	cursor.insertBlock();
+
+
+	//QPushButton *savelog = new QPushButton("savelog", this);
+	//QPushButton *closeButton = new QPushButton("close", this);
+	//qd1->addWidget(savelog);
+	//qd1->addWidget(closeButton);
+	//qd1->setColumnMinimumWidth(3,20);
+
+	//connect(savelog, SIGNAL(clicked()), this, SLOT(saveLogslot()));
+	//connect(closeButton, SIGNAL(clicked()), this, SLOT(closeBtnSlot()));
+
+
+
+
+
+	this->setLayout(qd1);
+
+}
+void PrinterJobInfo::closeBtnSlot()
+{
+	close();
+}
+void PrinterJobInfo::saveLogslot()
+{
+	QString fileName = QFileDialog::getSaveFileName(this,
+		tr("Choose a file name"), ".",
+		tr("txt (*.TXT )"));
+	if (fileName.isEmpty())
+		return;
+	QFile file(fileName);
+	if (!file.open(QFile::WriteOnly | QFile::Text)) {
+		QMessageBox::warning(this, tr("Dock Widgets"),
+			tr("Cannot write file %1:\n%2.")
+			.arg(fileName)
+			.arg(file.errorString()));
+		return;
+	}
+
+	QTextStream out(&file);
+	QApplication::setOverrideCursor(Qt::WaitCursor);
+	//out << te1->toHtml();
+	out << te1->toPlainText();
+
+	QApplication::restoreOverrideCursor();
+
+	//statusBar()->showMessage(tr("Saved '%1'").arg(fileName), 2000);
+}
+
+
+
+
+template<class T>
+QString PrinterJobInfo::combinestring(QString ss, T tt)
+{
+	QString::number(tt);
+
+}
+
+void PrinterJobInfo::initPJI()
+{
+	if (mdd->count_all_item() > 0) {
+
+		pJI.title.label = "Print Summary \n";
+
+		//***regular information
+		//pJI.currenttime.label = "--currentTime";
+		//pJI.currenttime.currenttime = QDateTime::currentDateTime();
+
+		//***printer_job_information*************************************
+		pJI.layerThickness.label = "Slice Height \n";
+		pJI.layerThickness.value = mdd->p_setting.getbuildheight().value;
+		pJI.layerThickness.unit = " mm";
+
+		pJI.estimatedBuildTime.label = "Estimated Print Time \n";
+		pJI.estimatedBuildTime.time = estimatedbuildTime(mdd->bbox().DimZ());
+
+		pJI.numoflayer.label = "Number Of Layer \n";
+		pJI.numoflayer.value = qCeil(mdd->bbox().DimZ() / pJI.layerThickness.value) + 1 + DSP_Blank_pages;
+		pJI.numoflayer.unit = " layers";
+
+		pJI.volumn.value = estimateVolumn();
+		pJI.estimatedBinderUsage.label = " \n Estimated Ink Usage \nBinder \n";
+		pJI.estimatedBinderUsage.value = estimateBinderInkUsage();
+		pJI.estimatedBinderUsage.unit = "ml";
+
+		//***mesh information
+		pJI.modelNumber.label = "Model Number \n";
+		pJI.modelNumber.value = mdd->count_all_item();
+		//pJI.modelNumber.unit = " item";
+
+		pJI.volumn.label = "Volume \n";
+
+		pJI.volumn.unit = " cubic centimeter";
+
+		pJI.area.label = "Surface Area \n";
+		pJI.area.value = estimateArea();
+		pJI.area.unit = QString("cm");
+
+		pJI.totalNumOfFacet.label = "Total Number of Facets \n";
+		pJI.totalNumOfFacet.value = mdd->selfn();
+		//pJI.totalNumOfFacet.unit = " Facet";
+
+		pJI.totalNumOfVertices.label = "Total Number of Vertices \n";
+		pJI.totalNumOfVertices.value = mdd->selvn();
+		//pJI.totalNumOfVertices.unit = " Vertices";
+
+
+
+
+		if (CMYUsage) {
+			pJI.estimated_cyan.label = "Cyan \n";
+			pJI.estimated_cyan.value = CMYUsage[0];
+			pJI.estimated_cyan.unit = "ml";
+			pJI.estimated_magenta.label = "Magenta \n";
+			pJI.estimated_magenta.value = CMYUsage[1];
+			pJI.estimated_magenta.unit = "ml";
+			pJI.estimated_yellow.label = "Yellow \n";
+			pJI.estimated_yellow.value = CMYUsage[2];
+			pJI.estimated_yellow.unit = "ml";
+		}
+
+
+
+	}
+}
+QTime PrinterJobInfo::estimatedbuildTime(float height)
+{
+	int pageOneMinute = 5;
+	QTime qt(0, 0, 0);
+	qt = qt.addSecs(int(((height / pJI.layerThickness.value) / pageOneMinute) * 60));
+	//qt = qt.addSecs(10000);
+	return qt;
+
+}
+float PrinterJobInfo::estimateVolumn()
+{
+	float total_volumn = 0;
+
+	//foreach(MeshModel *bm, mdd->meshList)
+	/*foreach(int mID, mdd->multiSelectID)
+	{
+	MeshModel *bm = mdd->getMesh(mID);
+	if (mdd->isPrint_item(*bm))
+	{
+	if (SKT::volumeOfMesh<float>(*bm) < bm->cm.bbox.Volume())
+	total_volumn += SKT::volumeOfMesh<float>(*bm);
+	else
+	total_volumn += bm->cm.bbox.Volume();
+	}
+	}*/
+	foreach(int i, mdd->multiSelectID)
+	//foreach(MeshModel *bm, mdd->meshList)
+	{
+		MeshModel *bm = mdd->getMesh(i);
+		if (mdd->isPrint_item(*bm))
+		{
+			if (SKT::volumeOfMesh<float>(*bm) < bm->cm.bbox.Volume())
+				total_volumn += SKT::volumeOfMesh<float>(*bm);
+			else
+				total_volumn += bm->cm.bbox.Volume();
+		}
+	}
+	return total_volumn / (DSP_cmmm*DSP_cmmm*DSP_cmmm);
+}
+float PrinterJobInfo::estimateArea()
+{
+	CMeshO::FaceIterator fi;
+	float area = 0;
+	foreach(int i, mdd->multiSelectID)	
+	{
+		MeshModel &ma = *mdd->getMesh(i);
+
+
+		//MeshModel &m = *mdd->mm();
+		vcg::Point3f va;
+		
+		for (fi = ma.cm.face.begin(); fi != ma.cm.face.end(); ++fi)
+		{
+			vcg::Point3f v0 = fi->V(1)->P() - fi->V(0)->P();
+			vcg::Point3f v1 = fi->V(2)->P() - fi->V(0)->P();
+
+			SKT::CrossProduct<float>(v0, v1, va);
+			area += SKT::Length<float>(va);
+
+		}
+	}
+	return area/1000;
+
+}
+float PrinterJobInfo::estimateBinderInkUsage()
+{
+	double sliceHeight = DSP_Estimate_Usage_Slice_Height;//0.1mm;
+	double oneCCNozzles = 14000 * 10 / 222;
+	double oneHundredLayers = 10 / sliceHeight;//***1cm/0.01cm assume slice height is 0.01cm
+	double nozzleDrop = 1.5e-9;
+	double binderChannel = 2;
+	double oneCCbinderUsage = oneCCNozzles*oneCCNozzles*binderChannel*oneHundredLayers*nozzleDrop;
+
+
+
+	int boxy_dim = qCeil((mdd->selBBox().max.Z() - mdd->selBBox().min.Z()) / sliceHeight) + 1;
+	double dropsize = 1200 * 1e-12;
+
+	double midJobDropDots = 14080000;
+
+	int midJobFrequency = 4;
+	double maintInkUsage = 2 * dropsize * midJobDropDots* (boxy_dim / midJobFrequency);
+
+	//return pJI.volumn.value*0.26;
+	return pJI.volumn.value*oneCCbinderUsage + maintInkUsage;
+
+}
+void PrinterJobInfo::updatePJI(Print_Job_Information *pji, MeshDocument *md)
+{
+	//estimatedbuildTime(md->bbox().DimZ());
+}
+Print_Job_Information PrinterJobInfo::getPJI()
+{
+	return pJI;
+}
+
+PrinterJobInfo::~PrinterJobInfo()
+{
+
+}

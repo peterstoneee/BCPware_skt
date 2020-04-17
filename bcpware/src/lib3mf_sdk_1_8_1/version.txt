@@ -1,0 +1,5 @@
+[Lib3MF_SDK]
+Version = 1.8.1
+BuildNumber = 446
+GITBranch = master
+GITRevision = ff914b9fae76cd6a365952728f44f8d79a9f8f75

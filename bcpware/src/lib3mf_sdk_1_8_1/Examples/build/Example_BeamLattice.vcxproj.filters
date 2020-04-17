@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\related_work\3DP_related\3DP_powder\program\3MF\lib3mf_sdk_1.8.1\Examples\Source\BeamLattice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\related_work\3DP_related\3DP_powder\program\3MF\lib3mf_sdk_1.8.1\Examples\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{36A75C80-4CCA-3EFE-A9CA-C61B1CD9315E}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

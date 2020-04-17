@@ -1,0 +1,9 @@
+{
+ "script": [
+  { "cmd": "RunSumpPump", "args": 
+	{ "Pwm": -35,
+    	"Duration": 1
+   	}
+  }
+ ]
+}

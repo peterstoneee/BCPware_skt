@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7264DF02-88FB-3DAF-8D57-8A056BF2D7C6}</ProjectGuid>
+    <RootNamespace>io_x3d</RootNamespace>
+    <Keyword>Qt4VSv1.0</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <PlatformToolSet>v140</PlatformToolSet>
+    <OutputDirectory>..\..\distrib\plugins\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <IntermediateDirectory>release\</IntermediateDirectory>
+    <PrimaryOutput>io_x3d</PrimaryOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <PlatformToolSet>v120</PlatformToolSet>
+    <OutputDirectory>..\..\distrib\plugins\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <IntermediateDirectory>release\</IntermediateDirectory>
+    <PrimaryOutput>io_x3d</PrimaryOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <PlatformToolSet>v140</PlatformToolSet>
+    <OutputDirectory>..\..\distrib\plugins\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <IntermediateDirectory>debug\</IntermediateDirectory>
+    <PrimaryOutput>io_x3d</PrimaryOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <PlatformToolSet>v120</PlatformToolSet>
+    <OutputDirectory>..\..\distrib\plugins\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <IntermediateDirectory>debug\</IntermediateDirectory>
+    <PrimaryOutput>io_x3d</PrimaryOutput>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\distrib\plugins\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">io_x3d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">io_x3d</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IgnoreImportLibrary>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\distrib\plugins\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">io_x3d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">io_x3d</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</IgnoreImportLibrary>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>..\..\distrib_de\plugins\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>..\..\distrib\plugins\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;..\..\..\..\vcglib;..\..\external\glew-1.7.0\include;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore;release;C:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>release\</AssemblerListingLocation>
+      <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;MESHLAB_SCALAR=float;NOMINMAX;GLEW_STATIC;_USE_MATH_DEFINES;_CRT_SECURE_NO_DEPRECATE;QT_NO_DEBUG;QT_PLUGIN;QT_OPENGL_LIB;QT_XMLPATTERNS_LIB;QT_WIDGETS_LIB;QT_SCRIPT_LIB;QT_NETWORK_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;../../distrib/common.lib;$(QTDIR)\lib\Qt5OpenGL.lib;$(QTDIR)\lib\Qt5XmlPatterns.lib;$(QTDIR)\lib\Qt5Widgets.lib;$(QTDIR)\lib\Qt5Script.lib;$(QTDIR)\lib\Qt5Network.lib;$(QTDIR)\lib\Qt5Xml.lib;$(QTDIR)\lib\Qt5Gui.lib;$(QTDIR)\lib\Qt5Core.lib;Qt5Core.lib;Qt5OpenGL.lib;Qt5Widgets.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+      <LinkDLL>true</LinkDLL>
+      <LinkIncremental>false</LinkIncremental>
+      <OutputFile>$(OutDir)\io_x3d.dll</OutputFile>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;MESHLAB_SCALAR=float;NOMINMAX;GLEW_STATIC;_USE_MATH_DEFINES;_CRT_SECURE_NO_DEPRECATE;QT_NO_DEBUG;QT_PLUGIN;QT_OPENGL_LIB;QT_XMLPATTERNS_LIB;QT_WIDGETS_LIB;QT_SCRIPT_LIB;QT_NETWORK_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;..\..\..\..\vcglib;..\..\external\glew-1.7.0\include;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore;release;C:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>release\</AssemblerListingLocation>
+      <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;PALETTE_SCALAR=float;NOMINMAX;GLEW_STATIC;_USE_MATH_DEFINES;_CRT_SECURE_NO_DEPRECATE;QT_NO_DEBUG;QT_PLUGIN;QT_OPENGL_LIB;QT_XMLPATTERNS_LIB;QT_WIDGETS_LIB;QT_SCRIPT_LIB;QT_NETWORK_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;../../distrib/common.lib;$(QTDIR)\lib\Qt5OpenGL.lib;$(QTDIR)\lib\Qt5XmlPatterns.lib;$(QTDIR)\lib\Qt5Widgets.lib;$(QTDIR)\lib\Qt5Script.lib;$(QTDIR)\lib\Qt5Network.lib;$(QTDIR)\lib\Qt5Xml.lib;$(QTDIR)\lib\Qt5Gui.lib;$(QTDIR)\lib\Qt5Core.lib;Qt5Core.lib;Qt5OpenGL.lib;Qt5Widgets.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+      <LinkDLL>true</LinkDLL>
+      <LinkIncremental>false</LinkIncremental>
+      <OutputFile>$(OutDir)\io_x3d.dll</OutputFile>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;MESHLAB_SCALAR=float;NOMINMAX;GLEW_STATIC;_USE_MATH_DEFINES;_CRT_SECURE_NO_DEPRECATE;QT_NO_DEBUG;QT_PLUGIN;QT_OPENGL_LIB;QT_XMLPATTERNS_LIB;QT_WIDGETS_LIB;QT_SCRIPT_LIB;QT_NETWORK_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;..\..\..\..\vcglib;..\..\external\glew-1.7.0\include;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore;debug;C:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>debug\</AssemblerListingLocation>
+      <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;MESHLAB_SCALAR=float;NOMINMAX;GLEW_STATIC;_USE_MATH_DEFINES;_CRT_SECURE_NO_DEPRECATE;QT_PLUGIN;QT_OPENGL_LIB;QT_XMLPATTERNS_LIB;QT_WIDGETS_LIB;QT_SCRIPT_LIB;QT_NETWORK_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;../../distrib/common.lib;$(QTDIR)\lib\Qt5OpenGLd.lib;$(QTDIR)\lib\Qt5XmlPatternsd.lib;$(QTDIR)\lib\Qt5Widgetsd.lib;$(QTDIR)\lib\Qt5Scriptd.lib;$(QTDIR)\lib\Qt5Networkd.lib;$(QTDIR)\lib\Qt5Xmld.lib;$(QTDIR)\lib\Qt5Guid.lib;$(QTDIR)\lib\Qt5Cored.lib;Qt5Cored.lib;Qt5OpenGLd.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+      <LinkDLL>true</LinkDLL>
+      <OutputFile>$(OutDir)\io_x3d.dll</OutputFile>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;MESHLAB_SCALAR=float;NOMINMAX;GLEW_STATIC;_USE_MATH_DEFINES;_CRT_SECURE_NO_DEPRECATE;QT_PLUGIN;QT_OPENGL_LIB;QT_XMLPATTERNS_LIB;QT_WIDGETS_LIB;QT_SCRIPT_LIB;QT_NETWORK_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;..\..\..\..\vcglib;..\..\external\glew-1.7.0\include;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore;debug;C:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>debug\</AssemblerListingLocation>
+      <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;PALETTE_SCALAR=float;NOMINMAX;GLEW_STATIC;_USE_MATH_DEFINES;_CRT_SECURE_NO_DEPRECATE;QT_PLUGIN;QT_OPENGL_LIB;QT_XMLPATTERNS_LIB;QT_WIDGETS_LIB;QT_SCRIPT_LIB;QT_NETWORK_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;../../distrib_de/common.lib;$(QTDIR)\lib\Qt5OpenGLd.lib;$(QTDIR)\lib\Qt5XmlPatternsd.lib;$(QTDIR)\lib\Qt5Widgetsd.lib;$(QTDIR)\lib\Qt5Scriptd.lib;$(QTDIR)\lib\Qt5Networkd.lib;$(QTDIR)\lib\Qt5Xmld.lib;$(QTDIR)\lib\Qt5Guid.lib;$(QTDIR)\lib\Qt5Cored.lib;Qt5Cored.lib;Qt5OpenGLd.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;C:\qt\qt5.3.2\5.3\msvc2013_64_opengl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+      <LinkDLL>true</LinkDLL>
+      <OutputFile>$(OutDir)\io_x3d.dll</OutputFile>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;MESHLAB_SCALAR=float;NOMINMAX;GLEW_STATIC;_USE_MATH_DEFINES;_CRT_SECURE_NO_DEPRECATE;QT_PLUGIN;QT_OPENGL_LIB;QT_XMLPATTERNS_LIB;QT_WIDGETS_LIB;QT_SCRIPT_LIB;QT_NETWORK_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles\Debug\moc_io_x3d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_io_x3d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="vrml\Parser.cpp" />
+    <ClCompile Include="vrml\Scanner.cpp" />
+    <ClCompile Include="io_x3d.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="vrml\Parser.h" />
+    <ClInclude Include="vrml\Scanner.h" />
+    <ClInclude Include="export_x3d.h" />
+    <ClInclude Include="import_x3d.h" />
+    <CustomBuild Include="io_x3d.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_USE_MATH_DEFINES -D_CRT_SECURE_NO_DEPRECATE -DQT_NO_DEBUG -DQT_PLUGIN -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -D_WINDLL  "-I.\..\.." "-I.\..\..\..\..\vcglib" "-I.\..\..\external\glew-1.7.0\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\release" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_USE_MATH_DEFINES -D_CRT_SECURE_NO_DEPRECATE -DQT_NO_DEBUG -DQT_PLUGIN -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -D_WINDLL  "-I.\..\.." "-I.\..\..\..\..\vcglib" "-I.\..\..\external\glew-1.7.0\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\release" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing io_x3d.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing io_x3d.h...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_USE_MATH_DEFINES -D_CRT_SECURE_NO_DEPRECATE -DQT_PLUGIN -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_WINDLL  "-I.\..\.." "-I.\..\..\..\..\vcglib" "-I.\..\..\external\glew-1.7.0\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\debug" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_USE_MATH_DEFINES -D_CRT_SECURE_NO_DEPRECATE -DQT_PLUGIN -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_WINDLL  "-I.\..\.." "-I.\..\..\..\..\vcglib" "-I.\..\..\external\glew-1.7.0\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\debug" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing io_x3d.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing io_x3d.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+    </CustomBuild>
+    <ClInclude Include="util_x3d.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" Qt5Version_x0020_Win32="msvc2013_64_opengl" Qt5Version_x0020_x64="5_3_2" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

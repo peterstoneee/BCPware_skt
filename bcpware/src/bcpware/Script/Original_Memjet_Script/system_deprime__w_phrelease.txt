@@ -1,0 +1,25 @@
+{
+ "script": [
+	{"cmd" : "RunPump", "args" : 
+		{ "ValvePos" : "openair", 
+		"MaintPos" : "cap", 
+		"Rpm" : 200, 
+		"Revs" : 150 } },
+	{ "cmd" : "Spit", "args" :
+ 		{ "ValvePos" : "openair", 
+		"MaintPos" : "cap",
+ 		"ChanMask": "1f",
+ 		"NumSpits" : 5000 } },
+ 	{ "cmd" : "Wipe", "args" : 
+		{ "ValvePos" : "openair", 
+		"StartOffset" : 60, 
+		"StopOffset":100, 
+		"Speed":3, 
+		"WiperRpm":60 } },
+	{ "cmd" : "WiperTransfer", "args" : 
+		{"MaintPos" : "print"}  },
+	{ "cmd" : "PHRelease" },
+	{ "cmd" : "PHPrimed", "args" :
+ 		{ "State" : "unprimed" } }
+ ]
+}

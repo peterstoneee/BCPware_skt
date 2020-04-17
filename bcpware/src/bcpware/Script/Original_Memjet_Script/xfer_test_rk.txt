@@ -1,0 +1,18 @@
+{
+ "script": [
+        { "cmd" : "WiperTransfer", "args" : 
+		{"MaintPos" : "print" }  },
+        { "cmd" : "Delay", "args" :
+                { "ValvePos" : "closed",
+                  "MaintPos" : "print", 
+                  "Time":15 } },
+        { "cmd" : "WiperTransfer", "args" : 
+		{"MaintPos" : "print" }},
+        { "cmd" : "Delay", "args" :
+                { "ValvePos" : "closed",
+                  "MaintPos" : "print", 
+                  "Time":30 } 
+  }
+ 
+ ]
+}

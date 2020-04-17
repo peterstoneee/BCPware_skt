@@ -1,0 +1,9 @@
+{
+ "script": [
+ { "cmd" : "Delay", "args" :
+ { "ValvePos" : "openink",
+ "MaintPos" : "cap", 
+"Time":1 } 
+  }
+ ]
+}

@@ -1,0 +1,29 @@
+{ "script": [
+	{ "cmd": "RunSumpPumpIss", "args": 
+		{ "rpms": 100,
+		"numRevs": 240 } },
+    { "cmd": "RunPump", "args": 
+		{ "ValvePos": "openink",
+		"MaintPos": "cap",
+		"Rpm": 50,
+		"Revs": 100 } },
+
+	{ "cmd": "RunSumpPumpIss", "args": 
+		{ "rpms": 100,
+		"numRevs": 240 } },
+    { "cmd": "RunPump", "args": 
+		{ "ValvePos": "openink",
+		"MaintPos": "cap",
+		"Rpm": 50,
+		"Revs": 100 } },
+		
+	{ "cmd": "RunSumpPumpIss", "args": 
+		{ "rpms": 100,
+		"numRevs": 48 } },
+    { "cmd": "RunPump", "args": 
+		{ "ValvePos": "openink",
+		"MaintPos": "cap",
+		"Rpm": 50,
+		"Revs": 20 } }
+ ]
+}

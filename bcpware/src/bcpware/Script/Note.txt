@@ -1,0 +1,196 @@
+////////// Note - 2017/12/01 Fri
+* Update ConsumeInk.
+* Update color mixed binder removal
+ - Waste_Binder_Removal.txt
+  - Split into 3 files.
+
+////////// Note - 2017/11/24 Fri
+*Let user to clean capper
+ - Remove_PH.txt
+   - PH will go to spittoon, then release PH latch.
+ - Install PH
+   - On SW side
+     - Check whether PH is installed
+     - Move PH module to spittoon position
+       - /maint/activate -> On
+       - /ststua/system_setup -> ServiceMode(On)
+       - /maint/ss_mod_goto -> ModulePos(wipe)
+     - Inform user to check/clean capper
+     - User press OK/Continue button
+     - Move PH module to cap position <-- don't need this
+       - /maint/ss_mod_goto -> ModulePos(cap) <-- don't need this
+       - /status/sysyem_setup -> ServiceMode(Off)
+       - /maint/activate -> Off
+    - Primed_New_PH.txt
+      - Add a wipe at the beginning of script, to clean waste ink on PH nozzle plate
+*Color mixed binder removal
+ - Waste_Binder_Removal.txt
+   - To waste pump color mixed binder, also circulate at the same time, which will remove all the color mixed binder.
+ - Original_Memjet_Script/delay.txt
+   - Initialilze Sirius.
+ - Prime_New_PH.txt
+   - PH nozzle plate may have waste ink after installation, so add a wipe at the beginning of script.
+
+////////// Note - 2017/11/02 Thu
+* For different machine(e.g. LP2_7) may still have ink near PH after deprime.
+(Ink level of IR is acceptable, only if all the tube length is controllable)
+  -> rollback to its original procedure.
+* Capper may have waste ink on it, which may related to color mixed.
+  -> Change pressure prime pos to cap.
+  -> Additionally add waste pump before pressure prime
+  -> Delete a delay after pressure prime
+* It'll consume a lot of ink after pressure prime
+  -> Reduce the revs to 20
+* May have to many waste ink under capper.
+  -> Review all the waste ink revs.
+  -> Heavy/Prime will pump for 1.5 mins.
+* Update ConsumeInk based on new pressure prime revs.
+  -> 5020 ul/ch
+
+
+////////// Note - 2017/09/04
+*Consider ink consumed.
+Wipe
+36ul/wipe.cha
+Pressure Prime
+7530ul/pressure prime.cha
+
+
+////////// Note - 2017/08/31
+* Midjob change back to 4 pages
+
+////////// Note - 2017/08/24
+*For midjob setting of "location"
+Location: NVM
+	script & other parameters(page interval) will save in NVM(test page interval only currently)
+Location: RAM
+	script will save in RAM
+	other parameters(page interval) will save in NVM
+
+
+////////// LP2 - Spit on Spitton & Dynamic Midjob - 2017/08/21
+*Automatic maintenance
+Startup			- After Sirius "Online" & FPGA "Idle"
+Prejob			- Before a print job
+Midjob			- Servicing in a print job(system default)
+Postjob			- After a print job, Sirius "Online" & FPGA "Idle"
+Idle			- Idle servicing
+Shutdown		- Before shutdown Sirius
+
+*Manual maintenance
+Prime_New_PH		- Install PH
+Remove_PH		- Remove PH
+Light_PH_Recovery	- Called maint L1 previously
+Heavy_PH_Recovery	- Called maint L2 previously
+
+*Maintenance command
+delay			- Delay
+phprime__STATUS_ONLY	- Set PH state to primed
+phrelease__LATCH_ONLY	- Release PH latch
+pump			- Reservior pump
+sumpPump_ISS		- Waste ink pump
+wipe			- Move wiper
+
+*Oblosete
+Clear_Color_Mix_Level_1
+Clear_Color_Mix_Level_2
+Idle_Servicing_Nios
+Midjob_Prolog		- Servicing in a print job
+Midjob_Middle		- Servicing in a print job
+Middle_Epilog		- Servicing in a print job
+
+
+////////// LP1.5 - Spit on Spitton & Dynamic Midjob - 2017/05/08
+*Automatic maintenance
+Startup			- After Sirius "Online" & FPGA "Idle"
+Prejob			- Before a print job
+Midjob			- Servicing in a print job(NVM, system default)
+Midjob_Prolog		- Servicing in a print job(RAM, during first few pages)
+Midjob_Middle		- Servicing in a print job(RAM, between Prolog and Epilog)
+Middle_Epilog		- Servicing in a print job(RAM, during last few pages)
+Postjob			- After a print job, Sirius "Online" & FPGA "Idle"(same as Heavy_PH_Recovery)
+Idle			- Idle servicing
+Shutdown		- Before shutdown Sirius
+
+*Manual maintenance
+Prime_New_PH		- Install PH
+Remove_PH		- Remove PH
+Light_PH_Recovery	- Called maint L1 previously
+Heavy_PH_Recovery	- Called maint L2 previously
+
+*Maintenance command
+delay			- Delay
+phprime__STATUS_ONLY	- Set PH state to primed
+phrelease__LATCH_ONLY	- Release PH latch
+pump			- Reservior pump
+sumpPump_ISS		- Waste ink pump
+wipe			- Move wiper
+
+*Oblosete
+Clear_Color_Mix_Level_1
+Clear_Color_Mix_Level_2
+Idle_Servicing_Nios
+
+
+////////// LP1 - Pressure Pump - 2017/03/16
+*Automatic maintenance
+Startup			- After Sirius "Online" & FPGA "Idle"
+Prejob			- Before a print job
+Midjob			- Servicing in a print job
+Postjob			- After a print job, Sirius "Online" & FPGA "Idle"
+Idle			- Idle servicing
+Shutdown		- Before shutdown Sirius
+
+*Manual maintenance
+Prime_New_PH		- Install PH
+Remove_PH		- Remove PH
+Light_PH_Recovery	- Called maint L1 previously
+Heavy_PH_Recovery	- Called maint L2 previously
+
+*Maintenance command
+delay			- Delay
+phprime__STATUS_ONLY	- Set PH state to primed
+phrelease__LATCH_ONLY	- Release PH latch
+pump			- Reservior pump
+sumpPump_ISS		- Waste ink pump
+wipe			- Move wiper
+
+*Oblosete
+Clear_Color_Mix_Level_1
+Clear_Color_Mix_Level_2
+
+
+////////// BB3
+*Prejob		Maint_Level_1.txt
+*Postjob	Maint_Level_1.txt
+*Midjob		midjob.txt
+
+*Power on
+	Check around the machine and the tube, see whether there's something wrong.
+	Print some pages, see whether color mixing or nozzle missing.
+	Based on the result, if color mix, to run Clear Color Mix(Better remove rum pump on the starting of script) 
+		Clear_Color_Mix_Level_1.txt
+		Clear_Color_Mix_Level_2.txt
+	Based on the result, if no color mixing, but nozzle's missing, to run 
+		Maint_Level_1.txt
+		Maint_Level_2.txt
+
+*Between print job, if the print quality is not good, do maint
+		Maint_Level_1.txt
+		Maint_Level_2.txt
+
+*To change print head
+		system_deprime__w_phrelease.txt
+
+*To install print head
+		PH_Priming.txt
+
+
+//////////
+Memjet Original Script - Needed
+*Delay				delay.txt
+*Set PH state to primed		phprime__STATUS_ONLY.txt
+*Release PH latch		phrelease__LATCH_ONLY.txt
+*Pump				pump.txt
+*Pump waste ink			sumpPump_ISS.txt
+*Wipe				wipe.txt

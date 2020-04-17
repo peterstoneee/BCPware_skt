@@ -1,0 +1,9 @@
+{
+ "script": [
+	{ "cmd" : "WiperTransfer", "args" : 
+		{"MaintPos" : "cap",
+                 "WiperRpm": 100,
+                 "WiperRevs":10}  
+        }
+ ]
+}

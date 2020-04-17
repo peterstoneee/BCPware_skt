@@ -1,0 +1,9 @@
+{
+ "script": [
+ 	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ValvePos" : "openink", 
+		"ChanMask" : "1F", 
+		"Volume":7566
+		} }
+ ]
+}

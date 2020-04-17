@@ -1,0 +1,10 @@
+D:/related_work/3DP_related/3DP_powder/program/3MF/lib3mf_sdk_1.8.1/Examples/build/CMakeFiles/Example_Cube.dir
+D:/related_work/3DP_related/3DP_powder/program/3MF/lib3mf_sdk_1.8.1/Examples/build/CMakeFiles/Example_ColorCube.dir
+D:/related_work/3DP_related/3DP_powder/program/3MF/lib3mf_sdk_1.8.1/Examples/build/CMakeFiles/Example_Components.dir
+D:/related_work/3DP_related/3DP_powder/program/3MF/lib3mf_sdk_1.8.1/Examples/build/CMakeFiles/Example_TextureCube.dir
+D:/related_work/3DP_related/3DP_powder/program/3MF/lib3mf_sdk_1.8.1/Examples/build/CMakeFiles/Example_Converter.dir
+D:/related_work/3DP_related/3DP_powder/program/3MF/lib3mf_sdk_1.8.1/Examples/build/CMakeFiles/Example_ExtractInfo.dir
+D:/related_work/3DP_related/3DP_powder/program/3MF/lib3mf_sdk_1.8.1/Examples/build/CMakeFiles/Example_Slice.dir
+D:/related_work/3DP_related/3DP_powder/program/3MF/lib3mf_sdk_1.8.1/Examples/build/CMakeFiles/Example_BeamLattice.dir
+D:/related_work/3DP_related/3DP_powder/program/3MF/lib3mf_sdk_1.8.1/Examples/build/CMakeFiles/ALL_BUILD.dir
+D:/related_work/3DP_related/3DP_powder/program/3MF/lib3mf_sdk_1.8.1/Examples/build/CMakeFiles/ZERO_CHECK.dir

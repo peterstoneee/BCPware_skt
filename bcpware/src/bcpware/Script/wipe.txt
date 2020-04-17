@@ -1,0 +1,10 @@
+{
+ "script": [
+ 	{ "cmd" : "Wipe", "args" : 
+		{ "ValvePos" : "openink", 
+		"StartOffset" : 60, 
+		"StopOffset":60, 
+		"Speed":5, 
+		"WiperRpm":60 } }
+ ]
+}

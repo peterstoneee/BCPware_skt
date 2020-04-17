@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/myImage">
+        <file>images/bg.jpg</file>
+        <file>images/Landing.jpg</file>
+        <file>images/center.jpg</file>
+        <file>images/btn_auto_packing@2x.png</file>
+        <file>images/btn_auto_packing.png</file>
+        <file>images/btn_menu_land_2x.png</file>
+        <file>images/btn_menu_land.png</file>
+
+        <file alias = "color_or_no_color.jpg">images/color_or_black_white.jpg</file>
+        <file>images/count_volumn.jpg</file>
+    </qresource>    
+</RCC>
+<!--<RCC>
+    <qresource prefix="/myImage">
+        <file alias="slice-img.jpg">image/step_32_.jpg</file>
+        <file alias="test_nonmanifold.png">image/pt_20.png</file>
+    </qresource>
+</RCC>-->
