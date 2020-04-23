@@ -825,7 +825,7 @@ public:
     void setFileName(const QString& newFileName) {fullPathFilename = newFileName;}
 	QString getFileName() { return fullPathFilename; }
     GLLogStream Log;
-	framework::Diagnostics::CLogger<framework::Threading::CNoLock> logger;// (LogLevel::Info, _T("MyApp"));
+	//framework::Diagnostics::CLogger<framework::Threading::CNoLock> logger;// (LogLevel::Info, _T("MyApp"));
     FilterScript* filterHistory;
     QStringList xmlhistory;
 

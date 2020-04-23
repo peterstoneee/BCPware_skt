@@ -35,13 +35,13 @@ QDialog(p), CMYUsage(_cmyUsage), printInfoMode_Option(_printInfoMode), two_side_
 	mdd = md;
 	initPJI();
 	createframe();
-	WRITELOG(mdd->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 	setWindowTitle("Estimate Usage");
 	//mdd->p_setting.getbuildheight().value;
 
 	te1->setReadOnly(true);
 	setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint);
-	WRITELOG(mdd->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));	
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));	
 	//param = parlst;
 }
 

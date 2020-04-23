@@ -434,6 +434,7 @@ private:
 #define NVM_SETTING_NAME "Advanced_Setting"
 #define PRINTER_SETTING_NAME "Basic_Setting"
 #define SLICING_SETTING_NAME "Printer_Setting"
+#define COMMON_SETTING_NAME "Common_Setting"
 
 class Setting3DP:public QDialog
 {

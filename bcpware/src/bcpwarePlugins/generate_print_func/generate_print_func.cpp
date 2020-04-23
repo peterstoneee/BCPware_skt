@@ -2478,7 +2478,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 	case FP_PRINT_FLOW_2:
 	{
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_PRINT_WITH_WHITE_KICK"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_PRINT_WITH_WHITE_KICK"));
 
 
 		md.jobname.clear();
@@ -2832,12 +2832,12 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 		//if (start_page == 0)
 		//{
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("newUselessbar_customateBlankPages"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("newUselessbar_customateBlankPages"));
 		if (!zxCheckMode == ZxGen_SKT::zxInitMode::ViewCheckMode  && continuePrinting == false && fourPage_switch)
 		{
 
 			SKT::createBlankPages(doubleprint, tempgroove.grooveheight, md.p_setting.get_plus_print_length(), useless_print, DSP_Blank_pages, blankTemp, blankcapCTemp, gen_pixelFormat, spittoon_M, spittoon_C, spittoon_Y, spittoon_B, print_dpi);
-			////WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("sendData2"));
+			////WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("sendData2"));
 			zx_skt->sendData2(blankTemp, blankcapCTemp);
 		}
 		//}
@@ -2895,7 +2895,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 		int generateNOI = 25;
 		int quickWipe = 1;
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("for loop start"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop start"));
 		if (start_page > boxy_dim && continuePrinting){
 			zx_skt->close();
 			zx_skt->~ZxGen_SKT();
@@ -2914,7 +2914,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			testswitch = false;
 		}
 
-		//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
 		for (int i = start_page, j = start_page + 1; i < boxy_dim; i++, j++)
 
 			//for (int i = start_page, j = start_page + 1; i < start_page + testPrintPageCount; i++, j++)
@@ -2986,9 +2986,9 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			//xyz::slice_roution(md, box_bottom + unit*i, faceColor);//***backup******************切層演算							  
 			//time.restart();
 			//Log("Closed %i holes and added %i new faces, %s,%d ", 12, 12, __FUNCTION__, __LINE__);
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("slice start"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("slice start"));
 			xyz::slice_roution(md, box_bottom + unit*i, faceColor);//****20160301*****************切層演算		
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("slice end"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("slice end"));
 
 
 			float currnentHeight = box_bottom + unit*i;
@@ -3126,7 +3126,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			//***20150508***BMP QImage設為Format_RGBA8888, readpixel要設為GL_RGBA
 			glReadPixels(0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, downBlackMaskFirstCV.data);
 			cv::flip(downBlackMaskFirstCV, downBlackMaskFirstCV, 0);
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
 			/*glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, image.bits());
 			image = image.mirrored(false, true);
 			look_down_Black_MaskCV = QImageToCvMat(image);*/
@@ -3199,7 +3199,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			}
 			/////////////////===end look down first color mask 0.05=====////////////////////////////
 
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
 			/*======start look down second black mask 0.5================*/
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 			glClearColor(1, 1, 1, 1);
@@ -3261,7 +3261,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			}
 			/////////////////end look down second black mask 0.5////////////////////////////////////////
 
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
 			/***start look down second color mask 0.5****/
 			glMatrixMode(GL_PROJECTION); glPopMatrix();
 			glMatrixMode(GL_MODELVIEW); glPopMatrix();
@@ -3315,9 +3315,9 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			}
 			//////////////end look down second color mask 0.5////////////////////////////////
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("upMergeDownCV"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("upMergeDownCV"));
 			//upMergeDownCV = SKT::upDownCombine(look_up_Black_MaskCV, look_up_color_CV, look_down_Black_MaskCV, look_down_color_CV);
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("upMergeDownCV"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("upMergeDownCV"));
 
 
 			/*if (savedebugImage)
@@ -3451,7 +3451,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				outlineColor.append(QString("_%1.png").arg(i, 4, 10, QChar('0')));
 				image.save(dir.absolutePath() + "/" + outlineColor, "png");
 			}
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
 			///////////////////////end outline color//////////////////////////
 
 			//***第一張圖片
@@ -3530,7 +3530,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			black_Mask = QImageToCvMat(image.mirrored());*/
 			glReadPixels(0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, black_Mask.data);
 			cv::flip(black_Mask, black_Mask, 0);
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
 			//***20160122***DSP_Color_Replace_Binder_thick_mask
 
 			/******outline and color replace binder thick black mask******/
@@ -3608,7 +3608,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 			/*fprintf(dbgff, "render_process %i, %i\n", time.elapsed(), i);
 			fflush(dbgff);*/
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 			//===========================================================================================
 			equ[3] = box_bottom + unit*i;
 			//***第二張圖***產生膠水圖**********//
@@ -3698,8 +3698,8 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			glDisable(MY_CLIP_PLANE);//存完圖
 			glDisable(GL_CULL_FACE);
 			//****
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 			if (par.getBool("generate_zx"))
 			{
 				cv::cvtColor(captemp, captemp, CV_BGR2GRAY);
@@ -3803,7 +3803,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			glDisable(MY_CLIP_PLANE3);
 			glDisable(GL_CULL_FACE);
 			//****								
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 			/*if (par.getBool("generate_zx"))
 			{*/
 			cv::cvtColor(capDownMask, capDownMask, CV_BGR2GRAY);
@@ -3923,10 +3923,10 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			//===*******************************************************************************************===//
 			/*fprintf(dbgff, "cap_prePrting_image %i, %i\n", time.elapsed(), i);
 			fflush(dbgff);*/
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 
 			//originalOutline = SKT::outlinePoint01CMCombine(outlineColorCv, outlineBlackMaskCV, upMergeDownCV, captemp);
@@ -3974,7 +3974,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 
 			//***20160112***image_process加上插點pattern
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("imagePorcess"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("imagePorcess"));
 			if (par.getBool("generate_zx"))
 			{
 				/*if (par.getBool("mono_bool"))
@@ -3992,7 +3992,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				//=====================black_Mask for no color area==================================================
 				imageProcess.operate2(originalOutline, captemp, black_Mask, false);
 				//SKT::brighterImage(originalOutline);
-				//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("yuvBrighterTest"));
+				//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("yuvBrighterTest"));
 				//originalOutline = SKT::yCbCrBrighterTest(originalOutline);
 
 				if (par.getBool("mono_bool"))
@@ -4015,7 +4015,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 
 
-				WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("profileStart"));
+				WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("profileStart"));
 
 
 				Mat desImg(originalOutline.size(), originalOutline.type(), Scalar(0, 0, 0));
@@ -4049,7 +4049,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 						testcolor.copyTo(originalOutline);
 					}
 				}
-				WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("profileEnd"));
+				WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("profileEnd"));
 
 				if (savedebugImage)
 				{
@@ -4066,7 +4066,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 						qDebug() << "dir.absolutePath()" << dir.absolutePath();
 					}
 				}
-				//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("yuvBrighterTest"));
+				//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("yuvBrighterTest"));
 				//SKT::generateUselessbar(temp);
 
 				//bool innerGrayBool = false;
@@ -4083,7 +4083,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				//if(((i-60)%100)>100)
 				QString papa = patternPath.absolutePath();
 
-				////WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("rect_test1"));
+				////WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("rect_test1"));
 				if ((i % 100) > 20 && add_pattern)
 					//if (true)
 				{
@@ -4202,7 +4202,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				if (dilateBinder)
 					captemp = SKT::dilateImage(&captemp, dilateBinderValue);
 
-				//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+				//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 				cv::Mat finalcolor(originalOutline.cols, originalOutline.rows, originalOutline.type(), Scalar(255, 255, 255));//finalcolor.setTo(cv::Scalar(255, 255, 255));
 				SKT::rotateImage(originalOutline, finalcolor);
 
@@ -4385,7 +4385,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			}
 
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
 			/*
 			gen_Final_Picture
 			*/
@@ -4486,7 +4486,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				//zggg->sendData(outlineCTemp, capCTemp);
 				bool sendResult = zx_skt->sendData2(outlineCTemp, capCTemp);
 				wchar_t *vOut = sendResult ? L"true" : L"false";
-				WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, (vOut));
+				WRITELOG(logger, framework::Diagnostics::LogLevel::Info, (vOut));
 
 				capCTemp.clear();
 				outlineCTemp.clear();
@@ -4539,13 +4539,13 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 			}
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("senddata end"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("senddata end"));
 			char* numpages = new char[20];
 			string temp = std::to_string(i).append("_pages");
 			strcpy(numpages, temp.c_str());
 			wchar_t *wmsg = new wchar_t[strlen(numpages) + 1]; //memory allocation
 			mbstowcs(wmsg, numpages, strlen(numpages) + 1);
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, wmsg);
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, wmsg);
 			delete[]wmsg;
 			delete[]numpages;
 
@@ -4566,9 +4566,9 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 			//fprintf(dbgff, "cap_prePrting_image %i, %i\n", time.elapsed(), i);
 			//fflush(dbgff);
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
 		}
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
 		//thread1.exit();
 
 
@@ -4613,7 +4613,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 #pragma region FP_PRINT_FOUR_IN_ONE
 	case FP_PRINT_FOUR_IN_ONE:
 	{
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_PRINT_WITH_WHITE_KICK"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_PRINT_WITH_WHITE_KICK"));
 
 
 		md.jobname.clear();
@@ -4921,12 +4921,12 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 		//if (start_page == 0)
 		//{
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("newUselessbar_customateBlankPages"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("newUselessbar_customateBlankPages"));
 		if (!zxCheckMode == ZxGen_SKT::zxInitMode::ViewCheckMode  && continuePrinting == false && fourPage_switch)
 		{
 
 			SKT::createBlankPages(doubleprint, tempgroove.grooveheight, md.p_setting.get_plus_print_length(), useless_print, DSP_Blank_pages, blankTemp, blankcapCTemp, gen_pixelFormat, spittoon_M, spittoon_C, spittoon_Y, spittoon_B, print_dpi);
-			////WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("sendData2"));
+			////WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("sendData2"));
 			zx_skt->sendData2(blankTemp, blankcapCTemp);
 		}
 		//}
@@ -4969,7 +4969,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 		int generateNOI = 25;
 		int quickWipe = 1;
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("for loop start"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop start"));
 		if (start_page > boxy_dim && continuePrinting){
 			zx_skt->close();
 			zx_skt->~ZxGen_SKT();
@@ -4988,7 +4988,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			testswitch = false;
 		}
 
-		//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
 		for (int i = start_page, j = start_page + 1; i < boxy_dim; i++, j++)
 
 			//for (int i = start_page, j = start_page + 1; i < start_page+testPrintPageCount; i++, j++)
@@ -5158,8 +5158,8 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			glDisable(MY_CLIP_PLANE);//存完圖
 			glDisable(GL_CULL_FACE);
 			//****
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 			//captemp.copyTo(originalOutline);
 			if (par.getBool("generate_zx"))
 			{
@@ -5275,10 +5275,10 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			//===*******************************************************************************************===//
 			/*fprintf(dbgff, "cap_prePrting_image %i, %i\n", time.elapsed(), i);
 			fflush(dbgff);*/
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));				
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));				
 			//========================================================//				
 			QImage testttt = cvMatToQImage(originalOutline);
 			if (false){
@@ -5290,7 +5290,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 
 			//***20160112***image_process加上插點pattern
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("imagePorcess"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("imagePorcess"));
 			if (par.getBool("generate_zx"))
 			{
 
@@ -5323,7 +5323,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				if (dilateBinder)
 					captemp = SKT::dilateImage(&captemp, dilateBinderValue);
 
-				//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+				//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 				cv::Mat finalcolor(originalOutline.cols, originalOutline.rows, originalOutline.type(), Scalar(255, 255, 255));//finalcolor.setTo(cv::Scalar(255, 255, 255));
 				SKT::rotateImage(originalOutline, finalcolor);
 				cv::Mat finalBinder(captemp.cols, captemp.rows, captemp.type(), Scalar(255));//finalBinder.setTo(cv::Scalar(255));
@@ -5400,7 +5400,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
 			if (savedebugImage)
 				//if (true)
 			{
@@ -5487,7 +5487,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				//zggg->sendData(outlineCTemp, capCTemp);
 				bool sendResult = zx_skt->sendData2(outlineCTemp, capCTemp);
 				wchar_t *vOut = sendResult ? L"true" : L"false";
-				WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, (vOut));
+				WRITELOG(logger, framework::Diagnostics::LogLevel::Info, (vOut));
 
 				capCTemp.clear();
 				outlineCTemp.clear();
@@ -5540,13 +5540,13 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 			}
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("senddata end"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("senddata end"));
 			char* numpages = new char[20];
 			string temp = std::to_string(i).append("_pages");
 			strcpy(numpages, temp.c_str());
 			wchar_t *wmsg = new wchar_t[strlen(numpages) + 1]; //memory allocation
 			mbstowcs(wmsg, numpages, strlen(numpages) + 1);
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, wmsg);
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, wmsg);
 			delete[]wmsg;
 			delete[]numpages;
 
@@ -5567,9 +5567,9 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 			//fprintf(dbgff, "cap_prePrting_image %i, %i\n", time.elapsed(), i);
 			//fflush(dbgff);
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
 		}
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
 		//thread1.exit();
 
 
@@ -5613,7 +5613,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 #pragma region FP_PRINT_DM_SLICER
 	case FP_PRINT_DM_SLICER:
 	{
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_PRINT_DM_SLICER"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_PRINT_DM_SLICER"));
 
 
 		md.jobname.clear();
@@ -5625,7 +5625,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 		GLenum err = glewInit();
 		if (GLEW_OK != err)
 		{
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("glew_error"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("glew_error"));
 			/* Problem: glewInit failed, something is seriously wrong. */
 			//fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
 			//qDebug("Error: %s\n", glewGetErrorString(err));
@@ -5955,12 +5955,12 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 		//if (start_page == 0)
 		//{
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("newUselessbar_customateBlankPages"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("newUselessbar_customateBlankPages"));
 		if (!zxCheckMode == ZxGen_SKT::zxInitMode::ViewCheckMode  && continuePrinting == false && fourPage_switch)
 		{
 
 			SKT::createBlankPages(doubleprint, tempgroove.grooveheight, md.p_setting.get_plus_print_length(), useless_print, DSP_Blank_pages, blankTemp, blankcapCTemp, gen_pixelFormat, spittoon_M, spittoon_C, spittoon_Y, spittoon_B, print_dpi);
-			////WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("sendData2"));
+			////WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("sendData2"));
 			zx_skt->sendData2(blankTemp, blankcapCTemp);
 		}
 		//}
@@ -6013,7 +6013,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 		int generateNOI = 25;
 		int quickWipe = 1;
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("for loop start"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop start"));
 		if (start_page > boxy_dim && continuePrinting){
 			zx_skt->close();
 			zx_skt->~ZxGen_SKT();
@@ -6032,7 +6032,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			testswitch = false;
 		}
 
-		//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
 		//for (int i = start_page, j = start_page + 1; i < boxy_dim; i++, j++)
 
 		for (int i = start_page, j = start_page + 1; i < start_page + testPrintPageCount; i++, j++)
@@ -6107,9 +6107,9 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			//xyz::slice_roution(md, box_bottom + unit*i, faceColor);//***backup******************切層演算							  
 			//time.restart();
 			//Log("Closed %i holes and added %i new faces, %s,%d ", 12, 12, __FUNCTION__, __LINE__);
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("slice start"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("slice start"));
 			xyz::slice_roution(md, box_bottom + unit*i, faceColor);//****20160301*****************切層演算		
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("slice end"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("slice end"));
 
 
 			float currnentHeight = box_bottom + unit*i;
@@ -6320,7 +6320,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			glPopMatrix();
 			glReadPixels(0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, black_Mask.data);
 			cv::flip(black_Mask, black_Mask, 0);
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
 			//***20160122***DSP_Color_Replace_Binder_thick_mask
 
 
@@ -6415,7 +6415,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			glDisable(MY_CLIP_PLANE);
 			glDisable(GL_CULL_FACE);
 			//****								
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 			/*if (par.getBool("generate_zx"))
 			{*/
 			cv::cvtColor(captemp, captemp, CV_BGR2GRAY);
@@ -6520,7 +6520,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			glDisable(MY_CLIP_PLANE3);
 			glDisable(GL_CULL_FACE);
 			//****								
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 			/*if (par.getBool("generate_zx"))
 			{*/
 			cv::cvtColor(capDownMask, capDownMask, CV_BGR2GRAY);
@@ -6630,7 +6630,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			/*=============================================================================================================================
 			=============================================================================================================================*/
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 
 			//cv::Mat reverse_binder_outline(downBlackMaskFirstCV.size(), downBlackMaskFirstCV.type(), Scalar(255, 255, 255));
@@ -6638,7 +6638,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 
 			//***20160112***image_process加上插點pattern
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("imagePorcess"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("imagePorcess"));
 			if (par.getBool("generate_zx"))
 			{
 				SKT::InkBalance imageProcess;
@@ -6661,7 +6661,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				//outlineBlackMaskCV = SKT::erodeImage(&outlineBlackMaskCV, erodeIteration);
 
 
-				////WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("rect_test1"));
+				////WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("rect_test1"));
 				//if ((i % 100) > 20 && add_pattern)
 
 				if (savedebugImage){
@@ -6770,7 +6770,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				if (dilateBinder)
 					captemp = SKT::dilateImage(&captemp, dilateBinderValue);
 
-				//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+				//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 				cv::Mat finalcolor(originalOutline.cols, originalOutline.rows, originalOutline.type(), Scalar(255, 255, 255));//finalcolor.setTo(cv::Scalar(255, 255, 255));
 				SKT::rotateImage(originalOutline, finalcolor);
 				cv::Mat finalBinder(captemp.cols, captemp.rows, captemp.type(), Scalar(255));//finalBinder.setTo(cv::Scalar(255));
@@ -6955,7 +6955,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			}
 
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
 			if (savedebugImage)
 				//if (true)
 			{
@@ -7026,7 +7026,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			{
 				bool sendResult = zx_skt->sendData2(outlineCTemp, capCTemp);
 				wchar_t *vOut = sendResult ? L"true" : L"false";
-				WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, (vOut));
+				WRITELOG(logger, framework::Diagnostics::LogLevel::Info, (vOut));
 
 				capCTemp.clear();
 				outlineCTemp.clear();
@@ -7075,13 +7075,13 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 			}
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("senddata end"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("senddata end"));
 			char* numpages = new char[20];
 			string temp = std::to_string(i).append("_pages");
 			strcpy(numpages, temp.c_str());
 			wchar_t *wmsg = new wchar_t[strlen(numpages) + 1]; //memory allocation
 			mbstowcs(wmsg, numpages, strlen(numpages) + 1);
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, wmsg);
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, wmsg);
 			delete[]wmsg;
 			delete[]numpages;
 
@@ -7093,9 +7093,9 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
 		}
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
 		//thread1.exit();
 
 
@@ -7141,7 +7141,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 #pragma region FP_PRINT_DM_SLICER_ALPHA
 	case FP_PRINT_DM_SLICER_ALPHA:
 	{
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_PRINT_DM_SLICER"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_PRINT_DM_SLICER"));
 
 
 		md.jobname.clear();
@@ -7153,7 +7153,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 		GLenum err = glewInit();
 		if (GLEW_OK != err)
 		{
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("glew_error"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("glew_error"));
 		}
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
@@ -7483,12 +7483,12 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 		//if (start_page == 0)
 		//{
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("newUselessbar_customateBlankPages"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("newUselessbar_customateBlankPages"));
 		if (!zxCheckMode == ZxGen_SKT::zxInitMode::ViewCheckMode  && continuePrinting == false && fourPage_switch)
 		{
 
 			SKT::createBlankPages(doubleprint, tempgroove.grooveheight, md.p_setting.get_plus_print_length(), useless_print, DSP_Blank_pages, blankTemp, blankcapCTemp, gen_pixelFormat, spittoon_M, spittoon_C, spittoon_Y, spittoon_B, print_dpi);
-			////WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("sendData2"));
+			////WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("sendData2"));
 			zx_skt->sendData2(blankTemp, blankcapCTemp);
 		}
 		//}
@@ -7586,7 +7586,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 		int generateNOI = 25;
 		int quickWipe = 1;
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("for loop start"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop start"));
 		if (start_page > boxy_dim && continuePrinting){
 			zx_skt->close();
 			zx_skt->~ZxGen_SKT();
@@ -7672,7 +7672,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 		}
 
 
-		//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
 		//for (int i = start_page, j = start_page + 1; i < boxy_dim; i++, j++)
 		for (int i = start_page, j = start_page + 1; i < start_page + testPrintPageCount; i++, j++)
 		{
@@ -7752,9 +7752,9 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			//xyz::slice_roution(md, box_bottom + unit*i, faceColor);//***backup******************切層演算							  
 			//time.restart();
 			//Log("Closed %i holes and added %i new faces, %s,%d ", 12, 12, __FUNCTION__, __LINE__);
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("slice start"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("slice start"));
 			xyz::slice_roution(md, box_bottom + unit*i, faceColor);//****20160301*****************切層演算		
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("slice end"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("slice end"));
 
 
 			float currnentHeight = box_bottom + unit*i;
@@ -7924,7 +7924,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			glPopMatrix();
 			glReadPixels(0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, black_Mask.data);
 			cv::flip(black_Mask, black_Mask, 0);
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
 			//***20160122***DSP_Color_Replace_Binder_thick_mask
 			if (savedebugImage){
 				QImage testttt = cvMatToQImage(black_Mask);
@@ -8024,7 +8024,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			glDisable(MY_CLIP_PLANE);
 			glDisable(GL_CULL_FACE);
 			//****								
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 			/*if (par.getBool("generate_zx"))
 			{*/
 			//cv::Mat tempMat(captemp.size(),CV_8UC1);
@@ -8321,7 +8321,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			glDisable(MY_CLIP_PLANE3);
 			glDisable(GL_CULL_FACE);
 			//****								
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 			/*if (par.getBool("generate_zx"))
 			{*/
 			cv::cvtColor(capDownMask, capDownMask, CV_BGR2GRAY);
@@ -8425,7 +8425,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			glDisable(MY_CLIP_PLANE4);
 			glDisable(GL_CULL_FACE);
 			//****								
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 			/*if (par.getBool("generate_zx"))
 			{*/
 			cv::cvtColor(capDownSureMask, capDownSureMask, CV_BGR2GRAY);
@@ -8541,7 +8541,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			/*=============================================================================================================================
 			=============================================================================================================================*/
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 
 			//cv::Mat reverse_binder_outline(downBlackMaskFirstCV.size(), downBlackMaskFirstCV.type(), Scalar(255, 255, 255));
@@ -8549,7 +8549,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 
 			//***20160112***image_process加上插點pattern
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("imagePorcess"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("imagePorcess"));
 			if (par.getBool("generate_zx"))
 			{
 				SKT::InkBalance imageProcess;
@@ -8572,7 +8572,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				//outlineBlackMaskCV = SKT::erodeImage(&outlineBlackMaskCV, erodeIteration);
 
 
-				////WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("rect_test1"));
+				////WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("rect_test1"));
 				//if ((i % 100) > 20 && add_pattern)
 
 				/*if (savedebugImage){
@@ -8814,7 +8814,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				/*if (dilateBinder)
 				captemp = SKT::dilateImage(&captemp, dilateBinderValue);*/
 
-				//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+				//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 				//finalcolor = *new cv::Mat(originalOutline.cols, originalOutline.rows, originalOutline.type(), Scalar(255, 255, 255));//finalcolor.setTo(cv::Scalar(255, 255, 255));				
 				//cv::resize(finalcolor, finalcolor, Size(originalOutline.rows, originalOutline.cols));
 				resetImage(finalcolor, originalOutline.rows, originalOutline.cols);
@@ -9052,7 +9052,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
 
 
 			//if (doubleprint && savedebugImage){
@@ -9090,7 +9090,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			{
 				bool sendResult = zx_skt->sendData2(outlineCTemp, capCTemp);
 				wchar_t *vOut = sendResult ? L"true" : L"false";
-				WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, (vOut));
+				WRITELOG(logger, framework::Diagnostics::LogLevel::Info, (vOut));
 
 				capCTemp.clear();
 				outlineCTemp.clear();
@@ -9139,13 +9139,13 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 			}
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("senddata end"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("senddata end"));
 			char* numpages = new char[20];
 			string temp = std::to_string(i).append("_pages");
 			strcpy(numpages, temp.c_str());
 			wchar_t *wmsg = new wchar_t[strlen(numpages) + 1]; //memory allocation
 			mbstowcs(wmsg, numpages, strlen(numpages) + 1);
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, wmsg);
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, wmsg);
 			delete[]wmsg;
 			delete[]numpages;
 
@@ -9157,9 +9157,9 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
 		}
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
 		//thread1.exit();
 
 
@@ -9516,7 +9516,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 		for (int i = start_page, j = start_page + 1; i < boxy_dim; i++, j++)
 		{
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("estimateStart"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("estimateStart"));
 			if (cb && (i % 1) == 0)
 			{
 				glContext->doneCurrent();
@@ -9938,7 +9938,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			glPopMatrix();
 
 		}
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("estimateEnd"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("estimateEnd"));
 
 		qDebug() << "totalMeanVal" << totalMeanVal[0];//Yellow
 		qDebug() << "totalMeanVal" << totalMeanVal[1];//Magenta
@@ -10118,7 +10118,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 		}*/
 
 
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("ESTIMATE_COLOR2"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("ESTIMATE_COLOR2"));
 		qDebug() << " done _applyClick ";
 		break;
 	}
@@ -10131,7 +10131,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 		md.jobname.clear();
 		//***************************
 
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_ESTIMATE_SURFACE_COLOR"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_ESTIMATE_SURFACE_COLOR"));
 
 		glContext->makeCurrent();
 
@@ -10206,7 +10206,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 		init_texture(md);
 
 		//*******************					  
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_ESTIMATE_SURFACE_COLOR"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_ESTIMATE_SURFACE_COLOR"));
 		//***20150507 standard path******************
 		//QString temppath = QStandardPaths::locate(QStandardPaths::TempLocation, "", QStandardPaths::LocateDirectory);
 		//QString temppath = "D:/temptemp";//backup
@@ -10245,7 +10245,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 		}
 
 		zx_dir.setPath(zxtemp + "/zx_file");
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_ESTIMATE_SURFACE_COLOR"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_ESTIMATE_SURFACE_COLOR"));
 		//==============================
 		//**********************
 		ctx.bindReadDrawFramebuffer(hFramebuffer);
@@ -10355,7 +10355,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 		double TotalinkUsage_C = 0;
 		double TotalinkUsage_M = 0;
 		double TotalinkUsage_Y = 0;
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_ESTIMATE_SURFACE_COLOR"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_ESTIMATE_SURFACE_COLOR"));
 		//for (int i = start_page, j = start_page + 1; i < boxy_dim; i++, j++)
 		for (int i = 0; i < 1; i++)
 		{
@@ -10459,7 +10459,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 		par.addParam(new RichFloat("MUsage", finalMusage, "", ""));
 		par.addParam(new RichFloat("YUsage", finalYusage, "", ""));
 
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_ESTIMATE_SURFACE_COLOR"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_ESTIMATE_SURFACE_COLOR"));
 #endif	
 
 		ctx.unbindReadDrawFramebuffer();
@@ -10478,7 +10478,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 
 
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_ESTIMATE_SURFACE_COLOR"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_ESTIMATE_SURFACE_COLOR"));
 
 		qDebug() << " done _applyClick ";
 		break;
@@ -11711,7 +11711,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 	case FP_PRINT_TEST_PAGE:
 	{
 
-		//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("test_page_start"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("test_page_start"));
 		md.jobname.clear();
 		//***************************
 
@@ -11911,7 +11911,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 		qDebug() << " done _applyClick ";
 		zx_skt->close();
 		zx_skt->~ZxGen_SKT();
-		//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("test_page_end"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("test_page_end"));
 		break;
 	}
 #pragma endregion FP_PRINT_TEST_PAGE
@@ -12066,7 +12066,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 #pragma region FP_MESH_INTERSECT_TEST
 	case FP_MESH_INTERSECT_TEST:
 	{
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_MESH_INTERSECT_TEST"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_MESH_INTERSECT_TEST"));
 
 
 		md.jobname.clear();
@@ -12346,7 +12346,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				//****
 				//(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
 				cv::Mat captemp;
-				//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+				//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 				cv::cvtColor(QImageToCvMat(cap_image.mirrored()), captemp, CV_RGB2GRAY);
 				temp_capImage.insert(std::pair<int, cv::Mat>(floorMesh->id(), captemp));
@@ -12359,7 +12359,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 					countj++;
 				}
 
-				//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+				//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 				glMatrixMode(GL_MODELVIEW);
 				glPopMatrix();
@@ -13889,7 +13889,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 	case FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE://pending
 	{
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE"));
 		float witnessWidth = par.getFloat("WITNESS_WIDTH");
 
 		if (md.multiSelectID.size() == 0)
@@ -13949,7 +13949,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			//SKT::GeneratePointsFromContour(selectSaveImage, pointCloud2, bm->cm.bbox.min.X(), 10);
 			//qDebug() << time.elapsed();
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE"));
 			//=========first method============//
 			//float boxsize = 1 / (inDPI / 25.4);
 			float boxsize = 1. / pixelRatio;
@@ -14053,7 +14053,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			Color4b newColor = Color4b(0, 0, 0, 255);
 			tri::UpdateColor<CMeshO>::PerVertexConstant(alShadow->cm, newColor);
 			tri::UpdateNormal<CMeshO>::PerVertex(alShadow->cm);
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE"));
 			////==========end first method=======================================================================
 
 			//=========second method============//
@@ -14237,7 +14237,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 	case FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE_FLOAT://pending
 	{
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE"));
 		float witnessWidth = par.getFloat("WITNESS_WIDTH");
 
 		if (md.multiSelectID.size() == 0)
@@ -14298,7 +14298,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			//SKT::GeneratePointsFromContour(selectSaveImage, pointCloud2, bm->cm.bbox.min.X(), 10);
 			//qDebug() << time.elapsed();
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE"));
 			//=========first method============//
 			//float boxsize = 1 / (inDPI / 25.4);
 			float boxsize = 1. / pixelRatio;
@@ -14427,7 +14427,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			Color4b newColor = Color4b(0, 0, 0, 255);
 			tri::UpdateColor<CMeshO>::PerVertexConstant(alShadow->cm, newColor);
 			tri::UpdateNormal<CMeshO>::PerVertex(alShadow->cm);
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE"));
 			////==========end first method=======================================================================
 
 
@@ -14472,7 +14472,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 #pragma region FP_MESH_INTERSECT_TEST2
 	case FP_MESH_INTERSECT_TEST2://
 	{
-		//								   WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_MESH_INTERSECT_TEST"));
+		//								   WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_MESH_INTERSECT_TEST"));
 		//
 		//
 		//								   md.jobname.clear();
@@ -14631,7 +14631,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 		//bool test = xyz::();
 
 
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_MESH_INTERSECT_TEST"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_MESH_INTERSECT_TEST"));
 
 
 		md.jobname.clear();
@@ -14992,7 +14992,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 	case FP_COUNT_BINDER_AREA:
 	{
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_PRINT_WITH_WHITE_KICK"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_PRINT_WITH_WHITE_KICK"));
 
 
 		md.jobname.clear();
@@ -15245,7 +15245,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 		//if (start_page == 0)
 		//{
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("createBlankPages"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("createBlankPages"));
 
 
 		QTime time;
@@ -15276,7 +15276,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 
 		int quickWipe = 1;
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("for loop start"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop start"));
 
 
 		if (continuePrinting)
@@ -15291,7 +15291,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			testswitch = false;
 		}
 		double totalDataPoint = 0;
-		//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
 		for (int i = start_page, j = start_page + 1; i < boxy_dim; i++, j++)
 			//for (int i = start_page, j = start_page + 1; i < start_page+testPrintPageCount; i++, j++)
 		{
@@ -15343,7 +15343,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 
 
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 			//===========================================================================================
 			equ[3] = box_bottom + unit*i;
 			//***第二張圖***產生膠水圖**********//
@@ -15452,9 +15452,9 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 			totalDataPoint += SKT::countBinderArea(captemp);
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
 		}
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
 		//thread1.exit();
 
 
@@ -15518,7 +15518,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 	case FP_PRINT_FLOW_2_V3:
 	{
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_PRINT_WITH_WHITE_KICK"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_PRINT_WITH_WHITE_KICK"));
 		testlog("FP_PRINT_FLOW_2_V3");
 
 		md.jobname.clear();
@@ -15866,12 +15866,12 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 		//if (start_page == 0)
 		//{
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("newUselessbar_customateBlankPages"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("newUselessbar_customateBlankPages"));
 		if (!(zxCheckMode == ZxGen_SKT::zxInitMode::ViewCheckMode)  && continuePrinting == false && fourPage_switch)
 		{
 
 			SKT::createBlankPages(doubleprint, tempgroove.grooveheight, md.p_setting.get_plus_print_length(), useless_print, DSP_Blank_pages, blankTemp, blankcapCTemp, gen_pixelFormat, spittoon_M, spittoon_C, spittoon_Y, spittoon_B, print_dpi);
-			////WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("sendData2"));
+			////WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("sendData2"));
 			if (par.getBool("generate_zx"))
 				zx_skt->sendData2(blankTemp, blankcapCTemp);
 		}
@@ -15936,7 +15936,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 		int generateNOI = 25;
 		int quickWipe = 1;
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("for loop start"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop start"));
 		if (start_page > boxy_dim && continuePrinting){
 			zx_skt->close();
 			zx_skt->~ZxGen_SKT();
@@ -16082,9 +16082,9 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			//xyz::slice_roution(md, box_bottom + unit*i, faceColor);//***backup******************切層演算							  
 			//time.restart();
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("slice start"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("slice start"));
 			xyz::slice_roution(md, box_bottom + unit*i, faceColor);//****20160301*****************切層演算		
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("slice end"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("slice end"));
 
 
 			float currnentHeight = box_bottom + unit*i;
@@ -16529,8 +16529,8 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			glDisable(MY_CLIP_PLANE);//存完圖
 			glDisable(GL_CULL_FACE);
 			//****
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("gen log"));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 			if (par.getBool("generate_zx"))
 			{
 				cv::cvtColor(captemp, captemp, CV_BGR2GRAY);
@@ -17126,7 +17126,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			glDisable(MY_CLIP_PLANE3);
 			glDisable(GL_CULL_FACE);
 			//****								
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 			/*if (par.getBool("generate_zx"))
 			{*/
 			cv::cvtColor(capDownMask, capDownMask, CV_BGR2GRAY);
@@ -17261,7 +17261,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			}
 
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 			//========================================================//
 
@@ -17284,7 +17284,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 
 			//***20160112***image_process加上插點pattern
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("imagePorcess"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("imagePorcess"));
 			if (par.getBool("generate_zx"))
 			{
 				SKT::InkBalance imageProcess;
@@ -17301,7 +17301,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				if (par.getBool("mono_bool"))
 					originalOutline = cv::Scalar(255, 255, 255);
 
-				WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("profileStart"));
+				WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("profileStart"));
 
 
 				Mat desImg(originalOutline.size(), originalOutline.type(), Scalar(0, 0, 0));
@@ -17337,7 +17337,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				///////cap_temp_change_add_pattern///////////////////		
 				QString papa = patternPath.absolutePath();
 
-				////WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("rect_test1"));
+				////WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("rect_test1"));
 				if ((i % 100) > 20 && add_pattern)
 					//if ( add_pattern)
 				{
@@ -17463,7 +17463,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				/*if (dilateBinder)
 				captemp = SKT::dilateImage(&captemp, dilateBinderValue);*/
 
-				//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+				//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 				cv::Mat finalcolor(originalOutline.cols, originalOutline.rows, originalOutline.type(), Scalar(255, 255, 255));//finalcolor.setTo(cv::Scalar(255, 255, 255));
 				SKT::rotateImage(originalOutline, finalcolor);
 
@@ -17601,7 +17601,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			}
 
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
 			/*
 			gen_Final_Picture
 			*/
@@ -17702,7 +17702,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				//zggg->sendData(outlineCTemp, capCTemp);
 				bool sendResult = zx_skt->sendData2(outlineCTemp, capCTemp);
 				wchar_t *vOut = sendResult ? L"true" : L"false";
-				WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, (vOut));
+				WRITELOG(logger, framework::Diagnostics::LogLevel::Info, (vOut));
 
 				capCTemp.clear();
 				outlineCTemp.clear();
@@ -17755,13 +17755,13 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 			}
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("senddata end"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("senddata end"));
 			char* numpages = new char[20];
 			string temp = std::to_string(i).append("_pages");
 			strcpy(numpages, temp.c_str());
 			wchar_t *wmsg = new wchar_t[strlen(numpages) + 1]; //memory allocation
 			mbstowcs(wmsg, numpages, strlen(numpages) + 1);
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, wmsg);
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, wmsg);
 			delete[]wmsg;
 			delete[]numpages;
 
@@ -17782,9 +17782,9 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 			//fprintf(dbgff, "cap_prePrting_image %i, %i\n", time.elapsed(), i);
 			//fflush(dbgff);
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
 		}
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
 		//thread1.exit();
 
 
@@ -17831,7 +17831,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 	case FP_SAVE_DEFAULT_SNAP_SHOT:
 	{
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("FP_PRINT_WITH_WHITE_KICK"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_PRINT_WITH_WHITE_KICK"));
 		testlog("FP_PRINT_FLOW_2_V3");
 
 		md.jobname.clear();
@@ -18167,7 +18167,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 		int generateNOI = 25;
 		int quickWipe = 1;
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("for loop start"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop start"));
 
 
 
@@ -18251,9 +18251,9 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			glMatrixMode(GL_PROJECTION);
 			glPopMatrix();
 
-			WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
 		}
-		WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
 		//thread1.exit();
 
 
@@ -18749,7 +18749,7 @@ bool GenSliceJob::getMeshLayerImage(QList<MeshModel *> mdlist, std::map<int, std
 			//****
 			//(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
 			cv::Mat captemp;
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 			cv::cvtColor(QImageToCvMat(cap_image.mirrored()), captemp, CV_RGB2GRAY);
 			bitwise_not(captemp, captemp);
@@ -18763,7 +18763,7 @@ bool GenSliceJob::getMeshLayerImage(QList<MeshModel *> mdlist, std::map<int, std
 				countj++;
 			}
 
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 			glMatrixMode(GL_MODELVIEW);
 			glPopMatrix();
@@ -19098,7 +19098,7 @@ bool GenSliceJob::getMeshLayerImagePlaneX(QList<MeshModel *> mdlist, std::map<in
 			//****
 			//(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
 			cv::Mat captemp;
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 			cv::cvtColor(QImageToCvMat(cap_image.mirrored()), captemp, CV_RGB2GRAY);
 			bitwise_not(captemp, captemp);
@@ -19112,7 +19112,7 @@ bool GenSliceJob::getMeshLayerImagePlaneX(QList<MeshModel *> mdlist, std::map<in
 				countj++;
 			}
 
-			//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 			glMatrixMode(GL_MODELVIEW);
 			glPopMatrix();
@@ -19417,7 +19417,7 @@ bool GenSliceJob::getMultiMeshLayerImage(QList<MeshModel *> mdlist, std::vector<
 		//****
 		//(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
 		cv::Mat captemp;
-		//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 		cv::cvtColor(QImageToCvMat(cap_image.mirrored()), captemp, CV_RGB2GRAY);
 		bitwise_not(captemp, captemp);
@@ -19430,7 +19430,7 @@ bool GenSliceJob::getMultiMeshLayerImage(QList<MeshModel *> mdlist, std::vector<
 			countj++;
 		}
 
-		//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix();
@@ -19711,7 +19711,7 @@ bool GenSliceJob::getMultiMeshLayerImageZ(QList<MeshModel *> mdlist, std::vector
 		//****
 		//(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
 		cv::Mat captemp;
-		//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 		cv::cvtColor(QImageToCvMat(cap_image.mirrored()), captemp, CV_RGB2GRAY);
 		bitwise_not(captemp, captemp);
@@ -19724,7 +19724,7 @@ bool GenSliceJob::getMultiMeshLayerImageZ(QList<MeshModel *> mdlist, std::vector
 			countj++;
 		}
 
-		//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix();
@@ -20084,7 +20084,7 @@ bool GenSliceJob::getMultiMeshLayerImageZ(QList<MeshModel *> mdlist, std::vector
 //			countj++;
 //		}
 //
-//		//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+//		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 //
 //		glMatrixMode(GL_MODELVIEW);
 //		glPopMatrix();
@@ -20467,7 +20467,7 @@ bool GenSliceJob::getMultiMeshLayerImageZ(QList<MeshModel *> mdlist, std::vector
 //			countj++;
 //		}
 //
-//		//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+//		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 //
 //		glMatrixMode(GL_MODELVIEW);
 //		glPopMatrix();
@@ -20850,7 +20850,7 @@ bool GenSliceJob::testDepthBuffer(QList<MeshModel *> mdlist, std::vector<cv::Mat
 			countj++;
 		}
 
-		//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix();
@@ -21144,7 +21144,7 @@ bool GenSliceJob::testDepthBuffer_float(QList<MeshModel *> mdlist, std::vector<c
 			countj++;
 		}
 
-		//WRITELOG(md.logger, framework::Diagnostics::LogLevel::Info, _T(""));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix();

@@ -423,13 +423,15 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 
 	this->setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint);
 	/*---------------create New UI-----------------------------------------------------*/
-	paramType << NVM_SETTING_NAME << PRINTER_SETTING_NAME << SLICING_SETTING_NAME;
+	paramType << NVM_SETTING_NAME << PRINTER_SETTING_NAME << SLICING_SETTING_NAME << COMMON_SETTING_NAME;
 	paramWidgetVector.insert(NVM_SETTING_NAME, new QVector<SKTWidget*>());
 	paramWidgetVector.insert(PRINTER_SETTING_NAME, new QVector<SKTWidget*>());
 	paramWidgetVector.insert(SLICING_SETTING_NAME, new QVector<SKTWidget*>());
+	paramWidgetVector.insert(COMMON_SETTING_NAME, new QVector<SKTWidget*>());
 
 
 	createParamSettingUI(NVM_SETTING_NAME);
+
 	createNVMPage();
 
 	//connect(setDefaultValueButton, SIGNAL(clicked()), this, SLOT(loadDefaultValue()));

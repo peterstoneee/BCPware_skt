@@ -133,6 +133,9 @@
     <ClCompile Include="picaException.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="Logger_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="GLLogStream.h">

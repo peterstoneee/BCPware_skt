@@ -259,6 +259,7 @@
     <ClCompile Include="filterscript.cpp" />
     <ClCompile Include="..\external\glew-1.7.0\src\glew.c" />
     <ClCompile Include="interfaces.cpp" />
+    <ClCompile Include="Logger_test.cpp" />
     <ClCompile Include="meshlabdocumentbundler.cpp" />
     <ClCompile Include="meshlabdocumentxml.cpp" />
     <ClCompile Include="meshmodel.cpp" />

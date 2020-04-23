@@ -116,6 +116,8 @@
 //#define DM_CONSOLE_FILE ""
 
 
+
+
 namespace SettingParams{
 	static double settingWTF = 1.2345;
 
@@ -147,7 +149,9 @@ static inline QString getLogFileName()
 }
 
 
+class BCPwareFileSystem{
 
+};
 
 
 

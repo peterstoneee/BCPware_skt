@@ -1775,24 +1775,24 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 	const char *c_str3 = tempname2.data();
 	wchar_t *wmsg2 = new wchar_t[strlen(c_str3) + 1]; //memory allocation
 	mbstowcs(wmsg2, c_str3, strlen(c_str3) + 1);
-	WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, wmsg2);
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, wmsg2);
 
 
-	WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("start executefilter"));
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("start executefilter"));
 	delOl(MeshModel::meshsort::slice_item);
 	filter_process_running = true;
 
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 	MeshFilterInterface  *iFilter = qobject_cast<MeshFilterInterface *>(action->parent());
 	
 	qb->show();
 	
 	iFilter->setLog(&meshDoc()->Log);
-	WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 	// Ask for filter requirements (eg a filter can need topology, border flags etc)
 	// and statisfy them
-	WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 	qApp->setOverrideCursor(QCursor(Qt::WaitCursor));//***設置游標
 	//MainWindow::globalStatusBar()->showMessage("Starting Filter...", 5000);//***設置狀態列
 	int req = iFilter->getRequirements(action);//***目前filter沒有re-implement這個函式
@@ -1801,7 +1801,7 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 	qApp->restoreOverrideCursor();
 
 	QMdiSubWindow *tempmvcc = mdiarea->currentSubWindow();
-	WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 	// (3) save the current filter and its parameters in the history**儲存用過的filter在script裡
 	if (!isPreview)
 	{
@@ -1818,7 +1818,7 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 	// (4) Apply the Filter
 	bool ret;
 	bool ret2 = false;
-	WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 	qApp->setOverrideCursor(QCursor(Qt::WaitCursor));
 	QTime tt; tt.start();
 	meshDoc()->setBusy(true);
@@ -1833,7 +1833,7 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 	iFilter->glContext = new QGLContext(defForm, filterWidget->context()->device());
 	iFilter->glContext->create(filterWidget->context());
 
-	WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 	QSet<MeshModel * > tempMM;
 	foreach(MeshModel *tmm, meshDoc()->meshList)
 	{
@@ -1848,7 +1848,7 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 
 		}
 	}
-	WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 	//qDebug() << "QThread::currentThread()" << QThread::currentThread();	
 	//filterThread = new QThread(this);
 	//filterWidget = new QGLWidget(GLA());
@@ -1873,7 +1873,7 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 
 		//***
 		showLayerDlg(false);//暫時解決當掉問題
-		WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 
 		if (currentViewContainer() == NULL)
 		{
@@ -2258,26 +2258,26 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 		//else if (action->text().contains("Landing_Tool") && params.getBool("all_or_not") == true)
 		else if (action->text().contains("FP_GET_DEPTH_LANDING_TEST2") && params.getBool("all_or_not") == true)
 		{
-			WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 			Matrix44m old_t_matrix = meshDoc()->mm()->cm.Tr;
 			ret = iFilter->applyFilter(action, *(meshDoc()), MergedEnvironment, QCallBack, GLA());//按下apply按鈕filter的反應 
 			//matrix_changed_2(meshDoc()->multiSelectID, old_t_matrix);
 		}
 		else if (action->text().contains("FP_GET_DEPTH_LANDING_TEST2") && params.getBool("all_or_not") == false)
 		{
-			WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 			Matrix44m old_t_matrix = meshDoc()->mm()->cm.Tr;
 			ret = iFilter->applyFilter(action, *(meshDoc()), MergedEnvironment, QCallBack, GLA());//按下apply按鈕filter的反應 
 			//matrix_changed_2(meshDoc()->multiSelectID, old_t_matrix);			
 		}
 		else if (action->text().contains("count_hole"))
 		{
-			WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 			ret = iFilter->applyFilter(action, *(meshDoc()), params, QCallBack, GLA());//按下apply按鈕filter的反應 
 		}
 		else if (action->text().contains("FP_PRINT_FLOW_2_V3") || action->text().contains("FP_PRINT_JR"))
 		{
-			WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 			dynamicWipe.clear();
 			finalDynamicPage.clear();
 			ret = iFilter->applyFilter(action, *(meshDoc()), MergedEnvironment, QCallBack2, GLA(), QCallBackdata);
@@ -2291,7 +2291,7 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 		}
 		else if (action->text().contains("FP_SAVE_DEFAULT_SNAP_SHOT") )
 		{
-			WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 			
 			ret = iFilter->applyFilter(action, *(meshDoc()), MergedEnvironment, QCallBack2, GLA(), QCallBackdata);
 			
@@ -2300,12 +2300,12 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 		}
 		else if (action->text().contains("FP_ESTIMATE_COLOR"))
 		{
-			WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 			ret = iFilter->applyFilter(action, *(meshDoc()), params, QCallBack, GLA());//按下apply按鈕filter的反應 		
 		}
 		else if (action->text().contains("FP_ESTIMATE_COLOR2"))
 		{
-			WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 			ret = iFilter->applyFilter(action, *(meshDoc()), params, QCallBack, GLA());//按下apply按鈕filter的反應 
 		}
 		else if (action->text().contains("FP_ESTIMATE_SURFACE_COLOR"))
@@ -2314,22 +2314,22 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 		}
 		else if (action->text().contains("FP_MESH_INTERSECT_TEST"))
 		{
-			WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("FP_MESH_INTERSECT_TEST"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_MESH_INTERSECT_TEST"));
 			ret = iFilter->applyFilter(action, *(meshDoc()), params, QCallBack, GLA());//按下apply按鈕filter的反應 
-			WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("done FP_MESH_INTERSECT_TEST"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("done FP_MESH_INTERSECT_TEST"));
 		}
 		else if (action->text().contains("FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE"))
 		{
 			/*MergedEnvironment.addParam(new RichBool("auto_rotate_or_not", true, "auto_rotate", ""));
 			ret = iFilter->applyFilter(action, *(meshDoc()), MergedEnvironment, QCallBack, GLA());*/
-			WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE"));
 			ret = iFilter->applyFilter(action, *(meshDoc()), MergedEnvironment, QCallBack, GLA());//按下apply按鈕filter的反應 
 		}
 		else
 		{
 			ret = iFilter->applyFilter(action, *(meshDoc()), MergedEnvironment, QCallBack, GLA());//按下apply按鈕filter的反應  
 		}
-		//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("filter"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("filter"));
 		mdiarea->setActiveSubWindow(tempmvcc);
 		MultiViewer_Container *tempmvc = currentViewContainer();
 		meshDoc()->setBusy(false);
@@ -2340,7 +2340,7 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 		//fflush(dbgff);
 		if (ret)
 		{
-			WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 			meshDoc()->Log.Logf(GLLogStream::SYSTEM, "Applied filter %s in %i msec", qPrintable(action->text()), tt.elapsed());
 			if (meshDoc()->mm() != NULL)
 				meshDoc()->mm()->meshModified() = true;
@@ -2470,7 +2470,7 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 
 		wchar_t *wmsg = new wchar_t[strlen(c_str2) + 1]; //memory allocation
 		mbstowcs(wmsg, c_str2, strlen(c_str2) + 1);
-		WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, wmsg);
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, wmsg);
 		delete[]wmsg;
 		//fprintf(dbgff, "c-3\n"); //@@@
 		//fflush(dbgff);
@@ -6897,7 +6897,7 @@ void MainWindow::printJobEstimate()//bool all or selected
 }
 void MainWindow::getCmyusage()
 {
-	WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("getCmyusage"));
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("getCmyusage"));
 
 	pause_button->setVisible(false);
 	s_pushbutton->setVisible(false);
@@ -6916,7 +6916,7 @@ void MainWindow::getCmyusage()
 	RichParameterSet tempTest;
 	tempTest.copy(pjpGenZX.getprintJobParam());
 
-	WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("getCmyusage"));
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("getCmyusage"));
 	executeFilter(PM.actionFilterMap.value("FP_ESTIMATE_COLOR2"), tempTest, false);
 	cmyusage.clear();
 	//executeFilter(PM.actionFilterMap.value("FP_ESTIMATE_SURFACE_COLOR"), tempTest, false);
@@ -6928,7 +6928,7 @@ void MainWindow::getCmyusage()
 		cmyusage.push_back(tempTest.getFloat("CUsage"));
 		cmyusage.push_back(tempTest.getFloat("MUsage"));
 		cmyusage.push_back(tempTest.getFloat("YUsage"));
-		WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("getCmyusage"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("getCmyusage"));
 	}
 	//return &cmyusage;
 }
@@ -7225,34 +7225,34 @@ bool MainWindow::printFunctionMono()
 	//QPushButton *ok = estimateBox.addButton("Estimate Now", QMessageBox::AcceptRole);
 	//estimateBox.addButton("Skip",QMessageBox::NoRole);
 	//int ret = estimateBox.exec();
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 	if (ret)
 	{
-		//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 		getCmyusage();
-		//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 	}
 	else{
 		return false;
-		//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 	}
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 
 	PrintOption printOption_(PrintOption::optionMode::NORMAL_PRINT_MODE, this, meshDoc());
 
 	//float *cmyusage = getCmyusage();
 	//QVector<float> *cmyusage = getCmyusage();
 
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 	bool twoSidePrint = currentGlobalParams.getBool("STIFF_PRIN_V2");
 	PrinterJobInfo *pjii = new PrinterJobInfo(this, meshDoc(), &currentGlobalParams, &cmyusage, PrinterJobInfo::printInfoMode::PrintOptionMode, twoSidePrint);
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 	int startPage = currentGlobalParams.getInt("START_PRINT_PAGE");
 	if (startPage != 0)pjii->setSMLayers(startPage);
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 	printOption_.updatePrintSummaryLabel(pjii->getPJI());
 	printOption_.exec();
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 
 	int wiperFrequency = currentGlobalParams.getInt("MIDJOB_FREQUENCY");//printOption_.getWiperFrequency();
 	int wiperIndex = currentGlobalParams.getInt("WIPER_INDEX"); //printOption_.getWiperIndex();
@@ -7447,15 +7447,15 @@ bool MainWindow::printFunction352()//
 
 	if (ret)
 	{
-		//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 		getCmyusage();
-		//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 	}
 	else{
 		//return false;
 		
 	}
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 
 	PrintOption printOption_(PrintOption::optionMode::MONO_PRINT_MODE, this, meshDoc());
 
@@ -7465,7 +7465,7 @@ bool MainWindow::printFunction352()//
 	
 	int startPage = currentGlobalParams.getInt("START_PRINT_PAGE");
 	if (startPage != 0)pjii->setSMLayers(startPage);
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 	printOption_.updatePrintSummaryLabel(pjii->getPJI());
 	printOption_.exec();
 	
@@ -7661,34 +7661,34 @@ bool MainWindow::printFunction()//
 	//QPushButton *ok = estimateBox.addButton("Estimate Now", QMessageBox::AcceptRole);
 	//estimateBox.addButton("Skip",QMessageBox::NoRole);
 	//int ret = estimateBox.exec();
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 	if (ret)
 	{
-		//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 		getCmyusage();
-		//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 	}
 	else{
 		//return false;
-		//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 	}
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 
 	PrintOption printOption_(PrintOption::optionMode::NORMAL_PRINT_MODE, this, meshDoc());
 	
 	//float *cmyusage = getCmyusage();
 	//QVector<float> *cmyusage = getCmyusage();
 
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 	bool twoSidePrint = currentGlobalParams.getBool("STIFF_PRIN_V2");
 	PrinterJobInfo *pjii = new PrinterJobInfo(this, meshDoc(), &currentGlobalParams, &cmyusage, PrinterJobInfo::printInfoMode::PrintOptionMode, twoSidePrint);
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 	int startPage = currentGlobalParams.getInt("START_PRINT_PAGE");
 	if (startPage != 0)pjii->setSMLayers(startPage);
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 	printOption_.updatePrintSummaryLabel(pjii->getPJI());
 	printOption_.exec();
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 
 	int wiperFrequency = currentGlobalParams.getInt("MIDJOB_FREQUENCY");//printOption_.getWiperFrequency();
 	int wiperIndex = currentGlobalParams.getInt("WIPER_INDEX"); //printOption_.getWiperIndex();
@@ -7941,7 +7941,7 @@ bool MainWindow::print_test_page_function()
 	}
 	//PrintOption printOption_(PrintOption::optionMode::TEST_PRINT_PAGE_MODE, this, meshDoc());
 
-	WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T(""));
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 	//float cmyusage[3] = { 0, 0, 0 };
 	PrinterJobInfo *pjii = new PrinterJobInfo(this, meshDoc(), &currentGlobalParams, &cmyusage);
@@ -9463,7 +9463,7 @@ void MainWindow::testFuncFunc()
 
 
 	/*========================================================================================
-	test seperate
+	test save snap shot
 	========================================================================================*/
 	
 	PrintjobParam pjpGenZX;
@@ -9525,7 +9525,7 @@ void MainWindow::testFuncFunc()
 
 
 	//meshDoc()->logger.ClearOutputStreams();//***delete log and cannot write, need to AddOutputStream again
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("Program starting"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("Program starting"));
 	//***logTest
 	/*QString path = QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory) + "picasso" + "/log.log";
 	QByteArray byteArray = path.toLocal8Bit();
@@ -10917,7 +10917,7 @@ bool MainWindow::testReadZX(QString zxFilename)
 	dynamicWipe = tempmap;
 
 	}*/
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("testReadZX"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("testReadZX"));
 	QFileInfo fi(zxFilename);
 	if (fi.suffix().toLower() != "zx")
 	{
@@ -10930,13 +10930,13 @@ bool MainWindow::testReadZX(QString zxFilename)
 	//***********************
 	PrintOption printOption_(PrintOption::optionMode::PRINT_ZXA_FLE,this, meshDoc());
 
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("testReadZX"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("testReadZX"));
 
 	//float *cmyusage = getCmyusage();
 	cmyusage.clear();
 	PrinterJobInfo *pjii = new PrinterJobInfo(this, meshDoc(), &currentGlobalParams,&cmyusage);
 	pjii->setLayers(pageCount);
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("testReadZX"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("testReadZX"));
 	printOption_.updatePrintSummaryLabel(pjii->getPJI());
 	printOption_.exec();
 
@@ -10944,7 +10944,7 @@ bool MainWindow::testReadZX(QString zxFilename)
 	int wiperIndex = currentGlobalParams.getInt("WIPER_INDEX");// printOption_.getWiperIndex();
 	int wiperClick = currentGlobalParams.getInt("WIPER_CLICK"); //printOption_.getWiperClick();
 
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("testReadZX"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("testReadZX"));
 	QVector<int> tempHeatParam;
 	printOption_.getHeatStuffParam(tempHeatParam);
 	tempHeatParam.replace(4, currentGlobalParams.getInt("PP_POST_HEATING_MINUTES"));
@@ -10967,7 +10967,7 @@ bool MainWindow::testReadZX(QString zxFilename)
 	cmdd.append(std::to_string(pumpValue));
 	cmdd.append(" HTTP/1.1\r\n\r\n");
 	comm->sendSCICommand(cmdd, s_result);
-	//WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T("testReadZX"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("testReadZX"));
 	switch (1)
 	{
 	case 0:
@@ -11226,7 +11226,7 @@ bool MainWindow::testReadZip(QString zxaAFilename)
 	//***********************
 	PrintOption printOption_(PrintOption::optionMode::PRINT_ZXA_FLE, this, meshDoc());
 
-	WRITELOG(meshDoc()->logger, framework::Diagnostics::LogLevel::Info, _T(""));
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
 	//float *cmyusage = getCmyusage();
 	cmyusage.clear();

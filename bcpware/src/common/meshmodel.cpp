@@ -547,7 +547,7 @@ void MeshDocument::updateRenderState(const QList<int>& mm,const int meshupdatema
 }
 
 
-MeshDocument::MeshDocument() : QObject(), rendstate(), Log(), xmlhistory(), groove(20, 20, 20), p_setting(), logger(*new framework::Diagnostics::CLogger<framework::Threading::CNoLock>(framework::Diagnostics::LogLevel::Info, L"MyApp"))
+MeshDocument::MeshDocument() : QObject(), rendstate(), Log(), xmlhistory(), groove(20, 20, 20), p_setting()/*, logger(*new framework::Diagnostics::CLogger<framework::Threading::CNoLock>(framework::Diagnostics::LogLevel::Info, L"MyApp"))*/
 {
 		
     meshIdCounter=0;
@@ -566,23 +566,23 @@ MeshDocument::MeshDocument() : QObject(), rendstate(), Log(), xmlhistory(), groo
 	filename.append("/" + time.toString("d_m_yy_h_m_s") +"_log.txt" );
 	QFileInfo outfile(filename);*/
 
-	QString logFileName = "/" + QDateTime::currentDateTime().toString("yyyy_M") + "BCPware_log.txt";
-	QFileInfo outfile(QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory) + PicaApplication::appName() + logFileName);
-	//if (!outfile.exists())
+	//QString logFileName = "/" + QDateTime::currentDateTime().toString("yyyy_M") + "BCPware_log.txt";
+	//QFileInfo outfile(QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory) + PicaApplication::appName() + logFileName);
+	////if (!outfile.exists())
 
-	std::wofstream *tempWof;
-	/*if (std::ifstream(outfile.absoluteFilePath().toStdString()))
-	{
-		std::cout << "File already exists" << std::endl;		
-		tempWof->open(outfile.absoluteFilePath().toStdString(), std::ofstream::out | std::ofstream::app);
-	}
-	else
-	{
-	}*/
-	tempWof = new std::wofstream(outfile.absoluteFilePath().toStdString(),std::ofstream::out | std::ofstream::app);
+	//std::wofstream *tempWof;
+	///*if (std::ifstream(outfile.absoluteFilePath().toStdString()))
+	//{
+	//	std::cout << "File already exists" << std::endl;		
+	//	tempWof->open(outfile.absoluteFilePath().toStdString(), std::ofstream::out | std::ofstream::app);
+	//}
+	//else
+	//{
+	//}*/
+	//tempWof = new std::wofstream(outfile.absoluteFilePath().toStdString(),std::ofstream::out | std::ofstream::app);
 
 
-	logger.AddOutputStream(tempWof, true, framework::Diagnostics::LogLevel::Info);
+	//logger.AddOutputStream(tempWof, true, framework::Diagnostics::LogLevel::Info);
 }
 
 void MeshDocument::scaleMesh(MeshModel *mm, Point3m scaleFactor)

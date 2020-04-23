@@ -416,21 +416,21 @@ void PrintOption::initTestPrintItem()
 
 void PrintOption::getPrintStatus()
 {
-	//WRITELOG(meshDoc->logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
 	std::string s, e;
 	comm->printerStatus(s, e);
-	//WRITELOG(meshDoc->logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
 	QString tempStatus = QString::fromStdString(s);
 	QString errorStatus = QString::fromStdString(e);
 
 	ui->consoleLB->setText("Printer Status :" + tempStatus);
-	//WRITELOG(meshDoc->logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
+	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
 
 	const char *c_str2 = s.data();
 
 	wchar_t *wmsg = new wchar_t[strlen(c_str2) + 1]; //memory allocation
 	mbstowcs(wmsg, c_str2, strlen(c_str2) + 1);
-	WRITELOG(meshDoc->logger, framework::Diagnostics::LogLevel::Info, wmsg);
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, wmsg);
 
 
 	std::map<std::string, int>::iterator it;
@@ -441,7 +441,7 @@ void PrintOption::getPrintStatus()
 		{
 		case Comm3DP::printer3dpString::printStatus::Online:
 		{
-			//WRITELOG(meshDoc->logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
 			ui->printListCB->setCurrentText("PartPro350 xBC");
 			//ui->label_2->setText("PartPro350 xBC " + tempStatus);
 			//ui->printListCB->removeItem(1);
@@ -458,13 +458,13 @@ void PrintOption::getPrintStatus()
 				ui->prepareBtn->setText(tr("StartPrinting"));
 				ui->prepareBtn->setEnabled(true);
 			}
-			//WRITELOG(meshDoc->logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
 			//timer->stop();
 		}
 		break;
 		case Comm3DP::printer3dpString::printStatus::GettingError://pause 
 		{
-			//WRITELOG(meshDoc->logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
 			ui->printListCB->setCurrentText(tr("Printer Not Detected"));
 			//ui->label_2->setText("No Printer " + tempStatus);
 			//ui->printListCB->removeItem(1);																 
@@ -473,12 +473,12 @@ void PrintOption::getPrintStatus()
 			QString qss = QString("  border: 0px solid #8f8f91;	border-radius: 2px; background-color: rgb(183, 231, 219);");
 			ui->prepareBtn->setStyleSheet(qss);
 			ui->prepareBtn->setText(tr("Not Ready"));
-			//WRITELOG(meshDoc->logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
 
 		}break;
 		default:
 		{
-			//WRITELOG(meshDoc->logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
 			ui->printListCB->setCurrentText("PartPro350 xBC");
 			ui->printListCB->setDisabled(true);
 			ui->prepareBtn->setDisabled(true);
@@ -492,7 +492,7 @@ void PrintOption::getPrintStatus()
 	}
 	else
 	{
-		WRITELOG(meshDoc->logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
 		ui->printListCB->setCurrentText("Printer Not Detected");
 		//ui->label_2->setText("PartPro350 xBC ");
 		//ui->printListCB->removeItem(1);																 
@@ -501,10 +501,10 @@ void PrintOption::getPrintStatus()
 		QString qss = QString("  border: 0px solid #8f8f91;	border-radius: 2px; background-color: rgb(183, 231, 219);");
 		ui->prepareBtn->setStyleSheet(qss);
 		ui->prepareBtn->setText(tr("Not Ready"));
-		WRITELOG(meshDoc->logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
+		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
 	}
 
-	WRITELOG(meshDoc->logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("PrintOption"));
 
 	//switch (comm->printer3dpString.errorStatusMap.at(e))
 	//{

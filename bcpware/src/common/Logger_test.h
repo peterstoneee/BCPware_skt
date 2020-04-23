@@ -38,6 +38,9 @@ using namespace std;
 
 #define MAX_TEXT_BUFFER_SIZE 512
 
+
+
+
 namespace framework
 {
 	namespace Diagnostics
@@ -270,3 +273,5 @@ namespace framework
 		};
 	}
 }
+static framework::Diagnostics::CLogger<framework::Threading::CNoLock> logger = *(new framework::Diagnostics::CLogger<framework::Threading::CNoLock>(framework::Diagnostics::LogLevel::Info, L"MyApp"));;// = *nullptr;
+//extern  framework::Diagnostics::CLogger<framework::Threading::CNoLock> *loggerS;

@@ -30,3 +30,5 @@ bcpware/src/distrib/plugins
 bcpware/src/distrib
 bcpware/src/distrib_de
 bcpware/src/Picasso_.v12.suo.orig
+*.log
+bcpware/src/Picasso_.opensdf
