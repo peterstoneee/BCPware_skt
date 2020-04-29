@@ -80,6 +80,11 @@
      <string>NVM_Setting</string>
     </property>
    </item>
+   <item>
+    <property name="text">
+     <string>Slice_Setting</string>
+    </property>
+   </item>
   </widget>
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
@@ -91,7 +96,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>6</number>
    </property>
    <widget class="QWidget" name="general_page">
     <widget class="QFrame" name="frame_12">
@@ -4620,6 +4625,31 @@
         <y>0</y>
         <width>559</width>
         <height>329</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page">
+    <widget class="QScrollArea" name="scrollArea_4">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>10</y>
+       <width>551</width>
+       <height>401</height>
+      </rect>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents_4">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>549</width>
+        <height>399</height>
        </rect>
       </property>
      </widget>

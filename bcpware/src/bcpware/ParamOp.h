@@ -62,6 +62,10 @@ public:
 	static bool saveJsonToFile(QString jsonString);
 	static bool saveJsonToFile(QString jsonString, QString saveFileName);
 	static bool saveJsonToFileWithPath(QString jsonString, QString saveFileName);
+	static bool saveStringToFileWithPath(QByteArray jsonString, QString saveFileName);
+	
+
+
 	static QString docPath() { return QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory); }
 
 	static QString createJsonStringCommand(QString floor1, QString floor2, QStringList floor3);

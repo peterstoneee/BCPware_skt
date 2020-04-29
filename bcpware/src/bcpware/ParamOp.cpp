@@ -46,6 +46,18 @@ bool ParamOp::saveJsonToFileWithPath(QString jsonString, QString fileName)
 	}
 	return true;
 }
+bool ParamOp::saveStringToFileWithPath(QByteArray qqString, QString fileName)
+{
+	QFile outfile(fileName);
+
+	if (outfile.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text))
+	{
+		QTextStream stream(&outfile);
+		stream << qqString << endl;
+		outfile.close();
+	}
+	return true;
+}
 
 
 //void ParamOp::genAllParamInfo(RichParameterSet &param)
@@ -433,7 +445,7 @@ bool ParamOp::mergeValue(QVariant &highLevelValue, QVariant insertValue, QString
 		return true;
 	}
     else if ( ( QMetaType::QVariantList == static_cast<QMetaType::Type>( highLevelValue.type() ) )
-              && ( -1 == replaceNum ) )
+		&& (-1 == replaceNum) && docFileName.isNull())
 	{
 		QVariantList temp = highLevelValue.toList();
 		temp.append(insertValue);
@@ -441,7 +453,7 @@ bool ParamOp::mergeValue(QVariant &highLevelValue, QVariant insertValue, QString
 		return true;
 	}
     else if ( ( QMetaType::QVariantList == static_cast<QMetaType::Type>( highLevelValue.type() ) )
-              && ( -1 != replaceNum ) )
+		&& (-1 != replaceNum) && docFileName.isNull())
     {
 		QVariantList temp = highLevelValue.toList();
 		temp.replace(replaceNum, insertValue);

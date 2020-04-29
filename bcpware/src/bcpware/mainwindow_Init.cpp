@@ -3386,8 +3386,8 @@ void MainWindow::loadFromFileToPicassoSettings()
 }
 void MainWindow::loadPicassoSettings()
 {
-	MainWindowSetting::initGlobalParameterSet(&defaultGlobalParams);
-	GLArea::initGlobalParameterSet(&defaultGlobalParams);//static function, ﹍て把计
+	//MainWindowSetting::initGlobalParameterSet(&defaultGlobalParams);
+	//GLArea::initGlobalParameterSet(&defaultGlobalParams);//static function, ﹍て把计
 	Setting3DP::initSetting(&defaultGlobalParams);
 
 	QSettings settings;

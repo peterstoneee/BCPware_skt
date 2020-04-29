@@ -40,7 +40,8 @@
 #include <QListWidget>
 #include <QSettings>
 #include <QScrollArea>
-
+#include <QCheckBox>
+#include "qaesencryption.h"
 
 #include "mainwindow.h"
 
@@ -377,7 +378,86 @@ private:
 	QHBoxLayout *hlayout;
 	int transformType;
 };
+//TO DO
+class CheckUI_SKX : public SKTWidget
+{
+	Q_OBJECT
+public:
+	CheckUI_SKX(QWidget *p, QString labelName, QString _identifyName, QString _categoryName, QVariant _value, QVariant _defaultValue ) :SKTWidget(p)
+	{
 
+	}
+	void addWidgetToGridLayout(QGridLayout *lay, const int r, const int c)
+	{
+
+	}
+	void updateUIValue(QVariant _value)
+	{
+
+	}
+private:
+	QLabel *label;
+	QCheckBox *checkBox;
+	QHBoxLayout *hlayout;
+
+
+};
+
+//TO DO
+/*
+A button for open file
+A label for show the filename
+*/
+class FileDialog_SKX : public SKTWidget
+{
+	Q_OBJECT
+public:
+	FileDialog_SKX(QWidget *p, QString labelName, QString _identifyName, QVariant _categoryName, QVariant _value, QVariant _defaultValue )
+		:SKTWidget(p, true, _categoryName, _defaultValue)
+	{
+		setValue(_value);
+		identifyName = _identifyName;
+
+		hlayout = new QHBoxLayout();
+		label = new QLabel(labelName);
+		valueLabel = new QLabel(_defaultValue.toString());
+
+		
+		openFileDialogButton = new QPushButton("Open File Dialog");
+		connect(openFileDialogButton, &QPushButton::clicked, [=]() {
+			QDir defaultPath(_defaultValue.toString());
+			QString filePath = QFileDialog::getOpenFileName(this, tr("Get Color Profile"), defaultPath.absolutePath(), "Color Profile (*.icc *.icm;)");
+			valueLabel->setText(filePath);
+			setValue(filePath);
+
+		});
+
+
+		hlayout->addWidget(label);
+		hlayout->addWidget(openFileDialogButton);
+		hlayout->addWidget(valueLabel);
+		
+		this->setLayout(hlayout);
+	}
+
+	void addWidgetToGridLayout(QGridLayout* lay, const int r, const int c)
+	{
+		lay->addWidget(this, r, c);
+	}
+	void updateUIValue(QVariant _value)
+	{
+		//labelValue->setText(_value.toString());
+	}
+private:
+	QLabel *label;
+	QPushButton *openFileDialogButton;
+	QLabel *valueLabel;
+	QFileDialog *selectFileDialog;
+	
+	//QSpinBox *spinBox;
+	QHBoxLayout *hlayout;
+
+};
 
 
 
@@ -433,7 +513,8 @@ private:
 
 #define NVM_SETTING_NAME "Advanced_Setting"
 #define PRINTER_SETTING_NAME "Basic_Setting"
-#define SLICING_SETTING_NAME "Printer_Setting"
+#define PP350_SETTING "PP350_Settings"
+#define PP352_SETTING "PP352_Settings"
 #define COMMON_SETTING_NAME "Common_Setting"
 
 class Setting3DP:public QDialog
@@ -446,6 +527,8 @@ public:
 	~Setting3DP();
 
 	static void initSetting(RichParameterSet *);
+	static void createRichParamfromJdoc(QString, RichParameterSet *in);
+	static void createPrinterSetting_FromRichParameter(int , QString, RichParameterSet *in);
 	void initDefaultSetting();
 	//setting loadfromregister();	
 	void initWidgetParam();
@@ -481,8 +564,10 @@ private:
 
 	/*---------------------------------------------------------*/
 	void createNVMPage();
-	void saveToRichParameterAndJson();
+	void updateRichParameterFromJsonFile(QString);
 	void createParamSettingUI(QString);
+	// Create Printer Setting Page
+	void createPrinterSettingPage();
 	
 	QMap<QString,QVector<SKTWidget *> *> paramWidgetVector;
 	QStringList paramType;
@@ -490,14 +575,21 @@ private:
 	QPushButton *updateToFPGAButton;
 	QPushButton *getFromFPGA;
 	QPushButton *setDefaultValueButton;
+	QPushButton *outputSettingToFile;
+	QPushButton *inputSettingFromFile;
+
 	void sendNVMPreProcess();
 	void getNVMFromFPGA();
 	//void updateTOFile();
 	bool updateUIFromJsonFile();
 	//void update
 
-	
-	
+	QByteArray encodeText, decodedText;
+
+	QString key;// ("@xyzprinting.com");
+	QByteArray hashKey;// = QCryptographicHash::hash(key.toLocal8Bit(), QCryptographicHash::Sha256);
+	QByteArray iv;
+	QAESEncryption *encryption;
 	
 protected:
 	void keyPressEvent(QKeyEvent *e);
