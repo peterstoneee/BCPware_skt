@@ -50,30 +50,30 @@ void CMD_Value::initDesMap()
 }
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-bool CMD_Value::getValueFromUI(QVariantList inputList)
+bool CMD_Value::getValueFromUI(QVector<QVariantList> nvmValueList)
 {
-	qDebug() << inputList;
-	QVector<QVariantList> nvmValueList(5);
-	//QVariantList nvmValueList[5];
-	for (int i = 0; i < inputList.size(); i++)
-	{
-		if (i < NUMOFNVM1) {
-			nvmValueList[0].append(inputList.at(i));
-		}
-		else if (i < NUMOFNVM1 + NUMOFNVM2) {
-			nvmValueList[1].append(inputList.at(i));
-		}
-		else if (i < (NUMOFNVM1 + NUMOFNVM2 + NUMOFNVM3)) {
-			nvmValueList[2].append(inputList.at(i));
-		}
-		else if (i < (NUMOFNVM1 + NUMOFNVM2 + NUMOFNVM3 + NUMOFNVM4)) {
-			nvmValueList[3].append(inputList.at(i));
+	//qDebug() << inputList;
+	//QVector<QVariantList> nvmValueList(5);
+	////QVariantList nvmValueList[5];
+	//for (int i = 0; i < inputList.size(); i++)
+	//{
+	//	if (i < NUMOFNVM1) {
+	//		nvmValueList[0].append(inputList.at(i));
+	//	}
+	//	else if (i < NUMOFNVM1 + NUMOFNVM2) {
+	//		nvmValueList[1].append(inputList.at(i));
+	//	}
+	//	else if (i < (NUMOFNVM1 + NUMOFNVM2 + NUMOFNVM3)) {
+	//		nvmValueList[2].append(inputList.at(i));
+	//	}
+	//	else if (i < (NUMOFNVM1 + NUMOFNVM2 + NUMOFNVM3 + NUMOFNVM4)) {
+	//		nvmValueList[3].append(inputList.at(i));
 
-		}
-		else if (i < (NUMOFNVM1 + NUMOFNVM2 + NUMOFNVM3 + NUMOFNVM4 + NUMOFNVM5)) {
-			nvmValueList[4].append(inputList.at(i));
-		}
-	}
+	//	}
+	//	else if (i < (NUMOFNVM1 + NUMOFNVM2 + NUMOFNVM3 + NUMOFNVM4 + NUMOFNVM5)) {
+	//		nvmValueList[4].append(inputList.at(i));
+	//	}
+	//}
 
 	/*
 	count check sum
@@ -395,10 +395,11 @@ void CMD_Value::init()
 	QVariantList nvmValueList[5];
 	for (int i = 0; i < 5; i++)
 	{
-		foreach(QVariant temp, NVM_NameList[i])
-		{
-			nvmValueList[i].append(getValuebyName2("Advanced_Setting", temp.toString()));
-		}
+		/*foreach(QVariant temp, NVM_NameList[i])
+		{*/
+		nvmValueList[i] = getValuebyName2("Advanced_Setting", i);
+
+		//}
 	}
 
 	/*
@@ -979,225 +980,337 @@ bool CMD_Value::sendNVMCommand()
 
 void CMD_Value::getValuebyName(QString categoryName, QString paramName, QVariant &paramValue)
 {
-	QVariantMap firstFloor;
-	QVariantList secondFloorList;
-	QVariantMap secondFloorMap;
-	QVariantList thirdFloorList;
-	QVariantMap thirdFloorMap;
-	QVariantMap fourthFloorMap;
+	QVariant category;
 
-	bool valueGet = false;
+	QVariant advancedMap, categoryList, paramList;
+	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, QString(), jsonInputString);
 
-	QJsonDocument jsonDoc;
-
-	QJsonParseError error;
-	jsonDoc = QJsonDocument::fromJson(jsonInputString.toUtf8(), &error);
-	if (error.error == QJsonParseError::NoError)
-		firstFloor = jsonDoc.toVariant().toMap();
-
-	//********test count execute layers*********************//
-	QMapIterator<QString, QVariant> firstFloor_ii(jsonDoc.toVariant().toMap());
-	while (firstFloor_ii.hasNext())
+	ParamOp::extractVariantTest(categoryList, category, "categories");
+	foreach(QVariant categoryListItem, categoryList.toList())
 	{
-		firstFloor_ii.next();
-		if (firstFloor_ii.key() == "categories")
+		QVariant _categoryName;
+		ParamOp::extractVariantTest(_categoryName, categoryListItem, "name");
+		if (_categoryName == categoryName)
 		{
-			secondFloorList = firstFloor_ii.value().toList();
-			foreach(QVariant secondFloorListValue, secondFloorList)
+			ParamOp::extractVariantTest(paramList, categoryListItem, "parameters");
+			foreach(QVariant groupMap, paramList.toList())
 			{
-				secondFloorMap = secondFloorListValue.toMap();
-				if (secondFloorMap.value("name") == categoryName)
+				QVariant groupItemList, parameterName, groupName;
+
+				ParamOp::extractVariantTest(groupItemList, groupMap, "group");
+				ParamOp::extractVariantTest(groupName, groupMap, "groupName");
+				foreach(QVariant groupItem, groupItemList.toList())
 				{
-					thirdFloorList = secondFloorMap.value("parameters").toList();
-					foreach(QVariant thirdFloorListValue, thirdFloorList)
+					QVariant controlMap, _paramValue, value_TypeValue;
+					ParamOp::extractVariantTest(parameterName, groupItem, "name");
+					if (parameterName == paramName)
 					{
-						thirdFloorMap = thirdFloorListValue.toMap();
-						if (thirdFloorMap.value("name") == paramName)
-						{
-							/*
-							* get data in JsonDocument
-							*/
-							fourthFloorMap = thirdFloorMap.value("control").toMap();
-							paramValue = fourthFloorMap.value("value");
-							valueGet = true;
-							break;
-						}
+						ParamOp::extractVariantTest(controlMap, groupItem, "control");
+						ParamOp::extractVariantTest(_paramValue, controlMap, "value");
+						paramValue = _paramValue;
+						return;
+
 					}
-				}
-				if (valueGet)
-				{
-					break;
 				}
 			}
 		}
 	}
+	//ParamOp::extractVariantTest(advancedMap, firstList, QString(), _category);
+	//ParamOp::extractVariantTest(paramList, advancedMap, "parameters");
+
+	//QVariantMap firstFloor;
+	//QVariantList secondFloorList;
+	//QVariantMap secondFloorMap;
+	//QVariantList thirdFloorList;
+	//QVariantMap thirdFloorMap;
+	//QVariantMap fourthFloorMap;
+
+	//bool valueGet = false;
+
+	//QJsonDocument jsonDoc;
+
+	//QJsonParseError error;
+	//jsonDoc = QJsonDocument::fromJson(jsonInputString.toUtf8(), &error);
+	//if (error.error == QJsonParseError::NoError)
+	//	firstFloor = jsonDoc.toVariant().toMap();
+
+	////********test count execute layers*********************//
+	//QMapIterator<QString, QVariant> firstFloor_ii(jsonDoc.toVariant().toMap());
+	//while (firstFloor_ii.hasNext())
+	//{
+	//	firstFloor_ii.next();
+	//	if (firstFloor_ii.key() == "categories")
+	//	{
+	//		secondFloorList = firstFloor_ii.value().toList();
+	//		foreach(QVariant secondFloorListValue, secondFloorList)
+	//		{
+	//			secondFloorMap = secondFloorListValue.toMap();
+	//			if (secondFloorMap.value("name") == categoryName)
+	//			{
+	//				thirdFloorList = secondFloorMap.value("parameters").toList();
+	//				foreach(QVariant thirdFloorListValue, thirdFloorList)
+	//				{
+	//					thirdFloorMap = thirdFloorListValue.toMap();
+	//					if (thirdFloorMap.value("name") == paramName)
+	//					{
+	//						/*
+	//						* get data in JsonDocument
+	//						*/
+	//						fourthFloorMap = thirdFloorMap.value("control").toMap();
+	//						paramValue = fourthFloorMap.value("value");
+	//						valueGet = true;
+	//						break;
+	//					}
+	//				}
+	//			}
+	//			if (valueGet)
+	//			{
+	//				break;
+	//			}
+	//		}
+	//	}
+	//}
 }
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-QVariant CMD_Value::getValuebyName2(QString categoryName, QString paramName)
+QVariantList CMD_Value::getValuebyName2(QString categoryName, int groupi)
 {
-	QVariantMap firstFloor;
-	QVariantList secondFloorList;
-	QVariantMap secondFloorMap;
-	QVariantList thirdFloorList;
-	QVariantMap thirdFloorMap;
-	QVariantMap fourthFloorMap;
-	QVariant paramValue;
-	QVariant transFormENUM;
+	//QVariantMap firstFloor;
+	//QVariantList secondFloorList;
+	//QVariantMap secondFloorMap;
+	//QVariantList thirdFloorList;
+	//QVariantMap thirdFloorMap;
+	//QVariantMap fourthFloorMap;
+	//QVariant paramValue;
+	//QVariant transFormENUM;
 
-	bool valueGet = false;
+	//bool valueGet = false;
 
-	QJsonDocument jsonDoc;
+	//QJsonDocument jsonDoc;
 
-	QJsonParseError error;
-	jsonDoc = QJsonDocument::fromJson(jsonInputString.toUtf8(), &error);
-	if (error.error == QJsonParseError::NoError)
+	//QJsonParseError error;
+	//jsonDoc = QJsonDocument::fromJson(jsonInputString.toUtf8(), &error);
+	//if (error.error == QJsonParseError::NoError)
+	//{
+	//	firstFloor = jsonDoc.toVariant().toMap();
+	//}
+
+	////********test count execute layers*********************//
+	//QMapIterator<QString, QVariant> firstFloor_ii(jsonDoc.toVariant().toMap());
+	//while (firstFloor_ii.hasNext())
+	//{
+	//	firstFloor_ii.next();
+	//	if (firstFloor_ii.key() == "categories")
+	//	{
+	//		secondFloorList = firstFloor_ii.value().toList();
+	//		foreach(QVariant secondFloorListValue, secondFloorList)
+	//		{
+	//			secondFloorMap = secondFloorListValue.toMap();
+	//			if (secondFloorMap.value("name") == categoryName)
+	//			{
+	//				thirdFloorList = secondFloorMap.value("parameters").toList();
+	//				foreach(QVariant thirdFloorListValue, thirdFloorList)
+	//				{
+	//					thirdFloorMap = thirdFloorListValue.toMap();
+	//					if (thirdFloorMap.value("name") == paramName)
+	//					{
+	//						/*
+	//						* get data in JsonDocument
+	//						*/
+	//						fourthFloorMap = thirdFloorMap.value("control").toMap();
+	//						//paramValue = fourthFloorMap.value("value");
+	//						transFormENUM = fourthFloorMap.value("transform_enum");
+
+	//						//transform 
+	//						//if (transFormENUM.toBool())
+	//						if (false)
+	//						{
+	//							paramValue = transformDataFromUIToFPGA(fourthFloorMap.value("value"), transFormENUM.toInt());
+	//						}
+	//						else
+	//						{
+	//							paramValue = fourthFloorMap.value("value");
+	//						}
+	//						valueGet = true;
+	//						break;
+	//					}
+	//				}
+	//			}
+	//			if (valueGet)
+	//			{
+	//				break;
+	//			}
+	//		}
+	//	}
+	//}
+	/*========================================================================================================================================*/
+
+	QVariant category, categoryList, typeMap, paramList, categoryName_file;
+	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
+	ParamOp::extractVariantTest(categoryList, category, "categories");
+
+	foreach(QVariant categoryItem, categoryList.toList())
 	{
-		firstFloor = jsonDoc.toVariant().toMap();
-	}
-
-	//********test count execute layers*********************//
-	QMapIterator<QString, QVariant> firstFloor_ii(jsonDoc.toVariant().toMap());
-	while (firstFloor_ii.hasNext())
-	{
-		firstFloor_ii.next();
-		if (firstFloor_ii.key() == "categories")
+		ParamOp::extractVariantTest(categoryName_file, categoryItem, "name");
+		if (categoryName_file == categoryName)
 		{
-			secondFloorList = firstFloor_ii.value().toList();
-			foreach(QVariant secondFloorListValue, secondFloorList)
-			{
-				secondFloorMap = secondFloorListValue.toMap();
-				if (secondFloorMap.value("name") == categoryName)
-				{
-					thirdFloorList = secondFloorMap.value("parameters").toList();
-					foreach(QVariant thirdFloorListValue, thirdFloorList)
-					{
-						thirdFloorMap = thirdFloorListValue.toMap();
-						if (thirdFloorMap.value("name") == paramName)
-						{
-							/*
-							* get data in JsonDocument
-							*/
-							fourthFloorMap = thirdFloorMap.value("control").toMap();
-							//paramValue = fourthFloorMap.value("value");
-							transFormENUM = fourthFloorMap.value("transform_enum");
+			ParamOp::extractVariantTest(paramList, categoryItem, "parameters");
 
-							//transform 
-							//if (transFormENUM.toBool())
-							if (false)
-							{
-								paramValue = transformDataFromUIToFPGA(fourthFloorMap.value("value"), transFormENUM.toInt());
-							}
-							else
-							{
-								paramValue = fourthFloorMap.value("value");
-							}
-							valueGet = true;
-							break;
-						}
-					}
-				}
-				if (valueGet)
-				{
-					break;
-				}
+			QVariant groupItemList, groupName;
+			ParamOp::extractVariantTest(groupItemList, paramList.toList().at(groupi), "group");
+			QVariantList returnList;
+			foreach(QVariant groupItem, groupItemList.toList())
+			{
+				QVariant identifyerName, controlMap, paramValue;
+				ParamOp::extractVariantTest(identifyerName, groupItem, "name");
+				ParamOp::extractVariantTest(controlMap, groupItem, "control");
+				ParamOp::extractVariantTest(paramValue, controlMap, "value");
+				returnList.push_back(paramValue);
+				/*if (paramName == identifyerName){
+					ParamOp::extractVariantTest(controlMap, groupItem, "control");
+					ParamOp::extractVariantTest(paramValue, controlMap, "value");
+
+					return paramValue;
+					}*/
 			}
+			return returnList;
+
+
 		}
 	}
-	return paramValue;
+
+	return QVariantList();
 }
 /*--------------------------------------------------------------------------------------------------------------------*/
 
 void CMD_Value::setValuebyName()//save value to Json File
 {
-	QVariantMap firstFloor;
-	QVariantList secondFloorList;
-	QVariantMap secondFloorMap;
-	QVariantList thirdFloorList;
-	QVariantMap thirdFloorMap;
-	QVariantMap fourthFloorMap;
+#define Advanced_SettingListNum 1
 
-	QString categoryName;// = item->getCategoryParam().toString();
 	QString paramName;// = item->getNameParam().toString();
 	QString paramValue;// = item->getValueParam().toString();
 
 	QJsonDocument jsonDoc;
 	QJsonParseError error;
-	ParamOp::getJsonFiletoString(jsonInputString, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
-	jsonDoc = QJsonDocument::fromJson(jsonInputString.toUtf8(), &error);
-	if (error.error == QJsonParseError::NoError)
-	{
-		firstFloor = jsonDoc.toVariant().toMap();
-	}
 
+	QVariant category, categoryList, typeMap, paramList, categoryName;
+	if (!ParamOp::extractVariantTest(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt"))
+		return;
 
 	QMapIterator<QVariant, QVariant> NVMiterator(NVM_Map);
 	while (NVMiterator.hasNext())
 	{
 		NVMiterator.next();
-		QMapIterator<QString, QVariant> firstFloor_ii(firstFloor);
+
 		categoryName = "Advanced_Setting";
 		paramName = NVMiterator.key().toString();
 		paramValue = NVMiterator.value().toString();
 
 
 		bool valueSet = false;
-		firstFloor_ii.toFront();
-		while (firstFloor_ii.hasNext())
+
+		ParamOp::extractVariantTest(categoryList, category, "categories");		
+		ParamOp::extractVariantTest(typeMap, categoryList, QString(), Advanced_SettingListNum);
+		ParamOp::extractVariantTest(paramList, typeMap, "parameters");
+		for (int j = 0; j < paramList.toList().size(); j++)
 		{
-			firstFloor_ii.next();
-			if (firstFloor_ii.key() == "categories") {
-				secondFloorList = firstFloor_ii.value().toList();
-				foreach(QVariant secondFloorListValue, secondFloorList)
+
+			QVariant groupItemList, groupMap;
+			ParamOp::extractVariantTest(groupMap, paramList.toList(), QString(), j);
+			ParamOp::extractVariantTest(groupItemList, groupMap, "group");
+
+			for (int z = 0; z < groupItemList.toList().size(); z++)
+			{
+				QVariant identifyerName, groupItem;
+				ParamOp::extractVariantTest(groupItem, groupItemList, QString(), z);
+				ParamOp::extractVariantTest(identifyerName, groupItem, "name");
+				if (paramName == identifyerName)
 				{
-					secondFloorMap = secondFloorListValue.toMap();
-					if (secondFloorMap.value("name") == categoryName)
-					{
-						thirdFloorList = secondFloorMap.value("parameters").toList();
-						foreach(QVariant thirdFloorListValue, thirdFloorList)
-						{
-							thirdFloorMap = thirdFloorListValue.toMap();
-							if (thirdFloorMap.value("name") == paramName)
-							{
-								/*
-								* Replace data in JsonDocument
-								*/
-								fourthFloorMap = thirdFloorMap.value("control").toMap();
+					QVariant controlMap;
+					ParamOp::extractVariantTest(controlMap, groupItem, "control");
 
+					ParamOp::mergeValue(controlMap, paramValue, "value");
 
-								QVariant trEnum = fourthFloorMap["transform_enum"];
+					ParamOp::mergeValue(groupItem, controlMap, "control");
+					ParamOp::mergeValue(groupItemList, groupItem, QString(), z);
 
-								
-								fourthFloorMap["value"] = paramValue;
+					ParamOp::mergeValue(groupMap, groupItemList, "group");
+					ParamOp::mergeValue(paramList, groupMap, QString(), j);
 
-								valueSet = true;
+					ParamOp::mergeValue(typeMap, paramList, "parameters");
+					ParamOp::mergeValue(categoryList, typeMap, QString(), 1);
 
-								thirdFloorMap.insert("control", fourthFloorMap);
-								int thirdFloorlistIndex = thirdFloorList.indexOf(thirdFloorListValue);
-								thirdFloorList.replace(thirdFloorlistIndex, thirdFloorMap);
+					ParamOp::mergeValue(category, categoryList, "categories");
 
-								secondFloorMap.insert("parameters", thirdFloorList);
-								int secondFloorlistIndex = secondFloorList.indexOf(secondFloorListValue);
-								secondFloorList.replace(secondFloorlistIndex, secondFloorMap);
-
-								firstFloor.insert("categories", secondFloorList);
-								break;
-							}
-						}
-					}
-					if (valueSet)
-					{
-						break;
-					}
+					valueSet = true;
+					break;
 				}
 			}
+			if (valueSet)
+				break;
 		}
+		QJsonDocument json = QJsonDocument::fromVariant(category);
+		QString updateJson(json.toJson(QJsonDocument::Compact));
+		jsonInputString = updateJson;
+		ParamOp::mergeValue(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
+
+
+		//while (firstFloor_ii.hasNext())
+		//{
+		//	firstFloor_ii.next();
+		//	if (firstFloor_ii.key() == "categories") {
+		//		secondFloorList = firstFloor_ii.value().toList();
+		//		foreach(QVariant secondFloorListValue, secondFloorList)
+		//		{
+		//			secondFloorMap = secondFloorListValue.toMap();
+		//			if (secondFloorMap.value("name") == categoryName)
+		//			{
+		//				thirdFloorList = secondFloorMap.value("parameters").toList();
+		//				foreach(QVariant thirdFloorListValue, thirdFloorList)
+		//				{
+		//					thirdFloorMap = thirdFloorListValue.toMap();
+		//					if (thirdFloorMap.value("name") == paramName)
+		//					{
+		//						/*
+		//						* Replace data in JsonDocument
+		//						*/
+		//						fourthFloorMap = thirdFloorMap.value("control").toMap();
+
+
+		//						QVariant trEnum = fourthFloorMap["transform_enum"];
+
+		//						
+		//						fourthFloorMap["value"] = paramValue;
+
+		//						valueSet = true;
+
+		//						thirdFloorMap.insert("control", fourthFloorMap);
+		//						int thirdFloorlistIndex = thirdFloorList.indexOf(thirdFloorListValue);
+		//						thirdFloorList.replace(thirdFloorlistIndex, thirdFloorMap);
+
+		//						secondFloorMap.insert("parameters", thirdFloorList);
+		//						int secondFloorlistIndex = secondFloorList.indexOf(secondFloorListValue);
+		//						secondFloorList.replace(secondFloorlistIndex, secondFloorMap);
+
+		//						firstFloor.insert("categories", secondFloorList);
+		//						break;
+		//					}
+		//				}
+		//			}
+		//			if (valueSet)
+		//			{
+		//				break;
+		//			}
+		//		}
+		//	}
+		//}
 	}
 
-	QJsonDocument json = QJsonDocument::fromVariant(firstFloor);
+	/*QJsonDocument json = QJsonDocument::fromVariant(firstFloor);
 	QString updateJson(json.toJson(QJsonDocument::Compact));
 	ParamOp::saveJsonToFileWithPath(updateJson, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
-	jsonInputString = updateJson;
+	jsonInputString = updateJson;*/
+#undef Advanced_SettingListNum
 }
 /*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -1205,72 +1318,99 @@ void CMD_Value::gatherAdvanced_SettingName()
 {
 
 	NVM_NameList[0].clear(); NVM_NameList[1].clear(); NVM_NameList[2].clear(); NVM_NameList[3].clear(); NVM_NameList[4].clear();
-	QVariantMap firstFloor;
-	QVariantList secondFloorList;
-	QVariantMap secondFloorMap;
-	QVariantList thirdFloorList;
-	QVariantMap thirdFloorMap;
-	QVariantMap fourthFloorMap;
-	QVariant paramValue;
+	//QVariantMap firstFloor;
+	//QVariantList secondFloorList;
+	//QVariantMap secondFloorMap;
+	//QVariantList thirdFloorList;
+	//QVariantMap thirdFloorMap;
+	//QVariantMap fourthFloorMap;
+	//QVariant paramValue;
 
-	bool valueGet = false;
+	//bool valueGet = false;
 
-	QJsonDocument jsonDoc;
+	//QJsonDocument jsonDoc;
 
-	QVariantList NVMList;
-	QJsonParseError error;
-	jsonDoc = QJsonDocument::fromJson(jsonInputString.toUtf8(), &error);
-	if (error.error == QJsonParseError::NoError)
+	//QVariantList NVMList;
+	//QJsonParseError error;
+	//jsonDoc = QJsonDocument::fromJson(jsonInputString.toUtf8(), &error);
+	//if (error.error == QJsonParseError::NoError)
+	//{
+	//	firstFloor = jsonDoc.toVariant().toMap();
+	//}
+
+	////********test count execute layers*********************//
+	//QMapIterator<QString, QVariant> firstFloor_ii(jsonDoc.toVariant().toMap());
+	//while (firstFloor_ii.hasNext())
+	//{
+	//	firstFloor_ii.next();
+	//	if (firstFloor_ii.key() == "categories") {
+	//		secondFloorList = firstFloor_ii.value().toList();
+	//		foreach(QVariant secondFloorListValue, secondFloorList)
+	//		{
+	//			secondFloorMap = secondFloorListValue.toMap();
+	//			if (secondFloorMap.value("name") == "Advanced_Setting")
+	//			{
+	//				thirdFloorList = secondFloorMap.value("parameters").toList();
+	//				int i = 1;
+	//				foreach(QVariant thirdFloorListValue, thirdFloorList)
+	//				{
+	//					thirdFloorMap = thirdFloorListValue.toMap();
+	//					NVMList.append(thirdFloorMap.value("name"));
+	//					if (i < (NUMOFNVM1 + 1)) {
+	//						NVM_NameList[0].append(thirdFloorMap.value("name"));
+	//					}
+	//					else if (i < (NUMOFNVM1 + NUMOFNVM2 + 1)) {
+	//						NVM_NameList[1].append(thirdFloorMap.value("name"));
+	//					}
+	//					else if (i > (NUMOFNVM1 + NUMOFNVM2 + 1) && i < (NUMOFNVM1 + NUMOFNVM2 + NUMOFNVM3 + 2)) {
+	//						NVM_NameList[2].append(thirdFloorMap.value("name"));
+	//					}
+	//					else if (i > (NUMOFNVM1 + NUMOFNVM2 + NUMOFNVM3 + 2) && i < (NUMOFNVM1 + NUMOFNVM2 + NUMOFNVM3 + NUMOFNVM4 + 3)) {
+	//						NVM_NameList[3].append(thirdFloorMap.value("name"));
+
+	//					}
+	//					else if (i > (NUMOFNVM1 + NUMOFNVM2 + NUMOFNVM3 + NUMOFNVM4 + 3) && i < (NUMOFNVM1 + NUMOFNVM2 + NUMOFNVM3 + NUMOFNVM4 + NUMOFNVM5 + 4)) {
+	//						NVM_NameList[4].append(thirdFloorMap.value("name"));
+	//					}
+	//					i++;
+	//				}
+
+	//			}
+	//			if (valueGet)
+	//			{
+	//				valueGet = false;
+	//				break;
+	//			}
+	//		}
+	//	}
+	//}
+	//=========================================================================================================================//
+	QVariant category, categoryList, typeMap, paramList, categoryName_file;
+	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, QString(), jsonInputString);
+	ParamOp::extractVariantTest(categoryList, category, "categories");
+
+	foreach(QVariant categoryItem, categoryList.toList())
 	{
-		firstFloor = jsonDoc.toVariant().toMap();
-	}
-
-	//********test count execute layers*********************//
-	QMapIterator<QString, QVariant> firstFloor_ii(jsonDoc.toVariant().toMap());
-	while (firstFloor_ii.hasNext())
-	{
-		firstFloor_ii.next();
-		if (firstFloor_ii.key() == "categories") {
-			secondFloorList = firstFloor_ii.value().toList();
-			foreach(QVariant secondFloorListValue, secondFloorList)
+		ParamOp::extractVariantTest(categoryName_file, categoryItem, "name");
+		if (categoryName_file == "Advanced_Setting")
+		{
+			ParamOp::extractVariantTest(paramList, categoryItem, "parameters");
+			int i = 0;
+			foreach(QVariant parameterItem, paramList.toList())
 			{
-				secondFloorMap = secondFloorListValue.toMap();
-				if (secondFloorMap.value("name") == "Advanced_Setting")
+				QVariant groupItemList, groupName;
+				ParamOp::extractVariantTest(groupItemList, parameterItem, "group");
+				foreach(QVariant groupItem, groupItemList.toList())
 				{
-					thirdFloorList = secondFloorMap.value("parameters").toList();
-					int i = 1;
-					foreach(QVariant thirdFloorListValue, thirdFloorList)
-					{
-						thirdFloorMap = thirdFloorListValue.toMap();
-						NVMList.append(thirdFloorMap.value("name"));
-						if (i < (NUMOFNVM1 + 1)) {
-							NVM_NameList[0].append(thirdFloorMap.value("name"));
-						}
-						else if (i < (NUMOFNVM1 + NUMOFNVM2 + 1)) {
-							NVM_NameList[1].append(thirdFloorMap.value("name"));
-						}
-						else if (i > (NUMOFNVM1 + NUMOFNVM2 + 1) && i < (NUMOFNVM1 + NUMOFNVM2 + NUMOFNVM3 + 2)) {
-							NVM_NameList[2].append(thirdFloorMap.value("name"));
-						}
-						else if (i > (NUMOFNVM1 + NUMOFNVM2 + NUMOFNVM3 + 2) && i < (NUMOFNVM1 + NUMOFNVM2 + NUMOFNVM3 + NUMOFNVM4 + 3)) {
-							NVM_NameList[3].append(thirdFloorMap.value("name"));
-
-						}
-						else if (i > (NUMOFNVM1 + NUMOFNVM2 + NUMOFNVM3 + NUMOFNVM4 + 3) && i < (NUMOFNVM1 + NUMOFNVM2 + NUMOFNVM3 + NUMOFNVM4 + NUMOFNVM5 + 4)) {
-							NVM_NameList[4].append(thirdFloorMap.value("name"));
-						}
-						i++;
-					}
-
+					QVariant identifyerName, controlMap, defaultValue, enumItem, highValue, lowValue, uiName, label_name, transformValue, ui_unitValue, paramValue, visible, value_TypeValue;
+					ParamOp::extractVariantTest(identifyerName, groupItem, "name");
+					NVM_NameList[i].push_back(identifyerName);
 				}
-				if (valueGet)
-				{
-					valueGet = false;
-					break;
-				}
+				i++;
 			}
 		}
 	}
+
 }
 /*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -1289,7 +1429,8 @@ bool CMD_Value::getNVMValue()
 		CMD_value::CMD_TYPE cmdType = CMD_valueMap.value(CMD_Description(i)).type;
 		if (cmdType == CMD_value::CMD_TYPE::NVM_Reading)
 		{
-			CMD_Json = ParamOp::createJsonStringCommand("FPGA", command, CMDValueList);
+			//CMD_Json = ParamOp::createJsonStringCommand("FPGA", command, CMDValueList);
+			CMD_Json = ParamOp::createJsonStringCommand("FPGA_NVMReading", command, CMDValueList);
 			allCommand << CMD_Json;
 		}
 	}
@@ -1306,6 +1447,7 @@ bool CMD_Value::getNVMValue()
 	bool getRightValue = true;
 	//foreach(QString ss, allCommand)
 	for (int cmd = 0; cmd < allCommand.size(); cmd++)
+	//for (int cmd = 0; cmd < 1; cmd++)
 	{
 		QString ss = allCommand.at(cmd);
 		std::string AAA;

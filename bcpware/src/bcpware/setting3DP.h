@@ -78,7 +78,7 @@ public:
 	{
 	}
 	SKTWidget(QWidget *p, bool _visible, QVariant _categoryName, QVariant _defaultValue, QVariant _uiUnit = NULL, int _transformType = 0)
-		:QWidget(p), visible(_visible), categoryName(_categoryName), defaultValue(_defaultValue), uiUnit(_uiUnit), transformType(_transformType)
+		:QWidget(p), visible(_visible), categoryName(_categoryName), defaultValue(_defaultValue), uiUnit(_uiUnit), transformType(_transformType), changed(false)
 	{
 		uiUnitlabel = new QLabel(uiUnit.toString());
 	}
@@ -112,6 +112,9 @@ public:
 	void setDefaultValue(QVariant _defaultValue){ defaultValue = _defaultValue; }
 	QVariant getDefaultValue(){ return defaultValue; }
 
+	void setChanged(bool _changed){ changed = _changed; }
+	bool getChanged(){ return changed; }
+
 	//void 
 
 private:
@@ -130,6 +133,7 @@ protected:
 	QLabel *uiUnitlabel;
 	QVariant defaultValue;
 	int transformType;
+	bool changed;
 
 	
 	//Value &getWidgetValue();
@@ -161,12 +165,15 @@ public:
 		
 		
 		hlayout->addWidget(label);
+		hlayout->addStretch();
 		hlayout->addWidget(spinBox);
 		this->setLayout(hlayout);
 
 		connect(spinBox, SIGNAL(valueChanged(int)), this, SIGNAL(parameterChanged()));
-		connect(spinBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, [&](int _value) {
-			setValue(_value);
+		connect(spinBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, [&](int _widget_value) {
+			setValue(_widget_value);
+			setChanged(true);
+			label->setStyleSheet("QLabel {  color : red; }");
 			qDebug() << "spinBox"<<getValue();
 		});
 	}
@@ -209,6 +216,7 @@ public:
 		spinBox->setMinimum(lowLimit);
 		spinBox->setFixedWidth(150);
 		spinBox->setAlignment(Qt::AlignRight);
+		spinBox->setDecimals(4);
 		if (!getUiUnit().isNull())
 		{
 			spinBox->setSuffix(" "+getUiUnit().toString());
@@ -222,13 +230,15 @@ public:
 			spinBox->setValue(value.toDouble());
 		}
 		hlayout->addWidget(label);
+		hlayout->addStretch();
 		hlayout->addWidget(spinBox);
 		this->setLayout(hlayout);
 
 		connect(spinBox, SIGNAL(valueChanged(double)), this, SIGNAL(parameterChanged()));
-		connect(spinBox, static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this, [&](double _value_) {
-			setValue(transformDataFromUIToFPGA(_value_, getTransformType()));
-
+		connect(spinBox, static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this, [&](double _widget_value) {
+			setValue(transformDataFromUIToFPGA(_widget_value, getTransformType()));
+			setChanged(true);
+			label->setStyleSheet("QLabel {  color : red; }");
 			qDebug() << "doublespinbox" << getValue();
 		});
 	}
@@ -306,25 +316,32 @@ class TextLabelUI_SKX : public  SKTWidget
 	Q_OBJECT
 public:
 	//QWidget *p, QString labelName, QString _identifyName, QVariant _categoryName, QVariant _value, QVariant _defaultValue, QVariant _uiUnit = NULL, int _transformType = 0, bool _visible = true, int highlimit = 0, int lowLimit = 0
-	TextLabelUI_SKX(QWidget *p, QString labelName, QString _identifyName, QVariant _categoryName, QVariant _value, QVariant _defaultValue) :
+	TextLabelUI_SKX(QWidget *p, QString labelName, QString _identifyName, QVariant _categoryName, QVariant _value, QVariant _defaultValue,QVariant _uiUnit = NULL, int _transformType = 0, bool _visible = true) :
 		SKTWidget(p, true, _categoryName, _defaultValue)
 	{
 		setValue(_value);
-		identifyName = _identifyName;
+		setIdentifyName(_identifyName);
 		hlayout = new QHBoxLayout();
+
 		label = new QLabel(labelName);
-		labelValue = new QLineEdit(value.toString());
+		labelValue = new QLineEdit(value.toString());		
 		labelValue->setReadOnly(true);
 		labelValue->setFixedWidth(250);
 		labelValue->setTextMargins(4, 0, 4, 0);
+
 		hlayout->addWidget(label);
+		hlayout->addStretch();
 		hlayout->addWidget(labelValue);
 		this->setLayout(hlayout);		
 
-		connect(labelValue, &QLineEdit::textChanged, this, [&](const QString _value_) {
-			setValue(_value_);
 
+		connect(labelValue, SIGNAL(textChanged(QString)), this, SIGNAL(parameterChanged()));
+
+		connect(labelValue, &QLineEdit::textChanged, this, [&](const QString _widget_value) {
+			setValue(_widget_value);
+			setChanged(true);
 			qDebug() << label->text() << "TextLabelUI_SKX" << getValue();
+			label->setStyleSheet("QLabel {  color : red; }");
 		});
 
 
@@ -350,50 +367,80 @@ class EnumUI_SKX : public SKTWidget
 {
 	Q_OBJECT
 public:
-	EnumUI_SKX(QWidget *p, QString labelName, QString _identifyName, QVariant value,QVariant enumList, int highlimit = 0, int lowLimit = 0) :SKTWidget(p)
+	EnumUI_SKX(QWidget *p, QString labelName, QString _identifyName, QVariant _categoryName, QVariant _value, QVariant _defaultValue, QVariant enumList, QVariant _uiUnit = NULL, bool _visible = true)
+		:SKTWidget(p, true, _categoryName, _defaultValue)
 	{
-		identifyName = _identifyName;
+		setValue(_value);
+		setIdentifyName( _identifyName);
 		hlayout = new QHBoxLayout();
 		label = new QLabel(labelName);
 		comboBox = new QComboBox();
 		comboBox->addItems(enumList.toStringList());
+		comboBox->setCurrentIndex(_value.toInt());
 		hlayout->addWidget(label);
+		hlayout->addStretch();
 		hlayout->addWidget(comboBox);
 		this->setLayout(hlayout);
-		connect(comboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [&](int _value) {
-			setValue(_value);
+
+		connect(comboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(parameterChanged()));
+		connect(comboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [&](int _widget_value) {
+			setValue(_widget_value);
+			setChanged(true);
+			label->setStyleSheet("QLabel {  color : red; }");
 			qDebug() << "QComboBox" << getValue();
 		});
 	}
-	void addWidgetToGridLayout(QGridLayout* lay, const int r)
+	void addWidgetToGridLayout(QGridLayout* lay, const int r,const int c)
 	{
-		lay->addWidget(this, r, 0);
+		lay->addWidget(this, r, c);
 		//lay->addLayout(hlayout, r, 0);
 	}
-	void setTransformType(int _transformtype){ transformType = _transformtype; }
-	int getTransformType(){ return transformType; }
+	void updateUIValue(QVariant _index)
+	{
+		comboBox->setCurrentIndex(_index.toInt());
+	}
 private:
 	QLabel *label;
 	QComboBox *comboBox;
 	QHBoxLayout *hlayout;
-	int transformType;
+	
 };
-//TO DO
+
 class CheckUI_SKX : public SKTWidget
 {
 	Q_OBJECT
 public:
-	CheckUI_SKX(QWidget *p, QString labelName, QString _identifyName, QString _categoryName, QVariant _value, QVariant _defaultValue ) :SKTWidget(p)
+	CheckUI_SKX(QWidget *p, QString labelName, QString _identifyName, QVariant _categoryName, QVariant _value, QVariant _defaultValue, QVariant _uiUnit = NULL, bool _visible = true)
+		:SKTWidget(p,true, _categoryName, _defaultValue)
 	{
+		setValue(_value);
+		setIdentifyName(_identifyName);
+		hlayout = new QHBoxLayout();
+		label = new QLabel(labelName);
+		checkBox = new QCheckBox;
+		checkBox->setChecked(_value.toBool());
+		hlayout->addWidget(label);
+		hlayout->addStretch();
+		hlayout->addWidget(checkBox);
+		this->setLayout(hlayout);
 
+		connect(checkBox, SIGNAL(stateChanged(int)), this, SIGNAL(parameterChanged()));
+		connect(checkBox, static_cast<void (QCheckBox::*)(int)>(&QCheckBox::stateChanged), this, [&](int _widget_value)
+		{
+			setValue(_widget_value);
+			setChanged(true);
+			label->setStyleSheet("QLabel {  color : red; }");
+		});
+		
 	}
-	void addWidgetToGridLayout(QGridLayout *lay, const int r, const int c)
+	void addWidgetToGridLayout(QGridLayout* lay, const int r, const int c)
 	{
-
+		lay->addWidget(this, r, c);
+		
 	}
-	void updateUIValue(QVariant _value)
+	void updateUIValue(QVariant _bool)
 	{
-
+		checkBox->setChecked(_bool.toBool());
 	}
 private:
 	QLabel *label;
@@ -420,23 +467,29 @@ public:
 
 		hlayout = new QHBoxLayout();
 		label = new QLabel(labelName);
-		valueLabel = new QLabel(_defaultValue.toString());
+		valueLabel = new QLabel(_value.toString());
+		valueLabel->setWordWrap(true);
+		valueLabel->setFixedWidth(200);
 
 		
 		openFileDialogButton = new QPushButton("Open File Dialog");
+		
+		//connect(valueLabel, SIGNAL(stateChanged(int)), this, SIGNAL(parameterChanged()));
+		
 		connect(openFileDialogButton, &QPushButton::clicked, [=]() {
-			QDir defaultPath(_defaultValue.toString());
+			QDir defaultPath(getValue().toString());
 			QString filePath = QFileDialog::getOpenFileName(this, tr("Get Color Profile"), defaultPath.absolutePath(), "Color Profile (*.icc *.icm;)");
 			valueLabel->setText(filePath);
 			setValue(filePath);
+			setChanged(true);
 
 		});
 
 
 		hlayout->addWidget(label);
+		hlayout->addStretch();
 		hlayout->addWidget(openFileDialogButton);
 		hlayout->addWidget(valueLabel);
-		
 		this->setLayout(hlayout);
 	}
 
@@ -511,11 +564,6 @@ private:
 	int value;
 };
 
-#define NVM_SETTING_NAME "Advanced_Setting"
-#define PRINTER_SETTING_NAME "Basic_Setting"
-#define PP350_SETTING "PP350_Settings"
-#define PP352_SETTING "PP352_Settings"
-#define COMMON_SETTING_NAME "Common_Setting"
 
 class Setting3DP:public QDialog
 {
@@ -526,13 +574,27 @@ public:
 	Setting3DP(MainWindow *_mw, RichParameterSet *,QWidget *parent = 0);
 	~Setting3DP();
 
+	enum JsonfileCategory
+	{
+		Basic_Setting,
+		Advanced_Setting,
+		PP350_SETTING_ca,
+		PP352_SETTING_ca,
+		Common_Setting_ca
+
+
+	};
+
 	static void initSetting(RichParameterSet *);
-	static void createRichParamfromJdoc(QString, RichParameterSet *in);
+	static void createRichParamfromJdoc(JsonfileCategory, RichParameterSet *in);
 	static void createPrinterSetting_FromRichParameter(int , QString, RichParameterSet *in);
 	void initDefaultSetting();
 	//setting loadfromregister();	
 	void initWidgetParam();
 
+	
+
+	
 
 public slots:
 	//save setting to register and pack as RichParameter
@@ -543,7 +605,8 @@ public slots:
 	void getDMICMColorProfile();
 	void resetSetting();
 	/*---------NVM another accept--------------*/
-	void updateTOFile();
+	void updateUIToJsonFile(JsonfileCategory);
+	void updateJsonFileToRichParameter(JsonfileCategory);
 	
 	
 private:
@@ -565,11 +628,23 @@ private:
 	/*---------------------------------------------------------*/
 	void createNVMPage();
 	void updateRichParameterFromJsonFile(QString);
-	void createParamSettingUI(QString);
+	void createParamSettingUI(JsonfileCategory);
 	// Create Printer Setting Page
-	void createPrinterSettingPage();
+	void create_PP350_Page();
+	void create_PP352_Page();
+	void create_Common_Page();
 	
-	QMap<QString,QVector<SKTWidget *> *> paramWidgetVector;
+	void ui_set_default_from_current_value(JsonfileCategory);
+	void ui_set_value_from_default(JsonfileCategory);
+	bool exportSetting(JsonfileCategory);
+	bool importSetting(JsonfileCategory);
+	bool updateValueToUI(QString,int,QString,QVariant);
+	QVariant getWidgetValue(JsonfileCategory,QString);
+
+	QMap<QString, QVector<QVector<SKTWidget *> *> *> paramWidgetVector;
+	QMap<QString, QMap<int , QString> *> paramGroupName;
+	
+
 	QStringList paramType;
 	/*---------------------------------------------------------*/
 	QPushButton *updateToFPGAButton;
@@ -581,7 +656,7 @@ private:
 	void sendNVMPreProcess();
 	void getNVMFromFPGA();
 	//void updateTOFile();
-	bool updateUIFromJsonFile();
+	bool updateUIFromJsonFile(JsonfileCategory);
 	//void update
 
 	QByteArray encodeText, decodedText;

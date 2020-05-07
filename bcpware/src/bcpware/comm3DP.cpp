@@ -3790,6 +3790,7 @@ bool Comm3DP::GetNVMValue(std::string NVMCmd, std::string &nvm)
 	static int iResult;
 	//cmd += ENDCHAR;  //Notice: it caused in double end char in next cmd!
 	sprintf(cmdbuffer, "@COMMAND_GetNVMValue %s" ENDCHAR, NVMCmd.c_str());
+	//sprintf(cmdbuffer, "@JSON_COMMAND_GET_VALUE %s" ENDCHAR, NVMCmd.c_str());
 	iResult = send(sockfd, cmdbuffer, strlen(cmdbuffer), 0);
 
 	if (iResult == SOCKET_ERROR) {

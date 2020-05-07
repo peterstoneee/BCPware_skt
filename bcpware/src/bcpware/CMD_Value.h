@@ -166,7 +166,9 @@ public:
 	QMap<CMD_Description, QString> CMD_des_string;
 
 	void getValuebyName(QString categoryName, QString paramName, QVariant &value);
-	Q_INVOKABLE QVariant getValuebyName2(QString categoryName, QString paramName);
+	//Q_INVOKABLE QVariant getValuebyName2(QString categoryName, QString paramName);
+	Q_INVOKABLE QVariantList getValuebyName2(QString categoryName, int group);
+
 	void gatherAdvanced_SettingName();
 	void setValuebyName();
 	void init();
@@ -185,7 +187,7 @@ public:
 	Q_INVOKABLE bool sendNVMCommand();
 	Q_INVOKABLE bool getNVMValue();
 
-	Q_INVOKABLE bool getValueFromUI(QVariantList);
+	Q_INVOKABLE bool getValueFromUI(QVector<QVariantList>);
 
 	void countCheckSum(QString);
 	QString countCheckSumTest(QVariantList, int num);

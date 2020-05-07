@@ -426,36 +426,80 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 
 	this->setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint);
 	/*---------------create New UI-----------------------------------------------------*/
-	paramType << NVM_SETTING_NAME << PRINTER_SETTING_NAME << PP350_SETTING << PP352_SETTING << COMMON_SETTING_NAME;
-	paramWidgetVector.insert(NVM_SETTING_NAME, new QVector<SKTWidget*>());
-	paramWidgetVector.insert(PRINTER_SETTING_NAME, new QVector<SKTWidget*>());
-	paramWidgetVector.insert(PP350_SETTING, new QVector<SKTWidget*>());
-	paramWidgetVector.insert(PP352_SETTING, new QVector<SKTWidget*>());
-	paramWidgetVector.insert(COMMON_SETTING_NAME, new QVector<SKTWidget*>());
+	paramType << "Basic_Setting" << "Advanced_Setting" << "PP350_Settings" << "PP352_Settings" << "Common_Setting";
+	foreach(QString ca, paramType)
+	{
+		paramWidgetVector.insert(ca, new QVector<QVector<SKTWidget*>*>());
+		paramGroupName.insert(ca, new QMap<int, QString>);
+	}
 
 
-	createParamSettingUI(NVM_SETTING_NAME);
-	//createParamSettingUI(PP350_SETTING);
+	createParamSettingUI(Advanced_Setting);
+	createParamSettingUI(PP350_SETTING_ca);
+	createParamSettingUI(PP352_SETTING_ca);
+	createParamSettingUI(Common_Setting_ca);
+
+	if (getWidgetValue(Common_Setting_ca, "TARGET_PRINTER") == 0)
+	{
+		qDebug() << "pp350";
+	}
+	else
+	{
+		qDebug() << "pp352";
+	}
 
 	createNVMPage();
+	create_PP350_Page();
+	create_PP352_Page();
+	create_Common_Page();
+
+	if (getWidgetValue(Common_Setting_ca, "TARGET_PRINTER") == 0)
+	{
+		qDebug() << "pp350";
+		ui->stackedWidget->widget(7)->setHidden(true);
+
+		QListWidgetItem *item = ui->listWidget->item(3);
+		item->setHidden(true);
+
+		item = ui->listWidget->item(7);
+		item->setHidden(true);
+
+
+
+	}
+	else
+	{
+		ui->stackedWidget->widget(6)->setHidden(true);
+		qDebug() << "pp352";
+
+		QListWidgetItem *item = ui->listWidget->item(3);
+		item->setHidden(true);
+
+		item = ui->listWidget->item(6);
+		item->setHidden(true);
+
+
+	}
+
+
 	//createPrinterSettingPage();
 
 	//connect(setDefaultValueButton, SIGNAL(clicked()), this, SLOT(loadDefaultValue()));
-	connect(setDefaultValueButton, &QPushButton::clicked, [=](){
+	//connect(setDefaultValueButton, &QPushButton::clicked, [=](){
 
-		QVector<SKTWidget *> *tempVector = paramWidgetVector.value(NVM_SETTING_NAME);
-		for (int i = 0; i < tempVector->size(); i++)
-		{
-			SKTWidget *tempWidget = tempVector->at(i);
-			if (tempWidget->getVisible())
-			{
-				qDebug() << tempWidget->getIdentifyName() << " " << tempWidget->getDefaultValue();
-				tempWidget->updateUIValue(tempWidget->getDefaultValue());
-			}
+	//	QVector<SKTWidget *> *tempVector = paramWidgetVector.value(NVM_SETTING_NAME);
+	//	for (int i = 0; i < tempVector->size(); i++)
+	//	{
+	//		SKTWidget *tempWidget = tempVector->at(i);
+	//		if (tempWidget->getVisible())
+	//		{
+	//			qDebug() << tempWidget->getIdentifyName() << " " << tempWidget->getDefaultValue();
+	//			tempWidget->updateUIValue(tempWidget->getDefaultValue());
+	//		}
 
 
-		}
-	});
+	//	}
+	//});
 
 	connect(updateToFPGAButton, &QPushButton::clicked, [=](){
 
@@ -489,15 +533,17 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 		//QAESEncryption encryption(QAESEncryption::AES_128, QAESEncryption::CBC, QAESEncryption::PKCS7);		
 		//output to a file, output value format
 
-		QVariant identifyNameValueMap;// = QVariantMap();
+		QVariant identifyNameValueMap = QVariantMap();
 		QVariant categoryMap = QVariantMap();
-		for (int i = 0; i < paramWidgetVector.value(NVM_SETTING_NAME)->size(); i++)
+		for (int i = 0; i < paramWidgetVector.value(paramType[2])->size(); i++)
 		{
-			SKTWidget *sktwidget = paramWidgetVector.value(NVM_SETTING_NAME)->at(i);
+			for (int j = 0; j < paramWidgetVector.value(paramType[2])->at(i)->size(); j++)
+			{
+				SKTWidget *sktwidget = paramWidgetVector.value(paramType[2])->at(i)->at(j);
 
-			ParamOp::mergeValue(identifyNameValueMap, sktwidget->getValue(), sktwidget->getIdentifyName().toString());
-			ParamOp::mergeValue(categoryMap, identifyNameValueMap, sktwidget->getCategoryName().toString());
-
+				ParamOp::mergeValue(identifyNameValueMap, "", sktwidget->getIdentifyName().toString());
+				ParamOp::mergeValue(categoryMap, identifyNameValueMap, sktwidget->getCategoryName().toString());
+			}
 		}
 		QJsonDocument jsonDoc = QJsonDocument::fromVariant(categoryMap);
 		QString updateJson(jsonDoc.toJson(QJsonDocument::Compact));
@@ -508,7 +554,7 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 		QByteArray ba_as_hex_string = encodeText.toHex();
 
 		decodedText = encryption->removePadding(encryption->decode(encodeText, hashKey, iv));
-		ParamOp::saveStringToFileWithPath(ba_as_hex_string, getDocumentDir() + "testEncode.txt");
+		ParamOp::saveStringToFileWithPath(updateJson.toUtf8(), getDocumentDir() + "testEncode.txt");
 
 
 
@@ -537,6 +583,7 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 		ParamOp::extractVariantTest(categoryMap, QVariant(), QString(), -1, QString(), QString(decodedText));
 
 	});
+
 	//ParamOp::transformJsonToRichParameter(tempSet, QString());
 
 }
@@ -1118,8 +1165,10 @@ void Setting3DP::initSetting(RichParameterSet *settingParam)
 	settingParam->addParam(new RichEnum("DM_SPIT_SWITCH", 0, dmSpitMode, tr("SPIT_MODE"), tr("")));
 #else 
 	/*Init setting from Json document, those are current parameters*/
-	createRichParamfromJdoc(PP350_SETTING, settingParam);
-	createRichParamfromJdoc(PP352_SETTING, settingParam);
+	createRichParamfromJdoc(PP350_SETTING_ca, settingParam);
+	createRichParamfromJdoc(PP352_SETTING_ca, settingParam);
+	createRichParamfromJdoc(Common_Setting_ca, settingParam);
+
 	//createPrinterSetting_FromRichParameter(PP350_SETTING, settingParam);
 	//createRichParamfromJdoc(SLICING_SETTING_NAME, settingParam);
 
@@ -1130,6 +1179,7 @@ void Setting3DP::initSetting(RichParameterSet *settingParam)
 
 void Setting3DP::getaccept()
 {
+#if TRANSFER_SWITCH
 	/*QStringList languageList = QStringList() << "English" << "Traditional Chinese";
 	QStringList unitList = QStringList() << "mm" << "inch";
 	QStringList targetPrinter = QStringList() << "Picasso_1_0" << "Picasso_Jr";
@@ -1344,8 +1394,18 @@ void Setting3DP::getaccept()
 	}
 	accept();
 
-#if TRANSFER_SWITCH
-	updateTOFile();
+
+#else	
+	updateUIToJsonFile(JsonfileCategory::PP350_SETTING_ca);
+	updateUIToJsonFile(JsonfileCategory::PP352_SETTING_ca);
+	updateUIToJsonFile(JsonfileCategory::Common_Setting_ca);
+
+
+	updateJsonFileToRichParameter(JsonfileCategory::PP350_SETTING_ca);
+	updateJsonFileToRichParameter(JsonfileCategory::PP352_SETTING_ca);
+	updateJsonFileToRichParameter(JsonfileCategory::Common_Setting_ca);
+
+
 #endif
 }
 void Setting3DP::acceptOne(RichParameter *inpar)
@@ -1839,33 +1899,191 @@ Setting3DP::~Setting3DP()
 {
 }
 
-void Setting3DP::createPrinterSettingPage()
+/**********************************************************************************************************************************************************************************************************/
+
+void Setting3DP::create_PP350_Page()
 {
+	QPushButton *setCurrentToDefault = new QPushButton("ui_set_default_from_current_value");
+	QPushButton *setDefaultToCurrent = new QPushButton("ui_set_value_from_default");
+	QPushButton *exportSettingPB = new QPushButton("Export 350 Setting");
+	QPushButton *importSettingPB = new QPushButton("Import 350 Setting");
+	connect(setCurrentToDefault, &QPushButton::clicked, [=](){
+		ui_set_default_from_current_value(JsonfileCategory::PP350_SETTING_ca);
+	});
+	connect(setDefaultToCurrent, &QPushButton::clicked, [=](){
+		ui_set_value_from_default(JsonfileCategory::PP350_SETTING_ca);
+	});
+	connect(exportSettingPB, &QPushButton::clicked, [&](){
+		exportSetting(JsonfileCategory::PP350_SETTING_ca);
+	});
+	connect(importSettingPB, &QPushButton::clicked, [=](){
+		importSetting(JsonfileCategory::PP350_SETTING_ca);
+	});
+
+	//exportSetting
+
+
+
+	/*QHBoxLayout *h1Layout = new QHBoxLayout;
+	QHBoxLayout *h2Layout = new QHBoxLayout;*/
+	QGridLayout *g1Layout = new QGridLayout;
+
+	//QVBoxLayout *topLayout = new QVBoxLayout;
+
+
+	g1Layout->addWidget(setCurrentToDefault, 0, 0);
+	g1Layout->addWidget(setDefaultToCurrent, 0, 1);
+	g1Layout->addWidget(exportSettingPB, 1, 0);
+	g1Layout->addWidget(importSettingPB, 1, 1);
+	/*topLayout->addLayout(g1Layout);
+	topLayout->addStretch();*/
+	ui->pp350buttonFrame->setLayout(g1Layout);
+
 
 
 	QGridLayout* glay = new QGridLayout();
-	QVector<SKTWidget *> *tempVector = paramWidgetVector.value(PP350_SETTING);
+	glay->setMargin(10);
+	glay->setSpacing(5);
 
-	for (int i = 0, j = 0; i < tempVector->size(); i++)
+	QVector<QVector<SKTWidget *>*> *tempVector = paramWidgetVector.value(paramType.at(PP350_SETTING_ca));
+	QVector<QVector<SKTWidget *> *>::ConstIterator groupIt;
+
+	for (int i = 0; i < tempVector->size(); i++)
 	{
-		SKTWidget *tempWidget = tempVector->at(i);
-		QLabel *num = new QLabel(QString::number(i));
-
-		if (tempWidget->getVisible())
+		QVector<SKTWidget *> *groupSKTWidget = tempVector->at(i);
+		QGridLayout* framGlay = new QGridLayout();
+		QGroupBox *groupbox = new QGroupBox(paramGroupName.value(paramType[PP350_SETTING_ca])->value(i));
+		/*QFrame *frame = new QFrame();
+		frame->setFrameShadow(QFrame::Sunken);
+		frame->setFrameShape(QFrame::Panel);*/
+		for (int j = 0, k = 0; j < groupSKTWidget->size(); j++)
 		{
-			glay->addWidget(num, j, 0);
-			tempWidget->addWidgetToGridLayout(glay, j, 1);
-			j++;
-		}
+			SKTWidget *tempWidget = groupSKTWidget->at(j);
+			QLabel *num = new QLabel(QString::number(k));
 
-		//glay->addWidget(temp,i,0);
+			if (tempWidget->getVisible())
+			{
+				framGlay->addWidget(num, k, 0);
+				tempWidget->addWidgetToGridLayout(framGlay, k, 1);
+				k++;
+			}
+
+		}
+		groupbox->setLayout(framGlay);
+		glay->addWidget(groupbox);
 	}
 	glay->setColumnStretch(1, 0);
 	ui->scrollAreaWidgetContents_4->setLayout(glay);
 
 
+}
+
+void Setting3DP::create_PP352_Page()
+{
+	//QPushButton *setCurrentToDefault = new QPushButton("ui_set_default_from_current_value");
+	//QPushButton *setDefaultToCurrent = new QPushButton("ui_set_value_from_default");
+	QPushButton *exportSettingPB = new QPushButton("Export 352 Setting");
+	QPushButton *importSettingPB = new QPushButton("Import 352 Setting");
+	/*connect(setCurrentToDefault, &QPushButton::clicked, [=](){
+		ui_set_default_from_current_value(JsonfileCategory::PP350_SETTING_ca);
+		});
+		connect(setDefaultToCurrent, &QPushButton::clicked, [=](){
+		ui_set_value_from_default(JsonfileCategory::PP350_SETTING_ca);
+		});*/
+	connect(exportSettingPB, &QPushButton::clicked, [&](){
+		exportSetting(JsonfileCategory::PP352_SETTING_ca);
+	});
+	connect(importSettingPB, &QPushButton::clicked, [=](){
+		importSetting(JsonfileCategory::PP352_SETTING_ca);
+	});
+	QGridLayout *g1Layout = new QGridLayout;
+
+	//QVBoxLayout *topLayout = new QVBoxLayout;
+
+
+
+	g1Layout->addWidget(exportSettingPB, 1, 0);
+	g1Layout->addWidget(importSettingPB, 1, 1);
+	//topLayout->addLayout(g1Layout);
+	//topLayout->addStretch();
+	ui->pp352buttonFrame->setLayout(g1Layout);
+
+
+
+
+	QGridLayout* glay = new QGridLayout();
+	glay->setMargin(10);
+	glay->setSpacing(5);
+
+	QVector<QVector<SKTWidget *>*> *tempVector = paramWidgetVector.value(paramType[3]);
+	QVector<QVector<SKTWidget *> *>::ConstIterator groupIt;
+
+	for (int i = 0; i < tempVector->size(); i++)
+	{
+		QVector<SKTWidget *> *groupSKTWidget = tempVector->at(i);
+		QGridLayout* framGlay = new QGridLayout();
+		QGroupBox *gb1 = new QGroupBox(paramGroupName.value(paramType[1])->value(i));
+		/*QFrame *frame = new QFrame();
+		frame->setFrameShadow(QFrame::Sunken);
+		frame->setFrameShape(QFrame::Panel);*/
+		for (int j = 0, k = 0; j < groupSKTWidget->size(); j++)
+		{
+			SKTWidget *tempWidget = groupSKTWidget->at(j);
+			QLabel *num = new QLabel(QString::number(k));
+
+			if (tempWidget->getVisible())
+			{
+				framGlay->addWidget(num, k, 0);
+				tempWidget->addWidgetToGridLayout(framGlay, k, 1);
+				k++;
+			}
+
+		}
+		gb1->setLayout(framGlay);
+		glay->addWidget(gb1);
+	}
+	glay->setColumnStretch(1, 0);
+	ui->pp352ScorllArea->setLayout(glay);
+
 
 }
+void Setting3DP::create_Common_Page()
+{
+	QGridLayout* glay = new QGridLayout();
+	glay->setMargin(10);
+	glay->setSpacing(5);
+
+	QVector<QVector<SKTWidget *>*> *tempVector = paramWidgetVector.value(paramType[4]);
+	QVector<QVector<SKTWidget *> *>::ConstIterator groupIt;
+
+	for (int i = 0; i < tempVector->size(); i++)
+	{
+		QVector<SKTWidget *> *groupSKTWidget = tempVector->at(i);
+		QGridLayout* framGlay = new QGridLayout();
+		QGroupBox *gb1 = new QGroupBox(paramGroupName.value(paramType[1])->value(i));
+		/*QFrame *frame = new QFrame();
+		frame->setFrameShadow(QFrame::Sunken);
+		frame->setFrameShape(QFrame::Panel);*/
+		for (int j = 0, k = 0; j < groupSKTWidget->size(); j++)
+		{
+			SKTWidget *tempWidget = groupSKTWidget->at(j);
+			QLabel *num = new QLabel(QString::number(k));
+
+			if (tempWidget->getVisible())
+			{
+				framGlay->addWidget(num, k, 0);
+				tempWidget->addWidgetToGridLayout(framGlay, k, 1);
+				k++;
+			}
+
+		}
+		gb1->setLayout(framGlay);
+		glay->addWidget(gb1);
+	}
+	glay->setColumnStretch(1, 0);
+	ui->common_settingArea->setLayout(glay);
+}
+
 void Setting3DP::createNVMPage()
 {
 	updateToFPGAButton = new QPushButton("updateToFPGAButton");
@@ -1876,45 +2094,97 @@ void Setting3DP::createNVMPage()
 
 	setDefaultValueButton = new QPushButton("setDefaultValueButton");
 
-	QHBoxLayout *h1Layout = new QHBoxLayout;
+	QPushButton *exportSettingPB = new QPushButton("Export NVM Setting");
+	QPushButton *importSettingPB = new QPushButton("Import NVM Setting");
+	connect(exportSettingPB, &QPushButton::clicked, [&](){
+		exportSetting(JsonfileCategory::Advanced_Setting);
+	});
+	connect(importSettingPB, &QPushButton::clicked, [=](){
+		importSetting(JsonfileCategory::Advanced_Setting);
+	});
+
+	QGridLayout* gridLayout = new QGridLayout();
+	/*QHBoxLayout *h1Layout = new QHBoxLayout;
 	QHBoxLayout *h2Layout = new QHBoxLayout;
-	QVBoxLayout *topLayout = new QVBoxLayout;
+	QHBoxLayout *h3Layout = new QHBoxLayout;*/
+
 
 	updateToFPGAButton->setDisabled(true);
-	h1Layout->addWidget(getFromFPGA);
-	h1Layout->addWidget(updateToFPGAButton);
+	gridLayout->addWidget(getFromFPGA, 0, 0);
+	gridLayout->addWidget(updateToFPGAButton, 0, 1);
 
-	h2Layout->addWidget(outputSettingToFile);
-	h2Layout->addWidget(inputSettingFromFile);
+	gridLayout->addWidget(outputSettingToFile, 1, 0);
+	gridLayout->addWidget(inputSettingFromFile, 1, 1);
 
-	topLayout->addLayout(h1Layout);
-	topLayout->addLayout(h2Layout);
-	topLayout->addWidget(setDefaultValueButton);
-	topLayout->addStretch();
-	ui->NVMPage->setLayout(topLayout);
+	gridLayout->addWidget(exportSettingPB, 2, 0);
+	gridLayout->addWidget(importSettingPB, 2, 1);
+
+	gridLayout->addWidget(setDefaultValueButton, 3, 0, 4, 2);
+	ui->nvmButtonFrame->setLayout(gridLayout);
+
+
+	/*topLayout->addWidget(setDefaultValueButton);
+	topLayout->addStretch();*/
+	//ui->NVMPage->setLayout(gridLayout);
 
 
 
 
 	QGridLayout* glay = new QGridLayout();
-	QVector<SKTWidget *> *tempVector = paramWidgetVector.value(NVM_SETTING_NAME);
+	glay->setMargin(10);
+	glay->setSpacing(5);
 
-	for (int i = 0, j = 0; i < tempVector->size(); i++)
+	QVector<QVector<SKTWidget *>*> *tempVector = paramWidgetVector.value(paramType[1]);
+	QVector<QVector<SKTWidget *> *>::ConstIterator groupIt;
+
+	for (int i = 0; i < tempVector->size(); i++)
 	{
-		SKTWidget *tempWidget = tempVector->at(i);
-		QLabel *num = new QLabel(QString::number(i));
-
-		if (tempWidget->getVisible())
+		QVector<SKTWidget *> *groupSKTWidget = tempVector->at(i);
+		QGridLayout* framGlay = new QGridLayout();
+		QGroupBox *gb1 = new QGroupBox(paramGroupName.value(paramType[1])->value(i));
+		/*QFrame *frame = new QFrame();
+		frame->setFrameShadow(QFrame::Sunken);
+		frame->setFrameShape(QFrame::Panel);*/
+		for (int j = 0, k = 0; j < groupSKTWidget->size(); j++)
 		{
-			glay->addWidget(num, j, 0);
-			tempWidget->addWidgetToGridLayout(glay, j, 1);
-			j++;
-		}
+			SKTWidget *tempWidget = groupSKTWidget->at(j);
+			QLabel *num = new QLabel(QString::number(k));
 
-		//glay->addWidget(temp,i,0);
+			if (tempWidget->getVisible())
+			{
+				framGlay->addWidget(num, k, 0);
+				tempWidget->addWidgetToGridLayout(framGlay, k, 1);
+				k++;
+			}
+
+		}
+		gb1->setLayout(framGlay);
+		glay->addWidget(gb1);
 	}
 	glay->setColumnStretch(1, 0);
 	ui->scrollAreaWidgetContents_2->setLayout(glay);
+
+
+
+	//QGridLayout* glay = new QGridLayout();
+	//QVector<SKTWidget *> *tempVector = paramWidgetVector.value(NVM_SETTING_NAME);
+
+	//for (int i = 0, j = 0; i < tempVector->size(); i++)
+	//{
+	//	SKTWidget *tempWidget = tempVector->at(i);
+	//	QLabel *num = new QLabel(QString::number(i));
+
+	//	if (tempWidget->getVisible())
+	//	{
+	//		glay->addWidget(num, j, 0);
+	//		tempWidget->addWidgetToGridLayout(glay, j, 1);
+	//		j++;
+	//	}
+
+	//	//glay->addWidget(temp,i,0);
+	//}
+	//glay->setColumnStretch(1, 0);
+	//ui->scrollAreaWidgetContents_2->setLayout(glay);
 }
 
 
@@ -2028,253 +2298,500 @@ void Setting3DP::updateRichParameterFromJsonFile(QString type)
 
 
 }
-void Setting3DP::createParamSettingUI(QString type)
+
+//JSON file ===> SKT Widget
+//void Setting3DP::createParamSettingUI(QString type)
+//{
+//	QString _jsonString;
+//	ParamOp::getJsonFiletoString(_jsonString, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");// "C:/Users/TB495076/Documents/BCPware/ParameterUI_STX.txt");
+//
+//	//go for all element's attribute, transform to richparameterset
+//	QVariantMap firstFloor;
+//	QVariantList secondFloorList;
+//	QVariantMap secondFloorMap;
+//	QVariantList thirdFloorList;
+//	QVariantMap thirdFloorMap;
+//	QVariantMap fourthFloorMap;
+//
+//	//QString jsonString;
+//	QJsonDocument jsonDoc;
+//
+//	QJsonParseError error;
+//	jsonDoc = QJsonDocument::fromJson(_jsonString.toUtf8(), &error);
+//	if (error.error == QJsonParseError::NoError)
+//	{
+//		firstFloor = jsonDoc.toVariant().toMap();
+//	}
+//
+//
+//	//********test count execute layers*********************//
+//	QMapIterator<QString, QVariant> ii(jsonDoc.toVariant().toMap());
+//	while (ii.hasNext())
+//	{
+//		ii.next();
+//		if (ii.key() == "categories")
+//		{
+//			secondFloorList = ii.value().toList();
+//			foreach(QVariant secondFloorListValue, secondFloorList)
+//			{
+//				secondFloorMap = secondFloorListValue.toMap();
+//				QVariant categoryName = secondFloorMap.value("name");
+//				if (categoryName == type)
+//				{
+//					thirdFloorList = secondFloorMap.value("parameters").toList();
+//					foreach(QVariant thirdFloorListValue, thirdFloorList)
+//					{
+//						thirdFloorMap = thirdFloorListValue.toMap();
+//						fourthFloorMap = thirdFloorMap.value("control").toMap();
+//
+//						QVariant controlName = fourthFloorMap.value("name");
+//						/*--------------Ui parameter Attribute ---------------------*/
+//						QString tempLabelName = fourthFloorMap.value("label_name").toString();
+//						QString identifyerName = thirdFloorMap.value("name").toString();
+//						QVariant parmaValue = fourthFloorMap.value("value");
+//						int transformType = fourthFloorMap.value("transform_enum").toInt();
+//						QString uiUnit = fourthFloorMap.value("ui_unit").toString();
+//						bool visible = fourthFloorMap.value("visible").toBool();
+//						int highLimit = fourthFloorMap.value("highLimit").toInt();
+//						int lowLimit = fourthFloorMap.value("lowLimit").toInt();
+//						QVariant _defaultValue = fourthFloorMap.value("default");
+//
+//						if (controlName == "SpinBox")
+//						{
+//							//p--labelName--identifyName-- categoryName--, value, uiUnit, transformType, visible, highLimit, lowLimit
+//							SpinBoxWidget_SKX *tempSpinBox = new SpinBoxWidget_SKX(nullptr, tempLabelName, identifyerName, categoryName, parmaValue.toInt(), _defaultValue, uiUnit, transformType, visible, highLimit, lowLimit);
+//							paramWidgetVector.value(type)->push_back(tempSpinBox);
+//							connect(tempSpinBox, &DoubleSpinBox_SKX::parameterChanged, [this]() {
+//								updateToFPGAButton->setEnabled(true);
+//							});
+//
+//						}
+//						if (controlName == "DSpinBox" && (fourthFloorMap.value("transform_enum") > 0))
+//						{
+//							DoubleSpinBox_SKX *tempSpinBox =
+//								new DoubleSpinBox_SKX(nullptr, tempLabelName, identifyerName, categoryName, parmaValue.toDouble(), _defaultValue, uiUnit, transformType, visible, highLimit, lowLimit);
+//							paramWidgetVector.value(type)->push_back(tempSpinBox);
+//
+//							connect(tempSpinBox, &DoubleSpinBox_SKX::parameterChanged, [this]() {
+//								updateToFPGAButton->setEnabled(true);
+//							});
+//
+//						}
+//						else if (controlName == "DSpinBox")
+//						{
+//
+//						}
+//						else if (controlName == "CheckBox")
+//						{
+//
+//						}
+//						else if (controlName == "EnumUI")
+//						{
+//
+//						}
+//						else if (controlName == "FileDialogUI")
+//						{
+//							FileDialog_SKX *tempFileDialog = new FileDialog_SKX(nullptr, tempLabelName, identifyerName, categoryName, parmaValue.toString(), _defaultValue);
+//							paramWidgetVector.value(type)->push_back(tempFileDialog);
+//						}
+//						else if (controlName == "TextfieldUI" || controlName == "TextLabelUI")
+//						{
+//
+//							TextLabelUI_SKX *tempLabelUI =
+//								new TextLabelUI_SKX(nullptr, tempLabelName, identifyerName, categoryName, parmaValue.toString(), _defaultValue);
+//							paramWidgetVector.value(type)->push_back(tempLabelUI);
+//						}
+//						//paramAttrib->setTransformType(fourthFloorMap.value("transform_enum"));
+//						if (fourthFloorMap.value("transform_enum").toInt() > 0)
+//						{
+//							//qDebug() << "JSON Data" << paramAttrib->name() << paramAttrib->transformType();
+//						}
+//
+//
+//					}
+//				}
+//			}
+//		}
+//	}
+//
+//	//connect(this,SIGNAL)
+//}
+
+//JSON file ===> SKT Widget
+void Setting3DP::createParamSettingUI(JsonfileCategory type)
 {
-	QString _jsonString;
-	ParamOp::getJsonFiletoString(_jsonString, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");// "C:/Users/TB495076/Documents/BCPware/ParameterUI_STX.txt");
+	//QString _jsonString;
+	//ParamOp::getJsonFiletoString(_jsonString, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");// "C:/Users/TB495076/Documents/BCPware/ParameterUI_STX.txt");
 
-	//go for all element's attribute, transform to richparameterset
-	QVariantMap firstFloor;
-	QVariantList secondFloorList;
-	QVariantMap secondFloorMap;
-	QVariantList thirdFloorList;
-	QVariantMap thirdFloorMap;
-	QVariantMap fourthFloorMap;
+	////go for all element's attribute, transform to richparameterset
+	//QVariantMap firstFloor;
+	//QVariantList secondFloorList;
+	//QVariantMap secondFloorMap;
+	//QVariantList thirdFloorList;
+	//QVariantMap thirdFloorMap;
+	//QVariantMap fourthFloorMap;
 
-	//QString jsonString;
-	QJsonDocument jsonDoc;
+	////QString jsonString;
+	//QJsonDocument jsonDoc;
 
-	QJsonParseError error;
-	jsonDoc = QJsonDocument::fromJson(_jsonString.toUtf8(), &error);
-	if (error.error == QJsonParseError::NoError)
+	//QJsonParseError error;
+	//jsonDoc = QJsonDocument::fromJson(_jsonString.toUtf8(), &error);
+	//if (error.error == QJsonParseError::NoError)
+	//{
+	//	firstFloor = jsonDoc.toVariant().toMap();
+	//}
+
+
+	QVariant category, categoryList, typeMap, paramList, categoryName;
+	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
+	ParamOp::extractVariantTest(categoryList, category, "categories");
+
+
+	ParamOp::extractVariantTest(typeMap, categoryList, QString(), type);
+	ParamOp::extractVariantTest(categoryName, typeMap, "name");
+	ParamOp::extractVariantTest(paramList, typeMap, "parameters");
+	int i = 0;
+	foreach(QVariant parameterItem, paramList.toList())
 	{
-		firstFloor = jsonDoc.toVariant().toMap();
-	}
+		QVariant groupItemList, parameterName, groupName;
+
+		ParamOp::extractVariantTest(groupItemList, parameterItem, "group");
+		ParamOp::extractVariantTest(groupName, parameterItem, "groupName");
+
+		paramWidgetVector.value(paramType[type])->push_back(new QVector<SKTWidget*>);
+		paramGroupName.value(paramType[type])->insert(i, groupName.toString());
 
 
-	//********test count execute layers*********************//
-	QMapIterator<QString, QVariant> ii(jsonDoc.toVariant().toMap());
-	while (ii.hasNext())
-	{
-		ii.next();
-		if (ii.key() == "categories")
+		foreach(QVariant groupItem, groupItemList.toList())
 		{
-			secondFloorList = ii.value().toList();
-			foreach(QVariant secondFloorListValue, secondFloorList)
+
+
+			QVariant controlMap, defaultValue, enumItem, highValue, lowValue, uiName, label_name, transformValue, ui_unitValue, paramValue, visible, value_TypeValue;
+			ParamOp::extractVariantTest(parameterName, groupItem, "name");
+
+			ParamOp::extractVariantTest(controlMap, groupItem, "control");
+			ParamOp::extractVariantTest(uiName, controlMap, "name");
+			ParamOp::extractVariantTest(defaultValue, controlMap, "default");
+			ParamOp::extractVariantTest(enumItem, controlMap, "enumeration");
+			ParamOp::extractVariantTest(highValue, controlMap, "highLimit");
+			ParamOp::extractVariantTest(lowValue, controlMap, "lowLimit");
+			ParamOp::extractVariantTest(label_name, controlMap, "label_name");
+			ParamOp::extractVariantTest(transformValue, controlMap, "transform_enum");
+			ParamOp::extractVariantTest(ui_unitValue, controlMap, "ui_unit");
+			ParamOp::extractVariantTest(paramValue, controlMap, "value");
+			ParamOp::extractVariantTest(visible, controlMap, "visible");
+			ParamOp::extractVariantTest(value_TypeValue, controlMap, "value_Type");
+
+			if (uiName == "SpinBox")
 			{
-				secondFloorMap = secondFloorListValue.toMap();
-				QVariant categoryName = secondFloorMap.value("name");
-				if (categoryName == type)
-				{
-					thirdFloorList = secondFloorMap.value("parameters").toList();
-					foreach(QVariant thirdFloorListValue, thirdFloorList)
-					{
-						thirdFloorMap = thirdFloorListValue.toMap();
-						fourthFloorMap = thirdFloorMap.value("control").toMap();
-
-						QVariant controlName = fourthFloorMap.value("name");
-						/*--------------Ui parameter Attribute ---------------------*/
-						QString tempLabelName = fourthFloorMap.value("label_name").toString();
-						QString identifyerName = thirdFloorMap.value("name").toString();
-						QVariant parmaValue = fourthFloorMap.value("value");
-						int transformType = fourthFloorMap.value("transform_enum").toInt();
-						QString uiUnit = fourthFloorMap.value("ui_unit").toString();
-						bool visible = fourthFloorMap.value("visible").toBool();
-						int highLimit = fourthFloorMap.value("highLimit").toInt();
-						int lowLimit = fourthFloorMap.value("lowLimit").toInt();
-						QVariant _defaultValue = fourthFloorMap.value("default");
-
-						if (controlName == "SpinBox")
-						{
-							//p--labelName--identifyName-- categoryName--, value, uiUnit, transformType, visible, highLimit, lowLimit
-							SpinBoxWidget_SKX *tempSpinBox = new SpinBoxWidget_SKX(nullptr, tempLabelName, identifyerName, categoryName, parmaValue.toInt(), _defaultValue, uiUnit, transformType, visible, highLimit, lowLimit);
-							paramWidgetVector.value(type)->push_back(tempSpinBox);
-							connect(tempSpinBox, &DoubleSpinBox_SKX::parameterChanged, [this]() {
-								updateToFPGAButton->setEnabled(true);
-							});
-
-						}
-						if (controlName == "DSpinBox" && (fourthFloorMap.value("transform_enum") > 0))
-						{
-							DoubleSpinBox_SKX *tempSpinBox =
-								new DoubleSpinBox_SKX(nullptr, tempLabelName, identifyerName, categoryName, parmaValue.toDouble(), _defaultValue, uiUnit, transformType, visible, highLimit, lowLimit);
-							paramWidgetVector.value(type)->push_back(tempSpinBox);
-
-							connect(tempSpinBox, &DoubleSpinBox_SKX::parameterChanged, [this]() {
-								updateToFPGAButton->setEnabled(true);
-							});
-
-						}
-						else if (controlName == "DSpinBox")
-						{
-
-						}
-						else if (controlName == "CheckBox")
-						{
-
-						}
-						else if (controlName == "EnumUI")
-						{
-
-						}
-						else if (controlName == "FileDialogUI")
-						{
-							FileDialog_SKX *tempFileDialog = new FileDialog_SKX(nullptr, tempLabelName, identifyerName, categoryName, parmaValue.toString(), _defaultValue);
-							paramWidgetVector.value(type)->push_back(tempFileDialog);
-						}
-						else if (controlName == "TextfieldUI" || controlName == "TextLabelUI")
-						{
-
-							TextLabelUI_SKX *tempLabelUI =
-								new TextLabelUI_SKX(nullptr, tempLabelName, identifyerName, categoryName, parmaValue.toString(), _defaultValue);
-							paramWidgetVector.value(type)->push_back(tempLabelUI);
-						}
-						//paramAttrib->setTransformType(fourthFloorMap.value("transform_enum"));
-						if (fourthFloorMap.value("transform_enum").toInt() > 0)
-						{
-							//qDebug() << "JSON Data" << paramAttrib->name() << paramAttrib->transformType();
-						}
+				SpinBoxWidget_SKX *tempSpinBox =
+					new SpinBoxWidget_SKX(nullptr, label_name.toString(), parameterName.toString(), categoryName.toString(), paramValue.toInt(), defaultValue, ui_unitValue.toString(), transformValue.toInt(), visible.toBool(), highValue.toInt(), lowValue.toInt());
 
 
-					}
-				}
+
+				paramWidgetVector.value(paramType[type])->at(i)->push_back(tempSpinBox);
+
+
+
+				connect(tempSpinBox, &DoubleSpinBox_SKX::parameterChanged, [this, tempSpinBox]() {
+					updateToFPGAButton->setEnabled(true);
+
+
+				});
 			}
+			else if (uiName == "DSpinBox" && transformValue.toInt() > 0)
+			{
+				DoubleSpinBox_SKX *tempSpinBox =
+					new DoubleSpinBox_SKX(nullptr, label_name.toString(), parameterName.toString(), categoryName, paramValue, defaultValue, ui_unitValue.toString(), transformValue.toInt(), visible.toBool(), highValue.toInt(), lowValue.toInt());
+
+
+				paramWidgetVector.value(paramType[type])->at(i)->push_back(tempSpinBox);
+
+
+				connect(tempSpinBox, &DoubleSpinBox_SKX::parameterChanged, [this, tempSpinBox]() {
+					updateToFPGAButton->setEnabled(true);
+
+				});
+			}
+			else if (uiName == "DSpinBox")
+			{
+				DoubleSpinBox_SKX *tempSpinBox =
+					new DoubleSpinBox_SKX(nullptr, label_name.toString(), parameterName.toString(), categoryName, paramValue.toDouble(), defaultValue, ui_unitValue.toInt(), 0, visible.toBool(), highValue.toInt(), lowValue.toInt());
+
+
+				paramWidgetVector.value(paramType[type])->at(i)->push_back(tempSpinBox);
+
+
+
+				connect(tempSpinBox, &DoubleSpinBox_SKX::parameterChanged, [this, tempSpinBox]() {
+					updateToFPGAButton->setEnabled(true);
+
+				});
+			}
+			else if (uiName == "CheckBox")
+			{
+				CheckUI_SKX *tempCheckBox =
+					new CheckUI_SKX(nullptr, label_name.toString(), parameterName.toString(), categoryName, paramValue, defaultValue, 0, visible.toBool());
+				paramWidgetVector.value(paramType[type])->at(i)->push_back(tempCheckBox);
+
+				/*connect(tempCheckBox, &CheckUI_SKX::parameterChanged, [this, tempCheckBox]() {
+					tempCheckBox->setChanged(true);
+					});*/
+			}
+			else if (uiName == "EnumUI")
+			{
+
+				EnumUI_SKX *tempEnum = new EnumUI_SKX(nullptr, label_name.toString(), parameterName.toString(), categoryName, paramValue, defaultValue, enumItem, 0, visible.toBool());
+				paramWidgetVector.value(paramType[type])->at(i)->push_back(tempEnum);
+
+				/*connect(tempEnum, &EnumUI_SKX::parameterChanged, [this, tempEnum]() {
+					tempEnum->setChanged(true);
+					});*/
+			}
+			else if (uiName == "FileDialogUI")
+			{
+				FileDialog_SKX *tempFileDialog = new FileDialog_SKX(nullptr, label_name.toString(), parameterName.toString(), categoryName, paramValue.toString(), defaultValue);
+				paramWidgetVector.value(paramType[type])->at(i)->push_back(tempFileDialog);
+				/*connect(tempFileDialog, &FileDialog_SKX::parameterChanged, [this, tempFileDialog]() {
+					tempFileDialog->setChanged(true);
+					});*/
+			}
+			else if (uiName == "TextfieldUI" || uiName.toString() == "TextLabelUI")
+			{
+				TextLabelUI_SKX *tempLabelUI =
+					new TextLabelUI_SKX(nullptr, label_name.toString(), parameterName.toString(), categoryName, paramValue.toString(), defaultValue);
+				paramWidgetVector.value(paramType[type])->at(i)->push_back(tempLabelUI);
+
+				/*connect(tempLabelUI, &TextLabelUI_SKX::parameterChanged, [this, tempLabelUI]() {
+					tempLabelUI->setChanged(true);
+
+					});*/
+
+			}
+
+
+
 		}
+		i++;
 	}
 
-	//connect(this,SIGNAL)
+}
+//Json file === > RichParameterSet
+void Setting3DP::updateJsonFileToRichParameter(JsonfileCategory type)
+{
+	QVariant category, categoryList, typeMap, paramList, categoryName;
+	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
+	ParamOp::extractVariantTest(categoryList, category, "categories");
+
+
+	ParamOp::extractVariantTest(typeMap, categoryList, QString(), type);
+	ParamOp::extractVariantTest(categoryName, typeMap, "name");
+	ParamOp::extractVariantTest(paramList, typeMap, "parameters");
+	int i = 0;
+	foreach(QVariant parameterItem, paramList.toList())
+	{
+		QVariant groupItemList, groupName;
+
+		ParamOp::extractVariantTest(groupItemList, parameterItem, "group");
+
+
+		foreach(QVariant groupItem, groupItemList.toList())
+		{
+
+
+			QVariant identifyerName, controlMap, defaultValue, enumItem, highValue, lowValue, uiName, label_name, transformValue, ui_unitValue, paramValue, visible, value_TypeValue;
+			ParamOp::extractVariantTest(identifyerName, groupItem, "name");
+
+			ParamOp::extractVariantTest(controlMap, groupItem, "control");
+			ParamOp::extractVariantTest(uiName, controlMap, "name");
+			ParamOp::extractVariantTest(defaultValue, controlMap, "default");
+			ParamOp::extractVariantTest(enumItem, controlMap, "enumeration");
+			ParamOp::extractVariantTest(highValue, controlMap, "highLimit");
+			ParamOp::extractVariantTest(lowValue, controlMap, "lowLimit");
+			ParamOp::extractVariantTest(label_name, controlMap, "label_name");
+			ParamOp::extractVariantTest(transformValue, controlMap, "transform_enum");
+			ParamOp::extractVariantTest(ui_unitValue, controlMap, "ui_unit");
+			ParamOp::extractVariantTest(paramValue, controlMap, "value");
+			ParamOp::extractVariantTest(visible, controlMap, "visible");
+			ParamOp::extractVariantTest(value_TypeValue, controlMap, "value_Type");
+
+			if (uiName == "SpinBox")
+			{
+				loadtoWidgetParam->setValue(identifyerName.toString(), IntValue(paramValue.toInt()));
+			}
+			else if (uiName == "DSpinBox" && transformValue.toInt() > 0)
+			{
+				loadtoWidgetParam->setValue(identifyerName.toString(), FloatValue(paramValue.toFloat()));
+			}
+			else if (uiName == "DSpinBox")
+			{
+				loadtoWidgetParam->setValue(identifyerName.toString(), FloatValue(paramValue.toFloat()));
+			}
+			else if (uiName == "CheckBox")
+			{
+				loadtoWidgetParam->setValue(identifyerName.toString(), BoolValue(paramValue.toBool()));
+			}
+			else if (uiName == "EnumUI")
+			{
+				loadtoWidgetParam->setValue(identifyerName.toString(), EnumValue(paramValue.toInt()));
+			}
+			else if (uiName == "FileDialogUI")
+			{
+				loadtoWidgetParam->setValue(identifyerName.toString(), StringValue(paramValue.toString()));
+			}
+			else if (uiName == "TextfieldUI" || uiName.toString() == "TextLabelUI")
+			{
+				loadtoWidgetParam->setValue(identifyerName.toString(), StringValue(paramValue.toString()));
+			}
+
+
+
+		}
+		i++;
+	}
+
+
+
+
 }
 
-void Setting3DP::updateTOFile()
+// UI_Value==>Json File
+void Setting3DP::updateUIToJsonFile(JsonfileCategory type)
 {
-	QString categoryName;// = item->getCategoryParam().toString();
+
 	QString paramName;// = item->getNameParam().toString();
 	QString paramValue;// = item->getValueParam().toString();
 	QString ui_typeValue;// = item->getUi_typeParam().toString();	
-
-	QVariantMap firstFloor;
-	QVariantList secondFloorList;
-	QVariantMap secondFloorMap;
-	QVariantList thirdFloorList;
-	QVariantMap thirdFloorMap;
-	QVariantMap fourthFloorMap;
 
 	QJsonDocument jsonDoc;
 	QJsonParseError error;
 	QString _jsonString;
 	//ParamOp::getJsonFiletoString(paramJsonString, DMShopFilesystem::workingDir().filePath(DM_UI_JSON_FILE));
-	ParamOp::getJsonFiletoString(_jsonString, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");// "C:/Users/TB495076/Documents/BCPware/ParameterUI_STX.txt");
-	jsonDoc = QJsonDocument::fromJson(_jsonString.toUtf8(), &error);
-	if (error.error == QJsonParseError::NoError)
-	{
-		firstFloor = jsonDoc.toVariant().toMap();
-	}
+	//ParamOp::getJsonFiletoString(_jsonString, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");// "C:/Users/TB495076/Documents/BCPware/ParameterUI_STX.txt");
+	QVariant category, categoryList, typeMap, paramList, categoryName;
+
+	if (!ParamOp::extractVariantTest(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt"))
+		return;
+
 
 	//********test count execute layers*********************//
 	//QMapIterator<QString, QVariant> firstFloor_ii(jsonDoc.toVariant().toMap());
 
-	foreach(QString categoryType, paramType){
-		foreach(SKTWidget *widget, *paramWidgetVector.value(categoryType))
+	QVector<QVector<SKTWidget *>*> *groupWidget = paramWidgetVector.value(paramType.at(type));
+	for (int x = 0; x < groupWidget->size(); x++)
+	{
+		QVector<SKTWidget *> *tempVector = groupWidget->at(x);
+		for (int i = 0; i < tempVector->size(); i++)
 		{
-			QMapIterator<QString, QVariant> firstFloor_ii(firstFloor);
-			categoryName = widget->getCategoryName().toString();
-			paramName = widget->getIdentifyName().toString();
+			SKTWidget *tempWidget = tempVector->at(i);
+			//categoryName = tempWidget->getCategoryName().toString();
+			paramName = tempWidget->getIdentifyName().toString();
+			paramValue = tempWidget->getValue().toString();
+			bool changed = tempWidget->getChanged();
 
-			paramValue = widget->getValue().toString();
-			qDebug() << "ParamSet_Value" << widget->getIdentifyName().toString() << widget->getValue().toString();// << item.transformType();
+			ParamOp::extractVariantTest(categoryList, category, "categories");
+			ParamOp::extractVariantTest(typeMap, categoryList, QString(), type);
+			ParamOp::extractVariantTest(paramList, typeMap, "parameters");
 
-			//ui_typeValue = item.uiType().toString();
 			bool valueSet = false;
-			firstFloor_ii.toFront();
-			while (firstFloor_ii.hasNext())
-			{
-				firstFloor_ii.next();
-				if (firstFloor_ii.key() == "categories") {
-					secondFloorList = firstFloor_ii.value().toList();
-					foreach(QVariant secondFloorListValue, secondFloorList)
+			if (changed)
+				for (int j = 0; j < paramList.toList().size(); j++)
+				{
+
+					QVariant groupItemList, groupMap;
+					ParamOp::extractVariantTest(groupMap, paramList.toList(), QString(), j);
+					ParamOp::extractVariantTest(groupItemList, groupMap, "group");
+
+					for (int z = 0; z < groupItemList.toList().size(); z++)
 					{
-						secondFloorMap = secondFloorListValue.toMap();
-						if (secondFloorMap.value("name") == categoryName)
+						QVariant identifyerName, groupItem;
+						ParamOp::extractVariantTest(groupItem, groupItemList, QString(), z);
+						ParamOp::extractVariantTest(identifyerName, groupItem, "name");
+						if (paramName == identifyerName)
 						{
-							thirdFloorList = secondFloorMap.value("parameters").toList();
-							foreach(QVariant thirdFloorListValue, thirdFloorList)
-							{
-								thirdFloorMap = thirdFloorListValue.toMap();
-								if (thirdFloorMap.value("name") == paramName)
-								{
-									/*
-									* Replace data in JsonDocument
-									*/
-									fourthFloorMap = thirdFloorMap.value("control").toMap();
+							QVariant controlMap;
+							ParamOp::extractVariantTest(controlMap, groupItem, "control");
 
-									if (fourthFloorMap["name"] == "DSpinBox")
-									{
-										fourthFloorMap["value"] = paramValue;
+							ParamOp::mergeValue(controlMap, paramValue, "value");
 
-										qDebug() << "fourthFloorMap" << fourthFloorMap["value"];
-									}
-									else
-									{
-										fourthFloorMap["value"] = paramValue;
-										qDebug() << "fourthFloorMap" << fourthFloorMap["label_name"] << fourthFloorMap["value"];
-									}
-									//fourthFloorMap["default"] = paramValue;
+							ParamOp::mergeValue(groupItem, controlMap, "control");
+							ParamOp::mergeValue(groupItemList, groupItem, QString(), z);
 
-									valueSet = true;
+							ParamOp::mergeValue(groupMap, groupItemList, "group");
+							ParamOp::mergeValue(paramList, groupMap, QString(), j);
 
-									thirdFloorMap.insert("control", fourthFloorMap);
-									int thirdFloorlistIndex = thirdFloorList.indexOf(thirdFloorListValue);
-									thirdFloorList.replace(thirdFloorlistIndex, thirdFloorMap);
+							ParamOp::mergeValue(typeMap, paramList, "parameters");
+							ParamOp::mergeValue(categoryList, typeMap, QString(), type);
 
-									secondFloorMap.insert("parameters", thirdFloorList);
-									int secondFloorlistIndex = secondFloorList.indexOf(secondFloorListValue);
-									secondFloorList.replace(secondFloorlistIndex, secondFloorMap);
+							ParamOp::mergeValue(category, categoryList, "categories");
 
-									firstFloor.insert("categories", secondFloorList);
-									qDebug() << "\n";
-									break;
-								}
-
-							}
-
-						}
-						if (valueSet)
-						{
+							valueSet = true;
+							tempWidget->setChanged(false);
 							break;
 						}
 					}
+					if (valueSet)
+						break;
 				}
-			}
+
+
 		}
 	}
+	ParamOp::mergeValue(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
 
 
-	QJsonDocument json = QJsonDocument::fromVariant(firstFloor);
-	QString updateJson(json.toJson(QJsonDocument::Compact));
-	bool test = ParamOp::saveJsonToFileWithPath(updateJson, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
 }
 void Setting3DP::sendNVMPreProcess()
 {
+#if 0
 	/*if (comm == nullptr)
 		qDebug() << "no Server";return*/
 	CMD_Value *cmdvalue = new CMD_Value(comm);
 	/*get NVM value from UI*/
 	QVariantList NVMValueList;
-	QVector<SKTWidget *> *tempVector = paramWidgetVector.value(NVM_SETTING_NAME);
-	for (int i = 0, j = 0; i < tempVector->size(); i++)
-	{
-		SKTWidget *tempWidget = tempVector->at(i);
-		NVMValueList.push_back(tempWidget->getValue());
-		//glay->addWidget(temp,i,0);
+	QVector<QVector<SKTWidget *>*> *groupWidget = paramWidgetVector.value(paramType.at(1));
+	//QVector<SKTWidget *> *tempVector = paramWidgetVector.value(NVM_SETTING_NAME);
+
+	for (int x = 0; x < groupWidget->size(); x++){
+		QVector<SKTWidget *> *tempVector = groupWidget->at(x);
+		for (int i = 0; i < tempVector->size(); i++)
+		{
+			SKTWidget *tempWidget = tempVector->at(i);
+			NVMValueList.push_back(tempWidget->getValue());
+			//glay->addWidget(temp,i,0);
+		}
 	}
 	cmdvalue->getValueFromUI(NVMValueList);
 	bool result = cmdvalue->sendNVMCommand();
 	//qDebug() << result;
+#endif
+
+	CMD_Value *cmdvalue = new CMD_Value(comm);
+	/*get NVM value from UI*/
+	QVector<QVariantList> NVMValueList(5);
+	QVector<QVector<SKTWidget *>*> *groupWidget = paramWidgetVector.value(paramType.at(1));
+	//QVector<SKTWidget *> *tempVector = paramWidgetVector.value(NVM_SETTING_NAME);
+
+	for (int x = 0; x < groupWidget->size(); x++){
+		QVector<SKTWidget *> *tempVector = groupWidget->at(x);
+		for (int i = 0; i < tempVector->size(); i++)
+		{
+			SKTWidget *tempWidget = tempVector->at(i);
+			NVMValueList[x].push_back(tempWidget->getValue());
+			//glay->addWidget(temp,i,0);
+		}
+	}
+	cmdvalue->getValueFromUI(NVMValueList);
+	bool result = cmdvalue->sendNVMCommand();
+	//qDebug() << result;
+
+
+
 	/*result update to file*/
 	//if (true)
 	if (result)
 	{
-		updateTOFile();
+		updateUIToJsonFile(Advanced_Setting);
 		updateToFPGAButton->setDisabled(true);
 	}
 	else
@@ -2289,158 +2806,147 @@ void Setting3DP::getNVMFromFPGA()
 	CMD_Value *cmdvalue = new CMD_Value(comm);
 	cmdvalue->getNVMValue();
 
-	/*update to UI from JsonFile*/
-	updateUIFromJsonFile();
+	/*update UI from JsonFile*/
+	updateUIFromJsonFile(JsonfileCategory::Advanced_Setting);
 
 }
 
-bool Setting3DP::updateUIFromJsonFile(){
+bool Setting3DP::updateUIFromJsonFile(JsonfileCategory _category){
 
-	QVariantList NVMValueList;
+	QVariantMap NVMValueList;
 	QVariant category;
 
 	QVariant advancedMap, firstList, paramList;
 	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
 	ParamOp::extractVariantTest(firstList, category, "categories");
-	ParamOp::extractVariantTest(advancedMap, firstList, QString(), 1);
+	ParamOp::extractVariantTest(advancedMap, firstList, QString(), _category);
 	ParamOp::extractVariantTest(paramList, advancedMap, "parameters");
 
 	for (int i = 0; i < paramList.toList().size(); i++)
 	{
-		QVariant paramAttributeMap;
-		QVariant paramName, paramControl;
-		QVariant paramValue;
-		ParamOp::extractVariantTest(paramAttributeMap, paramList, QString(), i);
 
-		ParamOp::extractVariantTest(paramName, paramAttributeMap, "name");
-		ParamOp::extractVariantTest(paramControl, paramAttributeMap, "control");
 
-		ParamOp::extractVariantTest(paramValue, paramControl, "value");
-		if (!paramName.isNull())
-			NVMValueList.push_back(paramValue);
+		QVariant paramValue, identifyerName;
 
-	}
 
-	QVector<SKTWidget *> *tempVector = paramWidgetVector.value(NVM_SETTING_NAME);
-	if (NVMValueList.size() == tempVector->size())
-	{
-		for (int i = 0, j = 0; i < tempVector->size(); i++)
+		//int group
+
+		QVariant groupItemList, groupName;
+
+		ParamOp::extractVariantTest(groupItemList, paramList.toList().at(i), "group");
+
+		int countGroupItem = 0;
+		foreach(QVariant groupItem, groupItemList.toList())
 		{
-			SKTWidget *tempWidget = tempVector->at(i);
-			tempWidget->setValue(NVMValueList.at(i));
-			tempWidget->updateUIValue(tempWidget->getValue());
+
+			QVariant controlMap, value_TypeValue;
+			ParamOp::extractVariantTest(identifyerName, groupItem, "name");
+
+			ParamOp::extractVariantTest(controlMap, groupItem, "control");
+			ParamOp::extractVariantTest(paramValue, controlMap, "value");
+
+			if (!identifyerName.isNull())
+			{
+				QVector<QVector<SKTWidget *>*> *groupWidget = paramWidgetVector.value(paramType[_category]);
+				QVector<SKTWidget *> *tempWidgets = groupWidget->at(i);
+				tempWidgets->at(countGroupItem)->updateUIValue(paramValue);
+			}
+			else
+			{
+				qDebug() << "identifyerName.isNull()";
+			}
+			countGroupItem++;
+
 		}
-	}
-	else
-	{
-		return false;
+
+
+
+
+
+
 	}
 
 	return true;
 }
 
 // Json file ===> RichParameterSet
-void Setting3DP::createRichParamfromJdoc(QString type, RichParameterSet *currentParamSet)
+void Setting3DP::createRichParamfromJdoc(JsonfileCategory type, RichParameterSet *currentParamSet)
 {
-	/*createRichParamfromJdoc*/
-	QString _jsonString;
-	ParamOp::getJsonFiletoString(_jsonString, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");// "C:/Users/TB495076/Documents/BCPware/ParameterUI_STX.txt");
+	QVariant category, categoryList, typeMap, paramList, categoryName;
+	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
+	ParamOp::extractVariantTest(categoryList, category, "categories");
 
-	//go for all element's attribute, transform to richparameterset
-	QVariantMap firstFloor;
-	QVariantList secondFloorList;
-	QVariantMap secondFloorMap;
-	QVariantList thirdFloorList;
-	QVariantMap thirdFloorMap;
-	QVariantMap fourthFloorMap;
 
-	//QString jsonString;
-	QJsonDocument jsonDoc;
-
-	QJsonParseError error;
-	jsonDoc = QJsonDocument::fromJson(_jsonString.toUtf8(), &error);
-	if (error.error == QJsonParseError::NoError)
+	ParamOp::extractVariantTest(typeMap, categoryList, QString(), type);
+	ParamOp::extractVariantTest(categoryName, typeMap, "name");
+	ParamOp::extractVariantTest(paramList, typeMap, "parameters");
+	int i = 0;
+	foreach(QVariant parameterItem, paramList.toList())
 	{
-		firstFloor = jsonDoc.toVariant().toMap();
-	}
+		QVariant groupItemList, groupName;
+
+		ParamOp::extractVariantTest(groupItemList, parameterItem, "group");
 
 
-	//********test count execute layers*********************//
-	QMapIterator<QString, QVariant> ii(jsonDoc.toVariant().toMap());
-	while (ii.hasNext())
-	{
-		ii.next();
-		if (ii.key() == "categories")
+		foreach(QVariant groupItem, groupItemList.toList())
 		{
-			secondFloorList = ii.value().toList();
-			foreach(QVariant secondFloorListValue, secondFloorList)
+
+
+			QVariant identifyerName, controlMap, defaultValue, enumItem, highValue, lowValue, uiName, label_name, transformValue, ui_unitValue, paramValue, visible, value_TypeValue;
+			ParamOp::extractVariantTest(identifyerName, groupItem, "name");
+
+			ParamOp::extractVariantTest(controlMap, groupItem, "control");
+			ParamOp::extractVariantTest(uiName, controlMap, "name");
+			ParamOp::extractVariantTest(defaultValue, controlMap, "default");
+			ParamOp::extractVariantTest(enumItem, controlMap, "enumeration");
+			ParamOp::extractVariantTest(highValue, controlMap, "highLimit");
+			ParamOp::extractVariantTest(lowValue, controlMap, "lowLimit");
+			ParamOp::extractVariantTest(label_name, controlMap, "label_name");
+			ParamOp::extractVariantTest(transformValue, controlMap, "transform_enum");
+			ParamOp::extractVariantTest(ui_unitValue, controlMap, "ui_unit");
+			ParamOp::extractVariantTest(paramValue, controlMap, "value");
+			ParamOp::extractVariantTest(visible, controlMap, "visible");
+			ParamOp::extractVariantTest(value_TypeValue, controlMap, "value_Type");
+
+			if (uiName == "SpinBox")
 			{
-				secondFloorMap = secondFloorListValue.toMap();
-				QVariant categoryName = secondFloorMap.value("name");
-				if (categoryName == type)
-				{
-					thirdFloorList = secondFloorMap.value("parameters").toList();
-					foreach(QVariant thirdFloorListValue, thirdFloorList)
-					{
-						thirdFloorMap = thirdFloorListValue.toMap();
-						fourthFloorMap = thirdFloorMap.value("control").toMap();
-
-						QVariant controlName = fourthFloorMap.value("name");
-						/*--------------Ui parameter Attribute ---------------------*/
-						QString tempLabelName = fourthFloorMap.value("label_name").toString();
-						QString identifyerName = thirdFloorMap.value("name").toString();
-						QVariant parmaValue = fourthFloorMap.value("value");
-						int transformType = fourthFloorMap.value("transform_enum").toInt();
-						QString uiUnit = fourthFloorMap.value("ui_unit").toString();
-						bool visible = fourthFloorMap.value("visible").toBool();
-						int highLimit = fourthFloorMap.value("highLimit").toInt();
-						int lowLimit = fourthFloorMap.value("lowLimit").toInt();
-
-						QStringList enumList = fourthFloorMap.value("enumeration").toStringList();
-
-						QVariant _defaultValue = fourthFloorMap.value("default");
-
-						if (controlName == "SpinBox")
-						{
-							//p--labelName--identifyName-- categoryName--, value, uiUnit, transformType, visible, highLimit, lowLimit
-							currentParamSet->addParam(new RichInt(identifyerName, parmaValue.toInt(), "", ""));
-						}
-
-						else if (controlName == "DSpinBox")
-						{
-							currentParamSet->addParam(new RichFloat(identifyerName, parmaValue.toFloat()));
-						}
-						else if (controlName == "CheckBox")
-						{
-							currentParamSet->addParam(new RichBool(identifyerName, parmaValue.toBool(), "", ""));
-						}
-						else if (controlName == "EnumUI")
-						{
-							currentParamSet->addParam(new RichEnum(identifyerName, parmaValue.toInt(), enumList));
-						}
-						else if (controlName == "FileDialogUI")
-						{
-							currentParamSet->addParam(new RichString(identifyerName, parmaValue.toString()));
-						}
-						else if (controlName == "TextfieldUI" || controlName == "TextLabelUI")
-						{
-							currentParamSet->addParam(new RichString(identifyerName, parmaValue.toString()));
-						}
-						//paramAttrib->setTransformType(fourthFloorMap.value("transform_enum"));
-						if (fourthFloorMap.value("transform_enum").toInt() > 0)
-						{
-							//qDebug() << "JSON Data" << paramAttrib->name() << paramAttrib->transformType();
-						}
-
-					}
-				}
+				currentParamSet->addParam(new RichInt(identifyerName.toString(), paramValue.toInt(), "", ""));
 			}
+			else if (uiName == "DSpinBox" && transformValue.toInt() > 0)
+			{
+				currentParamSet->addParam(new RichFloat(identifyerName.toString(), paramValue.toFloat()));
+			}
+			else if (uiName == "DSpinBox")
+			{
+				currentParamSet->addParam(new RichFloat(identifyerName.toString(), paramValue.toFloat()));
+			}
+			else if (uiName == "CheckBox")
+			{
+				currentParamSet->addParam(new RichBool(identifyerName.toString(), paramValue.toBool(), "", ""));
+			}
+			else if (uiName == "EnumUI")
+			{
+				currentParamSet->addParam(new RichEnum(identifyerName.toString(), paramValue.toInt(), enumItem.toStringList()));
+			}
+			else if (uiName == "FileDialogUI")
+			{
+				currentParamSet->addParam(new RichString(identifyerName.toString(), paramValue.toString()));
+			}
+			else if (uiName == "TextfieldUI" || uiName.toString() == "TextLabelUI")
+			{
+				currentParamSet->addParam(new RichString(identifyerName.toString(), paramValue.toString()));
+			}
+
+
+
 		}
+		i++;
 	}
+
 }
 
 // RichParameterSet ===> JsonFile, Create Printer_Setting( Slice Setting )Json file from RichParameter   
-void Setting3DP::createPrinterSetting_FromRichParameter(int listNum,QString type, RichParameterSet *currentParamSet)
+void Setting3DP::createPrinterSetting_FromRichParameter(int listNum, QString type, RichParameterSet *currentParamSet)
 {
 	/*for output*/
 	QList<RichParameter*>::const_iterator fpli;
@@ -2471,7 +2977,7 @@ void Setting3DP::createPrinterSetting_FromRichParameter(int listNum,QString type
 			ParamOp::mergeValue(contorlMap, (*fpli)->pd->defVal->getBool(), "default");
 			ParamOp::mergeValue(contorlMap, QVariant(), "enumeration");
 			ParamOp::mergeValue(contorlMap, QVariant(), "highLimit");
-			ParamOp::mergeValue(contorlMap, QVariant(), "label_name");
+			ParamOp::mergeValue(contorlMap, (*fpli)->name, "label_name");
 			ParamOp::mergeValue(contorlMap, QVariant(), "lowLimit");
 			ParamOp::mergeValue(contorlMap, "CheckBox", "name");
 			ParamOp::mergeValue(contorlMap, QVariant(), "spinStep");
@@ -2480,6 +2986,8 @@ void Setting3DP::createPrinterSetting_FromRichParameter(int listNum,QString type
 			ParamOp::mergeValue(contorlMap, (*fpli)->val->getBool(), "value");
 			ParamOp::mergeValue(contorlMap, QVariant(), "value_Type");
 			ParamOp::mergeValue(contorlMap, "true", "visible");
+			ParamOp::mergeValue(contorlMap, "0", "group");
+			ParamOp::mergeValue(contorlMap, "", "groupName");
 
 
 
@@ -2491,7 +2999,7 @@ void Setting3DP::createPrinterSetting_FromRichParameter(int listNum,QString type
 			ParamOp::mergeValue(contorlMap, (*fpli)->pd->defVal->getEnum(), "default");
 			ParamOp::mergeValue(contorlMap, enumList, "enumeration");
 			ParamOp::mergeValue(contorlMap, QVariant(), "highLimit");
-			ParamOp::mergeValue(contorlMap, QVariant(), "label_name");
+			ParamOp::mergeValue(contorlMap, (*fpli)->name, "label_name");
 			ParamOp::mergeValue(contorlMap, QVariant(), "lowLimit");
 			ParamOp::mergeValue(contorlMap, "EnumUI", "name");
 			ParamOp::mergeValue(contorlMap, QVariant(), "spinStep");
@@ -2500,13 +3008,15 @@ void Setting3DP::createPrinterSetting_FromRichParameter(int listNum,QString type
 			ParamOp::mergeValue(contorlMap, (*fpli)->val->getEnum(), "value");
 			ParamOp::mergeValue(contorlMap, QVariant(), "value_Type");
 			ParamOp::mergeValue(contorlMap, "true", "visible");
+			ParamOp::mergeValue(contorlMap, "0", "group");
+			ParamOp::mergeValue(contorlMap, "", "groupName");
 		}
 		else if ((*fpli)->val->isInt())
 		{
 			ParamOp::mergeValue(contorlMap, (*fpli)->pd->defVal->getInt(), "default");
 			ParamOp::mergeValue(contorlMap, QVariant(), "enumeration");
 			ParamOp::mergeValue(contorlMap, QVariant(), "highLimit");
-			ParamOp::mergeValue(contorlMap, QVariant(), "label_name");
+			ParamOp::mergeValue(contorlMap, (*fpli)->name, "label_name");
 			ParamOp::mergeValue(contorlMap, QVariant(), "lowLimit");
 			ParamOp::mergeValue(contorlMap, "SpinBox", "name");
 			ParamOp::mergeValue(contorlMap, QVariant(), "spinStep");
@@ -2515,13 +3025,15 @@ void Setting3DP::createPrinterSetting_FromRichParameter(int listNum,QString type
 			ParamOp::mergeValue(contorlMap, (*fpli)->val->getInt(), "value");
 			ParamOp::mergeValue(contorlMap, QVariant(), "value_Type");
 			ParamOp::mergeValue(contorlMap, "true", "visible");
+			ParamOp::mergeValue(contorlMap, "0", "group");
+			ParamOp::mergeValue(contorlMap, "", "groupName");
 		}
 		else if ((*fpli)->val->isFloat())
 		{
 			ParamOp::mergeValue(contorlMap, (*fpli)->pd->defVal->getFloat(), "default");
 			ParamOp::mergeValue(contorlMap, QVariant(), "enumeration");
 			ParamOp::mergeValue(contorlMap, QVariant(), "highLimit");
-			ParamOp::mergeValue(contorlMap, QVariant(), "label_name");
+			ParamOp::mergeValue(contorlMap, (*fpli)->name, "label_name");
 			ParamOp::mergeValue(contorlMap, QVariant(), "lowLimit");
 			ParamOp::mergeValue(contorlMap, "DSpinBox", "name");
 			ParamOp::mergeValue(contorlMap, QVariant(), "spinStep");
@@ -2530,13 +3042,15 @@ void Setting3DP::createPrinterSetting_FromRichParameter(int listNum,QString type
 			ParamOp::mergeValue(contorlMap, (*fpli)->val->getFloat(), "value");
 			ParamOp::mergeValue(contorlMap, QVariant(), "value_Type");
 			ParamOp::mergeValue(contorlMap, "true", "visible");
+			ParamOp::mergeValue(contorlMap, "0", "group");
+			ParamOp::mergeValue(contorlMap, "", "groupName");
 		}
 		else if ((*fpli)->val->isString())
 		{
 			ParamOp::mergeValue(contorlMap, (*fpli)->pd->defVal->getString(), "default");
 			ParamOp::mergeValue(contorlMap, QVariant(), "enumeration");
 			ParamOp::mergeValue(contorlMap, QVariant(), "highLimit");
-			ParamOp::mergeValue(contorlMap, QVariant(), "label_name");
+			ParamOp::mergeValue(contorlMap, (*fpli)->name, "label_name");
 			ParamOp::mergeValue(contorlMap, QVariant(), "lowLimit");
 			ParamOp::mergeValue(contorlMap, "TextfieldUI", "name");
 			ParamOp::mergeValue(contorlMap, QVariant(), "spinStep");
@@ -2545,6 +3059,8 @@ void Setting3DP::createPrinterSetting_FromRichParameter(int listNum,QString type
 			ParamOp::mergeValue(contorlMap, (*fpli)->val->getString(), "value");
 			ParamOp::mergeValue(contorlMap, QVariant(), "value_Type");
 			ParamOp::mergeValue(contorlMap, "true", "visible");
+			ParamOp::mergeValue(contorlMap, "0", "group");
+			ParamOp::mergeValue(contorlMap, "", "groupName");
 		}
 
 		else if ((*fpli)->name == "Palette_Language")
@@ -2567,4 +3083,138 @@ void Setting3DP::createPrinterSetting_FromRichParameter(int listNum,QString type
 	ParamOp::mergeValue(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
 
 	//////////
+}
+
+bool Setting3DP::exportSetting(JsonfileCategory category)
+{
+
+	QVector<QVector<SKTWidget *>*> *groupWidget = paramWidgetVector.value(paramType[category]);
+	QVariant categoryMap = QVariantMap();
+	QVariant categoryList = QVariantList();
+	for (int i = 0; i < groupWidget->size(); i++)
+	{
+		QVector<SKTWidget*> *tempWidgets = groupWidget->at(i);
+		QVariant groupItemMap = QVariantMap();
+		QString groupName = QString("group_%1").arg(i);
+		QVariant valueMap = QVariantMap();
+		foreach(SKTWidget* sktwidget, *tempWidgets)
+		{
+			ParamOp::mergeValue(valueMap, sktwidget->getValue(), sktwidget->getIdentifyName().toString());
+		}
+		ParamOp::mergeValue(groupItemMap, valueMap, groupName);
+		ParamOp::mergeValue(categoryList, groupItemMap, QString(), -1);
+	}
+	ParamOp::mergeValue(categoryMap, categoryList, paramType[category]);
+
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Save Setting File"), getDocumentFolder(), tr("Setting (*.sjs);"));
+
+
+	if (!fileName.isNull())
+	{
+		if (ParamOp::mergeValue(categoryMap, QVariant(), QString(), -1, fileName))
+			return true;
+		else return false;
+	}
+
+
+}
+bool Setting3DP::importSetting(JsonfileCategory type)
+{
+	//for every setting, update widget value
+	QString filePath = QFileDialog::getOpenFileName(this, tr("Get Setting"), getDocumentFolder(), "Setting (*.sjs);");
+	QVariant category, categoryList, typeMap, paramList, categoryName;
+	if (!filePath.isNull()){
+
+
+		ParamOp::extractVariantTest(category, QVariant(), QString(), -1, filePath);
+		QMapIterator<QString, QVariant> ii(category.toMap());
+		while (ii.hasNext())
+		{
+			ii.next();
+			QVariant categoryTypeList, groupList;
+			ParamOp::extractVariantTest(categoryTypeList, category, ii.key());
+			for (int i = 0; i < categoryTypeList.toList().size(); i++)
+			{
+				QVariant groupItem;
+				ParamOp::extractVariantTest(groupItem, categoryTypeList.toList(), QString(), i);
+				QMapIterator<QString, QVariant> ii2(groupItem.toMap());
+				while (ii2.hasNext()){
+					ii2.next();
+					QVariant groupItemMap;
+					ParamOp::extractVariantTest(groupItemMap, groupItem, ii2.key());
+					QMapIterator<QString, QVariant> ii3(groupItemMap.toMap());
+					while (ii3.hasNext()){
+						ii3.next();
+						updateValueToUI(ii.key(), i, ii3.key(), ii3.value());
+					}
+
+				}
+
+			}
+
+
+		}
+
+
+
+	}
+
+
+
+	return true;
+}
+
+bool Setting3DP::updateValueToUI(QString category, int group, QString valueName, QVariant value)
+{
+	QVector<SKTWidget *> *uiGroup = paramWidgetVector.value(category)->at(group);
+	foreach(SKTWidget *tempwidget, *uiGroup)
+	{
+		qDebug() << "tempwidget->getIdentifyName()" << tempwidget->getIdentifyName();
+		if (valueName == tempwidget->getIdentifyName())
+		{
+			tempwidget->updateUIValue(value);
+			return true;
+		}
+	}
+	return false;
+}
+
+
+
+void Setting3DP::ui_set_default_from_current_value(JsonfileCategory category)
+{
+	QVector<QVector<SKTWidget *>*> *groupWidget = paramWidgetVector.value(paramType[category]);
+	for (int i = 0; i < groupWidget->size(); i++)
+	{
+		QVector<SKTWidget*> *tempWidgets = groupWidget->at(i);
+		foreach(SKTWidget* temp, *tempWidgets)
+		{
+			temp->setDefaultValue(temp->getValue());
+		}
+	}
+}
+void Setting3DP::ui_set_value_from_default(JsonfileCategory category)
+{
+	QVector<QVector<SKTWidget *>*> *groupWidget = paramWidgetVector.value(paramType[category]);
+	for (int i = 0; i < groupWidget->size(); i++)
+	{
+		QVector<SKTWidget*> *tempWidgets = groupWidget->at(i);
+		foreach(SKTWidget* temp, *tempWidgets)
+		{
+			temp->updateUIValue(temp->getDefaultValue());
+		}
+	}
+}
+QVariant Setting3DP::getWidgetValue(JsonfileCategory category, QString paramName)
+{
+	QVector<QVector<SKTWidget *>*> *groupWidget = paramWidgetVector.value(paramType[category]);
+	for (int i = 0; i < groupWidget->size(); i++)
+	{
+		QVector<SKTWidget*> *tempWidgets = groupWidget->at(i);
+		foreach(SKTWidget* temp, *tempWidgets)
+		{
+			if (paramName == temp->getIdentifyName())
+				return temp->getValue();
+		}
+	}
 }

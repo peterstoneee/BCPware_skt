@@ -1,13 +1,106 @@
->>> 1>>> Enter: Comm3DP::openProc  Clock: 173
-<<< 1<<< Leave: Comm3DP::openProc  Clock: 308  (comm3DP.cpp:376)
->>> 1>>> Enter: Comm3DP::Comm3DP  Clock: 3308
-<<< 1<<< Leave: Comm3DP::Comm3DP  Clock: 3314  (comm3DP.cpp:201)
->>> 1>>> Enter: Comm3DP::printerStatus  Clock: 3314
->>> 2>>> Enter: Comm3DP::catchResponse  Clock: 3314
-    2  | Bytes received: 30 (comm3DP.cpp:341)
+>>> 1>>> Enter: Comm3DP::openProc  Clock: 182
+<<< 1<<< Leave: Comm3DP::openProc  Clock: 293  (comm3DP.cpp:376)
+>>> 1>>> Enter: Comm3DP::Comm3DP  Clock: 3295
+<<< 1<<< Leave: Comm3DP::Comm3DP  Clock: 3459  (comm3DP.cpp:201)
+>>> 1>>> Enter: Comm3DP::printerStatus  Clock: 3459
+>>> 2>>> Enter: Comm3DP::catchResponse  Clock: 3459
+    2  | Bytes received: 38 (comm3DP.cpp:341)
     2  | a complete response is collected (comm3DP.cpp:345)
     2  | vvvvvvvvvv Response is catched completely vvvvvvvvvvv
-GettingError/Error_no_printer
+Json_CMD_NVM_Reading/Error_no_printer
          ^^^^^^^^^^^^^^^^^^^(DATA END)^^^^^^^^^^^^^^^^^^^^ (comm3DP.cpp:352)
-<<< 2<<< Leave: Comm3DP::catchResponse  Clock: 3346  (comm3DP.cpp:353)
-<<< 1<<< Leave: Comm3DP::printerStatus  Clock: 3346  (comm3DP.cpp:435)
+<<< 2<<< Leave: Comm3DP::catchResponse  Clock: 3477  (comm3DP.cpp:353)
+<<< 1<<< Leave: Comm3DP::printerStatus  Clock: 3477  (comm3DP.cpp:435)
+>>> 1>>> Enter: Comm3DP::GetNVMValue  Clock: 26249
+>>> 2>>> Enter: Comm3DP::catchResponse  Clock: 26249
+    2  | Bytes received: 231 (comm3DP.cpp:341)
+    2  | a complete response is collected (comm3DP.cpp:345)
+    2  | vvvvvvvvvv Response is catched completely vvvvvvvvvvv
+1_1 Model_Name: DM_BJM_TEST
+1_2 Version: POC
+1_3 SN: AAA-111-AAA-111
+1_4 FPGA_Version: FPGA_v1.0.1_PP
+1_5 Sirius_Version: Sirius_v1.0.0_PP_R3_XYZ
+1_6 FPGA_Checksum: FFFFFFFF
+1_7 FPGA_Usercode: 00000000
+1_8 Checksum_1_M: FFFFD72A
+
+
+         ^^^^^^^^^^^^^^^^^^^(DATA END)^^^^^^^^^^^^^^^^^^^^ (comm3DP.cpp:352)
+<<< 2<<< Leave: Comm3DP::catchResponse  Clock: 27265  (comm3DP.cpp:353)
+x   1  | command is not send... (comm3DP.cpp:3814)
+<<< 1<<< Leave: Comm3DP::GetNVMValue  Clock: 27265  (comm3DP.cpp:3815)
+>>> 1>>> Enter: Comm3DP::GetNVMValue  Clock: 59894
+>>> 2>>> Enter: Comm3DP::catchResponse  Clock: 59894
+    2  | Bytes received: 231 (comm3DP.cpp:341)
+    2  | a complete response is collected (comm3DP.cpp:345)
+    2  | vvvvvvvvvv Response is catched completely vvvvvvvvvvv
+1_1 Model_Name: DM_BJM_TEST
+1_2 Version: POC
+1_3 SN: AAA-111-AAA-111
+1_4 FPGA_Version: FPGA_v1.0.1_PP
+1_5 Sirius_Version: Sirius_v1.0.0_PP_R3_XYZ
+1_6 FPGA_Checksum: FFFFFFFF
+1_7 FPGA_Usercode: 00000000
+1_8 Checksum_1_M: FFFFD72A
+
+
+         ^^^^^^^^^^^^^^^^^^^(DATA END)^^^^^^^^^^^^^^^^^^^^ (comm3DP.cpp:352)
+<<< 2<<< Leave: Comm3DP::catchResponse  Clock: 60928  (comm3DP.cpp:353)
+x   1  | command is not send... (comm3DP.cpp:3814)
+<<< 1<<< Leave: Comm3DP::GetNVMValue  Clock: 60928  (comm3DP.cpp:3815)
+>>> 1>>> Enter: Comm3DP::GetNVMValue  Clock: 300271
+>>> 2>>> Enter: Comm3DP::catchResponse  Clock: 300272
+    2  | Bytes received: 231 (comm3DP.cpp:341)
+    2  | a complete response is collected (comm3DP.cpp:345)
+    2  | vvvvvvvvvv Response is catched completely vvvvvvvvvvv
+1_1 Model_Name: DM_BJM_TEST
+1_2 Version: POC
+1_3 SN: AAA-111-AAA-111
+1_4 FPGA_Version: FPGA_v1.0.1_PP
+1_5 Sirius_Version: Sirius_v1.0.0_PP_R3_XYZ
+1_6 FPGA_Checksum: FFFFFFFF
+1_7 FPGA_Usercode: 00000000
+1_8 Checksum_1_M: FFFFD72A
+
+
+         ^^^^^^^^^^^^^^^^^^^(DATA END)^^^^^^^^^^^^^^^^^^^^ (comm3DP.cpp:352)
+<<< 2<<< Leave: Comm3DP::catchResponse  Clock: 301293  (comm3DP.cpp:353)
+x   1  | command is not send... (comm3DP.cpp:3814)
+<<< 1<<< Leave: Comm3DP::GetNVMValue  Clock: 301293  (comm3DP.cpp:3815)
+>>> 1>>> Enter: Comm3DP::SendJSONCmd  Clock: 531725
+>>> 2>>> Enter: Comm3DP::catchResponse  Clock: 531725
+    2  | Bytes received: 3 (comm3DP.cpp:341)
+    2  | a complete response is collected (comm3DP.cpp:345)
+    2  | vvvvvvvvvv Response is catched completely vvvvvvvvvvv
+OK
+         ^^^^^^^^^^^^^^^^^^^(DATA END)^^^^^^^^^^^^^^^^^^^^ (comm3DP.cpp:352)
+<<< 2<<< Leave: Comm3DP::catchResponse  Clock: 535403  (comm3DP.cpp:353)
+<<< 1<<< Leave: Comm3DP::SendJSONCmd  Clock: 535403  (comm3DP.cpp:3600)
+>>> 1>>> Enter: Comm3DP::SendJSONCmd  Clock: 561255
+>>> 2>>> Enter: Comm3DP::catchResponse  Clock: 561255
+    2  | Bytes received: 3 (comm3DP.cpp:341)
+    2  | a complete response is collected (comm3DP.cpp:345)
+    2  | vvvvvvvvvv Response is catched completely vvvvvvvvvvv
+OK
+         ^^^^^^^^^^^^^^^^^^^(DATA END)^^^^^^^^^^^^^^^^^^^^ (comm3DP.cpp:352)
+<<< 2<<< Leave: Comm3DP::catchResponse  Clock: 564334  (comm3DP.cpp:353)
+<<< 1<<< Leave: Comm3DP::SendJSONCmd  Clock: 564334  (comm3DP.cpp:3600)
+>>> 1>>> Enter: Comm3DP::SendJSONCmd  Clock: 578089
+>>> 2>>> Enter: Comm3DP::catchResponse  Clock: 578090
+    2  | Bytes received: 3 (comm3DP.cpp:341)
+    2  | a complete response is collected (comm3DP.cpp:345)
+    2  | vvvvvvvvvv Response is catched completely vvvvvvvvvvv
+OK
+         ^^^^^^^^^^^^^^^^^^^(DATA END)^^^^^^^^^^^^^^^^^^^^ (comm3DP.cpp:352)
+<<< 2<<< Leave: Comm3DP::catchResponse  Clock: 578111  (comm3DP.cpp:353)
+<<< 1<<< Leave: Comm3DP::SendJSONCmd  Clock: 578111  (comm3DP.cpp:3600)
+>>> 1>>> Enter: Comm3DP::SendJSONCmd  Clock: 587068
+>>> 2>>> Enter: Comm3DP::catchResponse  Clock: 587068
+    2  | Bytes received: 3 (comm3DP.cpp:341)
+    2  | a complete response is collected (comm3DP.cpp:345)
+    2  | vvvvvvvvvv Response is catched completely vvvvvvvvvvv
+OK
+         ^^^^^^^^^^^^^^^^^^^(DATA END)^^^^^^^^^^^^^^^^^^^^ (comm3DP.cpp:352)
+<<< 2<<< Leave: Comm3DP::catchResponse  Clock: 587078  (comm3DP.cpp:353)
+<<< 1<<< Leave: Comm3DP::SendJSONCmd  Clock: 587078  (comm3DP.cpp:3600)
