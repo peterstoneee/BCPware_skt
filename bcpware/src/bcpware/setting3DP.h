@@ -169,12 +169,13 @@ public:
 		hlayout->addWidget(spinBox);
 		this->setLayout(hlayout);
 
-		connect(spinBox, SIGNAL(valueChanged(int)), this, SIGNAL(parameterChanged()));
+		//connect(spinBox, SIGNAL(valueChanged(int)), this, SIGNAL(parameterChanged()));
 		connect(spinBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, [&](int _widget_value) {
 			setValue(_widget_value);
 			setChanged(true);
 			label->setStyleSheet("QLabel {  color : red; }");
 			qDebug() << "spinBox"<<getValue();
+			emit parameterChanged();
 		});
 	}
 	void addWidgetToGridLayout(QGridLayout* lay, const int r, const int c) 
@@ -234,12 +235,13 @@ public:
 		hlayout->addWidget(spinBox);
 		this->setLayout(hlayout);
 
-		connect(spinBox, SIGNAL(valueChanged(double)), this, SIGNAL(parameterChanged()));
+		//connect(spinBox, SIGNAL(valueChanged(double)), this, SIGNAL(parameterChanged()));
 		connect(spinBox, static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this, [&](double _widget_value) {
 			setValue(transformDataFromUIToFPGA(_widget_value, getTransformType()));
 			setChanged(true);
 			label->setStyleSheet("QLabel {  color : red; }");
 			qDebug() << "doublespinbox" << getValue();
+			emit parameterChanged();
 		});
 	}
 	void addWidgetToGridLayout(QGridLayout* lay, const int r, const int c)
@@ -335,13 +337,14 @@ public:
 		this->setLayout(hlayout);		
 
 
-		connect(labelValue, SIGNAL(textChanged(QString)), this, SIGNAL(parameterChanged()));
+		//connect(labelValue, SIGNAL(textChanged(QString)), this, SIGNAL(parameterChanged()));
 
 		connect(labelValue, &QLineEdit::textChanged, this, [&](const QString _widget_value) {
 			setValue(_widget_value);
 			setChanged(true);
 			qDebug() << label->text() << "TextLabelUI_SKX" << getValue();
 			label->setStyleSheet("QLabel {  color : red; }");
+			emit parameterChanged();
 		});
 
 
@@ -382,12 +385,13 @@ public:
 		hlayout->addWidget(comboBox);
 		this->setLayout(hlayout);
 
-		connect(comboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(parameterChanged()));
+		//connect(comboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(parameterChanged()));
 		connect(comboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [&](int _widget_value) {
 			setValue(_widget_value);
 			setChanged(true);
 			label->setStyleSheet("QLabel {  color : red; }");
 			qDebug() << "QComboBox" << getValue();
+			emit parameterChanged();
 		});
 	}
 	void addWidgetToGridLayout(QGridLayout* lay, const int r,const int c)
@@ -482,6 +486,8 @@ public:
 			valueLabel->setText(filePath);
 			setValue(filePath);
 			setChanged(true);
+			label->setStyleSheet("QLabel {  color : red; }");
+			emit parameterChanged();
 
 		});
 
@@ -499,7 +505,11 @@ public:
 	}
 	void updateUIValue(QVariant _value)
 	{
-		//labelValue->setText(_value.toString());
+		valueLabel->setText(_value.toString());
+		setValue(_value);
+		setChanged(true);
+		label->setStyleSheet("QLabel {  color : red; }");
+		emit parameterChanged();
 	}
 private:
 	QLabel *label;
@@ -640,6 +650,7 @@ private:
 	bool importSetting(JsonfileCategory);
 	bool updateValueToUI(QString,int,QString,QVariant);
 	QVariant getWidgetValue(JsonfileCategory,QString);
+	SKTWidget * getWidget(JsonfileCategory, QString);
 
 	QMap<QString, QVector<QVector<SKTWidget *> *> *> paramWidgetVector;
 	QMap<QString, QMap<int , QString> *> paramGroupName;

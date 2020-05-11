@@ -131,7 +131,7 @@ QListView::item:hover {
     </rect>
    </property>
    <property name="currentIndex">
-    <number>7</number>
+    <number>4</number>
    </property>
    <widget class="QWidget" name="general_page">
     <widget class="QFrame" name="frame_12">
@@ -2891,7 +2891,7 @@ QListView::item:hover {
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-329</y>
         <width>528</width>
         <height>1065</height>
        </rect>

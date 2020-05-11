@@ -33,7 +33,7 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 	ui->retranslateUi(this);
 	ui->listWidget->setCurrentRow(0);
 	ui->SliceSettingPage->setEnabled(false);
-	ui->NVMPage->setEnabled(false);
+	//ui->NVMPage->setEnabled(false);
 	initWidgetParam();
 	initDefaultSetting();
 	ui->label_3->setVisible(false);
@@ -57,8 +57,8 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 		item = ui->listWidget->item(4);
 		item->setHidden(true);
 
-		item = ui->listWidget->item(5);
-		item->setHidden(true);
+		/*item = ui->listWidget->item(5);
+		item->setHidden(true);*/
 
 		ui->stackedWidget->widget(3)->hide();
 		ui->stackedWidget->widget(3)->setHidden(true);
@@ -66,8 +66,8 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 		ui->stackedWidget->widget(4)->hide();
 		ui->stackedWidget->widget(4)->setHidden(true);
 
-		ui->stackedWidget->widget(5)->hide();
-		ui->stackedWidget->widget(5)->setHidden(true);
+		/*ui->stackedWidget->widget(5)->hide();
+		ui->stackedWidget->widget(5)->setHidden(true);*/
 
 
 		//ui->stackedWidget->setCurrentWidget(ui->SliceSettingPage);
@@ -453,10 +453,71 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 	create_PP352_Page();
 	create_Common_Page();
 
+	connect(getWidget(Common_Setting_ca, "TARGET_PRINTER"), &SKTWidget::parameterChanged, [this]() {
+		if (getWidgetValue(Common_Setting_ca, "TARGET_PRINTER") == 0)
+		{
+			qDebug() << "pp350";
+			ui->stackedWidget->widget(7)->setHidden(true);
+			ui->stackedWidget->widget(5)->setHidden(true);
+
+			QListWidgetItem *item = ui->listWidget->item(3);
+			item->setHidden(true);
+
+			item = ui->listWidget->item(6);
+			item->setHidden(false);
+
+			item = ui->listWidget->item(7);
+			item->setHidden(true);
+
+			item = ui->listWidget->item(5);
+			item->setHidden(true);
+
+			//ui->stackedWidget->setCurrentWidget(ui->general_page);
+		}
+		else
+		{
+			ui->stackedWidget->widget(6)->setHidden(true);
+			//ui->stackedWidget->widget(5)->setHidden(false);
+			qDebug() << "pp352";
+
+			QListWidgetItem *item = ui->listWidget->item(3);
+			item->setHidden(true);
+
+			item = ui->listWidget->item(6);
+			item->setHidden(true);
+
+			item = ui->listWidget->item(7);
+			item->setHidden(false);
+
+			item = ui->listWidget->item(5);
+			item->setHidden(false);
+
+			//ui->stackedWidget->setCurrentWidget(ui->general_page);
+		}
+	});
+
+	connect(getWidget(PP350_SETTING_ca, "COLOR_MODE"), &SKTWidget::parameterChanged, [this]() {
+		QVariant colormodeValue = getWidgetValue(PP350_SETTING_ca, "COLOR_MODE");
+		switch (colormodeValue.toInt())
+		{
+		case 0:
+			qDebug() << "pp350";
+			getWidget(PP350_SETTING_ca, "COLOR_PROFILE")->updateUIValue(PicaApplication::getRoamingDir() + "/ColorProfile/CMY_54_64_93c05to0_m05to0_y1to0_c295to245_m36to29_y505to415_c6to4_m8-7.icm");
+			break;
+		case 1:
+			getWidget(PP350_SETTING_ca, "COLOR_PROFILE")->updateUIValue(PicaApplication::getRoamingDir() + "/ColorProfile/ECI2002CMYKEyeOneL_siriusCMY_73_76_91_large_paperGray_1ti_coveron_lightPlus20.icm");
+			//ui->stackedWidget->setCurrentWidget(ui->general_page);
+			break;
+		}
+		
+	});
+
+
 	if (getWidgetValue(Common_Setting_ca, "TARGET_PRINTER") == 0)
 	{
 		qDebug() << "pp350";
 		ui->stackedWidget->widget(7)->setHidden(true);
+		ui->stackedWidget->widget(5)->setHidden(true);
 
 		QListWidgetItem *item = ui->listWidget->item(3);
 		item->setHidden(true);
@@ -464,12 +525,15 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 		item = ui->listWidget->item(7);
 		item->setHidden(true);
 
+		item = ui->listWidget->item(5);
+		item->setHidden(true);
 
 
 	}
 	else
 	{
 		ui->stackedWidget->widget(6)->setHidden(true);
+		//ui->stackedWidget->widget(5)->setHidden(false);
 		qDebug() << "pp352";
 
 		QListWidgetItem *item = ui->listWidget->item(3);
@@ -479,8 +543,12 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 		item->setHidden(true);
 
 
-	}
+		item = ui->listWidget->item(5);
+		item->setHidden(false);
 
+
+	}
+	ui->stackedWidget->setCurrentWidget(ui->general_page);
 
 	//createPrinterSettingPage();
 
@@ -2113,13 +2181,13 @@ void Setting3DP::createNVMPage()
 	gridLayout->addWidget(getFromFPGA, 0, 0);
 	gridLayout->addWidget(updateToFPGAButton, 0, 1);
 
-	gridLayout->addWidget(outputSettingToFile, 1, 0);
-	gridLayout->addWidget(inputSettingFromFile, 1, 1);
+	//gridLayout->addWidget(outputSettingToFile, 1, 0);
+	//gridLayout->addWidget(inputSettingFromFile, 1, 1);
 
-	gridLayout->addWidget(exportSettingPB, 2, 0);
-	gridLayout->addWidget(importSettingPB, 2, 1);
+	gridLayout->addWidget(exportSettingPB, 1, 0);
+	gridLayout->addWidget(importSettingPB, 1, 1);
 
-	gridLayout->addWidget(setDefaultValueButton, 3, 0, 4, 2);
+	gridLayout->addWidget(setDefaultValueButton, 2, 0, 3, 2);
 	ui->nvmButtonFrame->setLayout(gridLayout);
 
 
@@ -3099,7 +3167,8 @@ bool Setting3DP::exportSetting(JsonfileCategory category)
 		QVariant valueMap = QVariantMap();
 		foreach(SKTWidget* sktwidget, *tempWidgets)
 		{
-			ParamOp::mergeValue(valueMap, sktwidget->getValue(), sktwidget->getIdentifyName().toString());
+			//ParamOp::mergeValue(valueMap, sktwidget->getValue(), sktwidget->getIdentifyName().toString());
+			ParamOp::mergeValue(valueMap, "", sktwidget->getIdentifyName().toString());
 		}
 		ParamOp::mergeValue(groupItemMap, valueMap, groupName);
 		ParamOp::mergeValue(categoryList, groupItemMap, QString(), -1);
@@ -3215,6 +3284,19 @@ QVariant Setting3DP::getWidgetValue(JsonfileCategory category, QString paramName
 		{
 			if (paramName == temp->getIdentifyName())
 				return temp->getValue();
+		}
+	}
+}
+SKTWidget* Setting3DP::getWidget(JsonfileCategory category, QString paramName)
+{
+	QVector<QVector<SKTWidget *>*> *groupWidget = paramWidgetVector.value(paramType[category]);
+	for (int i = 0; i < groupWidget->size(); i++)
+	{
+		QVector<SKTWidget*> *tempWidgets = groupWidget->at(i);
+		foreach(SKTWidget* temp, *tempWidgets)
+		{
+			if (paramName == temp->getIdentifyName())
+				return temp;
 		}
 	}
 }
