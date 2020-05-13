@@ -34,7 +34,7 @@ bool ParamOp::saveJsonToFile(QString jsonString, QString fileName)
 	}
 	return true;
 }
-bool ParamOp::saveJsonToFileWithPath(QString jsonString, QString fileName)
+bool ParamOp::saveStringToFileWithPath(QString jsonString, QString fileName)
 {
 	QFile outfile(fileName);
 
@@ -460,11 +460,20 @@ bool ParamOp::mergeValue(QVariant &highLevelValue, QVariant insertValue, QString
 		highLevelValue = temp;
 		return true;
 	}
+	else if ((QMetaType::QString == static_cast<QMetaType::Type>(highLevelValue.type()))
+		 && docFileName.isNull())
+	{
+		QJsonDocument jsonDoc = QJsonDocument::fromVariant(insertValue);
+		QString updateJson(jsonDoc.toJson(QJsonDocument::Compact));
+		highLevelValue = updateJson;
+		if (!updateJson.isEmpty())
+			return true;
+	}
     else if ( !docFileName.isNull() )
 	{
 		QJsonDocument jsonDoc = QJsonDocument::fromVariant(highLevelValue);
 		QString updateJson(jsonDoc.toJson(QJsonDocument::Compact));
-		if (ParamOp::saveJsonToFileWithPath(updateJson, docFileName))
+		if (ParamOp::saveStringToFileWithPath(updateJson, docFileName))
 			return true;
 
 	}

@@ -26,7 +26,8 @@
 #include <QtGlobal>
 
 #define TRANSFER_SWITCH 0
-
+QString Setting3DP::paramFileLocation = getDocumentFolder() + "ParameterUI_STX.txt";
+QString Setting3DP::decodeParamString;
 Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *parent) :QDialog(parent), ui(new Ui::setting3DP_UI), loadtoWidgetParam(currParm)
 {
 	ui->setupUi(this);
@@ -426,6 +427,7 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 
 	this->setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint);
 	/*---------------create New UI-----------------------------------------------------*/
+	
 	paramType << "Basic_Setting" << "Advanced_Setting" << "PP350_Settings" << "PP352_Settings" << "Common_Setting";
 	foreach(QString ca, paramType)
 	{
@@ -433,6 +435,27 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 		paramGroupName.insert(ca, new QMap<int, QString>);
 	}
 
+	/*QString paramJsonString;
+	ParamOp::getJsonFiletoString(paramJsonString, BCPwareFileSystem::parameterFilePath());
+	QString encryptString = BCPwareFileSystem::encryptParam(paramJsonString);
+	ParamOp::saveStringToFileWithPath(encryptString, BCPwareFileSystem::documentDir().filePath("parameter_setting.zxb"));
+
+	QString outputString;
+	BCPwareFileSystem::decodeParam(outputString, QString(), BCPwareFileSystem::documentDir().filePath("parameter_setting.zxb"));*/
+
+	connect(ui->open_encryptFile, &QPushButton::clicked, [=](){
+		QString decodefilePath = QFileDialog::getOpenFileName(this, tr("Get Color Profile"), BCPwareFileSystem::documentDir().absolutePath(), "decode file (*.zxb;)");
+		QString outputstring;
+		BCPwareFileSystem::decodeParam(outputstring, QString(), decodefilePath);
+
+		ui->decodeText->setText(outputstring);
+		
+	});
+
+	BCPwareFileSystem::decodeParam(decodeParamString, QString(), BCPwareFileSystem::parameterFilePath());
+	connect(this, &Setting3DP::jsonFileChanged, [this]{
+		BCPwareFileSystem::decodeParam(decodeParamString, QString(), BCPwareFileSystem::parameterFilePath());
+	});
 
 	createParamSettingUI(Advanced_Setting);
 	createParamSettingUI(PP350_SETTING_ca);
@@ -1467,7 +1490,7 @@ void Setting3DP::getaccept()
 	updateUIToJsonFile(JsonfileCategory::PP350_SETTING_ca);
 	updateUIToJsonFile(JsonfileCategory::PP352_SETTING_ca);
 	updateUIToJsonFile(JsonfileCategory::Common_Setting_ca);
-
+	emit jsonFileChanged();
 
 	updateJsonFileToRichParameter(JsonfileCategory::PP350_SETTING_ca);
 	updateJsonFileToRichParameter(JsonfileCategory::PP352_SETTING_ca);
@@ -2090,7 +2113,7 @@ void Setting3DP::create_PP352_Page()
 	{
 		QVector<SKTWidget *> *groupSKTWidget = tempVector->at(i);
 		QGridLayout* framGlay = new QGridLayout();
-		QGroupBox *gb1 = new QGroupBox(paramGroupName.value(paramType[1])->value(i));
+		QGroupBox *gb1 = new QGroupBox(paramGroupName.value(paramType[PP352_SETTING_ca])->value(i));
 		/*QFrame *frame = new QFrame();
 		frame->setFrameShadow(QFrame::Sunken);
 		frame->setFrameShape(QFrame::Panel);*/
@@ -2255,7 +2278,7 @@ void Setting3DP::createNVMPage()
 	//ui->scrollAreaWidgetContents_2->setLayout(glay);
 }
 
-
+//deprecated function
 void Setting3DP::updateRichParameterFromJsonFile(QString type)
 {
 
@@ -2269,7 +2292,7 @@ void Setting3DP::updateRichParameterFromJsonFile(QString type)
 
 	/*createRichParamfromJdoc*/
 	QString _jsonString;
-	ParamOp::getJsonFiletoString(_jsonString, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");// "C:/Users/TB495076/Documents/BCPware/ParameterUI_STX.txt");
+	ParamOp::getJsonFiletoString(_jsonString, paramFileLocation);// "C:/Users/TB495076/Documents/BCPware/ParameterUI_STX.txt");
 
 	//go for all element's attribute, transform to richparameterset
 	QVariantMap firstFloor;
@@ -2488,30 +2511,14 @@ void Setting3DP::updateRichParameterFromJsonFile(QString type)
 //JSON file ===> SKT Widget
 void Setting3DP::createParamSettingUI(JsonfileCategory type)
 {
-	//QString _jsonString;
-	//ParamOp::getJsonFiletoString(_jsonString, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");// "C:/Users/TB495076/Documents/BCPware/ParameterUI_STX.txt");
-
-	////go for all element's attribute, transform to richparameterset
-	//QVariantMap firstFloor;
-	//QVariantList secondFloorList;
-	//QVariantMap secondFloorMap;
-	//QVariantList thirdFloorList;
-	//QVariantMap thirdFloorMap;
-	//QVariantMap fourthFloorMap;
-
-	////QString jsonString;
-	//QJsonDocument jsonDoc;
-
-	//QJsonParseError error;
-	//jsonDoc = QJsonDocument::fromJson(_jsonString.toUtf8(), &error);
-	//if (error.error == QJsonParseError::NoError)
-	//{
-	//	firstFloor = jsonDoc.toVariant().toMap();
-	//}
-
+	QString outputstring;
+	BCPwareFileSystem::decodeParam(outputstring, QString(), BCPwareFileSystem::parameterFilePath());
 
 	QVariant category, categoryList, typeMap, paramList, categoryName;
-	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
+	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, QString(), decodeParamString);
+	//ParamOp::extractVariantTest(category, QVariant(), QString(), -1, paramFileLocation);
+
+
 	ParamOp::extractVariantTest(categoryList, category, "categories");
 
 
@@ -2648,7 +2655,8 @@ void Setting3DP::createParamSettingUI(JsonfileCategory type)
 void Setting3DP::updateJsonFileToRichParameter(JsonfileCategory type)
 {
 	QVariant category, categoryList, typeMap, paramList, categoryName;
-	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
+	//ParamOp::extractVariantTest(category, QVariant(), QString(), -1, paramFileLocation);
+	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, QString(), decodeParamString);
 	ParamOp::extractVariantTest(categoryList, category, "categories");
 
 
@@ -2731,19 +2739,17 @@ void Setting3DP::updateUIToJsonFile(JsonfileCategory type)
 	QString paramValue;// = item->getValueParam().toString();
 	QString ui_typeValue;// = item->getUi_typeParam().toString();	
 
+
 	QJsonDocument jsonDoc;
 	QJsonParseError error;
 	QString _jsonString;
-	//ParamOp::getJsonFiletoString(paramJsonString, DMShopFilesystem::workingDir().filePath(DM_UI_JSON_FILE));
-	//ParamOp::getJsonFiletoString(_jsonString, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");// "C:/Users/TB495076/Documents/BCPware/ParameterUI_STX.txt");
+	
 	QVariant category, categoryList, typeMap, paramList, categoryName;
 
-	if (!ParamOp::extractVariantTest(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt"))
+	//if (!ParamOp::extractVariantTest(category, QVariant(), QString(), -1, paramFileLocation))
+	if (!ParamOp::extractVariantTest(category, QVariant(), QString(), -1, QString(), decodeParamString))
 		return;
 
-
-	//********test count execute layers*********************//
-	//QMapIterator<QString, QVariant> firstFloor_ii(jsonDoc.toVariant().toMap());
 
 	QVector<QVector<SKTWidget *>*> *groupWidget = paramWidgetVector.value(paramType.at(type));
 	for (int x = 0; x < groupWidget->size(); x++)
@@ -2805,8 +2811,14 @@ void Setting3DP::updateUIToJsonFile(JsonfileCategory type)
 
 		}
 	}
-	ParamOp::mergeValue(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
-
+	
+	//ParamOp::mergeValue(category, QVariant(), QString(), -1, paramFileLocation);
+	/*test encrypt*/
+	//emit signal :  update decode string;
+	QVariant testtemp = QString();
+	ParamOp::mergeValue(testtemp, category);
+	BCPwareFileSystem::encryptParam(testtemp.toString(), QFileInfo(BCPwareFileSystem::parameterFilePath()));
+	emit jsonFileChanged();
 
 }
 void Setting3DP::sendNVMPreProcess()
@@ -2872,20 +2884,28 @@ void Setting3DP::sendNVMPreProcess()
 void Setting3DP::getNVMFromFPGA()
 {
 	CMD_Value *cmdvalue = new CMD_Value(comm);
-	cmdvalue->getNVMValue();
+	if (cmdvalue->getNVMValue())
+	{
+		emit jsonFileChanged();
+		/*update UI from JsonFile*/
+		updateUIFromJsonFile(JsonfileCategory::Advanced_Setting);
 
-	/*update UI from JsonFile*/
-	updateUIFromJsonFile(JsonfileCategory::Advanced_Setting);
+	}
+
+
+
+	
 
 }
-
+//function for NVM setting
 bool Setting3DP::updateUIFromJsonFile(JsonfileCategory _category){
 
 	QVariantMap NVMValueList;
 	QVariant category;
 
 	QVariant advancedMap, firstList, paramList;
-	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
+	//ParamOp::extractVariantTest(category, QVariant(), QString(), -1, paramFileLocation);
+	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, QString(),decodeParamString);
 	ParamOp::extractVariantTest(firstList, category, "categories");
 	ParamOp::extractVariantTest(advancedMap, firstList, QString(), _category);
 	ParamOp::extractVariantTest(paramList, advancedMap, "parameters");
@@ -2941,7 +2961,11 @@ bool Setting3DP::updateUIFromJsonFile(JsonfileCategory _category){
 void Setting3DP::createRichParamfromJdoc(JsonfileCategory type, RichParameterSet *currentParamSet)
 {
 	QVariant category, categoryList, typeMap, paramList, categoryName;
-	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
+	//ParamOp::extractVariantTest(category, QVariant(), QString(), -1, paramFileLocation);
+	QString decodeString;
+	BCPwareFileSystem::decodeParam(decodeString, QString(), BCPwareFileSystem::parameterFilePath());
+
+	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, QString(), decodeString);
 	ParamOp::extractVariantTest(categoryList, category, "categories");
 
 
@@ -3013,7 +3037,7 @@ void Setting3DP::createRichParamfromJdoc(JsonfileCategory type, RichParameterSet
 
 }
 
-// RichParameterSet ===> JsonFile, Create Printer_Setting( Slice Setting )Json file from RichParameter   
+//Deprecated: RichParameterSet ===> JsonFile, Create Printer_Setting( Slice Setting )Json file from RichParameter   
 void Setting3DP::createPrinterSetting_FromRichParameter(int listNum, QString type, RichParameterSet *currentParamSet)
 {
 	/*for output*/
@@ -3024,7 +3048,7 @@ void Setting3DP::createPrinterSetting_FromRichParameter(int listNum, QString typ
 	QVariantList NVMValueList;
 	QVariant category;
 	QVariant printer_setting_map, firstList, paramListDoc;
-	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
+	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, paramFileLocation);
 	ParamOp::extractVariantTest(firstList, category, "categories");
 	ParamOp::extractVariantTest(printer_setting_map, firstList, QString(), listNum);
 	ParamOp::extractVariantTest(paramListDoc, printer_setting_map, "parameters");
@@ -3148,7 +3172,7 @@ void Setting3DP::createPrinterSetting_FromRichParameter(int listNum, QString typ
 
 
 	}
-	ParamOp::mergeValue(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
+	ParamOp::mergeValue(category, QVariant(), QString(), -1, paramFileLocation);
 
 	//////////
 }
@@ -3167,22 +3191,26 @@ bool Setting3DP::exportSetting(JsonfileCategory category)
 		QVariant valueMap = QVariantMap();
 		foreach(SKTWidget* sktwidget, *tempWidgets)
 		{
-			//ParamOp::mergeValue(valueMap, sktwidget->getValue(), sktwidget->getIdentifyName().toString());
-			ParamOp::mergeValue(valueMap, "", sktwidget->getIdentifyName().toString());
+			ParamOp::mergeValue(valueMap, sktwidget->getValue(), sktwidget->getIdentifyName().toString());
+			//ParamOp::mergeValue(valueMap, "", sktwidget->getIdentifyName().toString());
 		}
 		ParamOp::mergeValue(groupItemMap, valueMap, groupName);
 		ParamOp::mergeValue(categoryList, groupItemMap, QString(), -1);
 	}
 	ParamOp::mergeValue(categoryMap, categoryList, paramType[category]);
 
-	QString fileName = QFileDialog::getSaveFileName(this, tr("Save Setting File"), getDocumentFolder(), tr("Setting (*.sjs);"));
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Save Setting File"), getDocumentFolder(), tr("Setting (*.zxb);"));
 
 
 	if (!fileName.isNull())
 	{
-		if (ParamOp::mergeValue(categoryMap, QVariant(), QString(), -1, fileName))
+		/*if (ParamOp::mergeValue(categoryMap, QVariant(), QString(), -1, fileName))
 			return true;
-		else return false;
+		else return false;*/
+		QVariant jsonString = QString();
+		ParamOp::mergeValue(jsonString, categoryMap, QString());
+		BCPwareFileSystem::encryptParam(jsonString.toString(), QFileInfo(fileName));
+		return true;
 	}
 
 
@@ -3190,12 +3218,16 @@ bool Setting3DP::exportSetting(JsonfileCategory category)
 bool Setting3DP::importSetting(JsonfileCategory type)
 {
 	//for every setting, update widget value
-	QString filePath = QFileDialog::getOpenFileName(this, tr("Get Setting"), getDocumentFolder(), "Setting (*.sjs);");
+	QString filePath = QFileDialog::getOpenFileName(this, tr("Get Setting"), getDocumentFolder(), "Setting (*.zxb);");
+
+
 	QVariant category, categoryList, typeMap, paramList, categoryName;
 	if (!filePath.isNull()){
 
+		QString outputstring;
+		BCPwareFileSystem::decodeParam(outputstring, QString(), filePath);
 
-		ParamOp::extractVariantTest(category, QVariant(), QString(), -1, filePath);
+		ParamOp::extractVariantTest(category, QVariant(), QString(), -1, QString(), outputstring);
 		QMapIterator<QString, QVariant> ii(category.toMap());
 		while (ii.hasNext())
 		{

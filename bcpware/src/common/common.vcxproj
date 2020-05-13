@@ -252,6 +252,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="define_some_parameter.cpp" />
     <ClCompile Include="define_some_parameter.h" />
     <ClCompile Include="GLLogStream.cpp" />
     <ClCompile Include="construction_groove.cpp" />

@@ -136,6 +136,9 @@
     <ClCompile Include="Logger_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="define_some_parameter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="GLLogStream.h">

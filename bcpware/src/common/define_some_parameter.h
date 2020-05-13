@@ -32,6 +32,10 @@
 #include <QString>
 #include <QStandardPaths>
 #include <QDateTime>
+#include <QCryptographicHash>
+#include <QDir>
+#include "../bcpware/qaesencryption.h"
+
 
 #define DSP_SOFTWARE_VERSION "1.0.1.0"
 #define DSP_cmmm 10
@@ -113,6 +117,8 @@
 #define FeederZAxisHeight 350
 #define SparePowderHeight 15
 #define SAFE_BUILDER_HEIGHT_WITH_PLATE 120
+
+
 //#define DM_CONSOLE_FILE ""
 
 
@@ -149,10 +155,24 @@ static inline QString getLogFileName()
 }
 
 
-class BCPwareFileSystem{
+class BCPwareFileSystem
+{	
+
+public:
+	static const QString appName();
+	static const QString encryptKey();
+	static const QString parameterFileName();
+	static const QString parameterFilePath();
+	static QDir documentDir();
+
+	static bool encryptParam(QString inputString, QString &outputString);
+	static bool encryptParam(QString inputString, QFileInfo);
+
+	static bool decodeParam(QString &ouputString, QString inputString = QString(), QString filePath = QString());
+	
+	
 
 };
-
 
 
 

@@ -61,7 +61,7 @@ public:
 	static bool setValueToJsonSet(QString &jsonString, QString secondFloor, QVariant value);
 	static bool saveJsonToFile(QString jsonString);
 	static bool saveJsonToFile(QString jsonString, QString saveFileName);
-	static bool saveJsonToFileWithPath(QString jsonString, QString saveFileName);
+	static bool saveStringToFileWithPath(QString jsonString, QString saveFileName);
 	static bool saveStringToFileWithPath(QByteArray jsonString, QString saveFileName);
 	
 

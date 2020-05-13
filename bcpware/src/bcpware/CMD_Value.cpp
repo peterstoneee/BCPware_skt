@@ -1,11 +1,11 @@
 #include "CMD_Value.h"
 
 static std::size_t Checksum_Cal(unsigned short *addr, std::size_t count);
-
+QString CMD_Value::paramFileLocation = getDocumentFolder() + "ParameterUI_STX.txt";
 CMD_Value::CMD_Value(Comm3DP *_comm, QObject *parent) : QObject(parent)/*, comm(_comm)*/, comm(_comm)
 {
 
-	ParamOp::getJsonFiletoString(jsonInputString, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
+	ParamOp::getJsonFiletoString(jsonInputString, paramFileLocation);
 	gatherAdvanced_SettingName();
 	init();
 
@@ -24,7 +24,8 @@ CMD_Value::CMD_Value(Comm3DP *_comm, QObject *parent) : QObject(parent)/*, comm(
 CMD_Value::CMD_Value() : QObject()
 {
 
-	ParamOp::getJsonFiletoString(jsonInputString, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
+	//ParamOp::getJsonFiletoString(jsonInputString, paramFileLocation);
+	BCPwareFileSystem::decodeParam(jsonInputString,QString(),BCPwareFileSystem::parameterFilePath());
 	init();
 }
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -744,7 +745,7 @@ void CMD_Value::init()
 void CMD_Value::updatCMD_valueMap()
 {
 	CMD_valueMap.clear();
-	ParamOp::getJsonFiletoString(jsonInputString, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
+	ParamOp::getJsonFiletoString(jsonInputString, paramFileLocation);
 	init();
 }
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -1146,7 +1147,9 @@ QVariantList CMD_Value::getValuebyName2(QString categoryName, int groupi)
 	/*========================================================================================================================================*/
 
 	QVariant category, categoryList, typeMap, paramList, categoryName_file;
-	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
+	//ParamOp::extractVariantTest(category, QVariant(), QString(), -1, paramFileLocation);
+	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, QString(),jsonInputString);
+	
 	ParamOp::extractVariantTest(categoryList, category, "categories");
 
 	foreach(QVariant categoryItem, categoryList.toList())
@@ -1194,7 +1197,9 @@ void CMD_Value::setValuebyName()//save value to Json File
 	QJsonParseError error;
 
 	QVariant category, categoryList, typeMap, paramList, categoryName;
-	if (!ParamOp::extractVariantTest(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt"))
+	/*if (!ParamOp::extractVariantTest(category, QVariant(), QString(), -1, paramFileLocation))
+		return;*/
+	if (!ParamOp::extractVariantTest(category, QVariant(), QString(), -1, QString(), jsonInputString))
 		return;
 
 	QMapIterator<QVariant, QVariant> NVMiterator(NVM_Map);
@@ -1252,8 +1257,13 @@ void CMD_Value::setValuebyName()//save value to Json File
 		QJsonDocument json = QJsonDocument::fromVariant(category);
 		QString updateJson(json.toJson(QJsonDocument::Compact));
 		jsonInputString = updateJson;
-		ParamOp::mergeValue(category, QVariant(), QString(), -1, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
+		//ParamOp::mergeValue(category, QVariant(), QString(), -1, paramFileLocation);
 
+		//Test encrypt*/
+		QVariant testtemp = QString();
+		ParamOp::mergeValue(testtemp, category);
+		BCPwareFileSystem::encryptParam(testtemp.toString(), QFileInfo(BCPwareFileSystem::parameterFilePath())); 
+		/************************************************************************************************************/
 
 		//while (firstFloor_ii.hasNext())
 		//{
@@ -1308,7 +1318,7 @@ void CMD_Value::setValuebyName()//save value to Json File
 
 	/*QJsonDocument json = QJsonDocument::fromVariant(firstFloor);
 	QString updateJson(json.toJson(QJsonDocument::Compact));
-	ParamOp::saveJsonToFileWithPath(updateJson, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
+	ParamOp::saveStringToFileWithPath(updateJson, PicaApplication::getRoamingDir() + "ParameterUI_STX.txt");
 	jsonInputString = updateJson;*/
 #undef Advanced_SettingListNum
 }

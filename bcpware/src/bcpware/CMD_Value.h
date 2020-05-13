@@ -43,7 +43,7 @@ public:
 	//init without value
 	//CMDValue();
 
-
+	static QString paramFileLocation;
 	CMD_Value();
 
 

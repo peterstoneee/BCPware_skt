@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>931</width>
-    <height>794</height>
+    <height>805</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -120,6 +120,11 @@ QListView::item:hover {
      <string>Common_Setting</string>
     </property>
    </item>
+   <item>
+    <property name="text">
+     <string>decode</string>
+    </property>
+   </item>
   </widget>
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
@@ -131,7 +136,7 @@ QListView::item:hover {
     </rect>
    </property>
    <property name="currentIndex">
-    <number>4</number>
+    <number>9</number>
    </property>
    <widget class="QWidget" name="general_page">
     <widget class="QFrame" name="frame_12">
@@ -2891,7 +2896,7 @@ QListView::item:hover {
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-329</y>
+        <y>0</y>
         <width>528</width>
         <height>1065</height>
        </rect>
@@ -4652,8 +4657,8 @@ QListView::item:hover {
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>607</width>
-          <height>623</height>
+          <width>76</width>
+          <height>16</height>
          </rect>
         </property>
        </widget>
@@ -4712,8 +4717,8 @@ QListView::item:hover {
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>607</width>
-          <height>623</height>
+          <width>76</width>
+          <height>16</height>
          </rect>
         </property>
        </widget>
@@ -4807,7 +4812,7 @@ QListView::item:hover {
           <x>0</x>
           <y>0</y>
           <width>607</width>
-          <height>633</height>
+          <height>623</height>
          </rect>
         </property>
        </widget>
@@ -4830,6 +4835,57 @@ QListView::item:hover {
       </spacer>
      </item>
     </layout>
+   </widget>
+   <widget class="QWidget" name="page">
+    <widget class="QScrollArea" name="scrollArea_7">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>10</y>
+       <width>621</width>
+       <height>671</height>
+      </rect>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents_5">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>619</width>
+        <height>669</height>
+       </rect>
+      </property>
+      <widget class="QTextEdit" name="decodeText">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>60</y>
+         <width>601</width>
+         <height>601</height>
+        </rect>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="open_encryptFile">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>93</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
    </widget>
   </widget>
  </widget>
