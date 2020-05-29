@@ -1,1 +1,37 @@
+#include <windows.h>
+#include "../common/define_version.h"
  IDI_ICON1               ICON    DISCARDABLE     "images/icons/bcp_icon.ico"
+
+VS_VERSION_INFO VERSIONINFO
+	FILEVERSION TEST_VERSION_1,TEST_VERSION_2,TEST_VERSION_3,TEST_VERSION_4
+	PRODUCTVERSION TEST_P_VERSION_1,TEST_P_VERSION_2,TEST_P_VERSION_3,TEST_P_VERSION_4
+	FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+	FILEFLAGS VS_FF_DEBUG
+#else
+	FILEFLAGS 0x0L
+#endif
+	FILEOS VOS__WINDOWS32
+	FILETYPE VFT_DLL
+	FILESUBTYPE 0x0L
+	BEGIN
+		BLOCK "StringFileInfo"
+		BEGIN
+			BLOCK "040904b0"
+			BEGIN
+				VALUE "CompanyName", "\0"
+				VALUE "FileDescription", "\0"
+				VALUE "FileVersion", DSP_SOFTWARE_VERSION
+				VALUE "LegalCopyright", "\0"
+				VALUE "OriginalFilename", DSP_ORIGINAL_FILE_NAME
+				VALUE "ProductName", DSP_PRODUCTION_NAME
+				VALUE "ProductVersion", DSP_SOFTWARE_VERSION
+			END
+		END
+		BLOCK "VarFileInfo"
+		BEGIN
+			VALUE "Translation", 0x0409, 1200
+		END
+	END
+/* End of Version info */
+

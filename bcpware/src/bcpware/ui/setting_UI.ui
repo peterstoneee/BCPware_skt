@@ -136,278 +136,10 @@ QListView::item:hover {
     </rect>
    </property>
    <property name="currentIndex">
-    <number>9</number>
+    <number>10</number>
    </property>
-   <widget class="QWidget" name="general_page">
-    <widget class="QFrame" name="frame_12">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>0</y>
-       <width>331</width>
-       <height>271</height>
-      </rect>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_16">
-      <item row="4" column="0">
-       <widget class="QFrame" name="frame_13">
-        <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Plain</enum>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_17">
-         <item row="0" column="1">
-          <widget class="QLabel" name="offLB">
-           <property name="styleSheet">
-            <string notr="true">font: 75 9pt &quot;Arial&quot;;</string>
-           </property>
-           <property name="text">
-            <string>OFF</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QCheckBox" name="sendUsageCB">
-           <property name="styleSheet">
-            <string notr="true">image: url(:/images/icons/account_background.png);</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checked">
-            <bool>false</bool>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="languageLB">
-        <property name="styleSheet">
-         <string notr="true">font: 75 9pt &quot;Arial&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Language</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QComboBox" name="languageCB">
-        <property name="styleSheet">
-         <string notr="true">font: 75 9pt &quot;Arial&quot;;</string>
-        </property>
-        <item>
-         <property name="text">
-          <string>English</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Japanese</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_3">
-        <property name="styleSheet">
-         <string notr="true">font: 75 9pt &quot;Arial&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Send Usage statistics to XYZprinting</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <spacer name="verticalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="editor_page">
-    <widget class="QFrame" name="frame_10">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>0</y>
-       <width>421</width>
-       <height>191</height>
-      </rect>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_14">
-      <property name="leftMargin">
-       <number>7</number>
-      </property>
-      <property name="topMargin">
-       <number>7</number>
-      </property>
-      <property name="rightMargin">
-       <number>7</number>
-      </property>
-      <property name="bottomMargin">
-       <number>7</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QLabel" name="displayUnitLB">
-        <property name="styleSheet">
-         <string notr="true">font: 75 9pt &quot;Arial&quot;;</string>
-        </property>
-        <property name="text">
-         <string>DisplayUnit</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QComboBox" name="displayUnitCB">
-        <property name="styleSheet">
-         <string notr="true">font: 75 9pt &quot;Arial&quot;;</string>
-        </property>
-        <item>
-         <property name="text">
-          <string>mm</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>inch</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QCheckBox" name="totalFacetCB">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>9</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>When total facet larger than</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="fastRenderingLB">
-        <property name="styleSheet">
-         <string notr="true">font: 75 9pt &quot;Arial&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Fast Rendering</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0">
-       <widget class="QFrame" name="frame_11">
-        <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Plain</enum>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_15">
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item row="0" column="0">
-          <widget class="QLineEdit" name="totalFacetsLE">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="thousandFacetsLB">
-           <property name="styleSheet">
-            <string notr="true">font: 75 9pt &quot;Arial&quot;;</string>
-           </property>
-           <property name="text">
-            <string>facets</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </widget>
-   </widget>
+   <widget class="QWidget" name="general_page"/>
+   <widget class="QWidget" name="editor_page"/>
    <widget class="QWidget" name="Printer_page">
     <widget class="QFrame" name="frame_9">
      <property name="geometry">
@@ -4657,8 +4389,8 @@ QListView::item:hover {
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>76</width>
-          <height>16</height>
+          <width>607</width>
+          <height>623</height>
          </rect>
         </property>
        </widget>
@@ -4717,8 +4449,8 @@ QListView::item:hover {
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>76</width>
-          <height>16</height>
+          <width>607</width>
+          <height>623</height>
          </rect>
         </property>
        </widget>
@@ -4764,8 +4496,8 @@ QListView::item:hover {
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>607</width>
-          <height>623</height>
+          <width>55</width>
+          <height>16</height>
          </rect>
         </property>
        </widget>
@@ -4868,7 +4600,7 @@ QListView::item:hover {
         </rect>
        </property>
        <property name="readOnly">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
       </widget>
       <widget class="QPushButton" name="open_encryptFile">
@@ -4881,10 +4613,291 @@ QListView::item:hover {
         </rect>
        </property>
        <property name="text">
-        <string>PushButton</string>
+        <string>open</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="save_zxb">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>20</y>
+         <width>93</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>save_zxb</string>
        </property>
       </widget>
      </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_2">
+    <widget class="QFrame" name="frame_10">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>60</y>
+       <width>421</width>
+       <height>191</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_14">
+      <property name="leftMargin">
+       <number>7</number>
+      </property>
+      <property name="topMargin">
+       <number>7</number>
+      </property>
+      <property name="rightMargin">
+       <number>7</number>
+      </property>
+      <property name="bottomMargin">
+       <number>7</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="displayUnitLB">
+        <property name="styleSheet">
+         <string notr="true">font: 75 9pt &quot;Arial&quot;;</string>
+        </property>
+        <property name="text">
+         <string>DisplayUnit</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QComboBox" name="displayUnitCB">
+        <property name="styleSheet">
+         <string notr="true">font: 75 9pt &quot;Arial&quot;;</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>mm</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>inch</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QCheckBox" name="totalFacetCB">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>When total facet larger than</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="fastRenderingLB">
+        <property name="styleSheet">
+         <string notr="true">font: 75 9pt &quot;Arial&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Fast Rendering</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QFrame" name="frame_11">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_15">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLineEdit" name="totalFacetsLE">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="thousandFacetsLB">
+           <property name="styleSheet">
+            <string notr="true">font: 75 9pt &quot;Arial&quot;;</string>
+           </property>
+           <property name="text">
+            <string>facets</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QFrame" name="frame_12">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>270</y>
+       <width>331</width>
+       <height>271</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_16">
+      <item row="4" column="0">
+       <widget class="QFrame" name="frame_13">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_17">
+         <item row="0" column="1">
+          <widget class="QLabel" name="offLB">
+           <property name="styleSheet">
+            <string notr="true">font: 75 9pt &quot;Arial&quot;;</string>
+           </property>
+           <property name="text">
+            <string>OFF</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="sendUsageCB">
+           <property name="styleSheet">
+            <string notr="true">image: url(:/images/icons/account_background.png);</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <property name="tristate">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="languageLB">
+        <property name="styleSheet">
+         <string notr="true">font: 75 9pt &quot;Arial&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Language</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QComboBox" name="languageCB">
+        <property name="styleSheet">
+         <string notr="true">font: 75 9pt &quot;Arial&quot;;</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>English</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Japanese</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="styleSheet">
+         <string notr="true">font: 75 9pt &quot;Arial&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Send Usage statistics to XYZprinting</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <spacer name="verticalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </widget>
    </widget>
   </widget>

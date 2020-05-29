@@ -1,13 +1,13 @@
->>> 1>>> Enter: Comm3DP::openProc  Clock: 260
-<<< 1<<< Leave: Comm3DP::openProc  Clock: 503  (comm3DP.cpp:376)
->>> 1>>> Enter: Comm3DP::Comm3DP  Clock: 3504
-<<< 1<<< Leave: Comm3DP::Comm3DP  Clock: 3518  (comm3DP.cpp:201)
->>> 1>>> Enter: Comm3DP::printerStatus  Clock: 3518
->>> 2>>> Enter: Comm3DP::catchResponse  Clock: 3518
+>>> 1>>> Enter: Comm3DP::openProc  Clock: 428
+<<< 1<<< Leave: Comm3DP::openProc  Clock: 545  (comm3DP.cpp:376)
+>>> 1>>> Enter: Comm3DP::Comm3DP  Clock: 3546
+<<< 1<<< Leave: Comm3DP::Comm3DP  Clock: 3697  (comm3DP.cpp:201)
+>>> 1>>> Enter: Comm3DP::printerStatus  Clock: 3697
+>>> 2>>> Enter: Comm3DP::catchResponse  Clock: 3697
     2  | Bytes received: 30 (comm3DP.cpp:341)
     2  | a complete response is collected (comm3DP.cpp:345)
     2  | vvvvvvvvvv Response is catched completely vvvvvvvvvvv
 GettingError/Error_no_printer
          ^^^^^^^^^^^^^^^^^^^(DATA END)^^^^^^^^^^^^^^^^^^^^ (comm3DP.cpp:352)
-<<< 2<<< Leave: Comm3DP::catchResponse  Clock: 3531  (comm3DP.cpp:353)
-<<< 1<<< Leave: Comm3DP::printerStatus  Clock: 3532  (comm3DP.cpp:435)
+<<< 2<<< Leave: Comm3DP::catchResponse  Clock: 3718  (comm3DP.cpp:353)
+<<< 1<<< Leave: Comm3DP::printerStatus  Clock: 3718  (comm3DP.cpp:435)

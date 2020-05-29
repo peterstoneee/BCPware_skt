@@ -58,6 +58,12 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 		item = ui->listWidget->item(4);
 		item->setHidden(true);
 
+		item = ui->listWidget->item(8);
+		item->setHidden(true);
+
+		item = ui->listWidget->item(9);
+		item->setHidden(true);
+
 		/*item = ui->listWidget->item(5);
 		item->setHidden(true);*/
 
@@ -69,6 +75,9 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 
 		/*ui->stackedWidget->widget(5)->hide();
 		ui->stackedWidget->widget(5)->setHidden(true);*/
+
+		ui->stackedWidget->widget(4)->hide();
+		ui->stackedWidget->widget(4)->setHidden(true);
 
 
 		//ui->stackedWidget->setCurrentWidget(ui->SliceSettingPage);
@@ -444,13 +453,23 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 	BCPwareFileSystem::decodeParam(outputString, QString(), BCPwareFileSystem::documentDir().filePath("parameter_setting.zxb"));*/
 
 	connect(ui->open_encryptFile, &QPushButton::clicked, [=](){
-		QString decodefilePath = QFileDialog::getOpenFileName(this, tr("Get Color Profile"), BCPwareFileSystem::documentDir().absolutePath(), "decode file (*.zxb;)");
+		QString encryptfilePath = QFileDialog::getOpenFileName(this, tr("Get encrypt parameter file"), BCPwareFileSystem::documentDir().absolutePath(), "encrypt file (*.zxb;)");
 		QString outputstring;
-		BCPwareFileSystem::decodeParam(outputstring, QString(), decodefilePath);
+		BCPwareFileSystem::decodeParam(outputstring, QString(), encryptfilePath);
 
 		ui->decodeText->setText(outputstring);
 		
 	});
+
+	connect(ui->save_zxb, &QPushButton::clicked, [=](){
+		QString encryptfilePath = QFileDialog::getSaveFileName(this, tr("save to encrypt zxb file"), BCPwareFileSystem::documentDir().absolutePath(), "encrypt file (*.zxb;)");
+		QString outputstring;
+		BCPwareFileSystem::encryptParam(ui->decodeText->toPlainText(), QFileInfo(encryptfilePath));
+
+		
+
+	});
+
 
 	BCPwareFileSystem::decodeParam(decodeParamString, QString(), BCPwareFileSystem::parameterFilePath());
 	connect(this, &Setting3DP::jsonFileChanged, [this]{
@@ -461,6 +480,9 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 	createParamSettingUI(PP350_SETTING_ca);
 	createParamSettingUI(PP352_SETTING_ca);
 	createParamSettingUI(Common_Setting_ca);
+	//TBD : create General Setting UI to replace old one
+	//TBD : create Editor UI to replace old one
+
 
 	if (getWidgetValue(Common_Setting_ca, "TARGET_PRINTER") == 0)
 	{
@@ -474,7 +496,8 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 	createNVMPage();
 	create_PP350_Page();
 	create_PP352_Page();
-	create_Common_Page();
+	//create_Common_Page();
+	create_GeneralAndEditPage();
 
 	connect(getWidget(Common_Setting_ca, "TARGET_PRINTER"), &SKTWidget::parameterChanged, [this]() {
 		if (getWidgetValue(Common_Setting_ca, "TARGET_PRINTER") == 0)
@@ -2174,7 +2197,61 @@ void Setting3DP::create_Common_Page()
 	glay->setColumnStretch(1, 0);
 	ui->common_settingArea->setLayout(glay);
 }
+void Setting3DP::create_GeneralAndEditPage()
+{
+	/**/
+	/**/
 
+	
+
+	QVector<QVector<SKTWidget *>*> *tempVector = paramWidgetVector.value(paramType[4]);
+	QVector<QVector<SKTWidget *> *>::ConstIterator groupIt;
+
+	for (int i = 0; i < tempVector->size(); i++)
+	{
+		QGridLayout* glay = new QGridLayout();
+		glay->setMargin(10);
+		glay->setSpacing(5);
+		
+		QVector<SKTWidget *> *groupSKTWidget = tempVector->at(i);
+		QGridLayout* framGlay = new QGridLayout();
+		
+		framGlay->setSpacing(5);
+		QGroupBox *gb1 = new QGroupBox(paramGroupName.value(paramType[Common_Setting_ca])->value(i));
+
+		for (int j = 0, k = 0; j < groupSKTWidget->size(); j++)
+		{
+			SKTWidget *tempWidget = groupSKTWidget->at(j);
+			QLabel *num = new QLabel(QString::number(k));
+
+			if (tempWidget->getVisible())
+			{
+				framGlay->addWidget(num, k, 0);
+				
+				tempWidget->addWidgetToGridLayout(framGlay, k, 1);
+				k++;
+			}
+
+		}
+		framGlay->setRowStretch(groupSKTWidget->size(), 1);
+		gb1->setLayout(framGlay);
+		glay->addWidget(gb1);
+		
+		switch (i)
+		{
+		case 0:
+			ui->general_page->setLayout(glay);
+			break;
+		case 1:
+			ui->editor_page->setLayout(glay);
+			break;
+
+		}
+
+	}
+	
+	
+}
 void Setting3DP::createNVMPage()
 {
 	updateToFPGAButton = new QPushButton("updateToFPGAButton");

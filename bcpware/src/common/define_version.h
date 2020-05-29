@@ -1,0 +1,14 @@
+#ifndef M_DEFINE_VERSION_H
+#define M_DEFINE_VERSION_H
+#define TEST_VERSION_1 1
+#define TEST_VERSION_2 0
+#define TEST_VERSION_3 1
+#define TEST_VERSION_4 0
+#define TEST_P_VERSION_1 1
+#define TEST_P_VERSION_2 0
+#define TEST_P_VERSION_3 1
+#define TEST_P_VERSION_4 0
+#define DSP_SOFTWARE_VERSION "1.0.1.0\0"
+#define DSP_PRODUCTION_NAME "BCPware\0"
+#define DSP_ORIGINAL_FILE_NAME "BCPware.exe\0"
+#endif

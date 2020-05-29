@@ -64,7 +64,7 @@ public:
 	~PicaApplication(){}
 	//bool notify(QObject * rec, QEvent * ev);
 	//***20150513	
-	static const QString appName(){ return tr("BCPware"); }
+	static const QString appName(){ return tr(DSP_PRODUCTION_NAME); }
 	static const QString architecturalSuffix(const HW_ARCHITECTURE hw) { return "_" + QString::number(int(hw)) + "bit"; }
 	static const QString appArchitecturalName(const HW_ARCHITECTURE hw) { return appName() + architecturalSuffix(hw); }
 	static const QString appVer() {

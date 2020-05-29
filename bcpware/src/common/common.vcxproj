@@ -319,6 +319,7 @@
     </CustomBuild>
     <ClInclude Include="binPacking.h" />
     <ClInclude Include="construction_groove.h" />
+    <ClInclude Include="define_version.h" />
     <ClInclude Include="filterparameter.h" />
     <CustomBuild Include="filterscript.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DGLEW_STATIC -D_CRT_SECURE_NO_WARNINGS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_WIDGETS_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_DLL  "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I." "-I.\..\external\jhead-2.95" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtOpenGL" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXmlPatterns" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtWidgets" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtScript" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtNetwork" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtXml" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtGui" "-IC:\qt\qt5.3.2\5.3\msvc2013_64_opengl\include\QtCore" "-I.\release" "-IC:\Qt\Qt5.3.2\5.3\msvc2013_64_opengl\mkspecs\win32-msvc2013"</Command>

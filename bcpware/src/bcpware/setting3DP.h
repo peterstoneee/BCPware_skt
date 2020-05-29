@@ -644,6 +644,7 @@ private:
 	void create_PP350_Page();
 	void create_PP352_Page();
 	void create_Common_Page();
+	void create_GeneralAndEditPage();
 	
 	void ui_set_default_from_current_value(JsonfileCategory);
 	void ui_set_value_from_default(JsonfileCategory);

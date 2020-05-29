@@ -2587,20 +2587,24 @@ void GLArea::keyPressEvent(QKeyEvent * e)
 			equ[3] += 0.1;
 			bSpin ^= 1;
 			//qDebug() << "equ[3] " << equ[3];
-		};
+		}else
 		if (e->key() == Qt::Key_P)
 		{
 			equ[3] -= 0.1;
 			//qDebug() << "equ[3] " << equ[3];
 
-		};
+		}else
 		if (e->key() == Qt::Key_O)
 		{
 			/*md()->setBusy(true);
 			mw()->createSliceBar();
 			md()->setBusy(false);*/
 
-		};
+		}
+		else if (e->key() == Qt::Key_Escape)
+		{
+			md()->multiSelectID.clear();
+		}
 		mvc()->updateAllViewer();
 
 	}

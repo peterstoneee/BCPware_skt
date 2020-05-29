@@ -35,9 +35,9 @@
 #include <QCryptographicHash>
 #include <QDir>
 #include "../bcpware/qaesencryption.h"
+#include "define_version.h"
 
-
-#define DSP_SOFTWARE_VERSION "1.0.1.0"
+//#define DSP_SOFTWARE_VERSION "1.0.1.0"
 #define DSP_cmmm 10
 #define DSP_inchmm 25.4
 #define DSP_plusPrintLength 134
