@@ -73,6 +73,7 @@
 //#include "ui_congratsDialog.h"
 #include "rendermodeactions.h"
 #include "meshcheck.h"
+#include "widgetStyleSheet.h"
 
 #include "login.h"
 

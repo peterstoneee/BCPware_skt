@@ -29,9 +29,11 @@
 QString Setting3DP::paramFileLocation = getDocumentFolder() + "ParameterUI_STX.txt";
 QString Setting3DP::decodeParamString;
 Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *parent) :QDialog(parent), ui(new Ui::setting3DP_UI), loadtoWidgetParam(currParm)
+, expertsMode(false)
 {
+	this->setAttribute(Qt::WA_DeleteOnClose);
 	ui->setupUi(this);
-	ui->retranslateUi(this);
+	ui->retranslateUi(this);	
 	ui->listWidget->setCurrentRow(0);
 	ui->SliceSettingPage->setEnabled(false);
 	//ui->NVMPage->setEnabled(false);
@@ -55,6 +57,9 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 		QListWidgetItem *item = ui->listWidget->item(3);
 		item->setHidden(true);
 
+		item = ui->listWidget->item(2);
+		item->setHidden(true);
+
 		item = ui->listWidget->item(4);
 		item->setHidden(true);
 
@@ -63,6 +68,8 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 
 		item = ui->listWidget->item(9);
 		item->setHidden(true);
+
+		
 
 		/*item = ui->listWidget->item(5);
 		item->setHidden(true);*/
@@ -89,8 +96,11 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 	switchDM = false;
 
 	mw = _mw;
+	
 	connect(ui->importSamplePushButton, SIGNAL(clicked()), this, SLOT(importSampleFile()));
-	connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(getaccept()));
+	//connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(getaccept()));
+	connect(ui->okButton, SIGNAL(clicked()), this, SLOT(getaccept()));
+	connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
 	//connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(updateTOFile()));
 	connect(ui->sendUsageCB, SIGNAL(clicked()), this, SLOT(sendUsage()));
 	connect(ui->colorProfilePB, SIGNAL(clicked()), this, SLOT(getColorProfile()));
@@ -493,6 +503,56 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 		qDebug() << "pp352";
 	}
 
+	setCurrentToDefault = new QPushButton("ui_set_default_from_current_value");
+	setDefaultToCurrent = new QPushButton("Reset");
+	exportSettingPB = new QPushButton("Export 350 Setting");
+	importSettingPB = new QPushButton("Import 350 Setting");
+	switchExpertSetting = new QCheckBox("Switch Button");
+	pp350g1Layout = new QGridLayout;
+	pp350glay = new QVBoxLayout();
+	//switchExpertSetting->setChecked(false);
+	connect(setCurrentToDefault, &QPushButton::clicked, [=](){
+		ui_set_default_from_current_value(JsonfileCategory::PP350_SETTING_ca);
+	});
+	connect(setDefaultToCurrent, &QPushButton::clicked, [=](){
+		ui_set_value_from_default(JsonfileCategory::PP350_SETTING_ca);
+	});
+	connect(exportSettingPB, &QPushButton::clicked, [&](){
+		exportSetting(JsonfileCategory::PP350_SETTING_ca);
+	});
+	connect(importSettingPB, &QPushButton::clicked, [=](){
+		importSetting(JsonfileCategory::PP350_SETTING_ca);
+	});
+	/*connect(switchExpertSetting, static_cast<void (QCheckBox::*)(int)>(&QCheckBox::stateChanged), [=](int ix)
+	{
+		createParamSettingUI(PP350_SETTING_ca);
+		create_PP350_Page();
+	});*/
+
+	connect(this, &Setting3DP::switchsettingChanged, [&]()
+	{
+		
+		createParamSettingUI(PP350_SETTING_ca);
+		create_PP350_Page();
+		connect(getWidget(PP350_SETTING_ca, "COLOR_MODE"), &SKTWidget::parameterChanged, [this]() {
+			QVariant colormodeValue = getWidgetValue(PP350_SETTING_ca, "COLOR_MODE");
+			switch (colormodeValue.toInt())
+			{
+			case 0:
+				qDebug() << "pp350";
+				getWidget(PP350_SETTING_ca, "COLOR_PROFILE")->updateUIValue(PicaApplication::getRoamingDir() + "/ColorProfile/CMY_54_64_93c05to0_m05to0_y1to0_c295to245_m36to29_y505to415_c6to4_m8-7.icm");
+				break;
+			case 1:
+				getWidget(PP350_SETTING_ca, "COLOR_PROFILE")->updateUIValue(PicaApplication::getRoamingDir() + "/ColorProfile/ECI2002CMYKEyeOneL_siriusCMY_73_76_91_large_paperGray_1ti_coveron_lightPlus20.icm");
+				//ui->stackedWidget->setCurrentWidget(ui->general_page);
+				break;
+			}
+
+		});
+
+	});
+
+
 	createNVMPage();
 	create_PP350_Page();
 	create_PP352_Page();
@@ -500,7 +560,8 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 	create_GeneralAndEditPage();
 
 	connect(getWidget(Common_Setting_ca, "TARGET_PRINTER"), &SKTWidget::parameterChanged, [this]() {
-		if (getWidgetValue(Common_Setting_ca, "TARGET_PRINTER") == 0)
+		QVariant widgetValue = getWidgetValue(Common_Setting_ca, "TARGET_PRINTER");
+		if (widgetValue == 0)
 		{
 			qDebug() << "pp350";
 			ui->stackedWidget->widget(7)->setHidden(true);
@@ -520,7 +581,7 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 
 			//ui->stackedWidget->setCurrentWidget(ui->general_page);
 		}
-		else
+		else if (widgetValue==1)
 		{
 			ui->stackedWidget->widget(6)->setHidden(true);
 			//ui->stackedWidget->widget(5)->setHidden(false);
@@ -707,10 +768,10 @@ void Setting3DP::keyPressEvent(QKeyEvent *e)
 	if (e->matches(QKeySequence::Underline))
 	{
 		switchSetting ^= 1;
-
+		emit switchsettingChanged();
 		if (switchSetting)
 		{
-			QListWidgetItem *item = ui->listWidget->item(3);
+			/*QListWidgetItem *item = ui->listWidget->item(3);
 			item->setHidden(false);
 
 			item = ui->listWidget->item(5);
@@ -727,11 +788,11 @@ void Setting3DP::keyPressEvent(QKeyEvent *e)
 
 			ui->NVMPage->setEnabled(true);
 			ui->NVMPage->setHidden(false);
-			ui->listWidget->setCurrentRow(3);
+			ui->listWidget->setCurrentRow(3);*/
 		}
 		else
 		{
-			QListWidgetItem *item = ui->listWidget->item(3);
+			/*QListWidgetItem *item = ui->listWidget->item(3);
 			item->setHidden(true);
 
 			item = ui->listWidget->item(5);
@@ -749,12 +810,13 @@ void Setting3DP::keyPressEvent(QKeyEvent *e)
 
 			ui->NVMPage->setEnabled(false);
 			ui->NVMPage->setHidden(true);
-			ui->listWidget->setCurrentRow(0);
+			ui->listWidget->setCurrentRow(0);*/
 		}
 	}
 
 	else if (e->matches(QKeySequence::Bold))
 	{
+		/* deprecated
 		switchDM ^= 1;
 		if (switchDM)
 		{
@@ -770,6 +832,31 @@ void Setting3DP::keyPressEvent(QKeyEvent *e)
 			item->setHidden(true);
 			ui->listWidget->setCurrentRow(0);
 		}
+		*/
+		switchDM ^= 1;
+		if (switchDM)
+		{
+			QListWidgetItem *item = ui->listWidget->item(9);
+			item = ui->listWidget->item(9);
+			item->setHidden(false);
+			ui->listWidget->setCurrentRow(9);
+
+			/*item = ui->listWidget->item(4);
+			item->setHidden(false);
+			ui->listWidget->setCurrentRow(4);*/
+
+			//setCurrentToDefault->setHidden(false);
+		}
+		else
+		{
+			QListWidgetItem *item = ui->listWidget->item(9);
+			item = ui->listWidget->item(9);
+			item->setHidden(true);
+			ui->listWidget->setCurrentRow(0);
+			//setCurrentToDefault->setHidden(true);
+		}
+
+
 	}
 
 
@@ -2011,53 +2098,51 @@ void Setting3DP::resetSetting()
 }
 Setting3DP::~Setting3DP()
 {
+	foreach(QString ca, paramType)
+	{
+		QVector<QVector<SKTWidget *> *>  *testtemp = paramWidgetVector.value(ca);
+		for (int i = 0; i < testtemp->size(); i++)
+		{
+			QVector<SKTWidget *> * widgetTmep = testtemp->at(i);
+			for (int j = 0; j < widgetTmep->size(); j++)
+			{
+				//delete widgetTmep->at(j);
+				widgetTmep->at(j)->deleteLater();
+			}widgetTmep->clear();
+		}testtemp->clear();
+	}paramWidgetVector.clear();
+
+
 }
 
 /**********************************************************************************************************************************************************************************************************/
 
 void Setting3DP::create_PP350_Page()
 {
-	QPushButton *setCurrentToDefault = new QPushButton("ui_set_default_from_current_value");
-	QPushButton *setDefaultToCurrent = new QPushButton("ui_set_value_from_default");
-	QPushButton *exportSettingPB = new QPushButton("Export 350 Setting");
-	QPushButton *importSettingPB = new QPushButton("Import 350 Setting");
-	connect(setCurrentToDefault, &QPushButton::clicked, [=](){
-		ui_set_default_from_current_value(JsonfileCategory::PP350_SETTING_ca);
-	});
-	connect(setDefaultToCurrent, &QPushButton::clicked, [=](){
-		ui_set_value_from_default(JsonfileCategory::PP350_SETTING_ca);
-	});
-	connect(exportSettingPB, &QPushButton::clicked, [&](){
-		exportSetting(JsonfileCategory::PP350_SETTING_ca);
-	});
-	connect(importSettingPB, &QPushButton::clicked, [=](){
-		importSetting(JsonfileCategory::PP350_SETTING_ca);
-	});
-
+	
+	
+	QLayoutItem *wItem;
+	while ((wItem = pp350glay->takeAt(0)) != 0)
+		delete wItem->widget();
+	
 	//exportSetting
 
 
-
-	/*QHBoxLayout *h1Layout = new QHBoxLayout;
-	QHBoxLayout *h2Layout = new QHBoxLayout;*/
-	QGridLayout *g1Layout = new QGridLayout;
-
-	//QVBoxLayout *topLayout = new QVBoxLayout;
-
-
-	g1Layout->addWidget(setCurrentToDefault, 0, 0);
-	g1Layout->addWidget(setDefaultToCurrent, 0, 1);
-	g1Layout->addWidget(exportSettingPB, 1, 0);
-	g1Layout->addWidget(importSettingPB, 1, 1);
+	//pp350g1Layout->addWidget(setCurrentToDefault, 0, 0);
+	//pp350g1Layout->addWidget(setDefaultToCurrent, 0, 1);
+	pp350g1Layout->addWidget(setDefaultToCurrent, 0, 0, 1, 2 );
+	pp350g1Layout->addWidget(exportSettingPB, 1, 0);
+	pp350g1Layout->addWidget(importSettingPB, 1, 1);
+	//pp350g1Layout->addWidget(switchExpertSetting, 2, 0, 2, 1);
 	/*topLayout->addLayout(g1Layout);
 	topLayout->addStretch();*/
-	ui->pp350buttonFrame->setLayout(g1Layout);
+	ui->pp350buttonFrame->setLayout(pp350g1Layout);
 
 
 
-	QGridLayout* glay = new QGridLayout();
-	glay->setMargin(10);
-	glay->setSpacing(5);
+	
+	pp350glay->setMargin(10);
+	pp350glay->setSpacing(5);
 
 	QVector<QVector<SKTWidget *>*> *tempVector = paramWidgetVector.value(paramType.at(PP350_SETTING_ca));
 	QVector<QVector<SKTWidget *> *>::ConstIterator groupIt;
@@ -2067,47 +2152,62 @@ void Setting3DP::create_PP350_Page()
 		QVector<SKTWidget *> *groupSKTWidget = tempVector->at(i);
 		QGridLayout* framGlay = new QGridLayout();
 		QGroupBox *groupbox = new QGroupBox(paramGroupName.value(paramType[PP350_SETTING_ca])->value(i));
+		groupbox->setStyleSheet(WidgetStyleSheet::groupBoxStyleSheet());
+		groupbox->setFlat(true);
 		/*QFrame *frame = new QFrame();
 		frame->setFrameShadow(QFrame::Sunken);
 		frame->setFrameShape(QFrame::Panel);*/
 		for (int j = 0, k = 0; j < groupSKTWidget->size(); j++)
 		{
 			SKTWidget *tempWidget = groupSKTWidget->at(j);
-			QLabel *num = new QLabel(QString::number(k));
-
+			QLabel *num = new QLabel(QString::number(k+1));
+			qDebug() << tempWidget->getIdentifyName() << " " << tempWidget->getVisible();
 			if (tempWidget->getVisible())
 			{
-				framGlay->addWidget(num, k, 0);
-				tempWidget->addWidgetToGridLayout(framGlay, k, 1);
-				k++;
+				if (switchSetting)
+				{
+					/*framGlay->addWidget(num, k, 0);
+					framGlay->setColumnStretch(1, 1);
+					tempWidget->addWidgetToGridLayout(framGlay, k, 1, WidgetAlignment);*/
+					tempWidget->addWidgetToGridLayout(framGlay, k, 0, WidgetAlignment);
+					k++;
+					
+				}
+				else
+				{
+					if (!tempWidget->getExpert())
+					{
+						/*//framGlay->addWidget(num, k, 0);
+						framGlay->setColumnStretch(1, 1);
+						tempWidget->addWidgetToGridLayout(framGlay, k, 1, WidgetAlignment);*/
+						tempWidget->addWidgetToGridLayout(framGlay, k, 0, WidgetAlignment);
+						k++;
+					}			
+
+				}
+				
 			}
 
 		}
 		groupbox->setLayout(framGlay);
-		glay->addWidget(groupbox);
+		qDebug("Gridlayout %s : %d", groupbox->title().toStdString().c_str(), groupbox->children().size());
+		if (groupbox->title() != "deprecated" && groupbox->children().size()>1)
+		pp350glay->addWidget(groupbox);
 	}
-	glay->setColumnStretch(1, 0);
-	ui->scrollAreaWidgetContents_4->setLayout(glay);
+	pp350glay->setStretch(1, 0);
+	ui->scrollAreaWidgetContents_4->setLayout(pp350glay);
 
 
 }
 
 void Setting3DP::create_PP352_Page()
 {
-	//QPushButton *setCurrentToDefault = new QPushButton("ui_set_default_from_current_value");
-	//QPushButton *setDefaultToCurrent = new QPushButton("ui_set_value_from_default");
-	QPushButton *exportSettingPB = new QPushButton("Export 352 Setting");
-	QPushButton *importSettingPB = new QPushButton("Import 352 Setting");
-	/*connect(setCurrentToDefault, &QPushButton::clicked, [=](){
-		ui_set_default_from_current_value(JsonfileCategory::PP350_SETTING_ca);
-		});
-		connect(setDefaultToCurrent, &QPushButton::clicked, [=](){
-		ui_set_value_from_default(JsonfileCategory::PP350_SETTING_ca);
-		});*/
-	connect(exportSettingPB, &QPushButton::clicked, [&](){
+	QPushButton *export352SettingPB = new QPushButton("Export 352 Setting");
+	QPushButton *import352SettingPB = new QPushButton("Import 352 Setting");	
+	connect(export352SettingPB, &QPushButton::clicked, [&](){
 		exportSetting(JsonfileCategory::PP352_SETTING_ca);
 	});
-	connect(importSettingPB, &QPushButton::clicked, [=](){
+	connect(import352SettingPB, &QPushButton::clicked, [=](){
 		importSetting(JsonfileCategory::PP352_SETTING_ca);
 	});
 	QGridLayout *g1Layout = new QGridLayout;
@@ -2116,8 +2216,8 @@ void Setting3DP::create_PP352_Page()
 
 
 
-	g1Layout->addWidget(exportSettingPB, 1, 0);
-	g1Layout->addWidget(importSettingPB, 1, 1);
+	g1Layout->addWidget(export352SettingPB, 1, 0);
+	g1Layout->addWidget(import352SettingPB, 1, 1);
 	//topLayout->addLayout(g1Layout);
 	//topLayout->addStretch();
 	ui->pp352buttonFrame->setLayout(g1Layout);
@@ -2137,6 +2237,7 @@ void Setting3DP::create_PP352_Page()
 		QVector<SKTWidget *> *groupSKTWidget = tempVector->at(i);
 		QGridLayout* framGlay = new QGridLayout();
 		QGroupBox *gb1 = new QGroupBox(paramGroupName.value(paramType[PP352_SETTING_ca])->value(i));
+		gb1->setStyleSheet(WidgetStyleSheet::groupBoxStyleSheet());
 		/*QFrame *frame = new QFrame();
 		frame->setFrameShadow(QFrame::Sunken);
 		frame->setFrameShape(QFrame::Panel);*/
@@ -2148,7 +2249,7 @@ void Setting3DP::create_PP352_Page()
 			if (tempWidget->getVisible())
 			{
 				framGlay->addWidget(num, k, 0);
-				tempWidget->addWidgetToGridLayout(framGlay, k, 1);
+				tempWidget->addWidgetToGridLayout(framGlay, k, 1, WidgetAlignment);
 				k++;
 			}
 
@@ -2175,6 +2276,7 @@ void Setting3DP::create_Common_Page()
 		QVector<SKTWidget *> *groupSKTWidget = tempVector->at(i);
 		QGridLayout* framGlay = new QGridLayout();
 		QGroupBox *gb1 = new QGroupBox(paramGroupName.value(paramType[1])->value(i));
+		gb1->setStyleSheet(WidgetStyleSheet::groupBoxStyleSheet());
 		/*QFrame *frame = new QFrame();
 		frame->setFrameShadow(QFrame::Sunken);
 		frame->setFrameShape(QFrame::Panel);*/
@@ -2186,7 +2288,7 @@ void Setting3DP::create_Common_Page()
 			if (tempWidget->getVisible())
 			{
 				framGlay->addWidget(num, k, 0);
-				tempWidget->addWidgetToGridLayout(framGlay, k, 1);
+				tempWidget->addWidgetToGridLayout(framGlay, k, 1, WidgetAlignment);
 				k++;
 			}
 
@@ -2218,7 +2320,7 @@ void Setting3DP::create_GeneralAndEditPage()
 		
 		framGlay->setSpacing(5);
 		QGroupBox *gb1 = new QGroupBox(paramGroupName.value(paramType[Common_Setting_ca])->value(i));
-
+		gb1->setStyleSheet(WidgetStyleSheet::groupBoxStyleSheet());
 		for (int j = 0, k = 0; j < groupSKTWidget->size(); j++)
 		{
 			SKTWidget *tempWidget = groupSKTWidget->at(j);
@@ -2226,9 +2328,9 @@ void Setting3DP::create_GeneralAndEditPage()
 
 			if (tempWidget->getVisible())
 			{
-				framGlay->addWidget(num, k, 0);
-				
-				tempWidget->addWidgetToGridLayout(framGlay, k, 1);
+				//framGlay->addWidget(num, k, 0);				
+				//tempWidget->addWidgetToGridLayout(framGlay, k, 1, WidgetAlignment);
+				tempWidget->addWidgetToGridLayout(framGlay, k, 0, WidgetAlignment);
 				k++;
 			}
 
@@ -2321,7 +2423,8 @@ void Setting3DP::createNVMPage()
 			if (tempWidget->getVisible())
 			{
 				framGlay->addWidget(num, k, 0);
-				tempWidget->addWidgetToGridLayout(framGlay, k, 1);
+				
+				tempWidget->addWidgetToGridLayout(framGlay, k, 1, WidgetAlignment);
 				k++;
 			}
 
@@ -2588,6 +2691,20 @@ void Setting3DP::updateRichParameterFromJsonFile(QString type)
 //JSON file ===> SKT Widget
 void Setting3DP::createParamSettingUI(JsonfileCategory type)
 {
+	QVector<QVector<SKTWidget *> *>  *testtemp = paramWidgetVector.value(paramType[type]);
+	for (int i = 0; i < testtemp->size(); i++)
+	{
+		QVector<SKTWidget *> * widgetTmep = testtemp->at(i);
+		for (int j = 0; j < widgetTmep->size(); j++)
+		{
+			//delete widgetTmep->at(j);
+			 widgetTmep->at(j)->deleteLater();
+		}
+	}
+
+	paramWidgetVector.insert(paramType[type], new QVector<QVector<SKTWidget*>*>());
+
+
 	QString outputstring;
 	BCPwareFileSystem::decodeParam(outputstring, QString(), BCPwareFileSystem::parameterFilePath());
 
@@ -2618,7 +2735,7 @@ void Setting3DP::createParamSettingUI(JsonfileCategory type)
 		{
 
 
-			QVariant controlMap, defaultValue, enumItem, highValue, lowValue, uiName, label_name, transformValue, ui_unitValue, paramValue, visible, value_TypeValue;
+			QVariant controlMap, defaultValue, enumItem, highValue, lowValue, uiName, label_name, transformValue, ui_unitValue, paramValue, visible, value_TypeValue, expertValue;
 			ParamOp::extractVariantTest(parameterName, groupItem, "name");
 
 			ParamOp::extractVariantTest(controlMap, groupItem, "control");
@@ -2633,13 +2750,21 @@ void Setting3DP::createParamSettingUI(JsonfileCategory type)
 			ParamOp::extractVariantTest(paramValue, controlMap, "value");
 			ParamOp::extractVariantTest(visible, controlMap, "visible");
 			ParamOp::extractVariantTest(value_TypeValue, controlMap, "value_Type");
+			if (!ParamOp::extractVariantTest(expertValue, controlMap, "expert"))
+			{
+				expertValue = true;
+			}
+			else
+			{
+				qDebug() << "get expert value";
+			}
 
 			if (uiName == "SpinBox")
 			{
 				SpinBoxWidget_SKX *tempSpinBox =
 					new SpinBoxWidget_SKX(nullptr, label_name.toString(), parameterName.toString(), categoryName.toString(), paramValue.toInt(), defaultValue, ui_unitValue.toString(), transformValue.toInt(), visible.toBool(), highValue.toInt(), lowValue.toInt());
 
-
+				tempSpinBox->setExpert(expertValue.toBool());
 
 				paramWidgetVector.value(paramType[type])->at(i)->push_back(tempSpinBox);
 
@@ -2655,7 +2780,7 @@ void Setting3DP::createParamSettingUI(JsonfileCategory type)
 			{
 				DoubleSpinBox_SKX *tempSpinBox =
 					new DoubleSpinBox_SKX(nullptr, label_name.toString(), parameterName.toString(), categoryName, paramValue, defaultValue, ui_unitValue.toString(), transformValue.toInt(), visible.toBool(), highValue.toInt(), lowValue.toInt());
-
+				tempSpinBox->setExpert(expertValue.toBool());
 
 				paramWidgetVector.value(paramType[type])->at(i)->push_back(tempSpinBox);
 
@@ -2668,8 +2793,8 @@ void Setting3DP::createParamSettingUI(JsonfileCategory type)
 			else if (uiName == "DSpinBox")
 			{
 				DoubleSpinBox_SKX *tempSpinBox =
-					new DoubleSpinBox_SKX(nullptr, label_name.toString(), parameterName.toString(), categoryName, paramValue.toDouble(), defaultValue, ui_unitValue.toInt(), 0, visible.toBool(), highValue.toInt(), lowValue.toInt());
-
+					new DoubleSpinBox_SKX(nullptr, label_name.toString(), parameterName.toString(), categoryName, paramValue.toDouble(), defaultValue, ui_unitValue.toString(), 0, visible.toBool(), highValue.toInt(), lowValue.toInt());
+				tempSpinBox->setExpert(expertValue.toBool());
 
 				paramWidgetVector.value(paramType[type])->at(i)->push_back(tempSpinBox);
 
@@ -2684,6 +2809,7 @@ void Setting3DP::createParamSettingUI(JsonfileCategory type)
 			{
 				CheckUI_SKX *tempCheckBox =
 					new CheckUI_SKX(nullptr, label_name.toString(), parameterName.toString(), categoryName, paramValue, defaultValue, 0, visible.toBool());
+				tempCheckBox->setExpert(expertValue.toBool());
 				paramWidgetVector.value(paramType[type])->at(i)->push_back(tempCheckBox);
 
 				/*connect(tempCheckBox, &CheckUI_SKX::parameterChanged, [this, tempCheckBox]() {
@@ -2694,8 +2820,10 @@ void Setting3DP::createParamSettingUI(JsonfileCategory type)
 			{
 
 				EnumUI_SKX *tempEnum = new EnumUI_SKX(nullptr, label_name.toString(), parameterName.toString(), categoryName, paramValue, defaultValue, enumItem, 0, visible.toBool());
-				paramWidgetVector.value(paramType[type])->at(i)->push_back(tempEnum);
 
+				tempEnum->setExpert(expertValue.toBool());
+
+				paramWidgetVector.value(paramType[type])->at(i)->push_back(tempEnum);
 				/*connect(tempEnum, &EnumUI_SKX::parameterChanged, [this, tempEnum]() {
 					tempEnum->setChanged(true);
 					});*/
@@ -2703,6 +2831,7 @@ void Setting3DP::createParamSettingUI(JsonfileCategory type)
 			else if (uiName == "FileDialogUI")
 			{
 				FileDialog_SKX *tempFileDialog = new FileDialog_SKX(nullptr, label_name.toString(), parameterName.toString(), categoryName, paramValue.toString(), defaultValue);
+				tempFileDialog->setExpert(expertValue.toBool());
 				paramWidgetVector.value(paramType[type])->at(i)->push_back(tempFileDialog);
 				/*connect(tempFileDialog, &FileDialog_SKX::parameterChanged, [this, tempFileDialog]() {
 					tempFileDialog->setChanged(true);
@@ -2712,6 +2841,7 @@ void Setting3DP::createParamSettingUI(JsonfileCategory type)
 			{
 				TextLabelUI_SKX *tempLabelUI =
 					new TextLabelUI_SKX(nullptr, label_name.toString(), parameterName.toString(), categoryName, paramValue.toString(), defaultValue);
+				tempLabelUI->setExpert(expertValue.toBool());
 				paramWidgetVector.value(paramType[type])->at(i)->push_back(tempLabelUI);
 
 				/*connect(tempLabelUI, &TextLabelUI_SKX::parameterChanged, [this, tempLabelUI]() {
@@ -2813,7 +2943,7 @@ void Setting3DP::updateUIToJsonFile(JsonfileCategory type)
 {
 
 	QString paramName;// = item->getNameParam().toString();
-	QString paramValue;// = item->getValueParam().toString();
+	QVariant paramValue;// = item->getValueParam().toString();
 	QString ui_typeValue;// = item->getUi_typeParam().toString();	
 
 
@@ -2837,7 +2967,7 @@ void Setting3DP::updateUIToJsonFile(JsonfileCategory type)
 			SKTWidget *tempWidget = tempVector->at(i);
 			//categoryName = tempWidget->getCategoryName().toString();
 			paramName = tempWidget->getIdentifyName().toString();
-			paramValue = tempWidget->getValue().toString();
+			paramValue = tempWidget->getValue();
 			bool changed = tempWidget->getChanged();
 
 			ParamOp::extractVariantTest(categoryList, category, "categories");
@@ -3408,4 +3538,9 @@ SKTWidget* Setting3DP::getWidget(JsonfileCategory category, QString paramName)
 				return temp;
 		}
 	}
+}
+void Setting3DP:: reConnectWidgetSignal()
+{
+
+
 }

@@ -61,6 +61,10 @@ namespace
 //TextfieldUI
 
 extern Comm3DP *comm;
+#define labelStretch 0
+#define HLayoutMinimumSize 250
+#define WidgetAlignment 0
+#define SpinboxHeight 25
 
 class SKTWidget :public QWidget
 {
@@ -77,12 +81,17 @@ public:
 	SKTWidget(QWidget *p) :QWidget(p)
 	{
 	}
+	~SKTWidget()
+	{
+		
+	}
 	SKTWidget(QWidget *p, bool _visible, QVariant _categoryName, QVariant _defaultValue, QVariant _uiUnit = NULL, int _transformType = 0)
 		:QWidget(p), visible(_visible), categoryName(_categoryName), defaultValue(_defaultValue), uiUnit(_uiUnit), transformType(_transformType), changed(false)
 	{
 		uiUnitlabel = new QLabel(uiUnit.toString());
+		expert = false;
 	}
-	virtual void addWidgetToGridLayout(QGridLayout* lay, const int r, const int c) = 0;
+	virtual void addWidgetToGridLayout(QGridLayout* lay, const int r, const int c,Qt::Alignment alignment= Qt::AlignHCenter) = 0;
 	virtual void updateUIValue(QVariant _value)  = 0;
 	
 	QVariant getValue(){ return value; }
@@ -115,6 +124,9 @@ public:
 	void setChanged(bool _changed){ changed = _changed; }
 	bool getChanged(){ return changed; }
 
+	void setExpert(bool _Expert){ expert = _Expert; }
+	bool getExpert(){ return expert; }
+
 	//void 
 
 private:
@@ -134,6 +146,7 @@ protected:
 	QVariant defaultValue;
 	int transformType;
 	bool changed;
+	bool expert;
 
 	
 	//Value &getWidgetValue();
@@ -150,13 +163,16 @@ public:
 		identifyName = _identifyName;
 		hlayout = new QHBoxLayout();
 		label = new QLabel(labelName);
+		label->setStyleSheet(WidgetStyleSheet::settingLabelStyleSheet());
 
 		spinBox = new QSpinBox();
-		spinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+		spinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+		spinBox->setFixedSize(QSize(100, 24));
 		spinBox->setMaximum(highlimit);
 		spinBox->setMinimum(lowLimit);
 		spinBox->setValue(value.toInt());
 		spinBox->setFixedWidth(150);
+		spinBox->setFixedHeight(SpinboxHeight);
 		spinBox->setAlignment(Qt::AlignRight);
 		if (!getUiUnit().isNull())
 		{
@@ -165,23 +181,23 @@ public:
 		
 		
 		hlayout->addWidget(label);
-		hlayout->addStretch();
-		hlayout->addWidget(spinBox);
+		hlayout->addStretch(labelStretch);
+		hlayout->addWidget(spinBox, 0, WidgetAlignment);
 		this->setLayout(hlayout);
 
 		//connect(spinBox, SIGNAL(valueChanged(int)), this, SIGNAL(parameterChanged()));
 		connect(spinBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, [&](int _widget_value) {
 			setValue(_widget_value);
 			setChanged(true);
-			label->setStyleSheet("QLabel {  color : red; }");
+			label->setStyleSheet(WidgetStyleSheet::settingLabelchangedStyleSheet());
 			qDebug() << "spinBox"<<getValue();
 			emit parameterChanged();
 		});
 	}
-	void addWidgetToGridLayout(QGridLayout* lay, const int r, const int c) 
+	void addWidgetToGridLayout(QGridLayout* lay, const int r, const int c, Qt::Alignment alignment = Qt::AlignHCenter)
 	{		
 		int col = c;
-		lay->addWidget(this, r, col);
+		lay->addWidget(this, r, col, alignment);
 		/*if (!getUiUnit().isNull())
 		{
 			lay->addWidget(uiUnitlabel, r, ++col);
@@ -210,12 +226,14 @@ public:
 		identifyName = _identifyName;
 		hlayout = new QHBoxLayout();
 		label = new QLabel(labelName);
+		label->setStyleSheet(WidgetStyleSheet::settingLabelStyleSheet());
 
 		spinBox = new QDoubleSpinBox();
-		spinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+		spinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 		spinBox->setMaximum(highlimit);
 		spinBox->setMinimum(lowLimit);
 		spinBox->setFixedWidth(150);
+		spinBox->setFixedHeight(SpinboxHeight);
 		spinBox->setAlignment(Qt::AlignRight);
 		spinBox->setDecimals(4);
 		if (!getUiUnit().isNull())
@@ -231,23 +249,23 @@ public:
 			spinBox->setValue(value.toDouble());
 		}
 		hlayout->addWidget(label);
-		hlayout->addStretch();
-		hlayout->addWidget(spinBox);
+		hlayout->addStretch(labelStretch);
+		hlayout->addWidget(spinBox, 0, WidgetAlignment);
 		this->setLayout(hlayout);
 
 		//connect(spinBox, SIGNAL(valueChanged(double)), this, SIGNAL(parameterChanged()));
 		connect(spinBox, static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this, [&](double _widget_value) {
 			setValue(transformDataFromUIToFPGA(_widget_value, getTransformType()));
 			setChanged(true);
-			label->setStyleSheet("QLabel {  color : red; }");
+			label->setStyleSheet(WidgetStyleSheet::settingLabelchangedStyleSheet());
 			qDebug() << "doublespinbox" << getValue();
 			emit parameterChanged();
 		});
 	}
-	void addWidgetToGridLayout(QGridLayout* lay, const int r, const int c)
+	void addWidgetToGridLayout(QGridLayout* lay, const int r, const int c, Qt::Alignment alignment = Qt::AlignHCenter)
 	{
 		int col = c;
-		lay->addWidget(this, r, col);
+		lay->addWidget(this, r, col, alignment);
 		/*if (!getUiUnit().isNull())
 		{
 			lay->addWidget(uiUnitlabel, r, ++col);
@@ -319,21 +337,22 @@ class TextLabelUI_SKX : public  SKTWidget
 public:
 	//QWidget *p, QString labelName, QString _identifyName, QVariant _categoryName, QVariant _value, QVariant _defaultValue, QVariant _uiUnit = NULL, int _transformType = 0, bool _visible = true, int highlimit = 0, int lowLimit = 0
 	TextLabelUI_SKX(QWidget *p, QString labelName, QString _identifyName, QVariant _categoryName, QVariant _value, QVariant _defaultValue,QVariant _uiUnit = NULL, int _transformType = 0, bool _visible = true) :
-		SKTWidget(p, true, _categoryName, _defaultValue)
+		SKTWidget(p, _visible, _categoryName, _defaultValue)
 	{
 		setValue(_value);
 		setIdentifyName(_identifyName);
 		hlayout = new QHBoxLayout();
 
 		label = new QLabel(labelName);
+		label->setStyleSheet(WidgetStyleSheet::settingLabelStyleSheet());
 		labelValue = new QLineEdit(value.toString());		
 		labelValue->setReadOnly(true);
 		labelValue->setFixedWidth(250);
 		labelValue->setTextMargins(4, 0, 4, 0);
 
 		hlayout->addWidget(label);
-		hlayout->addStretch();
-		hlayout->addWidget(labelValue);
+		hlayout->addStretch(labelStretch);		
+		hlayout->addWidget(labelValue, 0, WidgetAlignment);
 		this->setLayout(hlayout);		
 
 
@@ -343,15 +362,15 @@ public:
 			setValue(_widget_value);
 			setChanged(true);
 			qDebug() << label->text() << "TextLabelUI_SKX" << getValue();
-			label->setStyleSheet("QLabel {  color : red; }");
+			label->setStyleSheet(WidgetStyleSheet::settingLabelchangedStyleSheet());
 			emit parameterChanged();
 		});
 
 
 	}
-	void addWidgetToGridLayout(QGridLayout* lay, const int r, const int c)
+	void addWidgetToGridLayout(QGridLayout* lay, const int r, const int c, Qt::Alignment alignment = Qt::AlignHCenter)
 	{
-		lay->addWidget(this, r, c);		
+		lay->addWidget(this, r, c, alignment);
 	}
 	void updateUIValue(QVariant _value)
 	{
@@ -371,32 +390,33 @@ class EnumUI_SKX : public SKTWidget
 	Q_OBJECT
 public:
 	EnumUI_SKX(QWidget *p, QString labelName, QString _identifyName, QVariant _categoryName, QVariant _value, QVariant _defaultValue, QVariant enumList, QVariant _uiUnit = NULL, bool _visible = true)
-		:SKTWidget(p, true, _categoryName, _defaultValue)
+		:SKTWidget(p, _visible, _categoryName, _defaultValue)
 	{
 		setValue(_value);
 		setIdentifyName( _identifyName);
 		hlayout = new QHBoxLayout();
 		label = new QLabel(labelName);
+		label->setStyleSheet(WidgetStyleSheet::settingLabelStyleSheet());
 		comboBox = new QComboBox();
 		comboBox->addItems(enumList.toStringList());
 		comboBox->setCurrentIndex(_value.toInt());
 		hlayout->addWidget(label);
-		hlayout->addStretch();
-		hlayout->addWidget(comboBox);
+		hlayout->addStretch(labelStretch);
+		hlayout->addWidget(comboBox, 0, WidgetAlignment);
 		this->setLayout(hlayout);
 
 		//connect(comboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(parameterChanged()));
 		connect(comboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [&](int _widget_value) {
 			setValue(_widget_value);
 			setChanged(true);
-			label->setStyleSheet("QLabel {  color : red; }");
+			label->setStyleSheet(WidgetStyleSheet::settingLabelchangedStyleSheet());
 			qDebug() << "QComboBox" << getValue();
 			emit parameterChanged();
 		});
 	}
-	void addWidgetToGridLayout(QGridLayout* lay, const int r,const int c)
+	void addWidgetToGridLayout(QGridLayout* lay, const int r, const int c, Qt::Alignment alignment = Qt::AlignHCenter)
 	{
-		lay->addWidget(this, r, c);
+		lay->addWidget(this, r, c, alignment);
 		//lay->addLayout(hlayout, r, 0);
 	}
 	void updateUIValue(QVariant _index)
@@ -415,15 +435,18 @@ class CheckUI_SKX : public SKTWidget
 	Q_OBJECT
 public:
 	CheckUI_SKX(QWidget *p, QString labelName, QString _identifyName, QVariant _categoryName, QVariant _value, QVariant _defaultValue, QVariant _uiUnit = NULL, bool _visible = true)
-		:SKTWidget(p,true, _categoryName, _defaultValue)
+		:SKTWidget(p, _visible, _categoryName, _defaultValue)
 	{
 		setValue(_value);
 		setIdentifyName(_identifyName);
 		hlayout = new QHBoxLayout();
 		label = new QLabel(labelName);
+		label->setStyleSheet(WidgetStyleSheet::settingLabelStyleSheet());
 		checkBox = new QCheckBox;
 		checkBox->setChecked(_value.toBool());
+		checkBox->setStyleSheet(WidgetStyleSheet::check_onoff_styleSheet());
 		hlayout->addWidget(label);
+		//hlayout->addSpacing(labelStretch);
 		hlayout->addStretch();
 		hlayout->addWidget(checkBox);
 		this->setLayout(hlayout);
@@ -433,13 +456,13 @@ public:
 		{
 			setValue(_widget_value);
 			setChanged(true);
-			label->setStyleSheet("QLabel {  color : red; }");
+			label->setStyleSheet(WidgetStyleSheet::settingLabelchangedStyleSheet());
 		});
 		
 	}
-	void addWidgetToGridLayout(QGridLayout* lay, const int r, const int c)
+	void addWidgetToGridLayout(QGridLayout* lay, const int r, const int c, Qt::Alignment alignment = Qt::AlignHCenter)
 	{
-		lay->addWidget(this, r, c);
+		lay->addWidget(this, r, c, alignment);
 		
 	}
 	void updateUIValue(QVariant _bool)
@@ -471,45 +494,66 @@ public:
 
 		hlayout = new QHBoxLayout();
 		label = new QLabel(labelName);
-		valueLabel = new QLabel(_value.toString());
-		valueLabel->setWordWrap(true);
+		label->setStyleSheet(WidgetStyleSheet::settingLabelStyleSheet());
+		QFileInfo tempFileInfo(_value.toString());
+		valueLabel = new QLabel(tempFileInfo.fileName());
+		//setElidedText(valueLabel, tempFileInfo.fileName());
+		
+		valueLabel->setWordWrap(true);		
 		valueLabel->setFixedWidth(200);
 
 		
-		openFileDialogButton = new QPushButton("Open File Dialog");
+		openFileDialogButton = new QPushButton("Browse");
 		
 		//connect(valueLabel, SIGNAL(stateChanged(int)), this, SIGNAL(parameterChanged()));
 		
 		connect(openFileDialogButton, &QPushButton::clicked, [=]() {
 			QDir defaultPath(getValue().toString());
 			QString filePath = QFileDialog::getOpenFileName(this, tr("Get Color Profile"), defaultPath.absolutePath(), "Color Profile (*.icc *.icm;)");
-			valueLabel->setText(filePath);
-			setValue(filePath);
-			setChanged(true);
-			label->setStyleSheet("QLabel {  color : red; }");
-			emit parameterChanged();
+			QFileInfo temp(filePath);
+			if (filePath != getValue())
+			{
+				valueLabel->setText(temp.fileName());
+				//setElidedText(valueLabel, temp.fileName());
+				setValue(filePath);
+				setChanged(true);
+				label->setStyleSheet(WidgetStyleSheet::settingLabelchangedStyleSheet());
+				emit parameterChanged();
+			}
 
 		});
 
 
 		hlayout->addWidget(label);
-		hlayout->addStretch();
+		hlayout->addStretch(labelStretch);
 		hlayout->addWidget(openFileDialogButton);
 		hlayout->addWidget(valueLabel);
 		this->setLayout(hlayout);
 	}
 
-	void addWidgetToGridLayout(QGridLayout* lay, const int r, const int c)
+	void setElidedText(QLabel* label, const QString &text){
+		QFontMetrics metrix(label->font());
+		int width = label->width() - 5;
+		QString clippedText = metrix.elidedText(text, Qt::ElideMiddle, width) ;
+		label->setText(clippedText);
+	}
+
+	void addWidgetToGridLayout(QGridLayout* lay, const int r, const int c, Qt::Alignment alignment = Qt::AlignHCenter)
 	{
-		lay->addWidget(this, r, c);
+		lay->addWidget(this, r, c, alignment);
 	}
 	void updateUIValue(QVariant _value)
 	{
-		valueLabel->setText(_value.toString());
-		setValue(_value);
-		setChanged(true);
-		label->setStyleSheet("QLabel {  color : red; }");
-		emit parameterChanged();
+		if (_value != getValue())
+		{
+			QFileInfo tempFileInfo(_value.toString());
+			valueLabel->setText(tempFileInfo.fileName());
+			//setElidedText(valueLabel, tempFileInfo.fileName());
+			setValue(_value);
+			setChanged(true);
+			label->setStyleSheet("QLabel {  color : blue; }");
+			emit parameterChanged();
+		}
 	}
 private:
 	QLabel *label;
@@ -640,6 +684,7 @@ private:
 	void createNVMPage();
 	void updateRichParameterFromJsonFile(QString);
 	void createParamSettingUI(JsonfileCategory);
+	void reConnectWidgetSignal();
 	// Create Printer Setting Page
 	void create_PP350_Page();
 	void create_PP352_Page();
@@ -666,6 +711,17 @@ private:
 	QPushButton *setDefaultValueButton;
 	QPushButton *outputSettingToFile;
 	QPushButton *inputSettingFromFile;
+	//pp350 page layout
+	QPushButton *setCurrentToDefault;
+	QPushButton *setDefaultToCurrent;
+	QPushButton *exportSettingPB;
+	QPushButton *importSettingPB;
+	QCheckBox *switchExpertSetting;
+	QGridLayout *pp350g1Layout;// = new QGridLayout;
+	QVBoxLayout* pp350glay;
+
+	bool expertsMode;
+
 
 	void sendNVMPreProcess();
 	void getNVMFromFPGA();
@@ -686,6 +742,7 @@ protected:
 	void keyPressEvent(QKeyEvent *e);
 signals:
 	void jsonFileChanged();
+	void switchsettingChanged();
 
 
 

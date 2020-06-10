@@ -686,7 +686,6 @@
     <None Include="picasso_ja.ts">
       <Filter>Translation Files</Filter>
     </None>
-    <None Include="bcpware.rc2" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="ui\customDialog.ui">

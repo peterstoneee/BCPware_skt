@@ -592,7 +592,93 @@ static QString WidgetStyleSheet::check_onoff_styleSheet2(const QString &name = N
 	);
 	return thisItemStyle;
 }
+
+static QString WidgetStyleSheet::groupBoxStyleSheet(const QString &name = NULL)
+{
+	const QString thisItemStyle
+		(
+
+		"QGroupBox{"
+		"font: 14px \"Arial\";"
+		"background-color: #ffffff;"
+		"border: 1px solid #707070;"
+		"border-radius: 1px;"
+		"margin-top: 10ex;" /* leave space at the top for the title */
+		"}"
+
+		"QGroupBox::title{"
+		"color:#2c3d50;"
+		"subcontrol-origin: margin;"
+		"subcontrol-position: top left; "/* position at the top center */
+		"padding: 0 3px;"
+		"}"
+		);
+	return thisItemStyle;
+}
+
+static QString WidgetStyleSheet::settingLabelStyleSheet(const QString &name = NULL)
+{
+	const QString thisItemStyle
+		(
+
+		"QLabel { "
+	"color : #2c3d50; "
+	"font: 14px \"Arial\";"
+	"   width: 130px;\n"
+	"   height :44px;\n"
+	"}"
+		);
+	return thisItemStyle;
+}
+static QString WidgetStyleSheet::settingLabelchangedStyleSheet(const QString &name = NULL)
+{
+	const QString thisItemStyle
+		(
+
+		"QLabel { "
+		"color : #2d00ff; "
+		"font: 14px \"Arial\";"
+		"   width: 130px;\n"
+		"   height :44px;\n"
+		"}"
+		);
+	return thisItemStyle;
+}
+static QString WidgetStyleSheet::settingSpinBoxStyleSheet(const QString &name = NULL)
+{
+	const QString thisItemStyle
+		(
+
+		"QSpinBox{font: 14px \"Arial\";"
+
+		"}"
+		);
+	return thisItemStyle;
+}
+
+static QString WidgetStyleSheet::settingComboBoxStyleSheet(const QString &name = NULL)
+{
+	const QString thisItemStyle
+		(
+
+		"QLabel {  color : blue; }"
+		);
+	return thisItemStyle;
+}
+
+static QString WidgetStyleSheet::settingCheckBoxStyleSheet(const QString &name = NULL)
+{
+	const QString thisItemStyle
+		(
+
+		"QLabel {  color : blue; }"
+		);
+	return thisItemStyle;
+}
+
 };
+
+
 
 
 
