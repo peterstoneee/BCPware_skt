@@ -451,12 +451,13 @@ public:
 		hlayout->addWidget(checkBox);
 		this->setLayout(hlayout);
 
-		connect(checkBox, SIGNAL(stateChanged(int)), this, SIGNAL(parameterChanged()));
+		//connect(checkBox, SIGNAL(stateChanged(int)), this, SIGNAL(parameterChanged()));
 		connect(checkBox, static_cast<void (QCheckBox::*)(int)>(&QCheckBox::stateChanged), this, [&](int _widget_value)
 		{
 			setValue(_widget_value);
 			setChanged(true);
 			label->setStyleSheet(WidgetStyleSheet::settingLabelchangedStyleSheet());
+			emit parameterChanged();
 		});
 		
 	}
@@ -640,6 +641,8 @@ public:
 	};
 
 	static void initSetting(RichParameterSet *);
+	static void updateValueToJsonFile(JsonfileCategory type, QString identifyName, QVariant value);
+	static QVariant getJsonFileParamValue(JsonfileCategory type, QString identifyName);
 	static void createRichParamfromJdoc(JsonfileCategory, RichParameterSet *in);
 	static void createPrinterSetting_FromRichParameter(int , QString, RichParameterSet *in);
 	//static bool 
@@ -699,6 +702,7 @@ private:
 	QVariant getWidgetValue(JsonfileCategory,QString);
 	SKTWidget * getWidget(JsonfileCategory, QString);
 	
+	
 
 	QMap<QString, QVector<QVector<SKTWidget *> *> *> paramWidgetVector;
 	QMap<QString, QMap<int , QString> *> paramGroupName;
@@ -716,9 +720,11 @@ private:
 	QPushButton *setDefaultToCurrent;
 	QPushButton *exportSettingPB;
 	QPushButton *importSettingPB;
+	QPushButton *importSampleFileBtn;
 	QCheckBox *switchExpertSetting;
 	QGridLayout *pp350g1Layout;// = new QGridLayout;
 	QVBoxLayout* pp350glay;
+
 
 	bool expertsMode;
 

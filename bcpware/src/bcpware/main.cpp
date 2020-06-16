@@ -137,15 +137,15 @@ static void rotateLogs();
 int main(int argc, char *argv[])
 {
 	//logger = 
-	QString logFileName = "/" + QDateTime::currentDateTime().toString("yyyy_M") + "BCPware_log.txt";
+	/*QString logFileName = "/" + QDateTime::currentDateTime().toString("yyyy_M") + "BCPware_log.txt";
 	QFileInfo outfile(QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory) + PicaApplication::appName() + logFileName);
 	std::wofstream *tempWof;	
 	tempWof = new std::wofstream(outfile.absoluteFilePath().toStdString(), std::ofstream::out | std::ofstream::app);
 	logger.AddOutputStream(tempWof, true, framework::Diagnostics::LogLevel::Info);
 	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("hahahahah"));
 	WRITELOG(logger, framework::Diagnostics::LogLevel::Error, _T("hahahahahb"));
-	WRITELOG(logger, framework::Diagnostics::LogLevel::Debug, _T("hahahahahc"));
-
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Debug, _T("hahahahahc"));*/
+	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("hahahahah"));
 	qDebug() << SettingParams::settingWTF;
 	HANDLE m_hMutex = CreateMutex(NULL, FALSE, DSP_PALETTE_GUID);
 	if (GetLastError() == ERROR_ALREADY_EXISTS) {
@@ -184,8 +184,8 @@ int main(int argc, char *argv[])
 	//}
 
 //#if(!defined QT_DEBUG) || (!defined _DEBUG)
-		//qInstallMessageHandler(logMessageOutputHandler);
-		//rotateLogs();
+		qInstallMessageHandler(logMessageOutputHandler);
+		rotateLogs();
 //#endif
 
 
@@ -357,13 +357,14 @@ static void logMessageOutputHandler(QtMsgType Type, const QMessageLogContext & C
 	if (cSeverity >= logSeverity)
 	{
 		fprintf(g_hOut,
-			"%s %s\t%s (%s:%u, %s) %s\n",
+			//"%s %s\t%s \t(%s:%u, %s) %s\n",
+			"%s %s\t%s \t(%s:%u) \n",
 			Timestamp.toLatin1().constData(),
 			pcType,
 			LocalMsg.constData(),
 			pcFile,
-			Context.line,
-			pcFunction, memoryUsage);
+			Context.line
+			/*pcFunction, memoryUsage*/);
 		fflush(g_hOut);
 	}
 

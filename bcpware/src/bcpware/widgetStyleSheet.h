@@ -603,7 +603,7 @@ static QString WidgetStyleSheet::groupBoxStyleSheet(const QString &name = NULL)
 		"background-color: #ffffff;"
 		"border: 1px solid #707070;"
 		"border-radius: 1px;"
-		"margin-top: 10ex;" /* leave space at the top for the title */
+		"margin-top: 5ex;" /* leave space at the top for the title */
 		"}"
 
 		"QGroupBox::title{"

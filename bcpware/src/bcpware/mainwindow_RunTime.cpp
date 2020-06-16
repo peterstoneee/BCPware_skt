@@ -7793,16 +7793,16 @@ bool MainWindow::printFunction()//
 				  */
 				  recordRollerPage();
 				  QString rollerCMDToServer = SKT::createJsonStringCommand("Other", "Mesh_Top", rollerPageToServer);
-				  comm->SendJSONCmd(rollerCMDToServer.toStdString());
+				  //comm->SendJSONCmd(rollerCMDToServer.toStdString());
 
 				  QEventLoop loop;
 				  QTimer::singleShot(500, &loop, SLOT(quit()));
 				  loop.exec();
 				  QString irCommand;
 				  if (ir_On_Off_Setting)
-					  irCommand = SKT::createJsonStringCommand("FPGA", "@HTO", rollerPageToServer);
+					  irCommand = SKT::createJsonStringCommand("FPGA", "@HTO", QStringList());
 				  else
-					  irCommand = SKT::createJsonStringCommand("FPGA", "@HTC", rollerPageToServer);
+					  irCommand = SKT::createJsonStringCommand("FPGA", "@HTC", QStringList());
 				  comm->SendJSONCmd(irCommand.toStdString());
 				  
 				  QTimer::singleShot(500, &loop, SLOT(quit()));

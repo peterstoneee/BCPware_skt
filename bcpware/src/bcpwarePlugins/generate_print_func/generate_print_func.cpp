@@ -17702,7 +17702,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				//zggg->sendData(outlineCTemp, capCTemp);
 				bool sendResult = zx_skt->sendData2(outlineCTemp, capCTemp);
 				wchar_t *vOut = sendResult ? L"true" : L"false";
-				WRITELOG(logger, framework::Diagnostics::LogLevel::Info, (vOut));
+				//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, (vOut));
 
 				capCTemp.clear();
 				outlineCTemp.clear();
@@ -17755,13 +17755,13 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 			}
 
-			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("senddata end"));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("senddata end"));
 			char* numpages = new char[20];
 			string temp = std::to_string(i).append("_pages");
 			strcpy(numpages, temp.c_str());
 			wchar_t *wmsg = new wchar_t[strlen(numpages) + 1]; //memory allocation
 			mbstowcs(wmsg, numpages, strlen(numpages) + 1);
-			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, wmsg);
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, wmsg);
 			delete[]wmsg;
 			delete[]numpages;
 
@@ -17782,9 +17782,9 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 			//fprintf(dbgff, "cap_prePrting_image %i, %i\n", time.elapsed(), i);
 			//fflush(dbgff);
-			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
+			//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
 		}
-		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
 		//thread1.exit();
 
 
@@ -17831,7 +17831,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 	case FP_SAVE_DEFAULT_SNAP_SHOT:
 	{
-		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_PRINT_WITH_WHITE_KICK"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_PRINT_WITH_WHITE_KICK"));
 		testlog("FP_PRINT_FLOW_2_V3");
 
 		md.jobname.clear();
@@ -18167,7 +18167,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 		int generateNOI = 25;
 		int quickWipe = 1;
-		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop start"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop start"));
 
 
 
@@ -18253,7 +18253,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("generate_final_picture"));
 		}
-		WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
+		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("for loop end"));
 		//thread1.exit();
 
 

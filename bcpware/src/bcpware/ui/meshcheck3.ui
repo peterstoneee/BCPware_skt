@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>350</width>
-    <height>235</height>
+    <height>241</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -78,13 +78,16 @@
           </property>
           <property name="font">
            <font>
+            <family>Arial</family>
             <pointsize>10</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
+            <weight>9</weight>
+            <italic>false</italic>
+            <bold>false</bold>
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color : gray;</string>
+           <string notr="true">background-color : gray;
+font: 75 10pt &quot;Arial&quot;;</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::Box</enum>
@@ -108,10 +111,15 @@
          <widget class="QLabel" name="xLabel">
           <property name="font">
            <font>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
+            <family>Arial</family>
+            <pointsize>10</pointsize>
+            <weight>9</weight>
+            <italic>false</italic>
+            <bold>false</bold>
            </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 75 10pt &quot;Arial&quot;;</string>
           </property>
           <property name="text">
            <string>X</string>
@@ -168,10 +176,16 @@
          <widget class="QLabel" name="yLabel">
           <property name="font">
            <font>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
+            <family>Arial</family>
+            <pointsize>10</pointsize>
+            <weight>9</weight>
+            <italic>false</italic>
+            <bold>false</bold>
            </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 75 10pt &quot;Arial&quot;;
+font: 75 10pt &quot;Arial&quot;;</string>
           </property>
           <property name="text">
            <string>Y</string>
@@ -228,10 +242,16 @@
          <widget class="QLabel" name="zLabel">
           <property name="font">
            <font>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
+            <family>Arial</family>
+            <pointsize>10</pointsize>
+            <weight>9</weight>
+            <italic>false</italic>
+            <bold>false</bold>
            </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">
+font: 75 10pt &quot;Arial&quot;;</string>
           </property>
           <property name="text">
            <string>Z</string>
@@ -324,13 +344,16 @@
           </property>
           <property name="font">
            <font>
+            <family>Arial</family>
             <pointsize>10</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
+            <weight>9</weight>
+            <italic>false</italic>
+            <bold>false</bold>
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color : gray;</string>
+           <string notr="true">background-color : gray;
+font: 75 10pt &quot;Arial&quot;;</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::Box</enum>
@@ -352,8 +375,15 @@
            <widget class="QCheckBox" name="mmCB">
             <property name="font">
              <font>
+              <family>Arial</family>
               <pointsize>10</pointsize>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
              </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 10pt &quot;Arial&quot;;</string>
             </property>
             <property name="text">
              <string>mm (Millimeters)</string>
@@ -364,8 +394,15 @@
            <widget class="QCheckBox" name="cmCB">
             <property name="font">
              <font>
+              <family>Arial</family>
               <pointsize>10</pointsize>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
              </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 10pt &quot;Arial&quot;;</string>
             </property>
             <property name="text">
              <string>cm (Centimeters)</string>
@@ -376,8 +413,15 @@
            <widget class="QCheckBox" name="mCB">
             <property name="font">
              <font>
+              <family>Arial</family>
               <pointsize>10</pointsize>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
              </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 10pt &quot;Arial&quot;;</string>
             </property>
             <property name="text">
              <string>m (Meters)</string>
@@ -388,8 +432,15 @@
            <widget class="QCheckBox" name="inCB">
             <property name="font">
              <font>
+              <family>Arial</family>
               <pointsize>10</pointsize>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
              </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 10pt &quot;Arial&quot;;</string>
             </property>
             <property name="text">
              <string>in (Inch)</string>
@@ -420,6 +471,9 @@
      </item>
      <item>
       <widget class="QDialogButtonBox" name="buttonBox">
+       <property name="styleSheet">
+        <string notr="true">font: 10pt &quot;Arial&quot;;</string>
+       </property>
        <property name="standardButtons">
         <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
        </property>

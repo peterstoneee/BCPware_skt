@@ -49,7 +49,7 @@
 #define DSP_Binder_thick 6
 #define DSP_Color_Replace_Binder_thick 3
 #define DSP_Look_Distination 300
-#define DSP_Blank_pages 8
+#define DSP_Blank_pages 0
 #define DSP_Estimate_Usage_Slice_Height 0.1
 #define DSP_Feeder_Up_Ratio 1.52
 #define DSP_Feeder_Height 330

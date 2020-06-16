@@ -33,7 +33,7 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 {
 	this->setAttribute(Qt::WA_DeleteOnClose);
 	ui->setupUi(this);
-	ui->retranslateUi(this);	
+	ui->retranslateUi(this);
 	ui->listWidget->setCurrentRow(0);
 	ui->SliceSettingPage->setEnabled(false);
 	//ui->NVMPage->setEnabled(false);
@@ -69,7 +69,7 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 		item = ui->listWidget->item(9);
 		item->setHidden(true);
 
-		
+
 
 		/*item = ui->listWidget->item(5);
 		item->setHidden(true);*/
@@ -96,7 +96,7 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 	switchDM = false;
 
 	mw = _mw;
-	
+
 	connect(ui->importSamplePushButton, SIGNAL(clicked()), this, SLOT(importSampleFile()));
 	//connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(getaccept()));
 	connect(ui->okButton, SIGNAL(clicked()), this, SLOT(getaccept()));
@@ -170,19 +170,6 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 
 
 	////////////////////////////////////////////////////////////////////////////////////////
-	connect(ui->startPageCB, &QCheckBox::clicked, [this]() {
-		if (ui->startPageCB->checkState())
-		{
-			ui->startPageLE->setEnabled(true);
-			ui->endPageLE->setEnabled(true);
-
-		}
-		else
-		{
-			ui->startPageLE->setEnabled(false);
-			ui->endPageLE->setEnabled(false);
-		}
-	});
 
 	connect(ui->stiffPrintV2CB, &QCheckBox::clicked, [this]() {
 		if (ui->stiffPrintV2CB->checkState())
@@ -446,7 +433,7 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 
 	this->setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint);
 	/*---------------create New UI-----------------------------------------------------*/
-	
+
 	paramType << "Basic_Setting" << "Advanced_Setting" << "PP350_Settings" << "PP352_Settings" << "Common_Setting";
 	foreach(QString ca, paramType)
 	{
@@ -468,7 +455,7 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 		BCPwareFileSystem::decodeParam(outputstring, QString(), encryptfilePath);
 
 		ui->decodeText->setText(outputstring);
-		
+
 	});
 
 	connect(ui->save_zxb, &QPushButton::clicked, [=](){
@@ -476,7 +463,7 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 		QString outputstring;
 		BCPwareFileSystem::encryptParam(ui->decodeText->toPlainText(), QFileInfo(encryptfilePath));
 
-		
+
 
 	});
 
@@ -507,9 +494,26 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 	setDefaultToCurrent = new QPushButton("Reset");
 	exportSettingPB = new QPushButton("Export 350 Setting");
 	importSettingPB = new QPushButton("Import 350 Setting");
+	importSampleFileBtn = new QPushButton("Import sample 3D model");
 	switchExpertSetting = new QCheckBox("Switch Button");
 	pp350g1Layout = new QGridLayout;
 	pp350glay = new QVBoxLayout();
+
+
+	//pp350g1Layout->addWidget(setCurrentToDefault, 0, 0);
+	//pp350g1Layout->addWidget(setDefaultToCurrent, 0, 1);
+	//pp350g1Layout->addWidget(setDefaultToCurrent, 0, 0, 1, 2 );
+	pp350g1Layout->addWidget(setDefaultToCurrent, 0, 0);
+	pp350g1Layout->addWidget(importSampleFileBtn, 0, 1);
+	pp350g1Layout->addWidget(exportSettingPB, 1, 0);
+	pp350g1Layout->addWidget(importSettingPB, 1, 1);
+	//pp350g1Layout->addWidget(switchExpertSetting, 2, 0, 2, 1);
+	/*topLayout->addLayout(g1Layout);
+	topLayout->addStretch();*/
+	ui->pp350buttonFrame->setLayout(pp350g1Layout);
+
+
+
 	//switchExpertSetting->setChecked(false);
 	connect(setCurrentToDefault, &QPushButton::clicked, [=](){
 		ui_set_default_from_current_value(JsonfileCategory::PP350_SETTING_ca);
@@ -523,15 +527,18 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 	connect(importSettingPB, &QPushButton::clicked, [=](){
 		importSetting(JsonfileCategory::PP350_SETTING_ca);
 	});
+
+	connect(importSampleFileBtn, &QPushButton::clicked, this, &Setting3DP::importSampleFile);
+
 	/*connect(switchExpertSetting, static_cast<void (QCheckBox::*)(int)>(&QCheckBox::stateChanged), [=](int ix)
 	{
-		createParamSettingUI(PP350_SETTING_ca);
-		create_PP350_Page();
+	createParamSettingUI(PP350_SETTING_ca);
+	create_PP350_Page();
 	});*/
 
 	connect(this, &Setting3DP::switchsettingChanged, [&]()
 	{
-		
+
 		createParamSettingUI(PP350_SETTING_ca);
 		create_PP350_Page();
 		connect(getWidget(PP350_SETTING_ca, "COLOR_MODE"), &SKTWidget::parameterChanged, [this]() {
@@ -550,7 +557,115 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 
 		});
 
+		connect(getWidget(PP350_SETTING_ca, "CONTINUE_PRINTING"), &SKTWidget::parameterChanged, [this]() {
+			QVariant customValue = getWidgetValue(PP350_SETTING_ca, "CONTINUE_PRINTING");
+			if (!customValue.isNull())
+			{
+				getWidget(PP350_SETTING_ca, "CONTINUE_PRINTING_PAGE")->setEnabled(customValue.toBool());
+				getWidget(PP350_SETTING_ca, "CONTINUE_PRINTING_END_PAGE")->setEnabled(customValue.toBool());
+			}
+		});
+		//DILATE_BINDER : DILATE_BINDER_VALUE
+		connect(getWidget(PP350_SETTING_ca, "DILATE_BINDER"), &SKTWidget::parameterChanged, [this]() {
+			QVariant customValue = getWidgetValue(PP350_SETTING_ca, "DILATE_BINDER");
+			if (!customValue.isNull())
+			{
+				getWidget(PP350_SETTING_ca, "DILATE_BINDER_VALUE")->setEnabled(customValue.toBool());				
+			}
+		});		
+		//STIFF_PRIN_V2 : STIFF_PRINT_VALUE
+		connect(getWidget(PP350_SETTING_ca, "STIFF_PRIN_V2"), &SKTWidget::parameterChanged, [this]() {
+			QVariant customValue = getWidgetValue(PP350_SETTING_ca, "STIFF_PRIN_V2");
+			if (!customValue.isNull())
+			{
+				getWidget(PP350_SETTING_ca, "STIFF_PRINT_VALUE")->setEnabled(customValue.toBool());
+				getWidget(PP350_SETTING_ca, "SHELL_PERCENT")->setEnabled(customValue.toBool());
+				
+			}
+		});
+		//WITNESS_BAR : WITNESS_BAR_PERCENT,WITNESS_WIDTH
+		connect(getWidget(PP350_SETTING_ca, "WITNESS_BAR"), &SKTWidget::parameterChanged, [this]() {
+			QVariant customValue = getWidgetValue(PP350_SETTING_ca, "WITNESS_BAR");
+			if (!customValue.isNull())
+			{
+				getWidget(PP350_SETTING_ca, "WITNESS_BAR_PERCENT")->setEnabled(customValue.toBool());
+				getWidget(PP350_SETTING_ca, "WITNESS_WIDTH")->setEnabled(customValue.toBool());
+			}
+		});
+
+		//PP_POST_HEATING_SWITCH : PP_POST_HEATING_UPPER_LIMIT, PP_POST_HEATING_LOWER_LIMIT, PP_POST_HEATING_MINUTES
+		connect(getWidget(PP350_SETTING_ca, "PP_POST_HEATING_SWITCH"), &SKTWidget::parameterChanged, [this]() {
+			QVariant customValue = getWidgetValue(PP350_SETTING_ca, "PP_POST_HEATING_SWITCH");
+			if (!customValue.isNull())
+			{
+				getWidget(PP350_SETTING_ca, "PP_POST_HEATING_UPPER_LIMIT")->setEnabled(customValue.toBool());
+				getWidget(PP350_SETTING_ca, "PP_POST_HEATING_LOWER_LIMIT")->setEnabled(customValue.toBool());
+				getWidget(PP350_SETTING_ca, "PP_POST_HEATING_MINUTES")->setEnabled(customValue.toBool());
+			}
+		});
+		//PROFILE_ON : COLOR_MODE,COLOR_PROFILE
+		connect(getWidget(PP350_SETTING_ca, "PROFILE_ON"), &SKTWidget::parameterChanged, [this]() {
+			QVariant customValue = getWidgetValue(PP350_SETTING_ca, "PROFILE_ON");
+			if (!customValue.isNull())
+			{
+				getWidget(PP350_SETTING_ca, "COLOR_MODE")->setEnabled(customValue.toBool());
+				getWidget(PP350_SETTING_ca, "COLOR_PROFILE")->setEnabled(customValue.toBool());
+				
+			}
+		});
+
+		//widget initial state========================		
+		emit getWidget(PP350_SETTING_ca, "CONTINUE_PRINTING")->parameterChanged();
+		emit getWidget(PP350_SETTING_ca, "DILATE_BINDER")->parameterChanged();
+		emit getWidget(PP350_SETTING_ca, "STIFF_PRIN_V2")->parameterChanged();
+		emit getWidget(PP350_SETTING_ca, "WITNESS_BAR")->parameterChanged();
+		emit getWidget(PP350_SETTING_ca, "PP_POST_HEATING_SWITCH")->parameterChanged();
+		emit getWidget(PP350_SETTING_ca, "PROFILE_ON")->parameterChanged();
+		/*if (!customValue.isNull())
+		{
+			getWidget(PP350_SETTING_ca, "CONTINUE_PRINTING_PAGE")->setEnabled(customValue.toBool());
+			getWidget(PP350_SETTING_ca, "CONTINUE_PRINTING_END_PAGE")->setEnabled(customValue.toBool());
+
+			qDebug() << "abcdefg : " << getWidget(PP350_SETTING_ca, "CONTINUE_PRINTING_PAGE")->isEnabled();
+		}
+		customValue = getWidgetValue(PP350_SETTING_ca, "DILATE_BINDER");
+		if (!customValue.isNull())
+		{
+			getWidget(PP350_SETTING_ca, "DILATE_BINDER_VALUE")->setEnabled(customValue.toBool());
+		}
+		customValue = getWidgetValue(PP350_SETTING_ca, "STIFF_PRIN_V2");
+		if (!customValue.isNull())
+		{
+			getWidget(PP350_SETTING_ca, "STIFF_PRINT_VALUE")->setEnabled(customValue.toBool());
+			getWidget(PP350_SETTING_ca, "SHELL_PERCENT")->setEnabled(customValue.toBool());
+		}
+		customValue = getWidgetValue(PP350_SETTING_ca, "WITNESS_BAR");
+		if (!customValue.isNull())
+		{
+			getWidget(PP350_SETTING_ca, "WITNESS_BAR_PERCENT")->setEnabled(customValue.toBool());
+			getWidget(PP350_SETTING_ca, "WITNESS_WIDTH")->setEnabled(customValue.toBool());
+		}
+		customValue = getWidgetValue(PP350_SETTING_ca, "PP_POST_HEATING_SWITCH");
+		if (!customValue.isNull())
+		{
+			getWidget(PP350_SETTING_ca, "PP_POST_HEATING_UPPER_LIMIT")->setEnabled(customValue.toBool());
+			getWidget(PP350_SETTING_ca, "PP_POST_HEATING_LOWER_LIMIT")->setEnabled(customValue.toBool());
+			getWidget(PP350_SETTING_ca, "PP_POST_HEATING_MINUTES")->setEnabled(customValue.toBool());
+		}
+		customValue = getWidgetValue(PP350_SETTING_ca, "PROFILE_ON");
+		if (!customValue.isNull())
+		{
+			getWidget(PP350_SETTING_ca, "COLOR_MODE")->setEnabled(customValue.toBool());
+			getWidget(PP350_SETTING_ca, "COLOR_PROFILE")->setEnabled(customValue.toBool());
+
+		}*/
+
+
 	});
+
+	
+
+	//==============================================
 
 
 	createNVMPage();
@@ -581,7 +696,7 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 
 			//ui->stackedWidget->setCurrentWidget(ui->general_page);
 		}
-		else if (widgetValue==1)
+		else if (widgetValue == 1)
 		{
 			ui->stackedWidget->widget(6)->setHidden(true);
 			//ui->stackedWidget->widget(5)->setHidden(false);
@@ -616,7 +731,7 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 			//ui->stackedWidget->setCurrentWidget(ui->general_page);
 			break;
 		}
-		
+
 	});
 
 
@@ -657,25 +772,7 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 	}
 	ui->stackedWidget->setCurrentWidget(ui->general_page);
 
-	//createPrinterSettingPage();
-
-	//connect(setDefaultValueButton, SIGNAL(clicked()), this, SLOT(loadDefaultValue()));
-	//connect(setDefaultValueButton, &QPushButton::clicked, [=](){
-
-	//	QVector<SKTWidget *> *tempVector = paramWidgetVector.value(NVM_SETTING_NAME);
-	//	for (int i = 0; i < tempVector->size(); i++)
-	//	{
-	//		SKTWidget *tempWidget = tempVector->at(i);
-	//		if (tempWidget->getVisible())
-	//		{
-	//			qDebug() << tempWidget->getIdentifyName() << " " << tempWidget->getDefaultValue();
-	//			tempWidget->updateUIValue(tempWidget->getDefaultValue());
-	//		}
-
-
-	//	}
-	//});
-
+	
 	connect(updateToFPGAButton, &QPushButton::clicked, [=](){
 
 		sendNVMPreProcess();
@@ -761,6 +858,9 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 
 	//ParamOp::transformJsonToRichParameter(tempSet, QString());
 
+	
+
+
 }
 
 void Setting3DP::keyPressEvent(QKeyEvent *e)
@@ -820,17 +920,17 @@ void Setting3DP::keyPressEvent(QKeyEvent *e)
 		switchDM ^= 1;
 		if (switchDM)
 		{
-			QListWidgetItem *item = ui->listWidget->item(4);
-			item = ui->listWidget->item(4);
-			item->setHidden(false);
-			ui->listWidget->setCurrentRow(4);
+		QListWidgetItem *item = ui->listWidget->item(4);
+		item = ui->listWidget->item(4);
+		item->setHidden(false);
+		ui->listWidget->setCurrentRow(4);
 		}
 		else
 		{
-			QListWidgetItem *item = ui->listWidget->item(4);
-			item = ui->listWidget->item(4);
-			item->setHidden(true);
-			ui->listWidget->setCurrentRow(0);
+		QListWidgetItem *item = ui->listWidget->item(4);
+		item = ui->listWidget->item(4);
+		item->setHidden(true);
+		ui->listWidget->setCurrentRow(0);
 		}
 		*/
 		switchDM ^= 1;
@@ -1365,6 +1465,44 @@ void Setting3DP::initSetting(RichParameterSet *settingParam)
 	QStringList dmSpitMode = QStringList() << "M_Spit" << "CMY_Spit";
 	settingParam->addParam(new RichEnum("DM_SPIT_SWITCH", 0, dmSpitMode, tr("SPIT_MODE"), tr("")));
 #else 
+	if (decodeParamString.isNull())
+		BCPwareFileSystem::decodeParam(decodeParamString, QString(), BCPwareFileSystem::parameterFilePath());
+	//update folder position, vary in different computer	
+	if (!QFileInfo(getJsonFileParamValue(PP350_SETTING_ca, "COLOR_PROFILE").toString()).exists())
+	{
+		QVariant pp350colorMode = getJsonFileParamValue(PP350_SETTING_ca, "COLOR_MODE");
+		if (!pp350colorMode.isNull()){
+			switch (pp350colorMode.toInt())
+			{
+			case 0:
+				updateValueToJsonFile(PP350_SETTING_ca, "COLOR_PROFILE", PicaApplication::getRoamingDir() + "/ColorProfile/CMY_54_64_93c05to0_m05to0_y1to0_c295to245_m36to29_y505to415_c6to4_m8-7.icm");
+				break;
+			case 1:
+				updateValueToJsonFile(PP350_SETTING_ca, "COLOR_PROFILE", PicaApplication::getRoamingDir() + "/ColorProfile/ECI2002CMYKEyeOneL_siriusCMY_73_76_91_large_paperGray_1ti_coveron_lightPlus20.icm");
+				break;
+			}
+		}
+		else
+		{
+			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("color mode is null"));
+		}
+
+
+		//PicaApplication::getRoamingDir() + "/ColorProfile/CMY_54_64_93c05to0_m05to0_y1to0_c295to245_m36to29_y505to415_c6to4_m8-7.icm"
+	}
+
+	if (!QFileInfo(getJsonFileParamValue(PP352_SETTING_ca, "DM_ICM_FOR_DITHER").toString()).exists())
+	{
+		QFileInfo dmICM(getJsonFileParamValue(PP352_SETTING_ca, "DM_ICM_FOR_DITHER").toString());
+		QFileInfo currentPCLocation(PicaApplication::getRoamingDir() + dmICM.fileName());
+		if (currentPCLocation.exists())
+			updateValueToJsonFile(PP352_SETTING_ca, "DM_ICM_FOR_DITHER", currentPCLocation.absoluteFilePath());
+		else qDebug() << "ICM not exist";
+
+	}
+	else qDebug() << "ICM  exist";
+	//updateValueToJsonFile(PP350_SETTING_ca, "COLOR_PROFILE",);
+
 	/*Init setting from Json document, those are current parameters*/
 	createRichParamfromJdoc(PP350_SETTING_ca, settingParam);
 	createRichParamfromJdoc(PP352_SETTING_ca, settingParam);
@@ -1624,8 +1762,10 @@ void Setting3DP::acceptOne(RichParameter *inpar)
 
 void Setting3DP::importSampleFile()
 {
-	QString fileName = QCoreApplication::applicationDirPath() + "/Cube.stl";
-	mw->importMeshWithLayerManagement(fileName);
+	QString fileName = QDir(QCoreApplication::applicationDirPath()).filePath("Sample.3mf");
+	//mw->importMeshWithLayerManagement(fileName);
+	if (QDir(QCoreApplication::applicationDirPath()).exists("Sample.3mf"))
+		mw->openProject2(fileName);
 	accept();
 }
 
@@ -2119,30 +2259,22 @@ Setting3DP::~Setting3DP()
 
 void Setting3DP::create_PP350_Page()
 {
-	
-	
+
+
 	QLayoutItem *wItem;
 	while ((wItem = pp350glay->takeAt(0)) != 0)
 		delete wItem->widget();
-	
+
 	//exportSetting
 
 
-	//pp350g1Layout->addWidget(setCurrentToDefault, 0, 0);
-	//pp350g1Layout->addWidget(setDefaultToCurrent, 0, 1);
-	pp350g1Layout->addWidget(setDefaultToCurrent, 0, 0, 1, 2 );
-	pp350g1Layout->addWidget(exportSettingPB, 1, 0);
-	pp350g1Layout->addWidget(importSettingPB, 1, 1);
-	//pp350g1Layout->addWidget(switchExpertSetting, 2, 0, 2, 1);
-	/*topLayout->addLayout(g1Layout);
-	topLayout->addStretch();*/
-	ui->pp350buttonFrame->setLayout(pp350g1Layout);
 
 
 
-	
+
+
 	pp350glay->setMargin(10);
-	pp350glay->setSpacing(5);
+	pp350glay->setSpacing(15);
 
 	QVector<QVector<SKTWidget *>*> *tempVector = paramWidgetVector.value(paramType.at(PP350_SETTING_ca));
 	QVector<QVector<SKTWidget *> *>::ConstIterator groupIt;
@@ -2160,8 +2292,10 @@ void Setting3DP::create_PP350_Page()
 		for (int j = 0, k = 0; j < groupSKTWidget->size(); j++)
 		{
 			SKTWidget *tempWidget = groupSKTWidget->at(j);
-			QLabel *num = new QLabel(QString::number(k+1));
+			QLabel *num = new QLabel(QString::number(k + 1));
 			qDebug() << tempWidget->getIdentifyName() << " " << tempWidget->getVisible();
+
+
 			if (tempWidget->getVisible())
 			{
 				if (switchSetting)
@@ -2171,7 +2305,7 @@ void Setting3DP::create_PP350_Page()
 					tempWidget->addWidgetToGridLayout(framGlay, k, 1, WidgetAlignment);*/
 					tempWidget->addWidgetToGridLayout(framGlay, k, 0, WidgetAlignment);
 					k++;
-					
+
 				}
 				else
 				{
@@ -2182,17 +2316,17 @@ void Setting3DP::create_PP350_Page()
 						tempWidget->addWidgetToGridLayout(framGlay, k, 1, WidgetAlignment);*/
 						tempWidget->addWidgetToGridLayout(framGlay, k, 0, WidgetAlignment);
 						k++;
-					}			
+					}
 
 				}
-				
+
 			}
 
 		}
 		groupbox->setLayout(framGlay);
 		qDebug("Gridlayout %s : %d", groupbox->title().toStdString().c_str(), groupbox->children().size());
-		if (groupbox->title() != "deprecated" && groupbox->children().size()>1)
-		pp350glay->addWidget(groupbox);
+		if (groupbox->title() != "deprecated" && groupbox->children().size() > 1)
+			pp350glay->addWidget(groupbox);
 	}
 	pp350glay->setStretch(1, 0);
 	ui->scrollAreaWidgetContents_4->setLayout(pp350glay);
@@ -2203,7 +2337,7 @@ void Setting3DP::create_PP350_Page()
 void Setting3DP::create_PP352_Page()
 {
 	QPushButton *export352SettingPB = new QPushButton("Export 352 Setting");
-	QPushButton *import352SettingPB = new QPushButton("Import 352 Setting");	
+	QPushButton *import352SettingPB = new QPushButton("Import 352 Setting");
 	connect(export352SettingPB, &QPushButton::clicked, [&](){
 		exportSetting(JsonfileCategory::PP352_SETTING_ca);
 	});
@@ -2304,7 +2438,7 @@ void Setting3DP::create_GeneralAndEditPage()
 	/**/
 	/**/
 
-	
+
 
 	QVector<QVector<SKTWidget *>*> *tempVector = paramWidgetVector.value(paramType[4]);
 	QVector<QVector<SKTWidget *> *>::ConstIterator groupIt;
@@ -2314,10 +2448,10 @@ void Setting3DP::create_GeneralAndEditPage()
 		QGridLayout* glay = new QGridLayout();
 		glay->setMargin(10);
 		glay->setSpacing(5);
-		
+
 		QVector<SKTWidget *> *groupSKTWidget = tempVector->at(i);
 		QGridLayout* framGlay = new QGridLayout();
-		
+
 		framGlay->setSpacing(5);
 		QGroupBox *gb1 = new QGroupBox(paramGroupName.value(paramType[Common_Setting_ca])->value(i));
 		gb1->setStyleSheet(WidgetStyleSheet::groupBoxStyleSheet());
@@ -2338,7 +2472,7 @@ void Setting3DP::create_GeneralAndEditPage()
 		framGlay->setRowStretch(groupSKTWidget->size(), 1);
 		gb1->setLayout(framGlay);
 		glay->addWidget(gb1);
-		
+
 		switch (i)
 		{
 		case 0:
@@ -2351,8 +2485,8 @@ void Setting3DP::create_GeneralAndEditPage()
 		}
 
 	}
-	
-	
+
+
 }
 void Setting3DP::createNVMPage()
 {
@@ -2423,7 +2557,7 @@ void Setting3DP::createNVMPage()
 			if (tempWidget->getVisible())
 			{
 				framGlay->addWidget(num, k, 0);
-				
+
 				tempWidget->addWidgetToGridLayout(framGlay, k, 1, WidgetAlignment);
 				k++;
 			}
@@ -2698,7 +2832,7 @@ void Setting3DP::createParamSettingUI(JsonfileCategory type)
 		for (int j = 0; j < widgetTmep->size(); j++)
 		{
 			//delete widgetTmep->at(j);
-			 widgetTmep->at(j)->deleteLater();
+			widgetTmep->at(j)->deleteLater();
 		}
 	}
 
@@ -2950,7 +3084,7 @@ void Setting3DP::updateUIToJsonFile(JsonfileCategory type)
 	QJsonDocument jsonDoc;
 	QJsonParseError error;
 	QString _jsonString;
-	
+
 	QVariant category, categoryList, typeMap, paramList, categoryName;
 
 	//if (!ParamOp::extractVariantTest(category, QVariant(), QString(), -1, paramFileLocation))
@@ -3018,7 +3152,7 @@ void Setting3DP::updateUIToJsonFile(JsonfileCategory type)
 
 		}
 	}
-	
+
 	//ParamOp::mergeValue(category, QVariant(), QString(), -1, paramFileLocation);
 	/*test encrypt*/
 	//emit signal :  update decode string;
@@ -3101,7 +3235,7 @@ void Setting3DP::getNVMFromFPGA()
 
 
 
-	
+
 
 }
 //function for NVM setting
@@ -3112,7 +3246,7 @@ bool Setting3DP::updateUIFromJsonFile(JsonfileCategory _category){
 
 	QVariant advancedMap, firstList, paramList;
 	//ParamOp::extractVariantTest(category, QVariant(), QString(), -1, paramFileLocation);
-	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, QString(),decodeParamString);
+	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, QString(), decodeParamString);
 	ParamOp::extractVariantTest(firstList, category, "categories");
 	ParamOp::extractVariantTest(advancedMap, firstList, QString(), _category);
 	ParamOp::extractVariantTest(paramList, advancedMap, "parameters");
@@ -3413,7 +3547,7 @@ bool Setting3DP::exportSetting(JsonfileCategory category)
 	{
 		/*if (ParamOp::mergeValue(categoryMap, QVariant(), QString(), -1, fileName))
 			return true;
-		else return false;*/
+			else return false;*/
 		QVariant jsonString = QString();
 		ParamOp::mergeValue(jsonString, categoryMap, QString());
 		BCPwareFileSystem::encryptParam(jsonString.toString(), QFileInfo(fileName));
@@ -3484,6 +3618,7 @@ bool Setting3DP::updateValueToUI(QString category, int group, QString valueName,
 			return true;
 		}
 	}
+	qWarning() << valueName << ": not updated";
 	return false;
 }
 
@@ -3539,8 +3674,100 @@ SKTWidget* Setting3DP::getWidget(JsonfileCategory category, QString paramName)
 		}
 	}
 }
-void Setting3DP:: reConnectWidgetSignal()
+void Setting3DP::reConnectWidgetSignal()
 {
 
 
+}
+
+void Setting3DP::updateValueToJsonFile(JsonfileCategory type, QString _identifyName, QVariant _value)
+{
+	QVariant category, categoryList, typeMap, paramList, categoryName;
+
+	if (!ParamOp::extractVariantTest(category, QVariant(), QString(), -1, QString(), decodeParamString))
+		return;
+
+	ParamOp::extractVariantTest(categoryList, category, "categories");
+	ParamOp::extractVariantTest(typeMap, categoryList, QString(), type);
+	ParamOp::extractVariantTest(paramList, typeMap, "parameters");
+
+
+	bool valueSet = false;
+	for (int j = 0; j < paramList.toList().size(); j++)
+	{
+
+		QVariant groupItemList, groupMap;
+		ParamOp::extractVariantTest(groupMap, paramList.toList(), QString(), j);
+		ParamOp::extractVariantTest(groupItemList, groupMap, "group");
+
+		for (int z = 0; z < groupItemList.toList().size(); z++)
+		{
+			QVariant identifyerName, groupItem;
+			ParamOp::extractVariantTest(groupItem, groupItemList, QString(), z);
+			ParamOp::extractVariantTest(identifyerName, groupItem, "name");
+			if (_identifyName == identifyerName)
+			{
+				QVariant controlMap;
+				ParamOp::extractVariantTest(controlMap, groupItem, "control");
+
+				ParamOp::mergeValue(controlMap, _value, "value");
+
+				ParamOp::mergeValue(groupItem, controlMap, "control");
+				ParamOp::mergeValue(groupItemList, groupItem, QString(), z);
+
+				ParamOp::mergeValue(groupMap, groupItemList, "group");
+				ParamOp::mergeValue(paramList, groupMap, QString(), j);
+
+				ParamOp::mergeValue(typeMap, paramList, "parameters");
+				ParamOp::mergeValue(categoryList, typeMap, QString(), type);
+
+				ParamOp::mergeValue(category, categoryList, "categories");
+				valueSet = true;
+				break;
+			}
+		}
+		if (valueSet)
+			break;
+	}
+	QVariant testtemp = QString();
+	ParamOp::mergeValue(testtemp, category);
+	BCPwareFileSystem::encryptParam(testtemp.toString(), QFileInfo(BCPwareFileSystem::parameterFilePath()));
+
+}
+QVariant Setting3DP::getJsonFileParamValue(JsonfileCategory type, QString _identifyName)
+{
+	QVariant category, categoryList, typeMap, paramList, categoryName;
+
+	if (!ParamOp::extractVariantTest(category, QVariant(), QString(), -1, QString(), decodeParamString))
+		return QVariant();
+
+	ParamOp::extractVariantTest(categoryList, category, "categories");
+	ParamOp::extractVariantTest(typeMap, categoryList, QString(), type);
+	ParamOp::extractVariantTest(paramList, typeMap, "parameters");
+
+
+	for (int j = 0; j < paramList.toList().size(); j++)
+	{
+
+		QVariant groupItemList, groupMap, value;
+		ParamOp::extractVariantTest(groupMap, paramList.toList(), QString(), j);
+		ParamOp::extractVariantTest(groupItemList, groupMap, "group");
+
+		for (int z = 0; z < groupItemList.toList().size(); z++)
+		{
+			QVariant identifyerName, groupItem;
+			ParamOp::extractVariantTest(groupItem, groupItemList, QString(), z);
+			ParamOp::extractVariantTest(identifyerName, groupItem, "name");
+			if (_identifyName == identifyerName)
+			{
+				QVariant controlMap;
+				ParamOp::extractVariantTest(controlMap, groupItem, "control");
+				ParamOp::extractVariantTest(value, controlMap, "value");
+
+				return value;
+			}
+		}
+
+	}
+	return QVariant();
 }

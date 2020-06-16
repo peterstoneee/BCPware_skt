@@ -340,14 +340,15 @@ public: //SKT
 			InstallingPH_Preparing,
 			InstallingPH_WaitInserting, InstallingPH_InsertRetry, InstallingPH_WaitApproval, InstallingPH,
 			PHLightRecovering, PHHeavyRecovering,
+
 			Online, Service, PanelControl,
 			PrePrinting, Printing, PostPrinting,
 			Pausing, Paused, DoorOpened,
 			WiperSetting,
-			BinderRecovering, Poweroff, /*None,*/
+			BinderRecovering, Poweroff, NVM, PHTest, PHCapTesting, UntracedPrinting,/*None,*/
 
 			Printing_INK_LOW, Printing_CARTRIDGE_MISSING, //2018_4_18_In printing error
-			Printing_INK_OUT,Fill_INK_To_Resume, //2018_4_18_In printing error
+			Printing_INK_OUT,Fill_INK_To_Resume, //2018_4_18_In printing errorf
 
 
 			GettingError,
@@ -422,6 +423,10 @@ public: //SKT
 			printerStatusmap.insert(make_pair("WiperSetting", (int)WiperSetting));
 			printerStatusmap.insert(make_pair("BinderRecovering", (int)BinderRecovering));
 			printerStatusmap.insert(make_pair("Poweroff", (int)Poweroff));
+			printerStatusmap.insert(make_pair("NVM", (int)NVM));
+			printerStatusmap.insert(make_pair("PHTest", (int)PHTest));
+			printerStatusmap.insert(make_pair("PHCapTesting", (int)PHCapTesting));
+			printerStatusmap.insert(make_pair("UntracedPrinting", (int)UntracedPrinting));
 			//printerStatusmap.insert(make_pair("", (int)None));
 
 
