@@ -3608,7 +3608,24 @@ bool Setting3DP::importSetting(JsonfileCategory type)
 
 bool Setting3DP::updateValueToUI(QString category, int group, QString valueName, QVariant value)
 {
-	QVector<SKTWidget *> *uiGroup = paramWidgetVector.value(category)->at(group);
+	QVector<QVector<SKTWidget *>*> *uiCategory = paramWidgetVector.value(category);
+	foreach(QVector<SKTWidget *> *uiGroup, *uiCategory)
+	{
+		foreach(SKTWidget *tempwidget, *uiGroup)
+		{
+			qDebug() << "tempwidget->getIdentifyName()" << tempwidget->getIdentifyName();
+			if (valueName == tempwidget->getIdentifyName())
+			{
+				tempwidget->updateUIValue(value);
+				return true;
+			}
+		}
+	}
+
+	qWarning() << valueName << ": not updated";
+	return false; 
+
+	/*QVector<SKTWidget *> *uiGroup = paramWidgetVector.value(category)->at(group);
 	foreach(SKTWidget *tempwidget, *uiGroup)
 	{
 		qDebug() << "tempwidget->getIdentifyName()" << tempwidget->getIdentifyName();
@@ -3619,7 +3636,8 @@ bool Setting3DP::updateValueToUI(QString category, int group, QString valueName,
 		}
 	}
 	qWarning() << valueName << ": not updated";
-	return false;
+	return false;*/
+
 }
 
 
