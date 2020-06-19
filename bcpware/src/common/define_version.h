@@ -3,12 +3,12 @@
 #define TEST_VERSION_1 1
 #define TEST_VERSION_2 0
 #define TEST_VERSION_3 2
-#define TEST_VERSION_4 2
+#define TEST_VERSION_4 3
 #define TEST_P_VERSION_1 1
 #define TEST_P_VERSION_2 0
 #define TEST_P_VERSION_3 2
-#define TEST_P_VERSION_4 2
-#define DSP_SOFTWARE_VERSION "1.0.2.2\0"
+#define TEST_P_VERSION_4 3
+#define DSP_SOFTWARE_VERSION "1.0.2.3\0"
 #define DSP_PRODUCTION_NAME "BCPware\0"
 #define DSP_ORIGINAL_FILE_NAME "BCPware.exe\0"
 #endif

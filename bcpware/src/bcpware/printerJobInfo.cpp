@@ -796,6 +796,31 @@ void PrinterJobInfo::exportReportSlot()
 
 	xlsx.write("K14", "=H17/K6");
 
+	/*retail price*/	
+	xlsx.write("F6", param->getInt("RETAIL_PRICE_C"));
+	xlsx.write("G6", param->getInt("RETAIL_C_CAPACITY"));
+
+	xlsx.write("F7", param->getInt("RETAIL_PRICE_M"));
+	xlsx.write("G7", param->getInt("RETAIL_M_CAPACITY"));
+
+	xlsx.write("F8", param->getInt("RETAIL_PRICE_Y"));
+	xlsx.write("G8", param->getInt("RETAIL_Y_CAPACITY"));
+
+	xlsx.write("F9", param->getInt("RETAIL_PRICE_B"));
+	xlsx.write("G9", param->getInt("RETAIL_B_CAPACITY"));
+
+	xlsx.write("F11", param->getInt("RETAIL_PRICE_POWDER"));
+	xlsx.write("G11", param->getInt("RETAIL_POWDER_CAPACITY"));
+
+	xlsx.write("F13", param->getInt("RETAIL_PRICE_WIPER"));
+	xlsx.write("G13", param->getInt("RETAIL_WIPER_CAPACITY"));
+
+	xlsx.write("F14", param->getInt("RETAIL_PRICE_PRINTHEAD"));
+	xlsx.write("G14", param->getInt("RETAIL_PRINTHEAD_CAPACITY"));
+
+	xlsx.write("F16", param->getInt("RETAIL_PRICE_CA"));
+	xlsx.write("G16", param->getInt("RETAIL_CA_CAPACITY"));
+	/*************************************************************************************************8/
 	/*xlsx.write("I11", maintBinder);
 	xlsx.write("I12", CMYUsage[3]);
 	xlsx.write("I13", CMYUsage[4]);

@@ -1131,6 +1131,7 @@ private:
 	QAction *showPrintDashBoardAct;
 	QAction *testPrintAct;
 	QAction *testPrintAct2;
+	QAction *importSample3DModel;
 	QAction *testPrintBORAct;
 	QAction *estimateUsageAct;
 	//QAction *

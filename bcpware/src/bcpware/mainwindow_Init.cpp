@@ -102,7 +102,7 @@ MainWindow::MainWindow()
 	ss << seconds_past_epoch;
 	std::string ts = ss.str();*/
 	//=================
-	
+
 
 	QFileInfo outfile(QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory) + PicaApplication::appName() + "/printerStatus_log.txt");
 	dbgff = fopen(outfile.absoluteFilePath().toStdString().data(), "w");//@@@
@@ -167,7 +167,7 @@ MainWindow::MainWindow()
 	PM.loadPlugins(defaultGlobalParams);//pluging從這裡匯入，可是不知道參數設在哪裡
 	QSettings settings;
 	QVariant vers = settings.value(PicaApplication::versionRegisterKeyName());//
-																			  //should update those values only after I run MeshLab for the very first time or after I installed a new version
+	//should update those values only after I run MeshLab for the very first time or after I installed a new version
 	if (!vers.isValid() || vers.toString() < PicaApplication::appVer())//***在這邊設置globalparameter ,appver
 	{
 		settings.setValue(PicaApplication::pluginsPathRegisterKeyName(), PluginManager::getDefaultPluginDirPath());
@@ -186,28 +186,28 @@ MainWindow::MainWindow()
 
 
 	loadPicassoSettings();
-	int x= currentGlobalParams.getEnum("Palette_Language");
+	int x = currentGlobalParams.getEnum("Palette_Language");
 	/*===============================*/
 	//Load From txt to currentParam
 
 	//
 	/*================================*/
 	QString lan;
-	if (x==0)
+	if (x == 0)
 	{
 		lan = "";
 	}
-	else if(x==1)
-	{		
+	else if (x == 1)
+	{
 		lan = "picasso_ja";
 	}
-	
+
 
 	QTranslator translator;
 	translator.load(lan);
 	qApp->installTranslator(&translator);
-	
-	
+
+
 
 
 	//used QUndoGroup to seperate stack per project (added by KPPH R&D-I-SW, Mark)
@@ -273,15 +273,15 @@ MainWindow::MainWindow()
 	statusLabel = new QLabel;
 	statusLabel->setMinimumWidth(200);
 	//statusWidget = new CusDialog(this);
-	
+
 
 	//printerStatusMsg = new QMessageBox(this);
 	//printerStatusMsg->information(this, "check update", "please check Firewall");
-	
+
 	statusBar()->addPermanentWidget(qb, 0);
 	statusBar()->addPermanentWidget(s_pushbutton, 0);
 	statusBar()->addPermanentWidget(pause_button, 0);
-	statusBar()->addPermanentWidget(statusLabel);	
+	statusBar()->addPermanentWidget(statusLabel);
 	//***stylesheet
 	setGenericStyleSheet();
 
@@ -327,7 +327,7 @@ MainWindow::MainWindow()
 
 	/*Qt::WindowFlags flags = this->windowFlags();
 	this->setWindowFlags(flags | Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint);
-*/
+	*/
 	//***20160310***//
 	TPreview = new TransformPreview(this);
 	//TPreview->setWindowFlags(Qt::Dialog);//加了會home widget不能按
@@ -349,7 +349,7 @@ MainWindow::MainWindow()
 
 	//createQDockWidget3();
 	dock = createQDockWidget4();
-	dock->setWindowFlags(  Qt::FramelessWindowHint);
+	dock->setWindowFlags(Qt::FramelessWindowHint);
 	dock->setStyleSheet(WidgetStyleSheet::dockWidget());
 	dock->setTitleBarWidget(0);
 	dock->setFeatures(QDockWidget::NoDockWidgetFeatures);
@@ -361,19 +361,19 @@ MainWindow::MainWindow()
 	currentViewContainer()->undoStack->setUndoLimit(100);
 	qDebug() << "first undo limit: " << undoLimit;
 
-	
 
-	
+
+
 
 
 	unitStatus = new QPushButton("Unit");
 	unitStatus->setStyleSheet(" QPushButton{	border:0pxsolid #8f8f91;		border-radius: 0px;		background-color: rgb(237, 237, 237);"
-	"font: 75 7pt \"Arial\"; }"
-	);
+		"font: 75 7pt \"Arial\"; }"
+		);
 	QString unitS;
-	if (currentGlobalParams.getEnum("DISPLAY_UNIT")==0)
+	if (currentGlobalParams.getEnum("DISPLAY_UNIT") == 0)
 		unitS = QString("Unit : mm");
-	else if(currentGlobalParams.getEnum("DISPLAY_UNIT") == 1)
+	else if (currentGlobalParams.getEnum("DISPLAY_UNIT") == 1)
 		unitS = QString("Unit : Inch");
 	unitStatus->setText(unitS);
 	connect(unitStatus, SIGNAL(clicked()), this, SLOT(startsetting()));
@@ -395,45 +395,45 @@ MainWindow::MainWindow()
 
 	//else
 	//if(GDPR_setting)
-		//run dialog
-		//save setting
+	//run dialog
+	//save setting
 	//else
 	/*
 		GPRD Setting
-	*/
+		*/
 	/*QSettings xyzReg;
 	//if (xyzReg.childGroups().contains("s", Qt::CaseInsensitive))
 	if (xyzReg.contains("GDPR_SETTING"))
 	{
-		if (xyzReg.value("GDPR_SETTING").toInt() == 1)
-		{
-			gdprResult = QDialog::Accepted;
-		}
-		else if (xyzReg.value("GDPR_SETTING").toInt() == 0)
-		{
-			gdprResult = QDialog::Rejected;
-		}
+	if (xyzReg.value("GDPR_SETTING").toInt() == 1)
+	{
+	gdprResult = QDialog::Accepted;
+	}
+	else if (xyzReg.value("GDPR_SETTING").toInt() == 0)
+	{
+	gdprResult = QDialog::Rejected;
+	}
 	}
 	else
-	{		
-		GDPRDialog *test = new GDPRDialog();
-		gdprResult = test->exec();
-		
-		if (gdprResult == QDialog::Accepted)
-		{
-			const QString gdpr_Setting("GDPR_SETTING");
-			settings.setValue(gdpr_Setting, 1);
-		}
-		else if (gdprResult == QDialog::Rejected)
-		{
-			const QString gdpr_Setting("GDPR_SETTING");
-			settings.setValue(gdpr_Setting, 0);
-		}
+	{
+	GDPRDialog *test = new GDPRDialog();
+	gdprResult = test->exec();
+
+	if (gdprResult == QDialog::Accepted)
+	{
+	const QString gdpr_Setting("GDPR_SETTING");
+	settings.setValue(gdpr_Setting, 1);
+	}
+	else if (gdprResult == QDialog::Rejected)
+	{
+	const QString gdpr_Setting("GDPR_SETTING");
+	settings.setValue(gdpr_Setting, 0);
+	}
 	}*/
 
-	
 
-	
+
+
 
 }
 
@@ -457,14 +457,14 @@ void MainWindow::rotate_changed(QSet<int> multiSelectID, Point3d _rotation, QLis
 	currentViewContainer()->undoStack->push(new Rotate_command(this, meshDoc(), multiSelectID, _rotation, _old_center, false));
 }
 
-void MainWindow::packing_occur(QSet<int> multiSelectID,QMap<int, Point3f> savePos)
+void MainWindow::packing_occur(QSet<int> multiSelectID, QMap<int, Point3f> savePos)
 {
-	currentViewContainer()->undoStack->push(new packing_command(this, meshDoc(), multiSelectID,savePos, false));
+	currentViewContainer()->undoStack->push(new packing_command(this, meshDoc(), multiSelectID, savePos, false));
 }
 
-void MainWindow::packing_rotate_occur(QSet<int> multiSelectID,QMap<int, Point3f> savePos, QMap<int, Point3d> firstRotation, QMap<int, Point3d> secondRotation)
+void MainWindow::packing_rotate_occur(QSet<int> multiSelectID, QMap<int, Point3f> savePos, QMap<int, Point3d> firstRotation, QMap<int, Point3d> secondRotation)
 {
-	currentViewContainer()->undoStack->push(new packing_rotate_command(this, meshDoc(), multiSelectID,savePos, firstRotation, secondRotation, false));
+	currentViewContainer()->undoStack->push(new packing_rotate_command(this, meshDoc(), multiSelectID, savePos, firstRotation, secondRotation, false));
 }
 
 void MainWindow::createUndoView()
@@ -476,9 +476,9 @@ void MainWindow::createUndoView()
 	reDoAct->setShortcutContext(Qt::ApplicationShortcut);
 	reDoAct->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Z);
 	//reDoAct->setShortcuts(QKeySequence::Redo);
-	
+
 	connect(unDoAct, SIGNAL(triggered()), this, SLOT(updateMenus()));
-	connect(reDoAct,SIGNAL(triggered()),this,SLOT(updateMenus()));
+	connect(reDoAct, SIGNAL(triggered()), this, SLOT(updateMenus()));
 
 	undoView = new QUndoView();
 	undoView->setGroup(undoGroup);
@@ -691,13 +691,13 @@ QDockWidget* MainWindow::createQDockWidget4()
 		break;
 	case 1:
 		dockTabWidget->setTabIcon(1, QIcon(":/images/icons/btn_cross_on_2x.png"));
-		break;	
+		break;
 	case 2:
 		dockTabWidget->setTabIcon(2, QIcon(":/images/icons/btn_move_on_2x.png"));
-		break;		
+		break;
 	case 3:
 		dockTabWidget->setTabIcon(3, QIcon(":/images/icons/btn_rotate_on_2x.png"));
-		break;		
+		break;
 	case 4:
 		dockTabWidget->setTabIcon(4, QIcon(":/images/icons/btn_scale_on_2x.png"));
 		break;
@@ -763,7 +763,7 @@ QTabWidget* MainWindow::createDockTabWidget()
 	temptab->addTab(scale_widget_cus, "");
 
 
-	
+
 	temptab->addTab(dockInformationWidget2, "");
 
 	temptab->setTabToolTip(0, tr("View"));
@@ -1134,7 +1134,7 @@ QWidget *MainWindow::createDockInformationWidget()
 
 
 	QVBoxLayout *vLayout2 = new QVBoxLayout;
-	
+
 	vLayout2->addLayout(vLayout);
 	vLayout2->addWidget(infoTab, 0, Qt::AlignHCenter);
 	vLayout2->addWidget(printEstimateTB, 0, Qt::AlignBottom);
@@ -1402,18 +1402,18 @@ QWidget *MainWindow::createDockCrossSection2()
 	crossSlider->setSingleStep(1);
 	crossSlider->setValue(-984);
 
-	
-	up5 = new QToolButton();	
+
+	up5 = new QToolButton();
 	up5->setFixedSize(44, 26);
 	//up5->setIconSize(QSize(60, 60));
 	//up5->setAutoRaise(true);
 	up5->setStyleSheet(WidgetStyleSheet::viewTextStyleSheet(":/images/icons/btn-add-label-5.png", ":/images/icons/btn-add-label-5-disable.png"));
 	connect(up5, SIGNAL(clicked()), crossSlider, SLOT(doubleAdd5Step()));
 
-	
+
 	down5 = new QToolButton();
 	down5->setFixedSize(44, 26);
-	down5->setStyleSheet(WidgetStyleSheet::viewTextStyleSheet(":/images/icons/btn-reduce-label-5.png", ":/images/icons/btn-reduce-label-5-disable.png"));	
+	down5->setStyleSheet(WidgetStyleSheet::viewTextStyleSheet(":/images/icons/btn-reduce-label-5.png", ":/images/icons/btn-reduce-label-5-disable.png"));
 	//down5->setAutoRaise(true);
 	connect(down5, SIGNAL(clicked()), crossSlider, SLOT(doubleMinus5Step()));
 
@@ -1563,11 +1563,11 @@ void MainWindow::createActions()//實體化action，與函示連結上
 
 	closeProjectAct = new QAction(tr("Close Project"), this);
 	closeProjectAct->setShortcutContext(Qt::WidgetShortcut);
-	closeProjectAct->setShortcut(Qt::CTRL+ Qt::Key_W);
-	connect(closeProjectAct, SIGNAL(triggered()), mdiarea, SLOT(closeActiveSubWindow()));	
+	closeProjectAct->setShortcut(Qt::CTRL + Qt::Key_W);
+	connect(closeProjectAct, SIGNAL(triggered()), mdiarea, SLOT(closeActiveSubWindow()));
 	connect(closeProjectAct, SIGNAL(triggered()), this, SLOT(testslot()));
 
-	
+
 	//connect(closeProjectAct, SIGNAL(triggered()),this, SLOT(closeProjectWindow()));
 	importMeshAct = new QAction(QIcon(":/images/icons/btn_import_modal_2x.png"), tr("&Import Model"), this);
 	importMeshAct->setShortcutContext(Qt::ApplicationShortcut);
@@ -1701,7 +1701,7 @@ void MainWindow::createActions()//實體化action，與函示連結上
 
 	connectRenderModeActionList(rendlist);//********觸發函式為mainwindow_RunTime的updateRenderMode
 
-										  //////////////Action Menu View ////////////////////////////////////////////////////////////////////////////
+	//////////////Action Menu View ////////////////////////////////////////////////////////////////////////////
 	fullScreenAct = new QAction(tr("&FullScreen"), this);
 	fullScreenAct->setCheckable(true);
 	fullScreenAct->setShortcutContext(Qt::ApplicationShortcut);
@@ -1783,7 +1783,7 @@ void MainWindow::createActions()//實體化action，與函示連結上
 	pasteAct->setShortcut(QKeySequence::Paste);
 	connect(pasteAct, SIGNAL(triggered()), this, SLOT(pasteSelectMeshes()), Qt::DirectConnection);
 	//connect(pasteAct, SIGNAL(triggered()), this, SLOT(copyNumber()));
-	
+
 	deleteAct = new QAction(QIcon(":/images/icons/btn_remove_2x.png"), tr("Delete"), this);
 	deleteAct->setShortcut(QKeySequence::Delete);
 	connect(deleteAct, SIGNAL(triggered()), this, SLOT(delMeshes()));
@@ -1798,9 +1798,9 @@ void MainWindow::createActions()//實體化action，與函示連結上
 	connect(copyAct_right, SIGNAL(triggered()), this, SLOT(setCopyMeshes()));
 
 	pasteAct_right = new QAction(tr("Paste"), this);
-	connect(pasteAct_right, SIGNAL(triggered()), this, SLOT(pasteSelectMeshes()));	
+	connect(pasteAct_right, SIGNAL(triggered()), this, SLOT(pasteSelectMeshes()));
 
-	pasteManyAct_right = new QAction(tr("Paste many"), this);	
+	pasteManyAct_right = new QAction(tr("Paste many"), this);
 	connect(pasteManyAct_right, SIGNAL(triggered()), this, SLOT(copyNumber()));
 
 	deleteAct_right = new QAction(tr("Delete"), this);
@@ -1880,7 +1880,7 @@ void MainWindow::createActions()//實體化action，與函示連結上
 	viewBottomAct->setShortcut(Qt::CTRL + Qt::Key_Home);*/
 
 	connect(viewFromGroupAct, SIGNAL(triggered(QAction *)), this, SLOT(viewFrom(QAction *)));
-	connect(viewFromGroupActTB, SIGNAL(triggered(QAction *)), this, SLOT(viewFrom(QAction *)));	
+	connect(viewFromGroupActTB, SIGNAL(triggered(QAction *)), this, SLOT(viewFrom(QAction *)));
 	connect(lockViewAct, SIGNAL(toggled(bool)), this, SLOT(lock_View(bool)));
 	connect(selectionModeSwitchAct, SIGNAL(toggled(bool)), this, SLOT(selection_View(bool)));
 
@@ -1942,25 +1942,25 @@ void MainWindow::createActions()//實體化action，與函示連結上
 
 	howToUseThisSWAct = new QAction(tr("User Manual"), this);
 	connect(howToUseThisSWAct, &QAction::triggered, [this]() {
-		qDebug() << "howToUseThisSWAct execute";		
+		qDebug() << "howToUseThisSWAct execute";
 		QString tmp = "c:\\windows\\explorer.exe\\ ./select,d:\\debug_open_1.txt";//
 		QString appEPath = "file:///";
-		appEPath.append(qApp->applicationDirPath()).append("./doc/");					
-		
+		appEPath.append(qApp->applicationDirPath()).append("./doc/");
+
 		QDesktopServices::openUrl(QUrl(appEPath, QUrl::TolerantMode));
-				qDebug() << "App path : " << qApp->applicationDirPath();
+		qDebug() << "App path : " << qApp->applicationDirPath();
 	}
 	);
 
 	printHistoryAct = new QAction(tr("Print History(Testing)"), this);
 	connect(printHistoryAct, &QAction::triggered, [this]() {
-		qDebug() << "Print History";		
-		
+		qDebug() << "Print History";
+
 		QProcess process(this);
 		QString fileName = QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory) + PicaApplication::appName() + "/printInfoCSV.csv";
 		QString printHistoryName = qApp->applicationDirPath() + "./PrintJogHistory.exe";
 		QStringList arguments;
-		arguments << fileName;		
+		arguments << fileName;
 		process.startDetached("PrintJogHistory.exe", arguments);
 	}
 	);
@@ -2012,7 +2012,7 @@ void MainWindow::createActions()//實體化action，與函示連結上
 
 	//////////////Action Print Filters /////////////filter的menu////////////////////////////////////////////////////////
 	threeDPrintAct = new QAction(QIcon(":/images/icons/btn_printing_2x.png"), tr("Prepare for Printing"), this);//***20150831
-																												//connect(threeDPrintAct, SIGNAL(triggered()), this, SLOT(emitconnect()), Qt::DirectConnection);
+	//connect(threeDPrintAct, SIGNAL(triggered()), this, SLOT(emitconnect()), Qt::DirectConnection);
 	threeDPrintAct->setShortcut(Qt::CTRL + Qt::Key_P);
 	connect(threeDPrintAct, SIGNAL(triggered()), this, SLOT(printFunction()));
 	//connect(threeDPrintAct, SIGNAL(triggered()), this, SLOT(testGetstring()));
@@ -2031,12 +2031,19 @@ void MainWindow::createActions()//實體化action，與函示連結上
 	testPrintAct = new QAction(tr("Test Print(Color Test Page)"), this);
 	connect(testPrintAct, SIGNAL(triggered()), this, SLOT(print_test_page_function()));
 
+	importSample3DModel = new QAction(tr("Import Sample3D Model"), this);
+	connect(importSample3DModel, &QAction::triggered, [&](){
+		QString fileName = QDir(QCoreApplication::applicationDirPath()).filePath("Sample.3mf");
+		if (QDir(QCoreApplication::applicationDirPath()).exists("Sample.3mf"))
+			openProject2(fileName);
+	});
+
 	testPrintAct2 = new QAction(tr("Test Print(Start Point Measurement)"), this);
 	connect(testPrintAct2, SIGNAL(triggered()), this, SLOT(print_test_page_function()));
 
 	testPrintBORAct = new QAction(tr("Test Bor File"), this);
 	connect(testPrintBORAct, SIGNAL(triggered()), this, SLOT(print_test_page_function()));
-	
+
 	zoomInAct = new QAction(QIcon(":/images/icons/btn_zoomin_2x.png"), tr("Zoom In"), this);
 	connect(zoomInAct, SIGNAL(triggered()), this, SLOT(zoomInSlot()));
 	zoomOutAct = new QAction(QIcon(":/images/icons/btn_zoomout_2x.png"), tr("Zoom Out"), this);
@@ -2100,10 +2107,10 @@ void MainWindow::createActions()//實體化action，與函示連結上
 	selectAllAct->setShortcut(QKeySequence::SelectAll);
 	connect(selectAllAct, SIGNAL(triggered()), this, SLOT(selectAllSlot()));
 
-	selectNoneAct = new QAction(tr("Deselect All"), this);	
+	selectNoneAct = new QAction(tr("Deselect All"), this);
 	connect(selectNoneAct, SIGNAL(triggered()), this, SLOT(selectNoneSlot()));
 
-	justifyFront = new QAction(tr("Front"),this);
+	justifyFront = new QAction(tr("Front"), this);
 	connect(justifyFront, SIGNAL(triggered()), this, SLOT(transferFilterNameSlot()));
 	justifyBack = new QAction(tr("Back"), this);
 	connect(justifyBack, SIGNAL(triggered()), this, SLOT(transferFilterNameSlot()));
@@ -2132,7 +2139,7 @@ void MainWindow::createActions()//實體化action，與函示連結上
 	connect(radarSwitchAct, SIGNAL(toggled(bool)), this, SLOT(updateMenus()));
 
 	chip_Gap_Mark_gird_Switch_Act = new QAction(tr("Grid/Chip_Gap_Mark"), this);
-	chip_Gap_Mark_gird_Switch_Act->setCheckable(true);	
+	chip_Gap_Mark_gird_Switch_Act->setCheckable(true);
 	chip_Gap_Mark_gird_Switch_Act->setChecked(true);
 	connect(chip_Gap_Mark_gird_Switch_Act, &QAction::toggled, [this]() {
 		if (chip_Gap_Mark_gird_Switch_Act->isChecked())
@@ -2150,7 +2157,7 @@ void MainWindow::createActions()//實體化action，與函示連結上
 	landAllAct = new QAction(tr("Land All"), this);
 	connect(landAllAct, SIGNAL(triggered()), this, SLOT(transferFilterNameSlot()));
 
-	genPrePrintingAct = new QAction(tr("Create Witness Part"),this);
+	genPrePrintingAct = new QAction(tr("Create Witness Part"), this);
 	connect(genPrePrintingAct, SIGNAL(triggered()), this, SLOT(genPrePrintingSlot()));
 
 
@@ -2203,7 +2210,7 @@ void MainWindow::createToolBars()//工具欄圖示
 
 
 	mainToolBar = addToolBar(tr("Standard"));//mainToolBar圖案的項目
-											 //	mainToolBar->setIconSize(QSize(32,32));
+	//	mainToolBar->setIconSize(QSize(32,32));
 	mainToolBar->setMovable(false);
 	mainToolBar->setIconSize(toolbarIconSize);
 
@@ -2385,8 +2392,8 @@ void MainWindow::createMenus_v2()
 
 	//////////////////// Menu Preferences /////////////////////////////////////////////////////////////////////
 	preferencesMenu = new QMenu; //menuBar()->addMenu(tr("&Tools"));
-								 //preferencesMenu->addAction(showFilterEditAct);
-								 //preferencesMenu->addSeparator();
+	//preferencesMenu->addAction(showFilterEditAct);
+	//preferencesMenu->addSeparator();
 	preferencesMenu->addAction(setCustomizeAct);
 
 
@@ -2435,14 +2442,14 @@ void MainWindow::createMenus_v3()
 	fileMenu->addAction(closeProjectAct);
 	fileMenu->addSeparator();
 	fileMenu->addAction(importMeshAct);
-	recentFileMenu = fileMenu->addMenu(tr("Import Recent"));	
+	recentFileMenu = fileMenu->addMenu(tr("Import Recent"));
 	fileMenu->addAction(exportMeshAsAct);
 	fileMenu->addSeparator();
 	fileMenu->addAction(testFuncReadZX);
 	fileMenu->addAction(genZXAct);
 	//fileMenu->addAction(testDMSlicerAct);
 	fileMenu->addSeparator();
-	fileMenu->addAction(exitAct);	
+	fileMenu->addAction(exitAct);
 
 	for (int i = 0; i < MAXRECENTFILES; ++i)
 	{
@@ -2499,14 +2506,14 @@ void MainWindow::createMenus_v3()
 
 	editMenu->addAction(this->autoPackingAct);
 	editMenu->addAction(this->autoPackingAct2);
-	
+
 
 	editMenu->addAction(this->toCenterAct);
 
 	landMenu = new QMenu(tr("Land Tool"));
 	landMenu->addAction(this->overLapAct);
 	landMenu->addAction(this->landAct);
-	landMenu->addAction(this->landAllAct);	
+	landMenu->addAction(this->landAllAct);
 	editMenu->addMenu(landMenu);
 
 	editMenu->addAction(this->genPrePrintingAct);
@@ -2635,7 +2642,7 @@ void MainWindow::createMenus_v3()
 	viewMenu->addSeparator();
 	viewMenu->addAction(chip_Gap_Mark_gird_Switch_Act);
 
-	
+
 
 	//Sydny 01-19-2017 added Function Menu Option on View Menu List
 	//viewMenu->addSeparator();
@@ -2652,6 +2659,7 @@ void MainWindow::createMenus_v3()
 	printMenu->addSeparator();
 	printMenu->addAction(showPrintDashBoardAct);
 	printMenu->addSeparator();
+	printMenu->addAction(importSample3DModel);
 	printMenu->addAction(testPrintAct);
 	printMenu->addAction(testPrintAct2);
 
@@ -2694,11 +2702,11 @@ void MainWindow::createMenus_v3()
 	helpMenu->addAction(picassoSupportSiteAct);
 	//helpMenu->addAction(contactSupportAct);
 	helpMenu->addAction(printHistoryAct);
-	
+
 	helpMenu->addSeparator();
 	helpMenu->addAction(aboutPicassoAct);
 
-	/*if (DSP_TEST_MODE)	
+	/*if (DSP_TEST_MODE)
 	{*/
 	programmerTest = menuBar()->addMenu(tr("&testFunc"));
 	programmerTest->addAction(testFuncAct);
@@ -2726,7 +2734,7 @@ void MainWindow::createMenus_v3()
 		status_Icon->setIcon(QIcon(":/images/icons/status_off.png"));
 		menuBar()->setCornerWidget(menuBar2, Qt::TopRightCorner);
 	}
-	
+
 
 	//status_Icon = menuBar()->addAction(tr(""));
 	//status_Icon->setIcon(QIcon(":/images/icons/status_off.png"));
@@ -3382,7 +3390,7 @@ void MainWindow::loadMeshLabSettings()
 void MainWindow::loadFromFileToPicassoSettings()
 {
 	RichParameterSet parameter;
-	
+
 
 }
 void MainWindow::loadPicassoSettings()
@@ -3397,60 +3405,71 @@ void MainWindow::loadPicassoSettings()
 	{
 		qDebug() << "mainwindowInit_qs" << qs;
 	}
-
-	// 1) load saved values into the <currentGlobalParams>
-	for (int ii = 0; ii < klist.size(); ++ii)
-	{
-		QDomDocument doc;
-		doc.setContent(settings.value(klist.at(ii)).toString());
-		QString st = settings.value(klist.at(ii)).toString();
-		qDebug() << "mainwindowInit_st" << klist.at(ii) << st;
-		QDomElement docElem = doc.firstChild().toElement();
-		if (!docElem.isNull()) {
-			qDebug() << "docElem.tagName()" << docElem.tagName(); // the node really is an element.
-		}
-
-		RichParameter* rpar = NULL;
-		if (!docElem.isNull())
-		{
-			bool ret = RichParameterFactory::create(docElem, &rpar);//***在這裡用RichParameterFactory::create 傳入QDomElement。
-			if (!ret)
-			{
-				//  qDebug("Warning Ignored parameter '%s' = '%s'. Malformed.", qPrintable(docElem.attribute("name")),qPrintable(docElem.attribute("value")));
-				continue;
-			}
-			if (!defaultGlobalParams.hasParameter(rpar->name))
-			{
-				//  qDebug("Warning Ignored parameter %s. In the saved parameters there are ones that are not in the HardWired ones. "
-				//         "It happens if you are running MeshLab with only a subset of the plugins. ",qPrintable(rpar->name));
-			}
-			else currentGlobalParams.addParam(rpar);//***把參數加入currentGlobalParams
-		}
-		/*QString xml = doc.toString();
-		qDebug() << "xmlxml" << xml;*/
-	}
-
-	// 2) eventually fill missing values with the hardwired defaults
+	/*use json file parameter, copy to current parameter*/
 	for (int ii = 0; ii < defaultGlobalParams.paramList.size(); ++ii)
 	{
-		//		qDebug("Searching param[%i] %s of the default into the loaded settings. ",ii,qPrintable(defaultGlobalParams.paramList.at(ii)->name));
-		qDebug() << "paramList.size()" << endl;
 		if (!currentGlobalParams.hasParameter(defaultGlobalParams.paramList.at(ii)->name))
-		{
-			qDebug("Warning! a default param was not found in the saved settings. This should happen only on the first run...");
+		{			
 			RichParameterCopyConstructor v;
 			defaultGlobalParams.paramList.at(ii)->accept(v);
 			currentGlobalParams.paramList.push_back(v.lastCreated);
-
-			QDomDocument doc("PaletteSetting");
-			RichParameterXMLVisitor vxml(doc);
-			v.lastCreated->accept(vxml);//create element attribute in here
-			doc.appendChild(vxml.parElem);
-			QString docstring = doc.toString();
-			QSettings setting;
-			setting.setValue(v.lastCreated->name, QVariant(docstring));
 		}
 	}
+	/********************************************************************************/
+
+	//// 1) load saved values into the <currentGlobalParams>
+	//for (int ii = 0; ii < klist.size(); ++ii)
+	//{
+	//	QDomDocument doc;
+	//	doc.setContent(settings.value(klist.at(ii)).toString());
+	//	QString st = settings.value(klist.at(ii)).toString();
+	//	qDebug() << "mainwindowInit_st" << klist.at(ii) << st;
+	//	QDomElement docElem = doc.firstChild().toElement();
+	//	if (!docElem.isNull()) {
+	//		qDebug() << "docElem.tagName()" << docElem.tagName(); // the node really is an element.
+	//	}
+
+	//	RichParameter* rpar = NULL;
+	//	if (!docElem.isNull())
+	//	{
+	//		bool ret = RichParameterFactory::create(docElem, &rpar);//***在這裡用RichParameterFactory::create 傳入QDomElement。
+	//		if (!ret)
+	//		{
+	//			//  qDebug("Warning Ignored parameter '%s' = '%s'. Malformed.", qPrintable(docElem.attribute("name")),qPrintable(docElem.attribute("value")));
+	//			continue;
+	//		}
+	//		if (!defaultGlobalParams.hasParameter(rpar->name))
+	//		{
+	//			//  qDebug("Warning Ignored parameter %s. In the saved parameters there are ones that are not in the HardWired ones. "
+	//			//         "It happens if you are running MeshLab with only a subset of the plugins. ",qPrintable(rpar->name));
+	//		}
+	//		else currentGlobalParams.addParam(rpar);//***把參數加入currentGlobalParams
+	//	}
+	//	/*QString xml = doc.toString();
+	//	qDebug() << "xmlxml" << xml;*/
+	//}
+
+	//// 2) eventually fill missing values with the hardwired defaults
+	//for (int ii = 0; ii < defaultGlobalParams.paramList.size(); ++ii)
+	//{
+	//	//		qDebug("Searching param[%i] %s of the default into the loaded settings. ",ii,qPrintable(defaultGlobalParams.paramList.at(ii)->name));
+	//	qDebug() << "paramList.size()" << endl;
+	//	if (!currentGlobalParams.hasParameter(defaultGlobalParams.paramList.at(ii)->name))
+	//	{
+	//		qDebug("Warning! a default param was not found in the saved settings. This should happen only on the first run...");
+	//		RichParameterCopyConstructor v;
+	//		defaultGlobalParams.paramList.at(ii)->accept(v);
+	//		currentGlobalParams.paramList.push_back(v.lastCreated);
+
+	//		QDomDocument doc("PaletteSetting");
+	//		RichParameterXMLVisitor vxml(doc);
+	//		v.lastCreated->accept(vxml);//create element attribute in here
+	//		doc.appendChild(vxml.parElem);
+	//		QString docstring = doc.toString();
+	//		QSettings setting;
+	//		setting.setValue(v.lastCreated->name, QVariant(docstring));
+	//	}
+	//}
 	//emit dispatchCustomSettings(currentGlobalParams);
 }
 void MainWindow::addToMenu(QList<QAction *> actionList, QMenu *menu, const char *slot)
@@ -4197,7 +4216,7 @@ void MainWindow::createQToolButton()
 	printImageFileButton = new QToolButton();
 	printImageFileButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 	printImageFileButton->setDefaultAction(this->threeDPrintAct);//appendProjectAct
-																 //printImageFileButton->setDefaultAction(this->appendProjectAct);//--20151221_test
+	//printImageFileButton->setDefaultAction(this->appendProjectAct);//--20151221_test
 
 	printImageFileButton->setText(tr("Print Image"));
 
@@ -4355,7 +4374,7 @@ void MainWindow::createQToolButton()
 	//QToolButton *showLayerToolbutton;
 	//QToolButton *butterflyToolbutton;
 	//QToolButton *startbuildToolbutton;
-	
+
 }
 //***20150904
 void MainWindow::connectEditAction()
@@ -4376,7 +4395,7 @@ void MainWindow::setGenericStyleSheet()
 	MainWindow::setStyleSheet(
 		"QProgressBar {	border: 2px solid grey;	border-radius:5px;	text-align:center;}"
 		"QProgressBar::chunk {background-color:#CD96CD; width:10px; margin:0.5px;}"
-	);
+		);
 
 	//***Tabbar
 	//pTabWidget->setStyleSheet(
@@ -4406,7 +4425,7 @@ void MainWindow::setGenericStyleSheet()
 		"QTabBar::tab : last : selected{margin-right: 0; }"
 		"QTabBar::tab : only-one{margin: 0; }"
 
-	);
+		);
 
 
 	MainWindow::setStyleSheet("QGroupBox{	background-color: qlineargradient(x1 : 0, y1 : 0, x2 : 0, y2 : 1,	stop : 0 #E0E0E0, stop: 1 #FFFFFF);}"
@@ -4414,7 +4433,7 @@ void MainWindow::setGenericStyleSheet()
 		"QGroupBox{border-radius: 5px;}"
 		"QGroupBox{margin-top: 1ex; /* leave space at the top for the title */}"
 		"QGroupBox::title{subcontrol-origin: margin; subcontrol-position: bottom center;padding: 0 3px;	background-color: qlineargradient(x1 : 0, y1 : 0, x2 : 0, y2 : 1,stop : 0 #FFAECE, stop: 1 #FFFFFF);}"
-	);
+		);
 
 
 	QApplication::setStyle(QStyleFactory::create("Fusion"));

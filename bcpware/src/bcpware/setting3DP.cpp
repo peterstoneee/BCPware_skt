@@ -504,7 +504,7 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 	//pp350g1Layout->addWidget(setDefaultToCurrent, 0, 1);
 	//pp350g1Layout->addWidget(setDefaultToCurrent, 0, 0, 1, 2 );
 	pp350g1Layout->addWidget(setDefaultToCurrent, 0, 0);
-	pp350g1Layout->addWidget(importSampleFileBtn, 0, 1);
+	//pp350g1Layout->addWidget(importSampleFileBtn, 0, 1);
 	pp350g1Layout->addWidget(exportSettingPB, 1, 0);
 	pp350g1Layout->addWidget(importSettingPB, 1, 1);
 	//pp350g1Layout->addWidget(switchExpertSetting, 2, 0, 2, 1);
@@ -2442,9 +2442,12 @@ void Setting3DP::create_GeneralAndEditPage()
 
 	QVector<QVector<SKTWidget *>*> *tempVector = paramWidgetVector.value(paramType[4]);
 	QVector<QVector<SKTWidget *> *>::ConstIterator groupIt;
-
+	QGridLayout* glayEditTest = new QGridLayout();
+	glayEditTest->setMargin(10);
+	glayEditTest->setSpacing(5);
 	for (int i = 0; i < tempVector->size(); i++)
 	{
+		
 		QGridLayout* glay = new QGridLayout();
 		glay->setMargin(10);
 		glay->setSpacing(5);
@@ -2470,21 +2473,25 @@ void Setting3DP::create_GeneralAndEditPage()
 
 		}
 		framGlay->setRowStretch(groupSKTWidget->size(), 1);
-		gb1->setLayout(framGlay);
-		glay->addWidget(gb1);
+		gb1->setLayout(framGlay);		
+		
 
 		switch (i)
 		{
 		case 0:
+			glay->addWidget(gb1);
 			ui->general_page->setLayout(glay);
 			break;
 		case 1:
-			ui->editor_page->setLayout(glay);
+		case 2:
+			glayEditTest->addWidget(gb1);
+			//ui->editor_page->setLayout(glay);
 			break;
 
 		}
 
 	}
+	ui->scrollAreaWidgetContents_6->setLayout(glayEditTest);
 
 
 }

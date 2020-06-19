@@ -20844,7 +20844,7 @@ bool GenSliceJob::testDepthBuffer(QList<MeshModel *> mdlist, std::vector<cv::Mat
 		testSaveImage.push_back(bigImage);
 		if (false){
 			QImage testttt = cvMatToQImage(captemp2);
-			QString capimagest = "captemp_image";
+			QString capimagest = "captemp_image_depth";
 			capimagest.append(QString("_%1_%2.png").arg(i, 4, 10, QChar('0')).arg(countj, 4, 10, QChar('0')));
 			testttt.save(dir.absolutePath() + "/" + capimagest, "png");
 			countj++;

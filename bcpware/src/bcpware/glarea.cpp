@@ -610,26 +610,30 @@ int GLArea::RenderForSelection(int pickX, int pickY)//render¿ï¨úªº½d³ò
 	float smalltt = 100000;
 	foreach(MeshModel *mm, record_bbox)
 	{
-		CMeshO::FaceIterator fi;
-		fi = mm->cm.face.begin();
-		fi->SetS();
-		for (; fi != mm->cm.face.end(); ++fi)
+		qDebug() << mm->cm.face.size();
+		if (mm->cm.face.size() > 0)
 		{
-			if (!(*fi).IsD() && (*fi).IsS() && !(*fi).IsV());
-			Point3m v1 = fi->V(0)->P();
-			Point3m v2 = fi->V(1)->P();
-			Point3m v3 = fi->V(2)->P();
-			float tt = -1;
-			if (SKT::testIntersection(v1, v2, v3, orig_wor, dir, tt))
+			CMeshO::FaceIterator fi;
+			fi = mm->cm.face.begin();
+			fi->SetS();
+			for (; fi != mm->cm.face.end(); ++fi)
 			{
-				if ((tt) < smalltt)
+				if (!(*fi).IsD() && (*fi).IsS() && !(*fi).IsV());
+				Point3m v1 = fi->V(0)->P();
+				Point3m v2 = fi->V(1)->P();
+				Point3m v3 = fi->V(2)->P();
+				float tt = -1;
+				if (SKT::testIntersection(v1, v2, v3, orig_wor, dir, tt))
 				{
-					id = mm->id();
-					smalltt = tt;
-					//camerDepth.insert(tt, id);
-				}
-				break;
+					if ((tt) < smalltt)
+					{
+						id = mm->id();
+						smalltt = tt;
+						//camerDepth.insert(tt, id);
+					}
+					break;
 
+				}
 			}
 		}
 

@@ -183,10 +183,10 @@ int main(int argc, char *argv[])
 		}
 	//}
 
-//#if(!defined QT_DEBUG) || (!defined _DEBUG)
+#if(!defined QT_DEBUG) || (!defined _DEBUG)
 		qInstallMessageHandler(logMessageOutputHandler);
 		rotateLogs();
-//#endif
+#endif
 
 
 	//ShellExecute(NULL, L"runas", L"3DPDashboard.exe", NULL, NULL, SW_HIDE);
