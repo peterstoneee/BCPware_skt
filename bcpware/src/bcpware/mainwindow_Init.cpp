@@ -250,6 +250,7 @@ MainWindow::MainWindow()
 	xmldialog = 0;
 	setAcceptDrops(true);
 	mdiarea->setAcceptDrops(true);
+	
 	setWindowTitle(PicaApplication::completeName(PicaApplication::HW_ARCHITECTURE(QSysInfo::WordSize)));
 	setStatusBar(new QStatusBar(this));
 	globalStatusBar() = statusBar();
@@ -3872,7 +3873,7 @@ QWidget *MainWindow::createHomeTabWidget()
 	CustomizeGroupBox *helpGroupBox = new CustomizeGroupBox(tr("Help"));
 	helpGroupBox->setLayout(helpLayout);
 
-	QWidget *spacerWidget = new QWidget();//***空白spacer
+	QWidget *spacerWidget = new QWidget(this);//***空白spacer
 	spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	spacerWidget->setVisible(true);
 
@@ -3886,7 +3887,7 @@ QWidget *MainWindow::createHomeTabWidget()
 
 
 
-	QWidget *homeTabWidget = new QWidget();
+	QWidget *homeTabWidget = new QWidget(this);
 	homeTabWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
 	homeTabWidget->setLayout(HomeTabLayout);
 
@@ -3922,7 +3923,7 @@ QWidget *MainWindow::createViewTabWidget()
 	CustomizeGroupBox *zoomGroupBox = new CustomizeGroupBox(tr("Zoom"));
 	zoomGroupBox->setLayout(zoomLayout);
 
-	QWidget *spacerWidget = new QWidget();//***空白spcer
+	QWidget *spacerWidget = new QWidget(this);//***空白spcer
 	spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	spacerWidget->setVisible(true);
 
@@ -3933,7 +3934,7 @@ QWidget *MainWindow::createViewTabWidget()
 	//ViewTabLayout->addWidget(zoomGroupBox);
 	ViewTabLayout->addWidget(spacerWidget);
 
-	QWidget *viewTabWidget = new QWidget();
+	QWidget *viewTabWidget = new QWidget(this);
 	viewTabWidget->setLayout(ViewTabLayout);
 
 	return viewTabWidget;
@@ -3961,7 +3962,7 @@ QWidget *MainWindow::createTransformTabWidget()
 	CustomizeGroupBox *scaleGroupBox = new CustomizeGroupBox(tr("Scale"));
 	scaleGroupBox->setLayout(scaleLayout);*/
 
-	QWidget *spacerWidget = new QWidget();//***空白spcer
+	QWidget *spacerWidget = new QWidget(this);//***空白spcer
 	spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	spacerWidget->setVisible(true);
 
@@ -3969,7 +3970,7 @@ QWidget *MainWindow::createTransformTabWidget()
 	transformTabLayout->addWidget(clipboardGroupBox);
 	transformTabLayout->addWidget(editGroupBox);
 
-	QWidget *transformTabWidget = new QWidget();
+	QWidget *transformTabWidget = new QWidget(this);
 
 	//transformTabLayout->addWidget(translateGroupBox);
 	//transformTabLayout->addWidget(rotateGroupBox);
@@ -4039,14 +4040,14 @@ QWidget *MainWindow::createSettingTabWidget()
 	settingGroupBox->setLayout(settingLayout);
 
 
-	QWidget *spacerWidget = new QWidget();//***空白spacer
+	QWidget *spacerWidget = new QWidget(this);//***空白spacer
 	spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	spacerWidget->setVisible(true);
 
 	QHBoxLayout *SettingTabLayout = new QHBoxLayout;
 	SettingTabLayout->addWidget(settingGroupBox);
 	SettingTabLayout->addWidget(spacerWidget);
-	QWidget *SettingTabWidget = new QWidget();
+	QWidget *SettingTabWidget = new QWidget(this);
 	SettingTabWidget->setLayout(SettingTabLayout);
 
 	return SettingTabWidget;
@@ -4058,14 +4059,14 @@ QWidget *MainWindow::createToolsTabWidget()
 	CustomizeGroupBox *toolsGroupBox = new CustomizeGroupBox(tr("Tools"));
 	toolsGroupBox->setLayout(toolsLayout);
 
-	QWidget *spacerWidget = new QWidget();//***空白spcer
+	QWidget *spacerWidget = new QWidget(this);//***空白spcer
 	spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	spacerWidget->setVisible(true);
 
 	QHBoxLayout *ToolsTabLayout = new QHBoxLayout;
 	ToolsTabLayout->addWidget(toolsGroupBox);
 	ToolsTabLayout->addWidget(spacerWidget);
-	QWidget *ToolsTabWidget = new QWidget();
+	QWidget *ToolsTabWidget = new QWidget(this);
 	ToolsTabWidget->setLayout(ToolsTabLayout);
 
 	return ToolsTabWidget;
