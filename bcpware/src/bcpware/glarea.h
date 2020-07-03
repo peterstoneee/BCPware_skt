@@ -348,6 +348,7 @@ protected:
     void tabletEvent(QTabletEvent *e);
     bool drawSelection;
     void hideEvent(QHideEvent * event);
+	
 
 private:
     QMap<QString,QCursor> curMap;

@@ -676,6 +676,30 @@ static QString WidgetStyleSheet::settingCheckBoxStyleSheet(const QString &name =
 	return thisItemStyle;
 }
 
+static QString WidgetStyleSheet::settingPrinterButtonStyleSheet(const QString &name = NULL, const QString &name2 = NULL, const QString &name3 = NULL)
+{
+	const QString thisItemStyle
+		(
+		"QPushButton{"
+		"image: url(" + name + ");"
+		"min-height:48;"
+		"border-radius: 6px;"
+		"min-width: 48;"
+		"}"
+
+	"QPushButton:pressed{"
+	"image: url(" + name2 + ");"
+	"}"
+
+	"QPushButton:hover:!pressed{"
+	"image: url(" + name3 + ");"
+	"}"
+
+		
+		);
+	return thisItemStyle;
+}
+
 };
 
 

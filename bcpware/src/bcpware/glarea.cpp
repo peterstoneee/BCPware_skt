@@ -207,6 +207,8 @@ GLArea::GLArea(MultiViewer_Container *mvcont, RichParameterSet *current)
 	sortDepthColor.push_back(Point3f(19 / 255., 3 / 255., 250 / 255.));
 	sortDepthColor.push_back(Point3f(196 / 255., 2 / 255., 249 / 255.));
 
+	
+
 	//rubberBand = new QRubberBand(QRubberBand::Line, this);
 	
 }

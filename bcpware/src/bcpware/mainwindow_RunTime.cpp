@@ -1176,6 +1176,7 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *event)
 {
 	//qDebug("dragEnterEvent: %s",event->format());
 	event->accept();
+	//event->acceptProposedAction();
 }
 
 void MainWindow::dropEvent(QDropEvent * event)//drag and drop action is completed.

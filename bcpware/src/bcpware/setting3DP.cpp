@@ -491,22 +491,35 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 	}
 
 	setCurrentToDefault = new QPushButton("ui_set_default_from_current_value");
-	setDefaultToCurrent = new QPushButton("Reset");
-	exportSettingPB = new QPushButton("Export 350 Setting");
-	importSettingPB = new QPushButton("Import 350 Setting");
+	setDefaultToCurrent = new QPushButton("");
+	exportSettingPB = new QPushButton("");
+	importSettingPB = new QPushButton("");
 	importSampleFileBtn = new QPushButton("Import sample 3D model");
 	switchExpertSetting = new QCheckBox("Switch Button");
 	pp350g1Layout = new QGridLayout;
 	pp350glay = new QVBoxLayout();
 
+	setDefaultToCurrent->setStyleSheet(WidgetStyleSheet::settingPrinterButtonStyleSheet(":/images/icons/btn_reset_normal.png", ":/images/icons/btn_reset_click.png", ":/images/icons/btn_reset_hover.png"));
+	setDefaultToCurrent->setToolTip("Load default setting");
+	exportSettingPB->setStyleSheet(WidgetStyleSheet::settingPrinterButtonStyleSheet(":/images/icons/btn_export_normal.png", ":/images/icons/btn_export_click.png", ":/images/icons/btn_export_hover.png"));
+	exportSettingPB->setToolTip("Export printer setting");
+	importSettingPB->setStyleSheet(WidgetStyleSheet::settingPrinterButtonStyleSheet(":/images/icons/btn_import_normal.png", ":/images/icons/btn_import_click.png", ":/images/icons/btn_import_hover.png"));
+	importSettingPB->setToolTip("Load printer setting");
+
 
 	//pp350g1Layout->addWidget(setCurrentToDefault, 0, 0);
 	//pp350g1Layout->addWidget(setDefaultToCurrent, 0, 1);
 	//pp350g1Layout->addWidget(setDefaultToCurrent, 0, 0, 1, 2 );
-	pp350g1Layout->addWidget(setDefaultToCurrent, 0, 0);
-	//pp350g1Layout->addWidget(importSampleFileBtn, 0, 1);
-	pp350g1Layout->addWidget(exportSettingPB, 1, 0);
-	pp350g1Layout->addWidget(importSettingPB, 1, 1);
+	pp350g1Layout->addWidget(setDefaultToCurrent, 0, 0);	
+	pp350g1Layout->addWidget(exportSettingPB, 0, 1);
+	pp350g1Layout->addWidget(importSettingPB, 0, 2);
+	
+
+	QWidget *spacerWidget = new QWidget(this);//***ªÅ¥Õspacer
+	spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	spacerWidget->setVisible(true);
+	pp350g1Layout->addWidget(spacerWidget, 0, 3);
+
 	//pp350g1Layout->addWidget(switchExpertSetting, 2, 0, 2, 1);
 	/*topLayout->addLayout(g1Layout);
 	topLayout->addStretch();*/

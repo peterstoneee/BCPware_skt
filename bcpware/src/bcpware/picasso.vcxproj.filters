@@ -1664,6 +1664,24 @@
     <Image Include="images\icons\btn-add-label-5-disable.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="images\icons\btn_export_normal.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\icons\btn_export_normal_2x.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\icons\btn_import_normal.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\icons\btn_import_normal_2x.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\icons\btn_reset_normal.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\icons\btn_reset_normal_2x.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="bcpware.rc" />

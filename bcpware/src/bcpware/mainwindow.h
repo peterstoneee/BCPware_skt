@@ -1774,8 +1774,15 @@ protected:
 			qDebug() << "eventEater";
 			noEvent = false;
 			QFileOpenEvent *fileEvent = static_cast<QFileOpenEvent*>(event);
-			mainWindow->importMeshWithLayerManagement(fileEvent->file());
-			qDebug("event fileopen %s", qPrintable(fileEvent->file()));
+			if (QFileInfo(fileEvent->file()).suffix() == ".3mf")
+			{		
+				mainWindow->openProject2(fileEvent->file());
+			}
+			else
+			{
+				mainWindow->importMeshWithLayerManagement(fileEvent->file());
+				qDebug("event fileopen %s", qPrintable(fileEvent->file()));
+			}
 			return true;
 		}
 		else {
