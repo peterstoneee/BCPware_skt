@@ -456,9 +456,24 @@ bool ParamOp::mergeValue(QVariant &highLevelValue, QVariant insertValue, QString
 		&& (-1 != replaceNum) && docFileName.isNull())
     {
 		QVariantList temp = highLevelValue.toList();
-		temp.replace(replaceNum, insertValue);
-		highLevelValue = temp;
-		return true;
+		if (replaceNum < temp.size() )
+		{
+			temp.replace(replaceNum, insertValue);
+			highLevelValue = temp;
+			return true;
+		}
+		else if (replaceNum >= temp.size())
+		{
+			int emptyNum = replaceNum + 1 - temp.size();
+			for (int i = 0; i < emptyNum; i++)
+			{
+				temp.append(QVariant());
+			}
+			temp.replace(replaceNum, insertValue);
+			highLevelValue = temp;
+			return true;
+		}
+			return false;
 	}
 	else if ((QMetaType::QString == static_cast<QMetaType::Type>(highLevelValue.type()))
 		 && docFileName.isNull())
@@ -611,6 +626,95 @@ bool ParamOp::transformJsonToRichParameter(RichParameterSet &input, QString json
 
 
 	return true;
+
+
+
+}
+
+void ParamOp::updateToHistory(bool newOrNot, QString _key, QVariant _value)
+{
+	QVariant _dmHistory;
+	QVariant _currentID, _id_History;
+	if (ParamOp::extractVariantTest(_dmHistory, QVariant(), QString(), -1, BCPwareFileSystem::printingHistoryFilePath()) || _dmHistory.isNull())
+	{
+		if (ParamOp::extractVariantTest(_currentID, _dmHistory, "CURRENT_RECORD_ID"))
+		{
+			if (ParamOp::extractVariantTest(_id_History, _dmHistory, _currentID.toString()))
+			{
+				ParamOp::mergeValue(_id_History, _value, _key);
+				ParamOp::mergeValue(_dmHistory, _id_History, _currentID.toString());
+				ParamOp::mergeValue(_dmHistory, QVariant(), QString(), -1, BCPwareFileSystem::printingHistoryFilePath());
+			}
+		}
+	}
+	
+
+	
+}
+
+//void ParamOp::updateSliceSettingToHistory(bool newOrNot, QString _key, QVariant _value)
+//{
+//	QVariant _dmHistory;
+//	QVariant _currentID, _id_History;
+//	QVariant _sliceSettingMap;
+//	QVariant _sliceSettingMapNew = QVariantMap();
+//	if (ParamOp::extractVariantTest(_dmHistory, QVariant(), QString(), -1, BCPwareFileSystem::printingHistoryFilePath()) || _dmHistory.isNull())
+//	{
+//		if (ParamOp::extractVariantTest(_currentID, _dmHistory, "CURRENT_RECORD_ID"))
+//		{
+//			if (ParamOp::extractVariantTest(_id_History, _dmHistory, _currentID.toString()))
+//			{
+//				if (ParamOp::extractVariantTest(_sliceSettingMap, _id_History, "SLICE_SETTING"))
+//				{
+//					ParamOp::mergeValue(_sliceSettingMap, _value, _key);
+//					ParamOp::mergeValue(_id_History, _sliceSettingMap, "SLICE_SETTING");
+//					ParamOp::mergeValue(_dmHistory, _id_History, _currentID.toString());
+//					ParamOp::mergeValue(_dmHistory, QVariant(), QString(), -1, BCPwareFileSystem::printingHistoryFilePath());
+//				}
+//				else
+//				{
+//					ParamOp::mergeValue(_sliceSettingMapNew, _value, _key);
+//					ParamOp::mergeValue(_id_History, _sliceSettingMapNew, "SLICE_SETTING");
+//					ParamOp::mergeValue(_dmHistory, _id_History, _currentID.toString());
+//					ParamOp::mergeValue(_dmHistory, QVariant(), QString(), -1, BCPwareFileSystem::printingHistoryFilePath());
+//				}
+//			}
+//		}
+//	}
+//
+//
+//
+//}
+
+void ParamOp::updateSliceSettingToHistory(bool newOrNot, int listNum, QVariant _value)
+{
+	QVariant _dmHistory;
+	QVariant _currentID, _id_History;
+	QVariant _sliceSettingList;
+	QVariant _sliceSettingListNew = QVariantList();
+	if (ParamOp::extractVariantTest(_dmHistory, QVariant(), QString(), -1, BCPwareFileSystem::printingHistoryFilePath()) || _dmHistory.isNull())
+	{
+		if (ParamOp::extractVariantTest(_currentID, _dmHistory, "CURRENT_RECORD_ID"))
+		{
+			if (ParamOp::extractVariantTest(_id_History, _dmHistory, _currentID.toString()))
+			{
+				if (ParamOp::extractVariantTest(_sliceSettingList, _id_History, "SLICE_SETTING"))
+				{
+					ParamOp::mergeValue(_sliceSettingList, _value, QString(),listNum);
+					ParamOp::mergeValue(_id_History, _sliceSettingList, "SLICE_SETTING");
+					ParamOp::mergeValue(_dmHistory, _id_History, _currentID.toString());
+					ParamOp::mergeValue(_dmHistory, QVariant(), QString(), -1, BCPwareFileSystem::printingHistoryFilePath());
+				}
+				else
+				{
+					ParamOp::mergeValue(_sliceSettingListNew, _value, QString(), listNum);
+					ParamOp::mergeValue(_id_History, _sliceSettingListNew, "SLICE_SETTING");
+					ParamOp::mergeValue(_dmHistory, _id_History, _currentID.toString());
+					ParamOp::mergeValue(_dmHistory, QVariant(), QString(), -1, BCPwareFileSystem::printingHistoryFilePath());
+				}
+			}
+		}
+	}
 
 
 

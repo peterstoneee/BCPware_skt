@@ -21,6 +21,10 @@ QString const BCPwareFileSystem::appName(){
 	
 	return "BCPware"; 
 }
+QString const BCPwareFileSystem::dashboardName(){
+
+	return "DashboardLogs";
+}
 QDir BCPwareFileSystem::documentDir()
 {
 	QString path = QStandardPaths::locate(QStandardPaths::DocumentsLocation, appName(), QStandardPaths::LocateDirectory);
@@ -37,6 +41,55 @@ QDir BCPwareFileSystem::documentDir()
 	}
 	return QDir(path);
 }
+QDir BCPwareFileSystem::documentDashboardDir()
+{
+	QString path = QStandardPaths::locate(QStandardPaths::DocumentsLocation, dashboardName(), QStandardPaths::LocateDirectory);
+	if (path.isEmpty())
+	{
+		path = QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory);
+		if (!path.isEmpty())
+		{
+			if (QDir(path).mkpath(dashboardName()))
+			{
+				path.append("/").append(dashboardName());
+			}
+		}
+	}
+	return QDir(path);
+}
+
+
+QDir BCPwareFileSystem::logDir()
+{
+	QDir logDir(documentDir());
+	if (logDir.exists("log") || logDir.mkpath("log"))
+	{
+		logDir.cd("log");
+	}
+	return logDir;
+	
+}
+QString const BCPwareFileSystem::printingHistoryFilePath()
+{
+	return documentDashboardDir().filePath("Print_History_ALL.log");
+}
+//QString BCPwareFileSystem::logFileName()
+//{
+//	return BCPwareFileSystem::logDir().filePath("BCPware" + QDateTime::currentDateTime().toString("yyyy_MM_dd") + ".log");
+//}
+
+QDir BCPwareFileSystem::projectThumbnailFolder()
+{
+	QDir thumbnailFolder(documentDir());
+	if (thumbnailFolder.exists("PjTm") || thumbnailFolder.mkpath("PjTm"))
+	{
+		thumbnailFolder.cd("PjTm");
+	}
+	return thumbnailFolder;
+}
+
+
+
 bool BCPwareFileSystem::encryptParam(QString inputString, QString &outputString)
 {
 	QAESEncryption *encryption = new QAESEncryption(QAESEncryption::AES_128, QAESEncryption::CBC, QAESEncryption::PKCS7);

@@ -376,6 +376,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Debug\moc_printingHistory.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_PrintingHistoryDetail.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Debug\moc_printOption.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -449,6 +457,8 @@
     <ClCompile Include="objectList.cpp" />
     <ClCompile Include="paletteAbout.cpp" />
     <ClCompile Include="ParamOp.cpp" />
+    <ClCompile Include="printingHistory.cpp" />
+    <ClCompile Include="PrintingHistoryDetail.cpp" />
     <ClCompile Include="printOption.cpp" />
     <ClCompile Include="qaesencryption.cpp" />
     <ClCompile Include="Release\moc_additionalgui.cpp">
@@ -552,6 +562,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Release\moc_printerJobInfo.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Release\moc_printingHistory.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Release\moc_PrintingHistoryDetail.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -685,9 +703,11 @@
     </CustomBuild>
     <ClInclude Include="GeneratedFiles\ui_credits.h" />
     <ClInclude Include="GeneratedFiles\ui_dockInfoWidgetUI.h" />
+    <ClInclude Include="GeneratedFiles\ui_historyDetail.h" />
     <ClInclude Include="GeneratedFiles\ui_login.h" />
     <ClInclude Include="GeneratedFiles\ui_meshcheck3.h" />
     <ClInclude Include="GeneratedFiles\ui_palette.h" />
+    <ClInclude Include="GeneratedFiles\ui_printingHistoryUi.h" />
     <ClInclude Include="GeneratedFiles\ui_setting_UI.h" />
     <CustomBuild Include="setting3DP.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
@@ -801,6 +821,42 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -D_CRT_SECURE_NO_DEPRECATE -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_CONCURRENT_LIB -DQT_SERIALPORT_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_WEBKITWIDGETS_LIB -DQT_DLL -DQT_WIDGETS_LIB "-I." "-I.\.." "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I.\..\external\jhead-2.95" "-I.\..\lib3mf\Include" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtPrintSupport" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtXmlPatterns" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtSerialPort" "-I$(QTDIR)\include\QtScript" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtXml" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtCore" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-I$(QTDIR)\include\QtWebkitWidgets" "-I.\..\..\..\vcglib\SKTlib\qxlsx\xlsx" "-I$(QTDIR)\include\QtWidgets"</Command>
     </CustomBuild>
     <ClInclude Include="ParamOp.h" />
+    <CustomBuild Include="printingHistory.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing printingHistory.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -D_CRT_SECURE_NO_DEPRECATE -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_CONCURRENT_LIB -DQT_SERIALPORT_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_WEBKITWIDGETS_LIB -DQT_DLL -DQT_WIDGETS_LIB "-I." "-I.\.." "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I.\..\external\jhead-2.95" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtPrintSupport" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtXmlPatterns" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtSerialPort" "-I$(QTDIR)\include\QtScript" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtXml" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtCore" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-I$(QTDIR)\include\QtWebkitWidgets" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing printingHistory.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -D_CRT_SECURE_NO_DEPRECATE -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_CONCURRENT_LIB -DQT_SERIALPORT_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_WEBKITWIDGETS_LIB -DQT_DLL -DQT_WIDGETS_LIB "-I." "-I.\.." "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I.\..\external\jhead-2.95" "-I.\..\lib3mf\Include" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtPrintSupport" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtXmlPatterns" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtSerialPort" "-I$(QTDIR)\include\QtScript" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtXml" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtCore" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-I$(QTDIR)\include\QtWebkitWidgets" "-I.\..\..\..\vcglib\SKTlib\qxlsx\xlsx" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing printingHistory.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -D_CRT_SECURE_NO_DEPRECATE -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_CONCURRENT_LIB -DQT_SERIALPORT_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_WEBKITWIDGETS_LIB -DQT_DLL -DQT_WIDGETS_LIB "-I." "-I.\.." "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I.\..\external\jhead-2.95" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtPrintSupport" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtXmlPatterns" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtSerialPort" "-I$(QTDIR)\include\QtScript" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtXml" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtCore" "-I.\release" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-I$(QTDIR)\include\QtWebkitWidgets" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing printingHistory.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -D_CRT_SECURE_NO_DEPRECATE -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_CONCURRENT_LIB -DQT_SERIALPORT_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_WEBKITWIDGETS_LIB -DQT_DLL -DQT_WIDGETS_LIB "-I." "-I.\.." "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I.\..\external\jhead-2.95" "-I.\..\lib3mf\Include" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtPrintSupport" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtXmlPatterns" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtSerialPort" "-I$(QTDIR)\include\QtScript" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtXml" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtCore" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-I$(QTDIR)\include\QtWebkitWidgets" "-I.\..\..\..\vcglib\SKTlib\qxlsx\xlsx" "-I$(QTDIR)\include\QtWidgets"</Command>
+    </CustomBuild>
+    <CustomBuild Include="PrintingHistoryDetail.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing PrintingHistoryDetail.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -D_CRT_SECURE_NO_DEPRECATE -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_CONCURRENT_LIB -DQT_SERIALPORT_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_WEBKITWIDGETS_LIB -DQT_DLL -DQT_WIDGETS_LIB "-I." "-I.\.." "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I.\..\external\jhead-2.95" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtPrintSupport" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtXmlPatterns" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtSerialPort" "-I$(QTDIR)\include\QtScript" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtXml" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtCore" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-I$(QTDIR)\include\QtWebkitWidgets" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing PrintingHistoryDetail.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -D_CRT_SECURE_NO_DEPRECATE -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_CONCURRENT_LIB -DQT_SERIALPORT_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_WEBKITWIDGETS_LIB -DQT_DLL -DQT_WIDGETS_LIB "-I." "-I.\.." "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I.\..\external\jhead-2.95" "-I.\..\lib3mf\Include" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtPrintSupport" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtXmlPatterns" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtSerialPort" "-I$(QTDIR)\include\QtScript" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtXml" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtCore" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-I$(QTDIR)\include\QtWebkitWidgets" "-I.\..\..\..\vcglib\SKTlib\qxlsx\xlsx" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing PrintingHistoryDetail.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DMESHLAB_SCALAR=float -DNOMINMAX -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -D_CRT_SECURE_NO_DEPRECATE -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_CONCURRENT_LIB -DQT_SERIALPORT_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_WEBKITWIDGETS_LIB -DQT_DLL -DQT_WIDGETS_LIB "-I." "-I.\.." "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I.\..\external\jhead-2.95" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtPrintSupport" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtXmlPatterns" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtSerialPort" "-I$(QTDIR)\include\QtScript" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtXml" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtCore" "-I.\release" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-I$(QTDIR)\include\QtWebkitWidgets" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing PrintingHistoryDetail.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DPALETTE_SCALAR=float -DNOMINMAX -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -D_CRT_SECURE_NO_DEPRECATE -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_XMLPATTERNS_LIB -DQT_CONCURRENT_LIB -DQT_SERIALPORT_LIB -DQT_SCRIPT_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -DQT_WEBKITWIDGETS_LIB -DQT_DLL -DQT_WIDGETS_LIB "-I." "-I.\.." "-I.\..\.." "-I.\..\..\..\vcglib" "-I.\..\external\glew-1.7.0\include" "-I.\..\external\jhead-2.95" "-I.\..\lib3mf\Include" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtPrintSupport" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtXmlPatterns" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtSerialPort" "-I$(QTDIR)\include\QtScript" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtXml" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtCore" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-I$(QTDIR)\include\QtWebkitWidgets" "-I.\..\..\..\vcglib\SKTlib\qxlsx\xlsx" "-I$(QTDIR)\include\QtWidgets"</Command>
+    </CustomBuild>
     <ClInclude Include="threemf_manip.h" />
     <CustomBuild Include="webService.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
@@ -1613,6 +1669,42 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
     </CustomBuild>
     <CustomBuild Include="ui\meshcheck3.ui">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
+    <CustomBuild Include="ui\printingHistoryUi.ui">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
+    <CustomBuild Include="ui\historyDetail.ui">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>

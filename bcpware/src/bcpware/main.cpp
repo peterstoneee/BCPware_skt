@@ -442,8 +442,8 @@ static void rotateLogs()
 	}
 
 	// Try to create the log directory
-	QDir LogDirectory(getDocumentFolder());// = getDocumentFolder();// DMShopFilesystem::logDir();
-	if (QDir().mkpath(getDocumentFolder()) && (nullptr == pErrorLog))
+	QDir LogDirectory(BCPwareFileSystem::logDir());// = getDocumentFolder();/
+	if (QDir().mkpath(LogDirectory.absolutePath()) && (nullptr == pErrorLog))
 	{
 		// Open a new log
 		pErrorLog = new QFile(

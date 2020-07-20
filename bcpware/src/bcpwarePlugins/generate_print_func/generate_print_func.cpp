@@ -17857,7 +17857,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			initMeshVBO(md);
 
 		//***20150907
-		const GLsizei print_dpi = 50;// GLsizei(par.getInt("print_dpi"));
+		const GLsizei print_dpi = 100;// GLsizei(par.getInt("print_dpi"));
 		float x = md.groove.DimX();
 		float y = md.groove.DimY();
 		const GLsizei width = (int)(x / DSP_inchmm * print_dpi);
@@ -18117,7 +18117,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 		QString zx_sn = makeOutputname2(zx_dir.absolutePath(), zxtempFileFinfo.completeBaseName());
 		QString zx_sn2 = makeOutputname(zx_dir.absolutePath(), 0);
 		QString snapShotFileName = zx_dir.absolutePath() + "/" + zxtempFileFinfo.completeBaseName() + ".png";
-
+		QString thumnailPath = par.getString("THUMBNAIL_FILE_PATH");
 		md.jobname.push_back(zx_sn);
 
 
@@ -18179,7 +18179,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 
 
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < 1; i++)
 		{
 			//cv::Mat capDownMask_bottom_face(height, width, CV_8UC3, Scalar(255, 255, 255));
 			resetImage(color_Bottom_face, width, height);
@@ -18239,10 +18239,9 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			cv::flip(color_Bottom_face, color_Bottom_face, 0);
 
 			if (true){
-				image = cvMatToQImage(color_Bottom_face);
-				QString color_Bottom_faceS = "color_Bottom_face";
-				color_Bottom_faceS.append(QString("_%1.png").arg(i, 4, 10, QChar('0')));
+				image = cvMatToQImage(color_Bottom_face);				
 				image.save(snapShotFileName, "png");
+				image.save(thumnailPath);
 			}
 			/*==============================================================*/
 

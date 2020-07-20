@@ -500,7 +500,7 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 	pp350glay = new QVBoxLayout();
 
 	setDefaultToCurrent->setStyleSheet(WidgetStyleSheet::settingPrinterButtonStyleSheet(":/images/icons/btn_reset_normal.png", ":/images/icons/btn_reset_click.png", ":/images/icons/btn_reset_hover.png"));
-	setDefaultToCurrent->setToolTip("Load default setting");
+	setDefaultToCurrent->setToolTip("Reset");
 	exportSettingPB->setStyleSheet(WidgetStyleSheet::settingPrinterButtonStyleSheet(":/images/icons/btn_export_normal.png", ":/images/icons/btn_export_click.png", ":/images/icons/btn_export_hover.png"));
 	exportSettingPB->setToolTip("Export printer setting");
 	importSettingPB->setStyleSheet(WidgetStyleSheet::settingPrinterButtonStyleSheet(":/images/icons/btn_import_normal.png", ":/images/icons/btn_import_click.png", ":/images/icons/btn_import_hover.png"));
@@ -627,7 +627,8 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 			}
 		});
 
-		//widget initial state========================		
+		//widget initial state========================	
+		emit getWidget(PP350_SETTING_ca, "COLOR_MODE")->parameterChanged();
 		emit getWidget(PP350_SETTING_ca, "CONTINUE_PRINTING")->parameterChanged();
 		emit getWidget(PP350_SETTING_ca, "DILATE_BINDER")->parameterChanged();
 		emit getWidget(PP350_SETTING_ca, "STIFF_PRIN_V2")->parameterChanged();
@@ -746,7 +747,8 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 		}
 
 	});
-
+	
+	emit getWidget(PP350_SETTING_ca, "COLOR_MODE")->parameterChanged();
 
 	if (getWidgetValue(Common_Setting_ca, "TARGET_PRINTER") == 0)
 	{

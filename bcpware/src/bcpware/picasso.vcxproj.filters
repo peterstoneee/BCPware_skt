@@ -466,6 +466,24 @@
     <ClCompile Include="Release\moc_CMD_Value.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="printingHistory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_printingHistory.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_printingHistory.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_PrintingHistoryDetail.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_PrintingHistoryDetail.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="PrintingHistoryDetail.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SaveDialogTest.h">
@@ -669,6 +687,12 @@
     <ClInclude Include="ParamOp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_printingHistoryUi.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_historyDetail.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="picasso_zh.ts">
@@ -803,6 +827,18 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="CMD_Value.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="printingHistory.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ui\printingHistoryUi.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ui\historyDetail.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="PrintingHistoryDetail.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

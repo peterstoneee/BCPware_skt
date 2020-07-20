@@ -74,6 +74,7 @@
 #include "rendermodeactions.h"
 #include "meshcheck.h"
 #include "widgetStyleSheet.h"
+#include "printingHistory.h"
 
 #include "login.h"
 
@@ -1955,14 +1956,17 @@ void MainWindow::createActions()//實體化action，與函示連結上
 
 	printHistoryAct = new QAction(tr("Print History(Testing)"), this);
 	connect(printHistoryAct, &QAction::triggered, [this]() {
-		qDebug() << "Print History";
-
+		/*qDebug() << "Print History";
 		QProcess process(this);
 		QString fileName = QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory) + PicaApplication::appName() + "/printInfoCSV.csv";
 		QString printHistoryName = qApp->applicationDirPath() + "./PrintJogHistory.exe";
 		QStringList arguments;
 		arguments << fileName;
-		process.startDetached("PrintJogHistory.exe", arguments);
+		process.startDetached("PrintJogHistory.exe", arguments);*/
+
+		PrintingHistory *pHsitory = new PrintingHistory(this);
+		pHsitory->exec();
+	
 	}
 	);
 
@@ -4429,12 +4433,12 @@ void MainWindow::setGenericStyleSheet()
 		);
 
 
-	MainWindow::setStyleSheet("QGroupBox{	background-color: qlineargradient(x1 : 0, y1 : 0, x2 : 0, y2 : 1,	stop : 0 #E0E0E0, stop: 1 #FFFFFF);}"
-		"QGroupBox{ border: 1px solid gray;}"
-		"QGroupBox{border-radius: 5px;}"
-		"QGroupBox{margin-top: 1ex; /* leave space at the top for the title */}"
-		"QGroupBox::title{subcontrol-origin: margin; subcontrol-position: bottom center;padding: 0 3px;	background-color: qlineargradient(x1 : 0, y1 : 0, x2 : 0, y2 : 1,stop : 0 #FFAECE, stop: 1 #FFFFFF);}"
-		);
+	//MainWindow::setStyleSheet("QGroupBox{	background-color: qlineargradient(x1 : 0, y1 : 0, x2 : 0, y2 : 1,	stop : 0 #E0E0E0, stop: 1 #FFFFFF);}"
+		//"QGroupBox{ border: 1px solid gray;}"
+	//	"QGroupBox{border-radius: 5px;}"
+	//	"QGroupBox{margin-top: 1ex; /* leave space at the top for the title */}"
+	//	"QGroupBox::title{subcontrol-origin: margin; subcontrol-position: bottom center;padding: 0 3px;	background-color: qlineargradient(x1 : 0, y1 : 0, x2 : 0, y2 : 1,stop : 0 #FFAECE, stop: 1 #FFFFFF);}"
+	//	);
 
 
 	QApplication::setStyle(QStyleFactory::create("Fusion"));

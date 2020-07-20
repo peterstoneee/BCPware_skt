@@ -450,6 +450,7 @@ public:
 
 		printJobParam.addParam(new RichBool("COLOR_BINDING", false, "Color Binding", ""));//***20160322mono_bool
 
+		printJobParam.addParam(new RichString("THUMBNAIL_FILE_PATH", "", "THUMBNAIL_FILE_PATH", ""));//***20160322mono_bool
 		//printJobParam.addParam(new RichInt("SPITTON_MODE", 0, "Spitton mode", ""));//***
 
 		//printJobParam.addParam(new RichFloat("WITNESS_WIDTH", 2, "Witness Width", ""));
@@ -551,7 +552,10 @@ public:
 	{
 		printJobParam.setValue("SPITTON_MODE", IntValue(Mode));
 	}*/
-	
+	void setThumbnailPath(QString path)
+	{
+		printJobParam.setValue("THUMBNAIL_FILE_PATH", StringValue(path));
+	}
 
 	RichParameterSet& getprintJobParam(){ return printJobParam; }
 

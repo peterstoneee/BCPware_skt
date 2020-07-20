@@ -8,7 +8,7 @@
 #include <QDebug>
 #include <QMap>
 #include <../common/filterparameter.h>
-//#include "../Console/define_global_parameter.h"
+#include "../common/define_some_parameter.h"
 //#include "ParamStuff.h"
 
 #define JOB_QUEUE_FILE_NAME "job_queue.txt"
@@ -86,6 +86,10 @@ public:
 	static bool transformJsonToRichParameter(RichParameterSet &input, QString josnString);
 	
 	//static void createDefaultParamJosonDoc();
+	static void updateToHistory(bool newOrNot, QString _key, QVariant _value);
+	//static void updateSliceSettingToHistory(bool newOrNot, QString _key, QVariant _value);
+	static void updateSliceSettingToHistory(bool newOrNot, int, QVariant _value);
+	
 
 };
 

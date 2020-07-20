@@ -144,6 +144,11 @@ static inline QString getDocumentFolder()
 {
 	return getDocumentDir() + "/" + DOCUMENT_NAME + "/";
 }
+
+static inline QString getLogDir()
+{
+	return getDocumentDir() + "/" + "log" + "/";
+}
 //static inline QString getLogFolder()
 //{
 //	return getDMDocumentFolder() + "/" + DM_LOG_FOLDER_NAME + "/";
@@ -159,11 +164,18 @@ class BCPwareFileSystem
 {	
 
 public:
+
 	static const QString appName();
+	static const QString dashboardName();
 	static const QString encryptKey();
 	static const QString parameterFileName();
 	static const QString parameterFilePath();
 	static QDir documentDir();
+	static QDir documentDashboardDir();
+	static QDir logDir();	
+	static const QString printingHistoryFilePath();
+	//static QString logFileName();
+	static QDir projectThumbnailFolder();
 
 	static bool encryptParam(QString inputString, QString &outputString);
 	static bool encryptParam(QString inputString, QFileInfo);

@@ -68,7 +68,7 @@
 #include "ui_support.h"
 #include "webService.h"
 #include "../bcpwarePlugins/filter_box_packing/three_d_packing.h"
-
+#include <QUuid>
 
 #include <vcg/complex/algorithms/create/ball_pivoting.h>
 #include <vcg/complex/algorithms/create/platonic.h>
@@ -7620,8 +7620,83 @@ bool MainWindow::printFunction352()//
 }
 bool MainWindow::printFunction()//
 {
+	/*thumbNail Test*/	
+	auto genThnumbnail = [&](){
+		QString projectThumbnailName;
+		if (!meshDoc()->getFileName().isEmpty())
+		{
+			QFileInfo prjectNameInfo(meshDoc()->getFileName());			
+			projectThumbnailName = BCPwareFileSystem::projectThumbnailFolder().filePath(QString("%1_%2.png").arg(prjectNameInfo.completeBaseName()).arg(QUuid::createUuid().toString().mid(1, 36)));
+			
+		}
+		else
+		{
+			projectThumbnailName = BCPwareFileSystem::projectThumbnailFolder().filePath(QString("%1.png").arg(QUuid::createUuid().toString().mid(1, 36)));
+		}
+
+		PrintjobParam genPICParam;
+		genPICParam.setCommonPrintValue(meshDoc());
+		genPICParam.setGenZxParam(true);
+		genPICParam.genDebugPic(false);//Test
+		genPICParam.setThumbnailPath(projectThumbnailName);
+
+		genPICParam.setPrintStart(false);
+		genPICParam.setStartPrintEstimate(true);
+		genPICParam.setColorProfile(currentGlobalParams.getString("COLOR_PROFILE"));
+		genPICParam.setStiffPrint(currentGlobalParams.getBool("STIFF_PRINT"));
+		genPICParam.setDilateBinder(currentGlobalParams.getBool("DILATE_BINDER"));
+		genPICParam.setDialteBinderValue(currentGlobalParams.getInt("DILATE_BINDER_VALUE"));
+		genPICParam.setDynamicWipe(currentGlobalParams.getBool("DYNAMIC_WIPE"));
+		genPICParam.setColorBinding(currentGlobalParams.getBool("COLOR_BINDING"));
+		executeFilter(PM.actionFilterMap.value("FP_SAVE_DEFAULT_SNAP_SHOT"), genPICParam.getprintJobParam(), false);
+		//update Thumbnail file path
+		ParamOp::updateToHistory(false, "JOB_THUMBNAIL_NAME", projectThumbnailName);
+		//upadte project Name
+		meshDoc()->getFileName().isEmpty() ? NULL : ParamOp::updateToHistory(false, "PROJECT_NAME", meshDoc()->getFileName());
+		
+		//GENERAL
+		ParamOp::updateSliceSettingToHistory(false, 0, currentGlobalParams.getFloat("SLIGHT_HEIGHT"));
+		ParamOp::updateSliceSettingToHistory(false, 1, currentGlobalParams.getBool("ADD_PATTERN"));
+		ParamOp::updateSliceSettingToHistory(false, 2, currentGlobalParams.getFloat("PLUS_PRINT_LENGTH"));
+		ParamOp::updateSliceSettingToHistory(false, 3, currentGlobalParams.getBool("LINE_OR_RECT"));
+		////slice 
+		ParamOp::updateSliceSettingToHistory(false, 4, currentGlobalParams.getBool("STIFF_PRIN_V2")); 
+		ParamOp::updateSliceSettingToHistory(false, 5, currentGlobalParams.getInt("STIFF_PRINT_VALUE"));
+		ParamOp::updateSliceSettingToHistory(false, 6, currentGlobalParams.getInt("SHELL_PERCENT"));
+
+		ParamOp::updateSliceSettingToHistory(false, 7, currentGlobalParams.getBool("DILATE_BINDER"));
+		ParamOp::updateSliceSettingToHistory(false, 8, currentGlobalParams.getInt("DILATE_BINDER_VALUE"));
+		ParamOp::updateSliceSettingToHistory(false, 9, currentGlobalParams.getFloat("PP_BOTTOM_LIGHTER_THICK"));
+		ParamOp::updateSliceSettingToHistory(false, 10, currentGlobalParams.getInt("PP_BOTTOM_LIGHTER_PERCENTAGE"));
+		ParamOp::updateSliceSettingToHistory(false, 11, currentGlobalParams.getFloat("HORIZONE_LINE_WIDTH"));
+		ParamOp::updateSliceSettingToHistory(false, 12, currentGlobalParams.getFloat("VERTICAL_LINE_WIDTH"));
+
+		ParamOp::updateSliceSettingToHistory(false, 13, currentGlobalParams.getBool("PROFILE_ON"));
+		ParamOp::updateSliceSettingToHistory(false, 14, currentGlobalParams.getString("COLOR_PROFILE"));
+		//spitton
+		ParamOp::updateSliceSettingToHistory(false, 15, currentGlobalParams.getFloat("SPITTOON_M"));
+		ParamOp::updateSliceSettingToHistory(false, 16, currentGlobalParams.getFloat("SPITTOON_C"));
+		ParamOp::updateSliceSettingToHistory(false, 17, currentGlobalParams.getFloat("SPITTOON_Y"));
+		ParamOp::updateSliceSettingToHistory(false, 18, currentGlobalParams.getFloat("SPITTOON_SECOND_CMY"));
+		ParamOp::updateSliceSettingToHistory(false, 19, currentGlobalParams.getFloat("SPITTOON_SECOND_B"));
+		//maintenance
+		ParamOp::updateSliceSettingToHistory(false, 20, currentGlobalParams.getInt("FAN_SPEED"));
+		ParamOp::updateSliceSettingToHistory(false, 21, currentGlobalParams.getBool("IR_On_Off"));
+		ParamOp::updateSliceSettingToHistory(false, 22, currentGlobalParams.getInt("MIDJOB_FREQUENCY"));
+		ParamOp::updateSliceSettingToHistory(false, 23, currentGlobalParams.getInt("WIPER_INDEX"));
+		ParamOp::updateSliceSettingToHistory(false, 24, currentGlobalParams.getInt("WIPER_CLICK"));
+		ParamOp::updateSliceSettingToHistory(false, 25, currentGlobalParams.getBool("PP_POST_HEATING_SWITCH"));
+		ParamOp::updateSliceSettingToHistory(false, 26, currentGlobalParams.getInt("PP_POST_HEATING_MINUTES"));
+		ParamOp::updateSliceSettingToHistory(false, 27, currentGlobalParams.getInt("PUMP_VALUE"));
+
+		
 
 
+	};
+	//genThnumbnail();
+
+	//return false;
+	/**/
 	bool Channel_control_mode = currentGlobalParams.getBool("CHANNEL_CONTROL");
 	detectOverlappingFunc();
 	if (meshDoc()->getIntersectMeshesID2()->size() > 0)
@@ -7855,7 +7930,7 @@ bool MainWindow::printFunction()//
 							  if (temp == "Printing")
 								  //if (temp == "Online")
 							  {
-
+								  genThnumbnail();
 								  break;
 							  }
 							  waitTime += 500;
@@ -7866,6 +7941,11 @@ bool MainWindow::printFunction()//
 							  }
 
 						  }
+						  /*
+						  Create Snap Shot
+						  */
+						  //executeFilter(PM.actionFilterMap.value("FP_SAVE_DEFAULT_SNAP_SHOT"), pjpGenZX.getprintJobParam(), false);
+						  /**/
 						  openDashboard(true);
 						  qb->show();
 						  if (!Channel_control_mode)
