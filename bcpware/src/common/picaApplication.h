@@ -65,6 +65,7 @@ public:
 	//bool notify(QObject * rec, QEvent * ev);
 	//***20150513	
 	static const QString appName(){ return tr(DSP_PRODUCTION_NAME); }
+	static const QString appNameDOC(){ return tr(DSP_PALETTE_PROCESS_DOC_NAME); }
 	static const QString architecturalSuffix(const HW_ARCHITECTURE hw) { return "_" + QString::number(int(hw)) + "bit"; }
 	static const QString appArchitecturalName(const HW_ARCHITECTURE hw) { return appName() + architecturalSuffix(hw); }
 	static const QString appVer() {
@@ -89,7 +90,7 @@ public:
 	static const QString wordSizeKeyName() { return tr("wordSize"); }
 	static const QString getRoamingDir()
 	{
-		QSettings settings(QSettings::IniFormat, QSettings::UserScope, appName(), "application");
+		QSettings settings(QSettings::IniFormat, QSettings::UserScope, appNameDOC(), "application");
 		QString location = QFileInfo(settings.fileName()).absolutePath() + "/";
 
 		return location;

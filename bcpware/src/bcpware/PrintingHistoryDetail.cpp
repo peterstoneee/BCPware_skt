@@ -122,7 +122,7 @@ PrintingHistoryDetail::PrintingHistoryDetail(int i, QWidget *parent) : QDialog(p
 	const int w = ui->frame->width();
 	const int h = ui->frame->height();
 	ui->thumbnailLb->setPixmap(QPixmap(itemMap.value("JOB_THUMBNAIL_NAME").toString()).scaled(w, h, Qt::KeepAspectRatio));
-
+	connect(ui->closeButton, SIGNAL(clicked()), this, SLOT(close()));
 
 	initConsumeTab();
 	initSliceTab();
@@ -139,7 +139,7 @@ void PrintingHistoryDetail::initSliceTab()
 		<< "Spitton C width" << "Spitton Y width" << "Second page spitton CMY width" << "Second page spitton Binder width" << "Fan speed rpm"
 		<< "IR on/off" << "Mid-job frequency" << "Wiper index" << "Wiper click" << "Post-heating On/off"
 		<< "Post-Heating minutes" << "Pump value";
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < sliceSettingList.size(); i++)
 	{
 		QMetaType::Type tempType = static_cast<QMetaType::Type>(sliceSettingList.at(i).type());
 		switch (tempType)
@@ -187,7 +187,7 @@ void PrintingHistoryDetail::initConsumeTab()
 	chl->addWidget(cyanEndpie);
 	chl->addWidget(cyanUsed);
 
-	ui->cyanGB->setStyleSheet(WidgetStyleSheet::groupBoxStyleSheet());
+	ui->cyanGB->setStyleSheet(WidgetStyleSheet::groupHistoryDetailBoxStyleSheet());
 	ui->cyanGB->setLayout(chl);
 
 	float mStartLevel = itemMap.value("MAGENTA_START_LEVEL").toFloat();
@@ -201,7 +201,7 @@ void PrintingHistoryDetail::initConsumeTab()
 	mhL->addWidget(magentaEndpie);
 	mhL->addWidget(magentaUsed);
 
-	ui->magentaGB->setStyleSheet(WidgetStyleSheet::groupBoxStyleSheet());
+	ui->magentaGB->setStyleSheet(WidgetStyleSheet::groupHistoryDetailBoxStyleSheet());
 	ui->magentaGB->setLayout(mhL);
 
 	float yStartLevel = itemMap.value("YELLOW_START_LEVEL").toFloat();
@@ -214,7 +214,7 @@ void PrintingHistoryDetail::initConsumeTab()
 	yhl->addWidget(yellowStartpie);
 	yhl->addWidget(yellowEndpie);
 	yhl->addWidget(yellowUsed);
-	ui->yellowGB->setStyleSheet(WidgetStyleSheet::groupBoxStyleSheet());
+	ui->yellowGB->setStyleSheet(WidgetStyleSheet::groupHistoryDetailBoxStyleSheet());
 	ui->yellowGB->setLayout(yhl);
 
 	float bStartLevel = itemMap.value("BINDER_START_LEVEL").toFloat();
@@ -227,7 +227,7 @@ void PrintingHistoryDetail::initConsumeTab()
 	bhl->addWidget(binderStartpie);
 	bhl->addWidget(binderEndpie);
 	bhl->addWidget(binderUsed);
-	ui->binderGB->setStyleSheet(WidgetStyleSheet::groupBoxStyleSheet());
+	ui->binderGB->setStyleSheet(WidgetStyleSheet::groupHistoryDetailBoxStyleSheet());
 	ui->binderGB->setLayout(bhl);
 	//wiper
 	QVBoxLayout *bhwiper = new QVBoxLayout();
@@ -238,6 +238,7 @@ void PrintingHistoryDetail::initConsumeTab()
 	bhwiper->addWidget(factoryLabel("Wiper at start", QString::number(wiperStart)));
 	bhwiper->addWidget(factoryLabel("Wiper at End", QString::number(wiperEnd)));
 	bhwiper->addWidget(factoryLabel("Wiper used", QString::number(wiperUsed)));
+	ui->wiperGB->setStyleSheet(WidgetStyleSheet::groupHistoryDetailBoxStyleSheet());
 	ui->wiperGB->setLayout(bhwiper);
 	//printhead
 	QVBoxLayout *bhPrinthead = new QVBoxLayout();	
@@ -249,15 +250,24 @@ void PrintingHistoryDetail::initConsumeTab()
 	bhPrinthead->addWidget(factoryLabel("Printhead at start", QString::number(printheadStart)));
 	bhPrinthead->addWidget(factoryLabel("Printhead at End", QString::number(printheadEnd)));
 	bhPrinthead->addWidget(factoryLabel("Printhead used", QString::number(printheadUsed)));
+	ui->printheadGB->setStyleSheet(WidgetStyleSheet::groupHistoryDetailBoxStyleSheet());
 	ui->printheadGB->setLayout(bhPrinthead);
 }
 
+void setElidedText(QLabel* label, const QString &text){
+	QFontMetrics metrix(label->font());
+	int width = label->width() - 5;
+	QString clippedText = metrix.elidedText(text, Qt::ElideRight, width);
+	label->setText(clippedText);
+}
 QWidget *PrintingHistoryDetail::factoryLabel(QString _decription, QString _value)
 {
 	QFrame *frr = new QFrame;
 	QHBoxLayout * hbl = new QHBoxLayout();
 	QLabel *descriptionLB = new QLabel(_decription);
-	QLabel *valueLB = new QLabel(_value);
+	QLabel *valueLB = new QLabel(this);
+	valueLB->setToolTip(_value);
+	setElidedText(valueLB, _value);
 	valueLB->setWordWrap(true);
 	hbl->addWidget(descriptionLB);
 	hbl->addWidget(valueLB);
@@ -272,7 +282,8 @@ PrintingHistoryDetail::~PrintingHistoryDetail()
 
 
 InformationWidget::InformationWidget(QWidget *parent) :QWidget(parent)
-{}
+{
+}
 void InformationWidget::paintEvent(QPaintEvent *)
 {
 	int width = this->width();

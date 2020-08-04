@@ -2302,21 +2302,21 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 		else if (action->text().contains("FP_ESTIMATE_COLOR"))
 		{
 			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
-			ret = iFilter->applyFilter(action, *(meshDoc()), params, QCallBack, GLA());//按下apply按鈕filter的反應 		
+			ret = iFilter->applyFilter(action, *(meshDoc()), params, QCallBack, GLA());//	
 		}
 		else if (action->text().contains("FP_ESTIMATE_COLOR2"))
 		{
 			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
-			ret = iFilter->applyFilter(action, *(meshDoc()), params, QCallBack, GLA());//按下apply按鈕filter的反應 
+			ret = iFilter->applyFilter(action, *(meshDoc()), params, QCallBack, GLA());//
 		}
 		else if (action->text().contains("FP_ESTIMATE_SURFACE_COLOR"))
 		{
-			ret = iFilter->applyFilter(action, *(meshDoc()), params, QCallBack, GLA());//按下apply按鈕filter的反應 
+			ret = iFilter->applyFilter(action, *(meshDoc()), params, QCallBack, GLA());//
 		}
 		else if (action->text().contains("FP_MESH_INTERSECT_TEST"))
 		{
 			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_MESH_INTERSECT_TEST"));
-			ret = iFilter->applyFilter(action, *(meshDoc()), params, QCallBack, GLA());//按下apply按鈕filter的反應 
+			ret = iFilter->applyFilter(action, *(meshDoc()), params, QCallBack, GLA());//
 			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("done FP_MESH_INTERSECT_TEST"));
 		}
 		else if (action->text().contains("FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE"))
@@ -2324,11 +2324,11 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 			/*MergedEnvironment.addParam(new RichBool("auto_rotate_or_not", true, "auto_rotate", ""));
 			ret = iFilter->applyFilter(action, *(meshDoc()), MergedEnvironment, QCallBack, GLA());*/
 			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE"));
-			ret = iFilter->applyFilter(action, *(meshDoc()), MergedEnvironment, QCallBack, GLA());//按下apply按鈕filter的反應 
+			ret = iFilter->applyFilter(action, *(meshDoc()), MergedEnvironment, QCallBack, GLA());//
 		}
 		else
 		{
-			ret = iFilter->applyFilter(action, *(meshDoc()), MergedEnvironment, QCallBack, GLA());//按下apply按鈕filter的反應  
+			ret = iFilter->applyFilter(action, *(meshDoc()), MergedEnvironment, QCallBack, GLA());//
 		}
 		//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("filter"));
 		mdiarea->setActiveSubWindow(tempmvcc);
@@ -5786,6 +5786,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 	e->accept();
 	}*/
 	if (e->key() == Qt::Key_Slash && e->modifiers() == Qt::AltModifier)
+	//if (e->key() == Qt::Key_0)
 	{
 		if (programmerTest->menuAction()->isVisible())
 			programmerTest->menuAction()->setVisible(false);

@@ -128,11 +128,11 @@ public:
 	QVariant getCheckState() const;
 	void setCheckState(const QVariant &value);
 
-	QTableWidgetItem *gethistoryID_TWI()const;
+	
 
 private:
 	QVariant historyID;
-	QTableWidgetItem *historyID_TWI;
+	
 
 	QVariant jobLayers;
 	QVariant jobPrintedPage;
@@ -211,7 +211,9 @@ public:
 	};
 
 private:
+	short historyColumnNum;
 	short testX;
+	short phIDSwitch;
 	void updateTable();
 	void initTableInformation();
 	QTableWidget *phistoryTb1;
@@ -223,5 +225,6 @@ private:
 		QPushButton *pb1;
 
 	};
+	void count_Total_Printhead();
 };
 

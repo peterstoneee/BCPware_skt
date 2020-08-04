@@ -9,6 +9,6 @@
 #define TEST_P_VERSION_3 2
 #define TEST_P_VERSION_4 5
 #define DSP_SOFTWARE_VERSION "1.0.2.5\0"
-#define DSP_PRODUCTION_NAME "BCPware\0"
-#define DSP_ORIGINAL_FILE_NAME "BCPware.exe\0"
+#define DSP_PRODUCTION_NAME "XYZprint AM³ᴰᴾ\0"
+#define DSP_ORIGINAL_FILE_NAME "XYZprint AM³ᴰᴾ.exe\0"
 #endif

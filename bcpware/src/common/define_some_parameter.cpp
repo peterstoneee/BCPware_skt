@@ -19,7 +19,11 @@ QString const BCPwareFileSystem::parameterFileName()
 }
 QString const BCPwareFileSystem::appName(){
 	
-	return "BCPware"; 
+	return "XYZprint AM³ᴰᴾ"; 
+}
+QString const BCPwareFileSystem::appNameDoc(){
+
+	return "XYZprint AM-3DP";
 }
 QString const BCPwareFileSystem::dashboardName(){
 
@@ -27,15 +31,15 @@ QString const BCPwareFileSystem::dashboardName(){
 }
 QDir BCPwareFileSystem::documentDir()
 {
-	QString path = QStandardPaths::locate(QStandardPaths::DocumentsLocation, appName(), QStandardPaths::LocateDirectory);
+	QString path = QStandardPaths::locate(QStandardPaths::DocumentsLocation, appNameDoc(), QStandardPaths::LocateDirectory);
 	if (path.isEmpty())
 	{
 		path = QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory);
 		if (!path.isEmpty())
 		{
-			if (QDir(path).mkpath(appName()))
+			if (QDir(path).mkpath(appNameDoc()))
 			{
-				path.append("/").append(appName());
+				path.append("/").append(appNameDoc());
 			}
 		}
 	}
@@ -161,7 +165,7 @@ bool BCPwareFileSystem::decodeParam(QString &outputString, QString inputString,Q
 			QString fileString = stringStream.readAll();
 			outfile.close();
 			QByteArray testbya = QByteArray::fromHex(fileString.toLatin1());
-			outputString = QString(encryption->removePadding(encryption->decode(testbya, hashKey, iv)));
+			outputString = QString((encryption->decode(testbya, hashKey, iv)));
 			return true;
 		}return false;
 

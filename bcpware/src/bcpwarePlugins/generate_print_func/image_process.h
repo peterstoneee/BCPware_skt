@@ -1666,10 +1666,10 @@ namespace SKT
 
 
 	/*SPITTOON*/
-	static void newUselessbar_custom(cv::Mat &src, float uselessprint, pixelFormat pixformat, float spittoon_m, float spittoon_c, float spittoon_y, float spittoon_b, float dpi)
+	static void newUselessbar_custom(cv::Mat &src, float uselessprint, pixelFormat pixformat, float spittoon_m, float spittoon_c, float spittoon_y, float spittoon_b, float dpi,int start_position = 59)
 	{
 
-		int uselessstart = 59;
+		int uselessstart = start_position;
 		int cm_pixel = 118 * uselessprint;
 		float mm_pixel = dpi / 25.4;
 
@@ -1717,10 +1717,10 @@ namespace SKT
 	}
 
 	/*SPITTOON*/
-	static void newUselessbar_custom_DM(cv::Mat &src, float uselessprint, pixelFormat pixformat, float spittoon_m, float spittoon_c, float spittoon_y, float spittoon_b, float dpi)
+	static void newUselessbar_custom_DM(cv::Mat &src, float uselessprint, pixelFormat pixformat, float spittoon_m, float spittoon_c, float spittoon_y, float spittoon_b, float dpi,int start_position = 59)
 	{
 
-		int uselessstart = 59;
+		int uselessstart = start_position;
 		int cm_pixel = 118 * uselessprint;
 		float mm_pixel = dpi / 25.4;
 

@@ -105,7 +105,7 @@ MainWindow::MainWindow()
 	//=================
 
 
-	QFileInfo outfile(QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory) + PicaApplication::appName() + "/printerStatus_log.txt");
+	QFileInfo outfile(QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory) + PicaApplication::appNameDOC() + "/printerStatus_log.txt");
 	dbgff = fopen(outfile.absoluteFilePath().toStdString().data(), "w");//@@@
 	//meshCheckSwitch = true;
 	//***20150603
@@ -1965,6 +1965,7 @@ void MainWindow::createActions()//實體化action，與函示連結上
 		process.startDetached("PrintJogHistory.exe", arguments);*/
 
 		PrintingHistory *pHsitory = new PrintingHistory(this);
+		pHsitory->setAttribute(Qt::WA_DeleteOnClose);
 		pHsitory->exec();
 	
 	}

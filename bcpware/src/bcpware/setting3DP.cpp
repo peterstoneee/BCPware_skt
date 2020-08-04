@@ -2862,7 +2862,7 @@ void Setting3DP::createParamSettingUI(JsonfileCategory type)
 
 
 	QString outputstring;
-	BCPwareFileSystem::decodeParam(outputstring, QString(), BCPwareFileSystem::parameterFilePath());
+	//BCPwareFileSystem::decodeParam(outputstring, QString(), BCPwareFileSystem::parameterFilePath());
 
 	QVariant category, categoryList, typeMap, paramList, categoryName;
 	ParamOp::extractVariantTest(category, QVariant(), QString(), -1, QString(), decodeParamString);

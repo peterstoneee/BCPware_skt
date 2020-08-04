@@ -59,7 +59,8 @@
 #define DSP_DASHBOARD_NAME _T("3DPDashboard.exe")
 #define DSP_DASHBOARD_WINDOW_NAME _T("Dashboard")
 
-#define DSP_PALETTE_PROCESS_NAME _T("BCPware.exe")
+#define DSP_PALETTE_PROCESS_NAME _T("XYZprint AM³ᴰᴾ.exe")
+#define DSP_PALETTE_PROCESS_DOC_NAME "XYZprint AM-3DP"
 #define DSP_PALETTE_GUID _T("79DD151F-0488-4E41-8A26-3AFE7B46A6F6")
 
 #define DSP_MAINTOOL_NAME _T("maintTool.exe")
@@ -105,7 +106,7 @@
 
 
 
-#define DOCUMENT_NAME "BCPware"
+#define DOCUMENT_NAME "XYZprint AM-3DP"
 
 #define LOG_FOLDER_NAME "log"
 
@@ -166,6 +167,7 @@ class BCPwareFileSystem
 public:
 
 	static const QString appName();
+	static const QString appNameDoc();
 	static const QString dashboardName();
 	static const QString encryptKey();
 	static const QString parameterFileName();

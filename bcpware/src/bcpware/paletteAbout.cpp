@@ -23,6 +23,7 @@
 
 #include "credits.h"
 #include <regex>
+#include "../common/define_some_parameter.h"
 
 
 PaletteAbout::PaletteAbout(QWidget *parent) :QDialog(parent), ui(new Ui::PaletteAbout)
@@ -253,7 +254,8 @@ bool PaletteAbout::updateOrNot(QString json)
 		message.setIconPixmap(QPixmap("icon.png"));
 		message.exec();*/
 		//QMessageBox::information(this, "check update", "version is the newest!");
-		ui->palette_versionLB->setText(tr("BCPware is up to date."));
+		//ui->palette_versionLB->setText(tr("BCPware is up to date."));
+		ui->palette_versionLB->setText(BCPwareFileSystem::appName()+" is up to date.");
 		//ui->testBtn->setText(currentVersion);
 		//ui->testBtn->setDisabled
 	}

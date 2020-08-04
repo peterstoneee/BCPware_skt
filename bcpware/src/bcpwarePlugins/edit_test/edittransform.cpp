@@ -829,5 +829,6 @@ bool EditTransform::updateModelProjectionMatrix(GLArea *gla)
 	screen_xaxis = (right - center) * Scalarm(2.0);//***screenspace
 	screen_yaxis = (top - center)   * Scalarm(2.0);
 	screen_zaxis = (front - center) * Scalarm(2.0);//
+	//qDebug() << "screen_xaxis" << screen_xaxis[0] << screen_xaxis[1] << screen_xaxis[2];
 	return true;
 }

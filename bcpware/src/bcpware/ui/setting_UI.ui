@@ -150,6 +150,7 @@ QListView::item:hover {
     <string notr="true">QStackedWidget{
 border-color: rgb(0, 255, 127);
 border: 1px solid #707070;
+	
 }</string>
    </property>
    <property name="lineWidth">
@@ -158,8 +159,15 @@ border: 1px solid #707070;
    <property name="currentIndex">
     <number>7</number>
    </property>
-   <widget class="QWidget" name="general_page"/>
+   <widget class="QWidget" name="general_page">
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+   </widget>
    <widget class="QWidget" name="editor_page">
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
     <widget class="QScrollArea" name="editScrollArea">
      <property name="geometry">
       <rect>
@@ -4422,6 +4430,9 @@ border: 1px solid #707070;
     </widget>
    </widget>
    <widget class="QWidget" name="NVMPage">
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
     <layout class="QGridLayout" name="gridLayout_7">
      <item row="2" column="0">
       <widget class="QScrollArea" name="scrollArea_3">
@@ -4472,6 +4483,9 @@ border: 1px solid #707070;
     </layout>
    </widget>
    <widget class="QWidget" name="PP350Page">
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
     <layout class="QGridLayout" name="gridLayout_8">
      <item row="0" column="0">
       <widget class="QFrame" name="pp350buttonFrame">
@@ -4540,6 +4554,9 @@ border: 1px solid #707070;
     </layout>
    </widget>
    <widget class="QWidget" name="PP352Page">
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
     <layout class="QGridLayout" name="gridLayout_9">
      <item row="0" column="0">
       <widget class="QFrame" name="pp352buttonFrame">
@@ -4587,6 +4604,9 @@ border: 1px solid #707070;
     </layout>
    </widget>
    <widget class="QWidget" name="commonPage">
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
     <layout class="QGridLayout" name="gridLayout_18">
      <item row="0" column="0">
       <widget class="QFrame" name="commbuttonFrame">

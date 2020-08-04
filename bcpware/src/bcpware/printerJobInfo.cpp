@@ -1027,7 +1027,7 @@ void PrinterJobInfo::genCSVFile()
 	bool hasHeader = hasCSVHeader();
 
 
-	QString fileName = PrinterJobInfo::docPath() + PicaApplication::appName() + "/printInfoCSV.csv";
+	QString fileName = PrinterJobInfo::docPath() + PicaApplication::appNameDOC() + "/printInfoCSV.csv";
 
 	if (fileName.isEmpty())
 
@@ -1122,7 +1122,7 @@ void PrinterJobInfo::writeAtLastLine()
 	bool hasHeader = hasCSVHeader();
 
 
-	QString fileName = PrinterJobInfo::docPath() + PicaApplication::appName() + "/printInfoCSV.csv";
+	QString fileName = PrinterJobInfo::docPath() + PicaApplication::appNameDOC() + "/printInfoCSV.csv";
 
 	if (fileName.isEmpty())
 
@@ -1160,7 +1160,7 @@ void PrinterJobInfo::writeAtLastLine()
 
 bool PrinterJobInfo::hasCSVHeader()
 {
-	QString fileName = PrinterJobInfo::docPath() + PicaApplication::appName() + "/printInfoCSV.csv";
+	QString fileName = PrinterJobInfo::docPath() + PicaApplication::appNameDOC() + "/printInfoCSV.csv";
 	if (fileName.isEmpty())
 		return false;
 	QFile file(fileName);

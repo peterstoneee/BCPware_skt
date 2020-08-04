@@ -3,13 +3,16 @@
 #include <qDebug>
 #include <QLabel>
 #include "PrintingHistoryDetail.h"
+#include <QCollator>
+#include "widgetStyleSheet.h"
+
 //TBD different sort function
 //
 
-PrintingHistory::PrintingHistory(QWidget *parent) : QDialog(parent), ui(new Ui::PrintingHistoryDlg), testX(1)
+PrintingHistory::PrintingHistory(QWidget *parent) : QDialog(parent), ui(new Ui::PrintingHistoryDlg), testX(1), phIDSwitch(1)
 {
 	ui->setupUi(this);
-
+	historyColumnNum = 9;
 	/*create history list*/
 	QVariant _dmHistory;
 	if (ParamOp::extractVariantTest(_dmHistory, QVariant(), QString(), -1, BCPwareFileSystem::printingHistoryFilePath()))
@@ -59,6 +62,8 @@ PrintingHistory::PrintingHistory(QWidget *parent) : QDialog(parent), ui(new Ui::
 	la1->addWidget(phistoryTb1);
 
 	setLayout(la1);*/
+
+	count_Total_Printhead();
 }
 void PrintingHistory::updateTable()
 {
@@ -70,10 +75,17 @@ void PrintingHistory::updateTable()
 	}*/
 	for (int i = 0; i < printHistoryItemList.size(); i++)
 	{
-		qDebug() << printHistoryItemList.at(i)->gethistoryID_TWI()->text();
+		
 		//phistoryTb1->setItem(i, 0, printHistoryItemList.at(i)->gethistoryID_TWI());
+		QHBoxLayout *chbHB = new QHBoxLayout();
+		QFrame *chbF = new QFrame();
 		QCheckBox *chb = new QCheckBox();
+		chbHB->setAlignment(Qt::AlignCenter); 
+		chbHB->setContentsMargins(0, 0, 0, 0);
+		chbHB->addWidget(chb);
+		chbF->setLayout(chbHB);
 		QPushButton*pb = new QPushButton("detail",this);
+
 		QLabel *lb1 = new QLabel(this);
 		const int w = lb1->width();
 		const int h = lb1->height();
@@ -95,7 +107,9 @@ void PrintingHistory::updateTable()
 		connect(pb, &QPushButton::clicked, [=](){
 
 			PrintingHistoryDetail *phD = new PrintingHistoryDetail(printHistoryItemList.at(i)->getHistoryID().toInt(), this);
-			
+			phD->setWindowFlags(Qt::Popup);
+			phD->setAttribute(Qt::WA_DeleteOnClose);
+			phD->move(200, 200);
 			phD->exec();
 
 
@@ -136,10 +150,6 @@ void PrintingHistory::updateTable()
 
 			//subItemList.push_back(new SubItemStruct("job Start time", printHistoryItemList.at(i)->getJobStartTime().toString()));
 			//subItemList.push_back(new SubItemStruct("job Start time", printHistoryItemList.at(i)->getJobCompletedTime().toString()));
-
-
-
-
 			//for (int i = 0, x = 0; i < 10; i++)
 			//{
 			//	for (int j = 0; j < 6; j++)
@@ -173,7 +183,7 @@ void PrintingHistory::updateTable()
 		
 
 
-		phistoryTb1->setCellWidget(i, 0, chb);
+		phistoryTb1->setCellWidget(i, 0, chbF);
 		phistoryTb1->setItem(i, 1, new QTableWidgetItem(printHistoryItemList.at(i)->getHistoryID().toString()));	
 		phistoryTb1->setCellWidget(i, 2, lb1);
 		//project name
@@ -183,7 +193,9 @@ void PrintingHistory::updateTable()
 
 		phistoryTb1->setItem(i, 6, new QTableWidgetItem(printHistoryItemList.at(i)->getJobElapsedTime().toString()));
 		
-		phistoryTb1->setCellWidget(i, 7, pb);
+		phistoryTb1->setItem(i, 7, new QTableWidgetItem(printHistoryItemList.at(i)->getPrintHeadID().toString()));
+
+		phistoryTb1->setCellWidget(i, 8, pb);
 
 	}
 	connect(phistoryTb1, static_cast<void(QTableWidget::*)(int, int)>(&QTableWidget::cellClicked), [&](int x, int y){
@@ -194,12 +206,13 @@ void PrintingHistory::updateTable()
 void PrintingHistory::initTableInformation()
 {
 	QStringList header;
-	header << ""<< "id"<< "Preview"<<"ProjectName"<<"Outcome"<<"Finished at"<<"Print Time"<<"Detail";
-	phistoryTb1 = new QTableWidget(printHistoryItemList.size(), 8);
+	header << ""<< "id"<< "Preview"<<"ProjectName"<<"Outcome"<<"Finished at"<<"Print Time"<<"Printhead ID"<<"Detail";
+	phistoryTb1 = new QTableWidget(printHistoryItemList.size(), historyColumnNum);
 	phistoryTb1->setHorizontalHeaderLabels(header);
-
+	phistoryTb1->setColumnWidth(5, 150);
+	phistoryTb1->verticalHeader()->setVisible(false);
+	phistoryTb1->setStyleSheet(WidgetStyleSheet::historyTableWidget());
 	
-
 	/**/
 	updateTable();
 	
@@ -217,14 +230,14 @@ void PrintingHistory::initTableInformation()
 			if (testX)
 			{
 				qSort(printHistoryItemList.begin(), printHistoryItemList.end(), [&](const PrintHistoryItem *infoA, const PrintHistoryItem *infoB){
-					return infoA->getHistoryID() > infoB->getHistoryID(); });
+					return infoA->getHistoryID().toInt() > infoB->getHistoryID().toInt(); });
 
 				updateTable();
 			}
 			else
 			{
 				qSort(printHistoryItemList.begin(), printHistoryItemList.end(), [&](const PrintHistoryItem *infoA, const PrintHistoryItem *infoB){
-					return infoA->getHistoryID() < infoB->getHistoryID(); });
+					return infoA->getHistoryID().toInt() < infoB->getHistoryID().toInt(); });
 
 				updateTable();
 			}
@@ -295,11 +308,67 @@ void PrintingHistory::initTableInformation()
 			
 		}
 			break;
+		case 4:
+		{
+			QCollator coll;
+			coll.setNumericMode(true);
+			if (phIDSwitch)
+			{
+
+				qSort(printHistoryItemList.begin(), printHistoryItemList.end(), [&](const PrintHistoryItem *infoA, const PrintHistoryItem *infoB){
+					QString outcomeA = infoA->getOutcomeHistory().toString();
+					QString outcomeB = infoB->getOutcomeHistory().toString();
+					qDebug() << "printheadIDA : " << outcomeA.toLower() << "outcomeB : " << outcomeB.toLower();
+					qDebug() << (coll.compare(outcomeA, outcomeB) < 0);
+					return  outcomeA > outcomeB;// coll.compare(printheadIDA, printheadIDB) < 0;
+				});
+				updateTable();
+			}
+			else
+			{
+				qStableSort(printHistoryItemList.begin(), printHistoryItemList.end(), [&](const PrintHistoryItem *infoA, const PrintHistoryItem *infoB){
+					QString outcomeA = infoA->getOutcomeHistory().toString();
+					QString outcomeB = infoB->getOutcomeHistory().toString();					
+					return  outcomeA < outcomeB;// coll.compare(printheadIDA, printheadIDB) < 0;
+				});
+				updateTable();
+			}
+			phIDSwitch ^= 1;
+		}break;
+		case 7:
+		{
+			QCollator coll;
+			coll.setNumericMode(true);
+			if (phIDSwitch)
+			{
+
+				qSort(printHistoryItemList.begin(), printHistoryItemList.end(), [&](const PrintHistoryItem *infoA, const PrintHistoryItem *infoB){
+					QString printheadIDA = infoA->getPrintHeadID().toString();
+					QString printheadIDB = infoB->getPrintHeadID().toString();
+					qDebug() << "printheadIDA : " << printheadIDA.toLower() << "printheadIDB : " << printheadIDB.toLower();
+					qDebug() << (coll.compare(printheadIDA, printheadIDB) < 0);
+					return  printheadIDA > printheadIDB;// coll.compare(printheadIDA, printheadIDB) < 0;
+				});
+				updateTable();
+			}
+			else
+			{
+				qStableSort(printHistoryItemList.begin(), printHistoryItemList.end(), [&](const PrintHistoryItem *infoA, const PrintHistoryItem *infoB){
+					QString printheadIDA = infoA->getPrintHeadID().toString();
+					QString printheadIDB = infoB->getPrintHeadID().toString();
+					qDebug() << "printheadIDA : " << printheadIDA.toLower() << "printheadIDB : " << printheadIDB.toLower();
+
+					return  printheadIDA < printheadIDB; //coll.compare(printheadIDA, printheadIDB)>0;
+				});
+				updateTable();
+			}
+			phIDSwitch ^= 1;
+		}break;
 		case 2:
 			break;
 		}
 
-		
+		printHistoryItemList.size();
 	
 		QString text = phistoryTb1->horizontalHeaderItem(logicalIndex)->text();
 		qDebug() << logicalIndex << text << testX;
@@ -307,13 +376,42 @@ void PrintingHistory::initTableInformation()
 	
 	
 	QGridLayout *la1 = new QGridLayout();
+	la1->setMargin(24);
 	la1->addWidget(phistoryTb1);
-	setLayout(la1);
+	qDebug() <<"phistoryTb1->width() : "<< phistoryTb1->width();
+	ui->frame->setLayout(la1);
+	
+	//setLayout(la1);
+}
+
+void PrintingHistory::count_Total_Printhead()
+{
+	QSet<QString> phidSet;
+	QMultiMap<QString, int> ph_page;
+	foreach(PrintHistoryItem *item, printHistoryItemList)
+	{
+		phidSet << item->getPrintHeadID().toString();
+		ph_page.insert(item->getPrintHeadID().toString(), item->getPrintHeadPageEnd().toInt());
+	}
+	QString tempS;
+	foreach(QString phidS, phidSet)
+	{
+		QList<int> pages = ph_page.values(phidS);
+		std::sort(pages.begin(), pages.end());
+		qDebug() << phidS <<":"<< pages.last();
+		tempS.append(QString("%1:%2\n").arg(phidS).arg(pages.last()));
+			//phIDPagesLb->set
+	}
+	ui->phIDPagesLb->setWordWrap(true);
+	ui->phIDPagesLb->setText(tempS);
+	//qDebug() << ph_page;
 }
 
 PrintingHistory::~PrintingHistory()
 {
-
+	qDeleteAll(printHistoryItemList);
+	printHistoryItemList.clear();
+	phistoryTb1->setRowCount(0);
 }
 
 PrintHistoryItem::PrintHistoryItem(const QFileInfo &_hsitoryInfo, const QString number)
@@ -372,7 +470,7 @@ PrintHistoryItem::PrintHistoryItem(const QFileInfo &_hsitoryInfo, const QString 
 			setJobPrintheadDropsEND(idMap.value("DOTS_PRINTED_TOTAL_END").toDouble() + idMap.value("DOTS_MAINT_TOTAL_END").toDouble());
 
 			setHistoryID(idMap.value("id"));
-			historyID_TWI = new QTableWidgetItem(idMap.value("id").toString());
+			//historyID_TWI = new QTableWidgetItem(idMap.value("id").toString());
 		}
 
 	}
@@ -560,10 +658,7 @@ void PrintHistoryItem::setHistoryID(const QVariant &value)
 	historyID = value;
 }
 
-QTableWidgetItem* PrintHistoryItem::gethistoryID_TWI() const
-{
-	return historyID_TWI;
-}
+
 
 QVariant PrintHistoryItem::getListSelected() const
 {

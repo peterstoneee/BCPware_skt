@@ -32,7 +32,7 @@ GenPrintInfo::GenPrintInfo(QString *_proejectName) :proejectName(_proejectName)
 }
 void GenPrintInfo::genAllParamInfo(RichParameterSet &param)
 {
-	QFile outfile(GenPrintInfo::docPath() + PicaApplication::appName() + "/printAllInfo.txt");
+	QFile outfile(GenPrintInfo::docPath() + PicaApplication::appNameDOC() + "/printAllInfo.txt");
 
 	QVariantMap firstFloor;
 	QVariantMap secondFloor;
@@ -96,7 +96,7 @@ void GenPrintInfo::getParamfromJsonFile(RichParameterSet &paramGet)
 	QString jsonString;
 	QJsonDocument jsonDoc;
 
-	QFile outfile(GenPrintInfo::docPath() + PicaApplication::appName() + "/printAllInfo.txt");
+	QFile outfile(GenPrintInfo::docPath() + PicaApplication::appNameDOC() + "/printAllInfo.txt");
 	if (outfile.exists())
 	{
 		if (!outfile.open(QIODevice::ReadOnly))
@@ -150,7 +150,7 @@ void GenPrintInfo::genZxInfo(MeshDocument &md, RichParameterSet &printParam, Pri
 	QString jsonString;
 	QJsonDocument jsonDoc;
 
-	QFile outfile(GenPrintInfo::docPath() + PicaApplication::appName() + "/printInfo.txt");
+	QFile outfile(GenPrintInfo::docPath() + PicaApplication::appNameDOC() + "/printInfo.txt");
 
 	if (outfile.exists())
 	{
@@ -413,7 +413,7 @@ void GenPrintInfo::count_total_Page()
 	QString jsonString;
 	QJsonDocument jsonDoc;
 
-	QFile outfile(GenPrintInfo::docPath() + PicaApplication::appName() + "/printInfo.txt");
+	QFile outfile(GenPrintInfo::docPath() + PicaApplication::appNameDOC() + "/printInfo.txt");
 	if (outfile.exists())
 	{
 		if (!outfile.open(QIODevice::ReadOnly))

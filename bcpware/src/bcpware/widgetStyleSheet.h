@@ -700,6 +700,51 @@ static QString WidgetStyleSheet::settingPrinterButtonStyleSheet(const QString &n
 	return thisItemStyle;
 }
 
+static QString WidgetStyleSheet::groupHistoryDetailBoxStyleSheet(const QString &name = NULL)
+{
+	const QString thisItemStyle
+		(
+
+		"QGroupBox{"
+		"font: 14px \"Arial\";"
+		"background-color: #ffffff;"
+		"border: 1px solid #707070;"
+		"border-radius: 1px;"
+		"margin-top: 5ex;" /* leave space at the top for the title */
+		"}"
+
+		"QGroupBox::title{"
+		"color:#2c3d50;"
+		"subcontrol-origin: margin;"
+		"subcontrol-position: top left; "/* position at the top center */
+		"padding: 0 3px;"
+		"color: rgb(134, 134, 134); "
+		"}"
+		);
+	return thisItemStyle;
+}
+
+static QString WidgetStyleSheet::historyTableWidget(const QString &name = NULL, const QString &name2 = NULL, const QString &name3 = NULL)
+{
+	const QString thisItemStyle
+		(
+		"QTableView ::section{"
+		"font: 14px \"Arial\";"
+		"color: rgb(99, 99, 99);"
+		"border:  1px solid  #c4c4c4;"
+		"background-color: rgb(255, 255, 255);"
+		"}"
+
+		"QTableView{"
+		"font: 14px \"Arial\";"
+		"background-color: rgb(242, 242, 242);"
+		"gridline-color:#c4c4c4;"
+		"}"
+		);
+
+	return thisItemStyle;
+}
+
 };
 
 

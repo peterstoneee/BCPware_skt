@@ -7325,7 +7325,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 		int CMYB_black_percentage = par.getInt("CMYB_BLACK_VALUE");
 		bool usePatternPercent = true;
 		bool reversePrint = false;
-
+		int spitton_start_position = par.getInt("SPITTON_START_POSITION");
 
 		/*
 		DM_Parameter
@@ -8783,19 +8783,19 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 				case 0:
 				{
 					originalOutline = SKT::resizeIamgecols(&originalOutline, plus_pixel, gen_pixelFormat);//ADD LENGTH ON COLOR IMAGE									
-					SKT::newUselessbar_custom_DM(originalOutline, useless_print, gen_pixelFormat, spittoon_M, spittoon_C, spittoon_Y, spittoon_B, print_dpi);
+					SKT::newUselessbar_custom_DM(originalOutline, useless_print, gen_pixelFormat, spittoon_M, spittoon_C, spittoon_Y, spittoon_B, print_dpi, spitton_start_position);
 
 					captemp = SKT::resizeIamgecols(&captemp, plus_pixel, gen_pixelFormat);
-					SKT::newUselessbar_custom_DM(captemp, useless_print, gen_pixelFormat, spittoon_M, spittoon_C, spittoon_Y, spittoon_B, print_dpi);
+					SKT::newUselessbar_custom_DM(captemp, useless_print, gen_pixelFormat, spittoon_M, spittoon_C, spittoon_Y, spittoon_B, print_dpi, spitton_start_position);
 
 				}break;
 				case 1:
 				{
 					originalOutline = SKT::resizeIamgecols(&originalOutline, plus_pixel, gen_pixelFormat);//ADD LENGTH ON COLOR IMAGE	
-					SKT::newUselessbar_custom(originalOutline, useless_print, gen_pixelFormat, spittoon_M, spittoon_C, spittoon_Y, spittoon_B, print_dpi);
+					SKT::newUselessbar_custom(originalOutline, useless_print, gen_pixelFormat, spittoon_M, spittoon_C, spittoon_Y, spittoon_B, print_dpi, spitton_start_position);
 
 					captemp = SKT::resizeIamgecols(&captemp, plus_pixel, gen_pixelFormat);
-					SKT::newUselessbar_custom(captemp, useless_print, gen_pixelFormat, spittoon_M, spittoon_C, spittoon_Y, spittoon_B, print_dpi);
+					SKT::newUselessbar_custom(captemp, useless_print, gen_pixelFormat, spittoon_M, spittoon_C, spittoon_Y, spittoon_B, print_dpi, spitton_start_position);
 				}break;
 
 				}
