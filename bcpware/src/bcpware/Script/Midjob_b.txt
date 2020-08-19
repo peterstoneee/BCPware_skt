@@ -1,0 +1,27 @@
+{"maint-set_script":
+	{ 	"name":"Midjob",
+		"location":"ram",
+		"Script":
+{
+			"script": [
+
+	{ "cmd": "RunPump", "args" : 
+		{ "ValvePos" : "openink", 
+		"MaintPos": "cap", 
+		"Rpm": 10,
+		"Revs": 25,
+		"DeciRevs": "Yes" } },
+
+	{ "cmd": "Delay", "args":
+		{ "ValvePos": "openink",
+		"MaintPos": "wipe",
+		"Time": 2 } },		
+
+	{ "cmd": "RunPump", "args" : 
+		{ "ValvePos": "openink", 
+		"MaintPos": "cap", 
+		"Rpm": 110,
+		"Revs": 10 } }
+			]
+		}
+ }}

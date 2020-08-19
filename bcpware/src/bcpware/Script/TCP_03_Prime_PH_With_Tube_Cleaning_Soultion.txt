@@ -1,0 +1,59 @@
+{
+	"script": [
+	{ "cmd" : "RunPump", "args" : 
+		{	"ValvePos" : "openink", 
+			"MaintPos" : "cap", 
+			"Rpm" : 110, 
+			"Revs" : 235
+		}
+	},
+	{ "cmd": "Spit" , "args":
+		{ "ValvePos": "openink",
+    		"MaintPos": "cap",
+    		"ChanMask": "1f",
+    		"NumSpits": 2000 } },
+	{ "cmd": "Delay", "args":
+		{ "ValvePos": "openink",
+		"MaintPos": "cap",
+		"Time": 2 } },
+
+	{ "cmd": "Wipe", "args" : 
+		{ "ValvePos": "openink", 
+		"StartOffset": 60, 
+		"StopOffset": 60, 
+		"Speed": 3, 
+		"WiperRpm": 50 } },
+	{ "cmd": "Delay", "args":
+		{ "ValvePos": "openink",
+		"MaintPos": "cap",
+		"Time": 0 } },
+
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "4", 
+		"Volume":70 } },
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "1", 
+		"Volume":68 } },
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "10", 
+		"Volume":88 } },
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "A", 
+		"Volume":122 } },
+
+	{ "cmd" : "PHPrimed", "args" :
+ 		{	"State" : "primed"
+		}
+	},
+	{ "cmd": "RunSumpPumpIss", "args": 
+		{	"rpms": 100,
+			"numRevs": 50
+		}
+	},		
+	{ "cmd": "Delay", "args":
+		{ "ValvePos": "openink",
+		"MaintPos": "cap",
+		"Time": 0 } }		
+ 
+ ]
+}

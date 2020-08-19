@@ -1,0 +1,18 @@
+{ "script": [
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "2", 
+		"Volume":60000 } },
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "2", 
+		"Volume":60000 } },
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "2", 
+		"Volume":60000 } },
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "2", 
+		"Volume":60000 } },
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "2", 
+		"Volume":23000 } }
+	]
+}

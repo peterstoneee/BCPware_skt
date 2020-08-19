@@ -165,7 +165,7 @@ bool BCPwareFileSystem::decodeParam(QString &outputString, QString inputString,Q
 			QString fileString = stringStream.readAll();
 			outfile.close();
 			QByteArray testbya = QByteArray::fromHex(fileString.toLatin1());
-			outputString = QString((encryption->decode(testbya, hashKey, iv)));
+			outputString = QString(encryption->removePadding(encryption->decode(testbya, hashKey, iv)));
 			return true;
 		}return false;
 

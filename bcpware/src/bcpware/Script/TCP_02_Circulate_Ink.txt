@@ -1,0 +1,11 @@
+{
+ "script": [
+  { "cmd": "RunPump", "args": 
+	{ "ValvePos": "openink",
+    	"MaintPos": "cap",
+    	"Rpm": 150,
+    	"Revs": 400
+   	}
+  }
+ ]
+}

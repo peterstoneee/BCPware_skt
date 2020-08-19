@@ -1,3 +1,51 @@
+////////// Note - 2018/08/14 Tue
+* Optimize TCP
+ - TCP_01_Deprime_PH_Not_Remove_PH.txt
+ - TCP_02_Circulate_Ink.txt
+ - TCP_03_Prime_PH_With_Tube_Cleaning_Soultion.txt
+
+////////// Note - 2018/07/24 Tue
+* Optimize Step 3 of waste binder removal
+ - Waste_Binder_Removal_3_Tube.txt
+* Add a new script to minus QA after waste binder removal.
+ - Waste_Binder_Removal_4_ConsumeInk.txt
+
+////////// Note - 2018/07/16 Mon
+* Modify Waste Binder Removal(Color Mixed Binder) procedure.
+ - Waste_Binder_Removal_3_Tube.txt
+  - Add additional 200 revs of waste pump to remove additional ink that may exist in the tube.
+
+////////// Note - 2018/05/31 Thu
+* Add Midjob_Dynamic.txt
+ - From SW side for dynamic midjob
+ - Have to note that the script in this file is not the original format(not complete)
+* Modify ConsumeInk order
+* Modify Midjob to spit before wipe
+* Modify Midjob to disable capping during printing
+
+////////// Note - 2018/03/05 Mon
+* Modify idle maintenance period.
+ - Currently we set the period to 30 mins.
+ - Memjet recommend to set the period to 8 hours.
+ - Project meeting decides to set the period to 4 hours now.
+ - This changes(change idle maintenance period) will be on SW side.
+
+////////// Note - 2018/01/19 Fri
+* Modify TCP_04_Remove_PH_Only
+ - Change latch open position at spittoon(wipe position).
+
+////////// Note - 2018/01/17 Wed
+* Modify the pressure prime RPM from 350 to 330.
+ - Waiting feedback from Memjet about this changes.
+* Tested on LP3_4.
+
+////////// Note - 2017/12/25 Mon
+* Add Tube Cleaning Procedure script
+ - TCP_01_Deprime_PH_Not_Remove_PH.txt
+ - TCP_02_Circulate_Ink.txt
+ - TCP_03_Prime_PH_With_Tube_Cleaning_Soultion.txt
+ - TCP_04_Remove_PH_Only.txt
+
 ////////// Note - 2017/12/01 Fri
 * Update ConsumeInk.
 * Update color mixed binder removal

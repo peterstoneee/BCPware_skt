@@ -1509,10 +1509,12 @@ void Setting3DP::initSetting(RichParameterSet *settingParam)
 	if (!QFileInfo(getJsonFileParamValue(PP352_SETTING_ca, "DM_ICM_FOR_DITHER").toString()).exists())
 	{
 		QFileInfo dmICM(getJsonFileParamValue(PP352_SETTING_ca, "DM_ICM_FOR_DITHER").toString());
-		QFileInfo currentPCLocation(PicaApplication::getRoamingDir() + dmICM.fileName());
+		QFileInfo currentPCLocation(PicaApplication::getRoamingDir() + "ColorProfile/" + dmICM.fileName());
+		qDebug() << currentPCLocation.absoluteFilePath();
 		if (currentPCLocation.exists())
 			updateValueToJsonFile(PP352_SETTING_ca, "DM_ICM_FOR_DITHER", currentPCLocation.absoluteFilePath());
-		else qDebug() << "ICM not exist";
+		else 
+			qDebug() << "ICM not exist";
 
 	}
 	else qDebug() << "ICM  exist";

@@ -36,10 +36,10 @@
 		{ "ChanMask" : "4", 
 		"Volume":70 } },
 	{ "cmd" : "ConsumeInk", "args" : 
-		{ "ChanMask" : "10", 
+		{ "ChanMask" : "1", 
 		"Volume":68 } },
 	{ "cmd" : "ConsumeInk", "args" : 
-		{ "ChanMask" : "1", 
+		{ "ChanMask" : "10", 
 		"Volume":88 } },
 	{ "cmd" : "ConsumeInk", "args" : 
 		{ "ChanMask" : "A", 

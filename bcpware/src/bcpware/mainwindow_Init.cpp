@@ -2024,6 +2024,10 @@ void MainWindow::createActions()//實體化action，與函示連結上
 	//connect(threeDPrintAct, SIGNAL(triggered()), this, SLOT(testGetstring()));
 	threeDPrintAct2 = new QAction(tr("PicassoJR"), this);//***20150831	PicassoJR
 	connect(threeDPrintAct2, SIGNAL(triggered()), this, SLOT(printFunction2()));
+
+	printfunctionMono = new QAction(tr("Prepare Mono Print"), this);//***20150831	PicassoJR
+	connect(printfunctionMono, SIGNAL(triggered()), this, SLOT(printFunction352()));
+
 	genZXAct = new QAction(tr("Export to Printable File"), this);
 	connect(genZXAct, SIGNAL(triggered()), this, SLOT(GenZXFunc()));
 
@@ -2661,6 +2665,7 @@ void MainWindow::createMenus_v3()
 
 	printMenu = menuBar()->addMenu(tr("&Print"));
 	printMenu->addAction(threeDPrintAct);
+	printMenu->addAction(printfunctionMono);
 	//printMenu->addAction(preparePrintintAct);
 	printMenu->addSeparator();
 	printMenu->addAction(showPrintDashBoardAct);
@@ -3421,6 +3426,8 @@ void MainWindow::loadPicassoSettings()
 			currentGlobalParams.paramList.push_back(v.lastCreated);
 		}
 	}
+	//testqqq
+	currentGlobalParams.addParam(new RichFloat("Quarternion_test_param", 0.1, "quaternion", "")); 
 	/********************************************************************************/
 
 	//// 1) load saved values into the <currentGlobalParams>

@@ -1,120 +1,17 @@
 { "script": [
-	{ "cmd": "RunPump", "args" : 
-		{ "ValvePos": "openink", 
-		"MaintPos": "cap", 
-		"Rpm": 110,
-		"Revs": 80 } },
+
 	{ "cmd": "RunPump", "args" : 
 		{ "ValvePos" : "openink", 
 		"MaintPos": "cap", 
 		"Rpm": 10,
 		"Revs": 25,
 		"DeciRevs": "Yes" } },
-	{ "cmd": "RunPump", "args" : 
-		{ "ValvePos": "openink", 
-		"MaintPos": "cap", 
-		"Rpm": 110,
-		"Revs": 75 } },
-	{ "cmd": "RunSumpPumpIss", "args":
-		{"rpms": 100,
-		"numRevs": 50} },
-	{ "cmd": "RunPump", "args" : 
-		{ "ValvePos" : "closed", 
-		"MaintPos" : "cap", 
-		"Rpm": 350,
-		"Revs": -20 } },
-	{ "cmd": "Delay", "args":
-		{"ValvePos": "closed",
-		"MaintPos": "cap",
-		"Time": 20 } },
-	{ "cmd": "Wipe", "args" : 
-		{ "ValvePos" : "closed", 
-		"StartOffset": 60, 
-		"StopOffset": 100, 
-		"Speed": 3, 
-		"WiperRpm": 50,
-		"WiperRevs": 10 } },
-	{ "cmd": "Delay", "args":
-		{ "ValvePos": "openink",
-		"MaintPos": "cap",
-		"Time": 0 } },
-	{ "cmd": "Delay", "args":
-		{ "ValvePos": "openink",
-		"MaintPos": "wipe",
-		"Time": 2 } },
-	{ "cmd": "Spit" , "args":
-		{ "ValvePos": "openink",
-    	"MaintPos": "wipe",
-    	"ChanMask": "14",
-    	"NumSpits": 2000 } },
-	{ "cmd": "Delay", "args":
-		{ "ValvePos": "openink",
-		"MaintPos": "wipe",
-		"Time": 2 } },
-	{ "cmd": "Spit" , "args":
-		{ "ValvePos": "openink",
-    	"MaintPos": "wipe",
-    	"ChanMask": "01",
-    	"NumSpits": 4000 } },
-	{ "cmd": "Delay", "args":
-		{ "ValvePos": "openink",
-		"MaintPos": "wipe",
-		"Time": 2 } },
-	{ "cmd": "Spit" , "args":
-		{ "ValvePos": "openink",
-    	"MaintPos": "wipe",
-    	"ChanMask": "14",
-    	"NumSpits": 2000 } },
-	{ "cmd": "Delay", "args":
-		{ "ValvePos": "openink",
-		"MaintPos": "wipe",
-		"Time": 2 } },
-	{ "cmd": "Spit" , "args":
-		{ "ValvePos": "openink",
-    	"MaintPos": "wipe",
-    	"ChanMask": "01",
-    	"NumSpits": 2000 } },
-	{ "cmd": "Delay", "args":
-		{ "ValvePos": "openink",
-		"MaintPos": "wipe",
-		"Time": 3 } },
-	{ "cmd": "Spit" , "args":
-		{ "ValvePos": "openink",
-    	"MaintPos": "wipe",
-    	"ChanMask": "01",
-    	"NumSpits": 2000 } },
-	{ "cmd": "Delay", "args":
-		{ "ValvePos": "openink",
-		"MaintPos": "wipe",
-		"Time": 3 } },
-	{ "cmd": "Spit" , "args":
-		{ "ValvePos": "openink",
-    	"MaintPos": "wipe",
-    	"ChanMask": "01",
-    	"NumSpits": 1000 } },
-	{ "cmd": "Delay", "args":
-		{ "ValvePos": "openink",
-		"MaintPos": "wipe",
-		"Time": 3 } },
-	{ "cmd": "Spit" , "args":
-		{ "ValvePos": "openink",
-    	"MaintPos": "wipe",
-    	"ChanMask": "0a",
-    	"NumSpits": 2000 } },
-	{ "cmd": "Delay", "args":
-		{ "ValvePos": "openink",
-		"MaintPos": "wipe",
-		"Time": 2 } },
-	{ "cmd": "Spit" , "args":
-		{ "ValvePos": "openink",
-    	"MaintPos": "wipe",
-    	"ChanMask": "0a",
-    	"NumSpits": 2000 } },
-	{ "cmd": "Delay", "args":
-		{ "ValvePos": "openink",
-		"MaintPos": "wipe",
-		"Time": 2 } },		
 
+
+	{ "cmd": "Delay", "args":
+		{ "ValvePos": "openink",
+		"MaintPos": "wipe",
+		"Time": 2 } },
 
 	{ "cmd": "RunPump", "args" : 
 		{ "ValvePos": "openink", 
@@ -122,26 +19,9 @@
 		"Rpm": 110,
 		"Revs": 10 } },
 
-	{ "cmd" : "ConsumeInk", "args" : 
-		{ "ChanMask" : "1F", 
-		"Volume":5020 } },
-
-	{ "cmd" : "ConsumeInk", "args" : 
-		{ "ChanMask" : "4", 
-		"Volume":70 } },
-	{ "cmd" : "ConsumeInk", "args" : 
-		{ "ChanMask" : "10", 
-		"Volume":68 } },
-	{ "cmd" : "ConsumeInk", "args" : 
-		{ "ChanMask" : "1", 
-		"Volume":88 } },
-	{ "cmd" : "ConsumeInk", "args" : 
-		{ "ChanMask" : "A", 
-		"Volume":122 } },
-
 		
 	{ "cmd": "RunSumpPumpIss", "args":
 		{"rpms": 100,
-		"numRevs": 150} }
+		"numRevs": 5} }
 	]
 }

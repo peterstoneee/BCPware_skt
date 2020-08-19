@@ -189,7 +189,7 @@ QString BoxPacking::filterName(FilterIDType filterID)const
 	case FP_JUSTIFY_RIGHT:return tr("JUSTIFY_RIGHT");
 	case FP_JUSTIFY_BOTTOM:return tr("JUSTIFY_BOTTOM");
 	case FP_JUSTIFY_TOP:return tr("JUSTIFY_TOP");
-	case FP_Test_Quaternion:return tr("test_quaternion");
+	case FP_Test_Quaternion:return tr("FP_Test_Quaternion");
 	case FP_COUNT_HOLES:return tr("count_hole");
 	case FP_SEPERATE_TEST:return tr("FP_SEPERATE_TEST");
 	}
@@ -2711,12 +2711,87 @@ bool BoxPacking::applyFilter(QAction * filter, MeshDocument &md, RichParameterSe
 		par.addParam(new RichInt("holeNum", hole, "", ""));
 	}break;
 #pragma endregion FP_COUNT_HOLES
+#pragma region FP_Test_Quaternion
 	case FP_Test_Quaternion:
 	{
 		
+		float testValue = par.getFloat("Quarternion_test_param");
+		float start_radian = par.getFloat("QUATENION_START_RADIAN");
+		float end_radian = par.getFloat("QUATENION_END_RADIAN");
+		Matrix44f testmatrix;
+		vcg::Quaternion<float> qfrom;
+		vcg::Quaternionf::Construct(qfrom);
+		qfrom.FromAxis(start_radian, Point3f(1, 0, 0));
+		//qfrom.ToMatrix(testmatrix);
+
+		vcg::Quaternion<float> qfrom2;
+		vcg::Quaternionf::Construct(qfrom2);
+		qfrom2.FromAxis(end_radian, Point3f(1, 0, 0));
+		//qfrom2.ToMatrix(testmatrix);
+
+		
+		vcg::Quaternion<float> qfromInter;
+		vcg::Quaternionf::Construct(qfromInter);
+		//qfromInter.slerp(qfrom, qfrom2, 0.5);
+
+		/*qfromInter = vcg::qqInterpolate(qfrom, qfrom2, 0.5);
+		qfromInter.ToMatrix(testmatrix);*/
+
+		float interpolate = 50.;
+		float pan_step = 2;
+
+		for (int i = 0; i < interpolate; i++)
+		{
+			QString name = "slerp_" + QString::number(i);
+			
+			
+			RenderMode *newMRM = new RenderMode(GLW::DMFlat);
+			if (tri::HasPerWedgeTexCoord(m.cm))
+			{
+				newMRM->setTextureMode(GLW::TMPerWedgeMulti);
+				newMRM->setColorMode(m.rmm.colorMode);
+				newMRM->setDrawMode(GLW::DMFlat);
+			}
+			else if (tri::HasPerVertexColor(m.cm))
+			{
+				newMRM->setTextureMode(GLW::TMNone);
+				newMRM->setColorMode(m.rmm.colorMode);
+				newMRM->setDrawMode(GLW::DMFlat);
+			}
+
+			MeshModel* currentMesh = md.addNewMesh("", name, false, *newMRM);
+			currentMesh->updateDataMask(m.dataMask());//½Æ»smask;
+			currentMesh->clearDataMask(MeshModel::MM_COLOR);
+
+			
+			vcg::tri::Append<CMeshO, CMeshO >::MeshCopy(currentMesh->cm, m.cm, false);
+			tri::UpdateBounding<CMeshO>::Box(currentMesh->cm);
+			currentMesh->cm.Tr = m.cm.Tr;
+			currentMesh->rmm = m.rmm;
+			currentMesh->glw.curr_hints = m.glw.curr_hints;
+
+			vcg::qqInterpolate(qfrom, qfrom2, i / interpolate).ToMatrix(testmatrix);
+			
+
+			tri::UpdatePosition<CMeshO>::Matrix(currentMesh->cm, testmatrix, true);
+			tri::UpdateBounding<CMeshO>::Box(currentMesh->cm);
+
+			Matrix44m pan;
+			pan.SetTranslate(i*pan_step, 0, 0);
+			tri::UpdatePosition<CMeshO>::Matrix(currentMesh->cm, pan, true);
+			tri::UpdateBounding<CMeshO>::Box(currentMesh->cm);
+
+		}
+		
+
+
+
+		
+
 
 	}
 	break;
+#pragma endregion FP_Test_Quaternion
 #pragma region FP_SEPERATE_TEST
 	case FP_SEPERATE_TEST:
 	{

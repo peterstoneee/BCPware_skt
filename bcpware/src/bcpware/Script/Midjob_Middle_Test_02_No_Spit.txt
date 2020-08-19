@@ -1,0 +1,26 @@
+{
+	"midjob-setup":{
+		"State": "On",
+		"Mode": "Pagecount",
+		"Action": "RunScript",
+		"Retrigger": "Repeat",
+		"location": "ram",
+		"MaintSequence": {
+
+		"script": [
+ { "cmd" : "Delay", "args" :
+ { "ValvePos" : "openink",
+ "MaintPos" : "wipe", 
+"Time":2 } 
+  }
+
+		
+			]
+		},
+		
+		"Distance": 0,
+		"TimeInterval": 0,
+		"PageInterval": 1,
+		"PauseSignal": "RTI" 
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"script": [
+ 	{ "cmd" : "Wipe", "args" : 
+		{ "ValvePos" : "openair", 
+		"StartOffset" : 60, 
+		"StopOffset":100, 
+		"Speed":3, 
+		"WiperRpm":60 }	},
+	{ "cmd": "Delay", "args":
+		{ "ValvePos": "closed",
+    	"MaintPos": "wipe",
+    	"Time": 0 } },
+		
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "4", 
+		"Volume":70 } },
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "1", 
+		"Volume":68 } },
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "10", 
+		"Volume":88 } },
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "A", 
+		"Volume":122 } },
+		
+	{ "cmd": "PHRelease" },
+	{ "cmd": "PHPrimed", "args" :
+ 		{ "State" : "unprimed" } }
+ ]
+}

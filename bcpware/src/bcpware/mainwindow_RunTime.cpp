@@ -5794,6 +5794,30 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 			programmerTest->menuAction()->setVisible(true);
 		e->accept();
 	}
+	//else if (e->key() == Qt::Key_A)
+	//{
+	//	float qqtemp = currentGlobalParams.getFloat("Quarternion_test_param");
+	//	//qqtemp += 0.1;
+	//	currentGlobalParams.setValue("Quarternion_test_param", FloatValue(qqtemp));
+	//	testFuncFunc();
+	//	e->accept();
+	//}
+	//else if (e->key() == Qt::Key_Z)
+	//{
+	//	float qqtemp = currentGlobalParams.getFloat("Quarternion_test_param");
+	//	//qqtemp -= 0.1;
+	//	currentGlobalParams.setValue("Quarternion_test_param", FloatValue(qqtemp));
+	//	testFuncFunc();
+	//	e->accept();
+	//}
+	//else if (e->key() == Qt::Key_Q)
+	//{
+	//	float qqtemp = currentGlobalParams.getFloat("Quarternion_test_param");
+	//	//qqtemp -= 0.1;
+	//	currentGlobalParams.setValue("Quarternion_test_param", FloatValue(qqtemp));
+	//	testFuncFunc();
+	//	e->accept();
+	//}
 	else e->ignore();
 }
 void MainWindow::set_cancel_filter()
@@ -7462,11 +7486,12 @@ bool MainWindow::printFunction352()//
 	PrintOption printOption_(PrintOption::optionMode::MONO_PRINT_MODE, this, meshDoc());
 
 	
-	bool twoSidePrint = currentGlobalParams.getBool("STIFF_PRIN_V2");
+	bool twoSidePrint = false;// currentGlobalParams.getBool("STIFF_PRIN_V2");
 	PrinterJobInfo *pjii = new PrinterJobInfo(this, meshDoc(), &currentGlobalParams, &cmyusage, PrinterJobInfo::printInfoMode::PrintOptionMode, twoSidePrint);
 	
 	int startPage = currentGlobalParams.getInt("START_PRINT_PAGE");
-	if (startPage != 0)pjii->setSMLayers(startPage);
+	if (startPage != 0)
+		pjii->setSMLayers(startPage);
 	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 	printOption_.updatePrintSummaryLabel(pjii->getPJI());
 	printOption_.exec();
@@ -7504,7 +7529,7 @@ bool MainWindow::printFunction352()//
 	int fanSpeed = currentGlobalParams.getInt("FAN_SPEED");
 	int pumpValue = currentGlobalParams.getInt("PUMP_VALUE");
 	bool dynamicSwitch = currentGlobalParams.getBool("DYNAMIC_WIPE");
-	bool layerPrintMode = currentGlobalParams.getBool("STIFF_PRIN_V2");
+	bool layerPrintMode = false;// currentGlobalParams.getBool("STIFF_PRIN_V2");
 	pause_button->setVisible(false);
 	s_pushbutton->setVisible(false);
 
@@ -7563,8 +7588,12 @@ bool MainWindow::printFunction352()//
 				//assert(checkListWidget.sendHeader(pjii->getPJI()));
 				pjii->genCSVFile();
 
+				int xlayerHeight = (currentGlobalParams.getFloat("DM_MONO_LAYER_HEIGHT") * 10000 + 0.5);
+				int layer = qCeil(meshDoc()->bbox().DimZ() / currentGlobalParams.getFloat("DM_MONO_LAYER_HEIGHT")) + 1;
+				bool headt = comm->sendPrintjobHeader(layer, xlayerHeight, 'L', fanSpeed);				
 
-				bool headt = checkListWidget.sendHeader(pjii->getPJI(), fanSpeed, pjpGenZX.getprintJobParam().getFloat("slice_height"));
+				//bool headt = checkListWidget.sendHeader(pjii->getPJI(), fanSpeed, xlayerHeight);
+
 				if (headt || DSP_TEST_MODE)
 				{
 					//QMessageBox::information(this, "Info", "header transfer successful");
@@ -7595,9 +7624,10 @@ bool MainWindow::printFunction352()//
 					openDashboard(true);
 					qb->show();
 					if (!Channel_control_mode)
-						executeFilter(PM.actionFilterMap.value("FP_PRINT_FLOW_2_V3"), pjpGenZX.getprintJobParam(), false);
+						executeFilter(PM.actionFilterMap.value("FP_PRINT_DM_SLICER_ALPHA"), pjpGenZX.getprintJobParam(), false);
 					else
-						executeFilter(PM.actionFilterMap.value("FP_PRINT_FOUR_IN_ONE"), pjpGenZX.getprintJobParam(), false);
+						//executeFilter(PM.actionFilterMap.value("FP_PRINT_FOUR_IN_ONE"), pjpGenZX.getprintJobParam(), false);
+						executeFilter(PM.actionFilterMap.value("FP_PRINT_DM_SLICER_ALPHA"), pjpGenZX.getprintJobParam(), false);
 
 					
 				}
@@ -9500,6 +9530,20 @@ void MainWindow::genByDMSlicer()
 
 void MainWindow::testFuncFunc()
 {
+
+
+	/*========================================================================================
+	test quternion
+	========================================================================================*/
+	//RichParameterSet printParamt;
+	////printParamt
+	//executeFilter(PM.actionFilterMap.value("FP_Test_Quaternion"), printParamt, false);
+	/*
+	========================================================================================
+	========================================================================================
+	*/
+
+
 	/*
 	test witness bar
 	*/
@@ -9548,20 +9592,20 @@ void MainWindow::testFuncFunc()
 	test save snap shot
 	========================================================================================*/
 	
-	PrintjobParam pjpGenZX;
-	pjpGenZX.setCommonPrintValue(meshDoc());
-	pjpGenZX.setGenZxParam(true);
-	pjpGenZX.genDebugPic(false);//Test
-	pjpGenZX.setMono(false);
-	pjpGenZX.setPrintStart(true);
-	pjpGenZX.setStartPrintEstimate(true);
-	pjpGenZX.setColorProfile(currentGlobalParams.getString("COLOR_PROFILE"));
-	pjpGenZX.setStiffPrint(currentGlobalParams.getBool("STIFF_PRINT"));
-	pjpGenZX.setDilateBinder(currentGlobalParams.getBool("DILATE_BINDER"));
-	pjpGenZX.setDialteBinderValue(currentGlobalParams.getInt("DILATE_BINDER_VALUE"));
-	pjpGenZX.setDynamicWipe(currentGlobalParams.getBool("DYNAMIC_WIPE"));
-	pjpGenZX.setColorBinding(currentGlobalParams.getBool("COLOR_BINDING"));
-	executeFilter(PM.actionFilterMap.value("FP_SAVE_DEFAULT_SNAP_SHOT"), pjpGenZX.getprintJobParam(), false);
+	//PrintjobParam pjpGenZX;
+	//pjpGenZX.setCommonPrintValue(meshDoc());
+	//pjpGenZX.setGenZxParam(true);
+	//pjpGenZX.genDebugPic(false);//Test
+	//pjpGenZX.setMono(false);
+	//pjpGenZX.setPrintStart(true);
+	//pjpGenZX.setStartPrintEstimate(true);
+	//pjpGenZX.setColorProfile(currentGlobalParams.getString("COLOR_PROFILE"));
+	//pjpGenZX.setStiffPrint(currentGlobalParams.getBool("STIFF_PRINT"));
+	//pjpGenZX.setDilateBinder(currentGlobalParams.getBool("DILATE_BINDER"));
+	//pjpGenZX.setDialteBinderValue(currentGlobalParams.getInt("DILATE_BINDER_VALUE"));
+	//pjpGenZX.setDynamicWipe(currentGlobalParams.getBool("DYNAMIC_WIPE"));
+	//pjpGenZX.setColorBinding(currentGlobalParams.getBool("COLOR_BINDING"));
+	//executeFilter(PM.actionFilterMap.value("FP_SAVE_DEFAULT_SNAP_SHOT"), pjpGenZX.getprintJobParam(), false);
 	/*
 	========================================================================================
 	========================================================================================

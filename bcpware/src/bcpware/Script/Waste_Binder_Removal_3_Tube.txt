@@ -7,6 +7,10 @@
 		"MaintPos": "cap",
 		"Rpm": 50,
 		"Revs": 100 } },
+	{ "cmd" : "Delay", "args" :
+		{ "ValvePos" : "openink",
+		"MaintPos" : "cap", 
+		"Time":30 } },
 
 	{ "cmd": "RunSumpPumpIss", "args": 
 		{ "rpms": 100,
@@ -16,14 +20,59 @@
 		"MaintPos": "cap",
 		"Rpm": 50,
 		"Revs": 100 } },
+	{ "cmd" : "Delay", "args" :
+		{ "ValvePos" : "openink",
+		"MaintPos" : "cap", 
+		"Time":30 } },		
 		
 	{ "cmd": "RunSumpPumpIss", "args": 
 		{ "rpms": 100,
-		"numRevs": 48 } },
+		"numRevs": 240 } },
     { "cmd": "RunPump", "args": 
 		{ "ValvePos": "openink",
 		"MaintPos": "cap",
 		"Rpm": 50,
-		"Revs": 20 } }
+		"Revs": 100 } },
+	{ "cmd" : "Delay", "args" :
+		{ "ValvePos" : "openink",
+		"MaintPos" : "cap", 
+		"Time":30 } },		
+	
+	{ "cmd": "RunSumpPumpIss", "args": 
+		{ "rpms": 100,
+		"numRevs": 200 } },
+	{ "cmd" : "Delay", "args" :
+		{ "ValvePos" : "openink",
+		"MaintPos" : "cap", 
+		"Time":125 } },
+		
+	{ "cmd": "RunSumpPumpIss", "args": 
+		{ "rpms": 100,
+		"numRevs": 100 } },
+	{ "cmd" : "Delay", "args" :
+		{ "ValvePos" : "openink",
+		"MaintPos" : "cap", 
+		"Time":65 } },
+
+	{ "cmd": "RunSumpPumpIss", "args": 
+		{ "rpms": 100,
+		"numRevs": 120 } },
+    { "cmd": "RunPump", "args": 
+		{ "ValvePos": "openink",
+		"MaintPos": "cap",
+		"Rpm": 50,
+		"Revs": 50 } },
+	{ "cmd" : "Delay", "args" :
+		{ "ValvePos" : "openink",
+		"MaintPos" : "cap", 
+		"Time":20 } },	
+
+	{ "cmd": "RunSumpPumpIss", "args": 
+		{ "rpms": 100,
+		"numRevs": 200 } },
+	{ "cmd" : "Delay", "args" :
+		{ "ValvePos" : "openink",
+		"MaintPos" : "cap", 
+		"Time":125 } }		
  ]
 }

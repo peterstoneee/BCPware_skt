@@ -28,7 +28,7 @@
 	{ "cmd": "RunPump", "args" : 
 		{ "ValvePos" : "closed", 
 		"MaintPos" : "cap", 
-		"Rpm": 350,
+		"Rpm": 330,
 		"Revs": -20 } },
 	{ "cmd": "Delay", "args":
 		{"ValvePos": "closed",
@@ -138,10 +138,10 @@
 		{ "ChanMask" : "4", 
 		"Volume":140 } },
 	{ "cmd" : "ConsumeInk", "args" : 
-		{ "ChanMask" : "10", 
+		{ "ChanMask" : "1", 
 		"Volume":136 } },
 	{ "cmd" : "ConsumeInk", "args" : 
-		{ "ChanMask" : "1", 
+		{ "ChanMask" : "10", 
 		"Volume":176 } },
 	{ "cmd" : "ConsumeInk", "args" : 
 		{ "ChanMask" : "A", 

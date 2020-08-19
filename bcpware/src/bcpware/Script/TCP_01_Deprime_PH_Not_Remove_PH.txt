@@ -1,0 +1,65 @@
+{
+	"script": [
+	{"cmd" : "RunPump", "args" : 
+		{	"ValvePos" : "openair", 
+			"MaintPos" : "cap", 
+			"Rpm" : 150, 
+			"Revs" : 200
+		}
+	},
+ 	{ "cmd" : "Wipe", "args" : 
+		{	"ValvePos" : "openair", 
+			"StartOffset" : 60, 
+			"StopOffset":100, 
+			"Speed":3, 
+			"WiperRpm":60
+		}
+	},
+		{ "cmd": "Delay", "args":
+		{ "ValvePos": "openair",
+    		"MaintPos": "cap",
+    		"Time": 0 } },
+ 	{ "cmd" : "Wipe", "args" : 
+		{	"ValvePos" : "openair", 
+			"StartOffset" : 60, 
+			"StopOffset":100, 
+			"Speed":3, 
+			"WiperRpm":60
+		}
+	},
+			{ "cmd": "Delay", "args":
+		{ "ValvePos": "openair",
+    		"MaintPos": "cap",
+    		"Time": 0 } },
+ 	{ "cmd" : "Wipe", "args" : 
+		{	"ValvePos" : "openair", 
+			"StartOffset" : 60, 
+			"StopOffset":100, 
+			"Speed":3, 
+			"WiperRpm":60
+		}
+	},
+	
+	{ "cmd": "Delay", "args":
+		{ "ValvePos": "openair",
+    		"MaintPos": "cap",
+    		"Time": 0 } },
+			
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "4", 
+		"Volume":210 } },
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "1", 
+		"Volume":204 } },
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "10", 
+		"Volume":264 } },
+	{ "cmd" : "ConsumeInk", "args" : 
+		{ "ChanMask" : "A", 
+		"Volume":366 } },
+		
+		{ "cmd": "RunSumpPumpIss", "args":
+		{"rpms": 100,
+		"numRevs": 50} }
+ ]
+}

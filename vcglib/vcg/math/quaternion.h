@@ -162,6 +162,9 @@ public:
   {
     return Quaternion(S(b[0]),S(b[1]),S(b[2]),S(b[3]));
   }
+  
+  //Quaternion<S> slerp(Quaternion<S> v0, Quaternion<S> v1, S t);
+  
 
 private:
 };
@@ -169,7 +172,7 @@ private:
 /*template<classS, class M> void QuaternionToMatrix(Quaternion<S> &s, M &m);
 template<classS, class M> void MatrixtoQuaternion(M &m, Quaternion<S> &s);*/
 
-template <class S> Quaternion<S> Interpolate(  Quaternion<S>   a,   Quaternion<S>   b, double t);
+template <class S> Quaternion<S> qqInterpolate(Quaternion<S>   a, Quaternion<S>   b, double t);
 template <class S> Quaternion<S> &Invert(Quaternion<S> &q);
 template <class S> Quaternion<S> Inverse(const Quaternion<S> &q);
 
@@ -388,6 +391,39 @@ void Quaternion<S>::FromEulerAngles(S alpha, S beta, S gamma)
 	V(3) = cosalpha * cosbeta * singamma - sinalpha * sinbeta * cosgamma;
 }
 
+//template <class S> 
+//Quaternion<S> Quaternion<S>::slerp(Quaternion<S>   a, Quaternion<S>   b, double t)
+//{
+//	v0.Normalize();
+//	v1.Normalize();
+//
+//	double dot = a.V(0) * b.V(0) + a.V(1) * b.V(1) + a.V(2) * b.V(2) + a.V(3) * b.V(3);
+//
+//	if (dot < 0.0f)
+//	{
+//		v1 = -v1;
+//		dot = -dot;
+//	}
+//	const double DOT_THRESHOLD = 0.9995;
+//	if (dot > DOT_THRESHOLD)
+//	{
+//		Point4<Q> tempp;// = (v0)+t*(v1 - v0);
+//		Quaternion<Q> result(S(temp[0]), S(temp[1]), S(temp[2]), S(temp[3]));
+//		result.Normalize();
+//		return result;
+//	}
+//	float theta_0 = acos(dot);
+//	float theta = theta_0*t;
+//	float sin_theta = sin(theta);
+//	float sin_theta_0 = sin(theta_0);
+//
+//	float s0 = cos(theta) - dot * sin_theta / sintheta_0;
+//	float s1 = sin_theta / sin_theta_0;
+//	return (s0*v0) + (s1*v1);
+//
+//}
+
+
 template <class S> Quaternion<S> &Invert(Quaternion<S> &m) {
   m.Invert();
   return m;
@@ -399,7 +435,7 @@ template <class S> Quaternion<S> Inverse(const Quaternion<S> &m) {
   return a;
 }
 
-template <class S> Quaternion<S> Interpolate(   Quaternion<S>   a ,    Quaternion<S>   b , double t) {
+template <class S> Quaternion<S> qqInterpolate(   Quaternion<S>   a ,    Quaternion<S>   b , double t) {
  	 
 		double v = a.V(0) * b.V(0) + a.V(1) * b.V(1) + a.V(2) * b.V(2) + a.V(3) * b.V(3);
 		double phi = math::Acos(v);
@@ -424,7 +460,7 @@ template <class S> Quaternion<S> Interpolate(   Quaternion<S>   a ,    Quaternio
 		c.Normalize();
 		return c;
 	}
-		
+
 	
 
 typedef Quaternion<float>  Quaternionf;

@@ -1,26 +1,7 @@
 {
 	"script": [
 
-	{ "cmd": "Spit" , "args":
-		{ "ValvePos": "openink",
-    	"MaintPos": "wipe",
-    	"ChanMask": "04",
-    	"NumSpits": 200 } }, 
-	{ "cmd": "Spit", "args":
-		{ "ValvePos" : "openink",
-    	"MaintPos": "wipe",
-   		"ChanMask": "10",
-    	"NumSpits": 400 } },	
-	{ "cmd": "Spit", "args":
-		{ "ValvePos" : "openink",
-    	"MaintPos": "wipe",
-   		"ChanMask": "01",
-    	"NumSpits": 400 } },
-	{ "cmd": "Spit", "args" :
-		{ "ValvePos": "openink",
-		"MaintPos": "wipe",    
-		"ChanMask": "0a",
-		"NumSpits": 800 } },			
+			
 	{ "cmd": "RunPump", "args":
 		{ "ValvePos": "openink",      
 		"MaintPos": "cap", 
@@ -35,6 +16,6 @@
     	"Time": 0 } },
 	{ "cmd": "RunSumpPumpIss", "args":
 		{"rpms": 100,
-		"numRevs": 50} }
+		"numRevs": 5} }
  ]
 }

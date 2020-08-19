@@ -148,7 +148,7 @@ GenSliceJob::GenSliceJob()
 		<< FP_GET_DEPTH_IMAGE << FP_GET_DEPTH_LANDING_TEST2/* << FP_GET_DEPTH_X_LANDING_TEST2 << FP_GET_DEPTH_Y_LANDING_TEST2*/ << FP_PACKING_VERSION_3 << FP_TEST_SEARCH_SPACE_ALL_IMAGE
 		<< FP_TEST_SEARCH_SPACE_ALL_IMAGE2 << FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE << FP_TEST_GENERATE_POINTS_FROM_GRAY_IMAGE_FLOAT << FP_MESH_INTERSECT_TEST2
 		<< FP_MESH_DELAUNAY_TRIANGULATION << FP_COUNT_BINDER_AREA << FP_PRINT_FOUR_IN_ONE << FP_PRINT_DM_SLICER << FP_PRINT_DM_SLICER_ALPHA
-		<< FP_PRINT_FLOW_2_V3 << FP_TEST_WITNESS_BAR << FP_SAVE_DEFAULT_SNAP_SHOT << FP_DM_ESTIMATE_COLOR;
+		<< FP_PRINT_FLOW_2_V3 << FP_TEST_WITNESS_BAR << FP_SAVE_DEFAULT_SNAP_SHOT << FP_DM_ESTIMATE_COLOR << FP_TEST_BEZIER_CURVE;
 
 	foreach(FilterIDType tt, types())
 	{
@@ -218,6 +218,7 @@ QString GenSliceJob::filterName(FilterIDType filterId) const
 	case FP_SAVE_DEFAULT_SNAP_SHOT:return QString("FP_SAVE_DEFAULT_SNAP_SHOT");
 	case FP_TEST_WITNESS_BAR:return QString("FP_TEST_WITNESS_BAR");
 	case FP_DM_ESTIMATE_COLOR:return QString("FP_DM_ESTIMATE_COLOR");
+	case FP_TEST_BEZIER_CURVE:return QString("FP_TEST_BEZIER_CURVE");
 	default: assert(0);
 	}
 	return QString();
@@ -260,8 +261,8 @@ QString GenSliceJob::filterInfo(FilterIDType filterId) const
 	case FP_PRINT_FLOW_2_V3:return QString("FP_PRINT_FLOW_2_V3");;
 	case FP_SAVE_DEFAULT_SNAP_SHOT:return QString("FP_SAVE_DEFAULT_SNAP_SHOT");;
 	case FP_TEST_WITNESS_BAR:return QString("FP_TEST_WITNESS_BAR");
-	case FP_DM_ESTIMATE_COLOR:return QString("FP_DM_ESTIMATE_COLOR");
-
+	case FP_DM_ESTIMATE_COLOR:return QString("FP_DM_ESTIMATE_COLOR"); 
+	case FP_TEST_BEZIER_CURVE:return QString("FP_TEST_BEZIER_CURVE");
 	default: assert(0);
 	}
 	return QString("Unknown Filter");
@@ -306,7 +307,8 @@ GenSliceJob::FilterClass GenSliceJob::getClass(QAction *a)
 	case FP_PRINT_FLOW_2_V3:return MeshFilterInterface::Generic;
 	case FP_SAVE_DEFAULT_SNAP_SHOT:return MeshFilterInterface::Generic;
 	case FP_TEST_WITNESS_BAR:return MeshFilterInterface::MeshCreation;;
-	case FP_DM_ESTIMATE_COLOR:return MeshFilterInterface::Generic;;
+	case FP_DM_ESTIMATE_COLOR:return MeshFilterInterface::Generic;
+	case FP_TEST_BEZIER_CURVE:return MeshFilterInterface::Generic;;
 
 
 
@@ -7234,7 +7236,8 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 		//***20150505***slice_func_³]¸m°ª«×
 		float box_bottom = md.bbox().min.Z();
-		float unit = par.getFloat("slice_height");
+		//float unit = par.getFloat("slice_height");
+		float unit = par.getFloat("DM_MONO_LAYER_HEIGHT");
 
 
 
@@ -18302,7 +18305,21 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 	}break;
 
 #pragma endregion FP_DM_ESTIMATE_COLOR
+#pragma region FP_TEST_BEZIER_CURVE
 
+	case FP_TEST_BEZIER_CURVE:
+	{
+		Point2m p0(0, 0);
+		Point2m p1(3, 8);
+		Point2m p2(10, 5);
+		for (int x = 0; x < 10; x++)
+		{
+
+		}
+
+	}break;
+
+#pragma endregion FP_TEST_BEZIER_CURVE
 
 	}
 	return true;
