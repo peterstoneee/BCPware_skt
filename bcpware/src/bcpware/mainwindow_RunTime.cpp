@@ -5799,7 +5799,14 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 	//	float qqtemp = currentGlobalParams.getFloat("Quarternion_test_param");
 	//	//qqtemp += 0.1;
 	//	currentGlobalParams.setValue("Quarternion_test_param", FloatValue(qqtemp));
-	//	testFuncFunc();
+	//	RichParameterSet printParamt;
+	//	//printParamt
+	//	executeFilter(PM.actionFilterMap.value("FP_Test_Quaternion"), printParamt, false);
+	//	GLA()->setHastoRefreshVBO();
+	//	//GLA()->setHastoUpdatePartVBO();
+	//	meshDoc()->setBusy(false);
+
+
 	//	e->accept();
 	//}
 	//else if (e->key() == Qt::Key_Z)
@@ -7529,7 +7536,7 @@ bool MainWindow::printFunction352()//
 	int fanSpeed = currentGlobalParams.getInt("FAN_SPEED");
 	int pumpValue = currentGlobalParams.getInt("PUMP_VALUE");
 	bool dynamicSwitch = currentGlobalParams.getBool("DYNAMIC_WIPE");
-	bool layerPrintMode = false;// currentGlobalParams.getBool("STIFF_PRIN_V2");
+	bool layerPrintMode =  currentGlobalParams.getBool("DM_TWICE_IN_ONE_LAYER");
 	pause_button->setVisible(false);
 	s_pushbutton->setVisible(false);
 
@@ -7549,8 +7556,8 @@ bool MainWindow::printFunction352()//
 	break;
 	case 1:
 	{
-		if (printOption_.result() || DSP_TEST_MODE)
-		//if (true)
+		//if (printOption_.result() || DSP_TEST_MODE)
+		if (true)
 		{//backup
 			/*
 			count mesh top pages
@@ -7701,7 +7708,7 @@ bool MainWindow::printFunction()//
 		ParamOp::updateSliceSettingToHistory(false, 10, currentGlobalParams.getInt("PP_BOTTOM_LIGHTER_PERCENTAGE"));
 		ParamOp::updateSliceSettingToHistory(false, 11, currentGlobalParams.getFloat("HORIZONE_LINE_WIDTH"));
 		ParamOp::updateSliceSettingToHistory(false, 12, currentGlobalParams.getFloat("VERTICAL_LINE_WIDTH"));
-
+		
 		ParamOp::updateSliceSettingToHistory(false, 13, currentGlobalParams.getBool("PROFILE_ON"));
 		ParamOp::updateSliceSettingToHistory(false, 14, currentGlobalParams.getString("COLOR_PROFILE"));
 		//spitton

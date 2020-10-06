@@ -29,6 +29,7 @@
 PaletteAbout::PaletteAbout(QWidget *parent) :QDialog(parent), ui(new Ui::PaletteAbout)
 {
 	ui->setupUi(this);
+	this->setFixedSize(380, 311);
 	/*QDialog *about_dialog = new QDialog(0, Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
 	Ui::PaletteAbout temp;
 	temp.setupUi(about_dialog);

@@ -2762,6 +2762,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </Image>
+    <Image Include="images\icons\btn_printer_hover.png" />
+    <Image Include="images\icons\btn_printer_normal.png" />
+    <Image Include="images\icons\btn_printer_selected.png" />
     <Image Include="images\icons\btn_printing.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -3028,6 +3031,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </Image>
+    <Image Include="images\icons\btn_slice_settings_hover.png" />
+    <Image Include="images\icons\btn_slice_settings_normal.png" />
+    <Image Include="images\icons\btn_slice_settings_selected.png" />
     <Image Include="images\icons\btn_to_center.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -3376,6 +3382,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </Image>
+    <Image Include="images\icons\history_btn_remove_all.png" />
+    <Image Include="images\icons\history_btn_remove_all_disabled.png" />
+    <Image Include="images\icons\history_btn_remove_all_hover.png" />
+    <Image Include="images\icons\history_nan_pic.png" />
     <Image Include="images\icons\ic_checkbox_cross.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
