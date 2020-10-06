@@ -714,8 +714,9 @@ static QString WidgetStyleSheet::groupHistoryDetailBoxStyleSheet(const QString &
 		"}"
 
 		"QGroupBox::title{"
+		"font: 14px \"Arial\";"
 		"color:#2c3d50;"
-		"subcontrol-origin: margin;"
+		"subcontrol-origin: padding;"
 		"subcontrol-position: top left; "/* position at the top center */
 		"padding: 0 3px;"
 		"color: rgb(134, 134, 134); "

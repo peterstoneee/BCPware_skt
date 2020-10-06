@@ -1562,6 +1562,8 @@ void MainWindow::createActions()//實體化action，與函示連結上
 	printjobestimateAct->setToolTip("Estimate Usage");
 	connect(printjobestimateAct, SIGNAL(triggered()), this, SLOT(printJobEstimate()));
 
+	
+
 
 	closeProjectAct = new QAction(tr("Close Project"), this);
 	closeProjectAct->setShortcutContext(Qt::WidgetShortcut);
@@ -1954,7 +1956,8 @@ void MainWindow::createActions()//實體化action，與函示連結上
 	}
 	);
 
-	printHistoryAct = new QAction(tr("Print History(Testing)"), this);
+	printHistoryAct = new QAction(QIcon(tr(":/images/icons/btn_history_normal.png")),tr("Print History"), this);
+	printHistoryAct->setToolTip("Printing History");
 	connect(printHistoryAct, &QAction::triggered, [this]() {
 		/*qDebug() << "Print History";
 		QProcess process(this);
@@ -1968,6 +1971,9 @@ void MainWindow::createActions()//實體化action，與函示連結上
 		pHsitory->setAttribute(Qt::WA_DeleteOnClose);
 		pHsitory->exec();
 	
+		
+
+
 	}
 	);
 
@@ -2278,6 +2284,7 @@ void MainWindow::createToolBars()//工具欄圖示
 	settingToolBar_pi->addAction(showObjectListAct);
 	settingToolBar_pi->addSeparator();
 	settingToolBar_pi->addAction(printjobestimateAct);
+	settingToolBar_pi->addAction(printHistoryAct);
 	settingToolBar_pi->addAction(groove_settingAct);
 	//settingToolBar_pi->addAction(selectionModeSwitchAct);
 }

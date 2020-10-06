@@ -226,5 +226,8 @@ private:
 
 	};
 	void count_Total_Printhead();
+	QAction *selectAllAct;
+	QAction *cancelAct;
+
 };
 

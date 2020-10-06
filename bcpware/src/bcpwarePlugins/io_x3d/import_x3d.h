@@ -756,6 +756,7 @@ namespace io {
 					{
 						QDomElement imageTexture = texture.at(i).toElement();
 						QString url = imageTexture.attribute("url");
+						url.replace("\"", "");
 						if (url != "")
 						{
 							//========

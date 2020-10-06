@@ -501,7 +501,7 @@ border: 1px solid #707070;
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>578</width>
+        <width>408</width>
         <height>1332</height>
        </rect>
       </property>
@@ -2681,7 +2681,7 @@ border: 1px solid #707070;
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>528</width>
+        <width>435</width>
         <height>1025</height>
        </rect>
       </property>
@@ -4444,8 +4444,8 @@ border: 1px solid #707070;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>605</width>
-          <height>621</height>
+          <width>98</width>
+          <height>28</height>
          </rect>
         </property>
        </widget>
@@ -4528,8 +4528,8 @@ border: 1px solid #707070;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>607</width>
-          <height>623</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
        </widget>
@@ -4628,8 +4628,8 @@ border: 1px solid #707070;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>605</width>
-          <height>621</height>
+          <width>98</width>
+          <height>28</height>
          </rect>
         </property>
        </widget>
@@ -4991,9 +4991,15 @@ border: 1px solid #707070;
     <rect>
      <x>10</x>
      <y>730</y>
-     <width>99</width>
-     <height>36</height>
+     <width>88</width>
+     <height>28</height>
     </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>88</width>
+     <height>28</height>
+    </size>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
@@ -5034,9 +5040,21 @@ QPushButton:hover:!pressed
     <rect>
      <x>783</x>
      <y>730</y>
-     <width>99</width>
-     <height>36</height>
+     <width>88</width>
+     <height>28</height>
     </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>28</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>88</width>
+     <height>28</height>
+    </size>
    </property>
    <property name="font">
     <font>

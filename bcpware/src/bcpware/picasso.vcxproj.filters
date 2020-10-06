@@ -1718,6 +1718,36 @@
     <Image Include="images\icons\btn_reset_normal_2x.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="images\icons\history_btn_remove_all.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\icons\history_nan_pic.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\icons\btn_slice_settings_selected.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\icons\btn_slice_settings_hover.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\icons\btn_slice_settings_normal.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\icons\btn_printer_hover.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\icons\btn_printer_selected.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\icons\btn_printer_normal.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\icons\history_btn_remove_all_disabled.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\icons\history_btn_remove_all_hover.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="bcpware.rc" />

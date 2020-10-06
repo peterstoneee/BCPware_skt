@@ -247,5 +247,26 @@
     <file>images/icons/btn_reset_hover.png</file>
     <file>images/icons/btn_reset_hover_2x.png</file>
 
+    <file>images/icons/btn_history_normal.png</file>
+    <file>images/icons/btn_history_normal_2x.png</file>
+    <file>images/icons/btn_detail_normal.png</file>
+    <file>images/icons/btn_detail_normal_2x.png</file>
+
+    <file>images/icons/history_btn_remove_all.png</file>
+    <file>images/icons/history_btn_remove_all_disabled.png</file>
+    <file>images/icons/history_btn_remove_all_hover.png</file>
+    
+    <file>images/icons/history_nan_pic.png</file>
+
+    <file>images/icons/btn_slice_settings_normal.png</file>
+    <file>images/icons/btn_slice_settings_hover.png</file>
+    <file>images/icons/btn_slice_settings_selected.png</file>
+    
+
+    <file>images/icons/btn_printer_hover.png</file>
+    <file>images/icons/btn_printer_selected.png</file>
+    <file>images/icons/btn_printer_normal.png</file>
+    
+
   </qresource>
 </RCC>

@@ -2714,19 +2714,27 @@ bool BoxPacking::applyFilter(QAction * filter, MeshDocument &md, RichParameterSe
 #pragma region FP_Test_Quaternion
 	case FP_Test_Quaternion:
 	{
+		/*Matrix44f moveToCenter;
+		moveToCenter.SetTranslate(-m.cm.bbox.Center());
+
+		tri::UpdatePosition<CMeshO>::Matrix(m.cm, moveToCenter, true);
+		tri::UpdateBounding<CMeshO>::Box(m.cm);*/
+
 		
 		float testValue = par.getFloat("Quarternion_test_param");
 		float start_radian = par.getFloat("QUATENION_START_RADIAN");
 		float end_radian = par.getFloat("QUATENION_END_RADIAN");
+		Point3f start_Axis(par.getFloat("QUATENION_START_X"), par.getFloat("QUATENION_START_Y"), par.getFloat("QUATENION_START_Z"));
+		Point3f end_Axis(par.getFloat("QUATENION_END_X"), par.getFloat("QUATENION_END_Y"), par.getFloat("QUATENION_END_Z"));
 		Matrix44f testmatrix;
 		vcg::Quaternion<float> qfrom;
 		vcg::Quaternionf::Construct(qfrom);
-		qfrom.FromAxis(start_radian, Point3f(1, 0, 0));
+		qfrom.FromAxis(start_radian, start_Axis);
 		//qfrom.ToMatrix(testmatrix);
 
 		vcg::Quaternion<float> qfrom2;
 		vcg::Quaternionf::Construct(qfrom2);
-		qfrom2.FromAxis(end_radian, Point3f(1, 0, 0));
+		qfrom2.FromAxis(end_radian, end_Axis);
 		//qfrom2.ToMatrix(testmatrix);
 
 		
@@ -2738,7 +2746,8 @@ bool BoxPacking::applyFilter(QAction * filter, MeshDocument &md, RichParameterSe
 		qfromInter.ToMatrix(testmatrix);*/
 
 		float interpolate = 50.;
-		float pan_step = 2;
+		//float pan_step = 2;
+		Point3f pan_step(2, 0, 0);
 
 		for (int i = 0; i < interpolate; i++)
 		{
@@ -2777,7 +2786,7 @@ bool BoxPacking::applyFilter(QAction * filter, MeshDocument &md, RichParameterSe
 			tri::UpdateBounding<CMeshO>::Box(currentMesh->cm);
 
 			Matrix44m pan;
-			pan.SetTranslate(i*pan_step, 0, 0);
+			pan.SetTranslate(pan_step*i);
 			tri::UpdatePosition<CMeshO>::Matrix(currentMesh->cm, pan, true);
 			tri::UpdateBounding<CMeshO>::Box(currentMesh->cm);
 

@@ -1369,7 +1369,7 @@ private:
 	QAction *threeDPrintAct;
 	QAction *threeDPrintAct2;
 	QAction *printfunctionMono;
-	QAction *printjobestimateAct;
+	QAction *printjobestimateAct;	
 	QAction *changeRendertypeAct[3];
 	//bool meshCheckSwitch;//檢查mesh的開關
 	int vtNumberLimit;
