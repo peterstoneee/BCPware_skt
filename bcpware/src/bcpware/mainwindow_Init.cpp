@@ -2672,7 +2672,7 @@ void MainWindow::createMenus_v3()
 
 	printMenu = menuBar()->addMenu(tr("&Print"));
 	printMenu->addAction(threeDPrintAct);
-	printMenu->addAction(printfunctionMono);
+	printMenu->addAction(printfunctionMono);//For mono printing
 	//printMenu->addAction(preparePrintintAct);
 	printMenu->addSeparator();
 	printMenu->addAction(showPrintDashBoardAct);
@@ -2680,6 +2680,18 @@ void MainWindow::createMenus_v3()
 	printMenu->addAction(importSample3DModel);
 	printMenu->addAction(testPrintAct);
 	printMenu->addAction(testPrintAct2);
+
+	int x = currentGlobalParams.getEnum("TARGET_PRINTER");
+	if (x == 0)
+	{
+		threeDPrintAct->setVisible(true);
+		printfunctionMono->setVisible(false);
+	}
+	else if (x == 1)
+	{
+		threeDPrintAct->setVisible(false);
+		printfunctionMono->setVisible(true);
+	}
 
 	/*
 	diable bor file
@@ -3435,6 +3447,7 @@ void MainWindow::loadPicassoSettings()
 	}
 	//testqqq
 	currentGlobalParams.addParam(new RichFloat("Quarternion_test_param", 0.1, "quaternion", "")); 
+	
 	/********************************************************************************/
 
 	//// 1) load saved values into the <currentGlobalParams>

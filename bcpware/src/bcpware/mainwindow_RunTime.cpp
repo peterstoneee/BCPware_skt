@@ -586,6 +586,7 @@ void MainWindow::updateMenus()
 
 
 	threeDPrintAct->setEnabled(notEmptyActiveDoc && !meshDoc()->isBusy());
+	printfunctionMono->setEnabled(notEmptyActiveDoc && !meshDoc()->isBusy());
 	viewMenu->setEnabled(activeDoc);
 	editMenu->setEnabled(notEmptyActiveDoc);
 	testFuncReadZX->setEnabled(activeDoc);
@@ -6591,8 +6592,21 @@ void MainWindow::startsetting()
 	//Setting3DP *test = new Setting3DP(this, &currentGlobalParams);
 	setting3DP2 = new Setting3DP(this, &currentGlobalParams);
 
-	setting3DP2->exec();
-
+	int settingResult = setting3DP2->exec();
+	if (settingResult)
+	{
+		int x = currentGlobalParams.getEnum("TARGET_PRINTER");
+		if (x == 0)
+		{
+			threeDPrintAct->setVisible(true);
+			printfunctionMono->setVisible(false);
+		}
+		else if (x == 1)
+		{
+			threeDPrintAct->setVisible(false);
+			printfunctionMono->setVisible(true);
+		}
+	}
 
 
 	/*if (undoLimit != currentGlobalParams.getInt("UNDO_LIMIT"))
