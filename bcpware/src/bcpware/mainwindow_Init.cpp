@@ -2096,8 +2096,11 @@ void MainWindow::createActions()//實體化action，與函示連結上
 
 		}
 	}
-	testDMSlicerAct = new QAction(tr("TestDMSlicer"), this);
+	testDMSlicerAct = new QAction(tr("Export to Printable File 352"), this);
 	connect(testDMSlicerAct, SIGNAL(triggered()), this, SLOT(genByDMSlicer()));
+
+	testDMSlicerAct_BJM = new QAction(tr("Export to Printable File BJM"), this);
+	connect(testDMSlicerAct_BJM, SIGNAL(triggered()), this, SLOT(genByDMSlicer_BJM()));
 
 
 	testFuncAct = new QAction(tr("TestFuncFunc"), this);
@@ -2464,7 +2467,8 @@ void MainWindow::createMenus_v3()
 	fileMenu->addSeparator();
 	fileMenu->addAction(testFuncReadZX);
 	fileMenu->addAction(genZXAct);
-	//fileMenu->addAction(testDMSlicerAct);
+	fileMenu->addAction(testDMSlicerAct);
+	
 	fileMenu->addSeparator();
 	fileMenu->addAction(exitAct);
 
@@ -2685,12 +2689,18 @@ void MainWindow::createMenus_v3()
 	if (x == 0)
 	{
 		threeDPrintAct->setVisible(true);
-		printfunctionMono->setVisible(false);
+		genZXAct->setVisible(true);
+
+		printfunctionMono->setVisible(false);		
+		testDMSlicerAct->setVisible(false);
 	}
 	else if (x == 1)
 	{
 		threeDPrintAct->setVisible(false);
-		printfunctionMono->setVisible(true);
+		genZXAct->setVisible(false);
+
+		printfunctionMono->setVisible(true);		
+		testDMSlicerAct->setVisible(true);
 	}
 
 	/*
@@ -2742,7 +2752,7 @@ void MainWindow::createMenus_v3()
 	programmerTest->addAction(testFuncAct);
 	programmerTest->addAction(autoPackingAct2);
 	programmerTest->addAction(testPrintBORAct);
-	programmerTest->addAction(testDMSlicerAct);
+	programmerTest->addAction(testDMSlicerAct_BJM);
 	programmerTest->addAction(saveSnapshotAct);
 	/*programmerTest->addAction(testFuncAct2);
 	programmerTest->addAction(testLoad3mfAct3);
@@ -3447,7 +3457,8 @@ void MainWindow::loadPicassoSettings()
 	}
 	//testqqq
 	currentGlobalParams.addParam(new RichFloat("Quarternion_test_param", 0.1, "quaternion", "")); 
-	
+	string desProfilePath = currentGlobalParams.getString("COLOR_PROFILE").toStdString();
+	qWarning() << " "<<currentGlobalParams.getString("COLOR_PROFILE");
 	/********************************************************************************/
 
 	//// 1) load saved values into the <currentGlobalParams>

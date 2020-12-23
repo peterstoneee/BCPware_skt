@@ -400,6 +400,7 @@ public:
 		comboBox = new QComboBox();
 		comboBox->addItems(enumList.toStringList());
 		comboBox->setCurrentIndex(_value.toInt());
+		comboBox->setStyleSheet(WidgetStyleSheet::settingComboBoxStyleSheet());
 		hlayout->addWidget(label);
 		hlayout->addStretch(labelStretch);
 		hlayout->addWidget(comboBox, 0, WidgetAlignment);
@@ -663,7 +664,7 @@ public slots:
 	void getDMICMColorProfile();
 	void resetSetting();
 	/*---------NVM another accept--------------*/
-	void updateUIToJsonFile(JsonfileCategory);
+	bool updateUIToJsonFile(JsonfileCategory);
 	void updateJsonFileToRichParameter(JsonfileCategory);
 	
 	

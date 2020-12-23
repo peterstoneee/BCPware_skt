@@ -145,7 +145,7 @@ void MainWindow::updateRecentFileActions()
 	{
 		recentFileActs[j]->setVisible(false);
 	}
-	
+
 }
 
 void MainWindow::updateRecentProjActions()
@@ -450,106 +450,106 @@ void MainWindow::updateMenus()
 	bool notEmptyActiveDoc = activeDoc && !meshDoc()->meshList.empty();
 	bool notEmptyActiveDocAndNotEmptySelection = notEmptyActiveDoc && !meshDoc()->getMultiSelectID()->empty();
 	if (activeDoc)
-	if (/*currentViewContainer() != NULL &&*/ /*this->meshDoc()->count_print_item() > 0 &&*/ meshDoc()->multiSelectID.size() > 0)
-	{
-		//QFileInfo temp(meshDoc()->mm()->fullName());		
-
-		int oneLineString = 10;
-		//originalName->setText(operateString(QString("%1").arg(temp.completeBaseName()), oneLineString));
-
-		//buildHeight->setText(operateString(QString("%1").arg(meshDoc()->bbox().DimZ()), oneLineString));
-		////dimension->setText(operateString(QString("%1  * %2 * %3").arg(meshDoc()->bbox().DimX(), 0, 'g', 3).arg(meshDoc()->bbox().DimY(), 0, 'g', 3).arg(meshDoc()->bbox().DimZ(), 0, 'g', 3), oneLineString));
-		//dimension->setText((QString("%1 \n").arg(meshDoc()->bbox().DimX(), 0, 'g', 3).append("%1\n").arg(meshDoc()->bbox().DimY(), 0, 'g', 3).append("%1").arg(meshDoc()->bbox().DimZ(), 0, 'g', 3)));
-		////dimension->setText(QString("45661 \n  9879"));
-		//numOfvertices->setText(operateString(QString("%1 (%2)").arg(meshDoc()->mm()->cm.vn).arg(this->meshDoc()->vn()), oneLineString));
-		//numOfFace->setText(operateString(QString("%1 (%2)").arg(meshDoc()->mm()->cm.fn).arg(this->meshDoc()->fn()), oneLineString));
-
-		/*if (dockInformationWidget2->ui->singleOrAllTB->isChecked()) {
-			QStringList tempSL;
-			tempSL << operateString(QString("%1").arg(meshDoc()->meshList.count()), oneLineString)
-			<< operateString(QString("%1").arg(meshDoc()->bbox().DimZ()), oneLineString)
-			<< QString("%1(x)\n%2(y)\n%3(z)").arg(meshDoc()->bbox().DimX(), 0, 'f', 1).arg(meshDoc()->bbox().DimY(), 0, 'f', 1).arg(meshDoc()->bbox().DimZ(), 0, 'f', 1)
-			<< operateString(QString("%1 ").arg(this->meshDoc()->vn()), oneLineString)
-			<< operateString(QString("%1 ").arg(this->meshDoc()->fn()), oneLineString)
-			<< operateString(QString("%1(x) * %2(y) * %3 (z) ").arg(meshDoc()->bbox().min.X(), 0, 'f', 1).arg(meshDoc()->bbox().min.Y(), 0, 'f', 1).arg(meshDoc()->bbox().min.Z(), 0, 'f', 1), oneLineString);
-
-			dockInformationWidget2->updateUi(tempSL);
-
-			}*/
-		Point3f halfDim = meshDoc()->groove.Dim() / 2.;
-		if (meshDoc()->p_setting.gd_unit == 0)
+		if (/*currentViewContainer() != NULL &&*/ /*this->meshDoc()->count_print_item() > 0 &&*/ meshDoc()->multiSelectID.size() > 0)
 		{
-			if (meshDoc()->multiSelectID.size() > 1)
-			{
-				QStringList tempSL;
-				tempSL << operateString(QString("%1").arg(meshDoc()->multiSelectID.size()), oneLineString)
-					<< operateString(QString("%1").arg(meshDoc()->selBBox().DimZ()), oneLineString)
-					<< QString("%1(x)\n%2(y)\n%3(z) mm").arg(meshDoc()->selBBox().DimX(), 0, 'f', 1).arg(meshDoc()->selBBox().DimY(), 0, 'f', 1).arg(meshDoc()->selBBox().DimZ(), 0, 'f', 1)
-					<< operateString(QString("%1 ").arg(meshDoc()->selvn()), oneLineString)
-					<< operateString(QString("%1 ").arg(meshDoc()->selfn()), oneLineString)
-					<< QString("%1(x)\n%2(y)\n%3 (z) mm ").arg(meshDoc()->selBBox().min.X() + halfDim.X(), 0, 'f', 1).arg(meshDoc()->selBBox().min.Y() + halfDim.Y(), 0, 'f', 1).arg(meshDoc()->selBBox().min.Z() + halfDim.Z(), 0, 'f', 1);
-				//<< QString("%1(x)\n%2(y)\n%3 (z) ").arg((meshDoc()->selBBox().min.X() + meshDoc()->selBBox().max.X()) / 2, 0, 'f', 1).arg((meshDoc()->selBBox().min.Y() + meshDoc()->selBBox().max.Y()) / 2, 0, 'f', 1).arg(meshDoc()->selBBox().min.Z() + meshDoc()->groove.DimZ() / 2., 0, 'f', 1);
+			//QFileInfo temp(meshDoc()->mm()->fullName());		
 
-				dockInformationWidget2->updateUi(tempSL, false);
-			}
-			else if (meshDoc()->multiSelectID.size() == 1)
-			{
-				MeshModel *abc = meshDoc()->mm();
-				QStringList tempSL;
-				tempSL << operateString(QString("%1").arg(meshDoc()->mm()->label()), oneLineString)
-					<< operateString(QString("%1").arg(meshDoc()->mm()->cm.bbox.DimZ()), oneLineString)
-					<< QString("%1(x)\n%2(y)\n%3(z) mm").arg(meshDoc()->mm()->cm.bbox.DimX(), 0, 'f', 1).arg(meshDoc()->mm()->cm.bbox.DimY(), 0, 'f', 1).arg(meshDoc()->mm()->cm.bbox.DimZ(), 0, 'f', 1)
-					<< operateString(QString("%1 ").arg(meshDoc()->mm()->cm.vn), oneLineString)
-					<< operateString(QString("%1 ").arg(meshDoc()->mm()->cm.fn), oneLineString)
-					<< QString("%1(x)\n%2(y)\n%3 (z) mm").arg(meshDoc()->mm()->cm.bbox.min.X() + halfDim.X(), 0, 'f', 1).arg(meshDoc()->mm()->cm.bbox.min.Y() + halfDim.Y(), 0, 'f', 1).arg(meshDoc()->mm()->cm.bbox.min.Z() + halfDim.Z(), 0, 'f', 1);
-				//<< QString("%1(x)\n%2(y)\n%3 (z) ").arg((meshDoc()->selBBox().min.X() + meshDoc()->selBBox().max.X()) / 2, 0, 'f', 1).arg((meshDoc()->selBBox().min.Y() + meshDoc()->selBBox().max.Y()) / 2, 0, 'f', 1).arg(meshDoc()->selBBox().min.Z() + meshDoc()->groove.DimZ() / 2., 0, 'f', 1);
+			int oneLineString = 10;
+			//originalName->setText(operateString(QString("%1").arg(temp.completeBaseName()), oneLineString));
 
-				dockInformationWidget2->updateUi(tempSL, true);
+			//buildHeight->setText(operateString(QString("%1").arg(meshDoc()->bbox().DimZ()), oneLineString));
+			////dimension->setText(operateString(QString("%1  * %2 * %3").arg(meshDoc()->bbox().DimX(), 0, 'g', 3).arg(meshDoc()->bbox().DimY(), 0, 'g', 3).arg(meshDoc()->bbox().DimZ(), 0, 'g', 3), oneLineString));
+			//dimension->setText((QString("%1 \n").arg(meshDoc()->bbox().DimX(), 0, 'g', 3).append("%1\n").arg(meshDoc()->bbox().DimY(), 0, 'g', 3).append("%1").arg(meshDoc()->bbox().DimZ(), 0, 'g', 3)));
+			////dimension->setText(QString("45661 \n  9879"));
+			//numOfvertices->setText(operateString(QString("%1 (%2)").arg(meshDoc()->mm()->cm.vn).arg(this->meshDoc()->vn()), oneLineString));
+			//numOfFace->setText(operateString(QString("%1 (%2)").arg(meshDoc()->mm()->cm.fn).arg(this->meshDoc()->fn()), oneLineString));
+
+			/*if (dockInformationWidget2->ui->singleOrAllTB->isChecked()) {
+				QStringList tempSL;
+				tempSL << operateString(QString("%1").arg(meshDoc()->meshList.count()), oneLineString)
+				<< operateString(QString("%1").arg(meshDoc()->bbox().DimZ()), oneLineString)
+				<< QString("%1(x)\n%2(y)\n%3(z)").arg(meshDoc()->bbox().DimX(), 0, 'f', 1).arg(meshDoc()->bbox().DimY(), 0, 'f', 1).arg(meshDoc()->bbox().DimZ(), 0, 'f', 1)
+				<< operateString(QString("%1 ").arg(this->meshDoc()->vn()), oneLineString)
+				<< operateString(QString("%1 ").arg(this->meshDoc()->fn()), oneLineString)
+				<< operateString(QString("%1(x) * %2(y) * %3 (z) ").arg(meshDoc()->bbox().min.X(), 0, 'f', 1).arg(meshDoc()->bbox().min.Y(), 0, 'f', 1).arg(meshDoc()->bbox().min.Z(), 0, 'f', 1), oneLineString);
+
+				dockInformationWidget2->updateUi(tempSL);
+
+				}*/
+			Point3f halfDim = meshDoc()->groove.Dim() / 2.;
+			if (meshDoc()->p_setting.gd_unit == 0)
+			{
+				if (meshDoc()->multiSelectID.size() > 1)
+				{
+					QStringList tempSL;
+					tempSL << operateString(QString("%1").arg(meshDoc()->multiSelectID.size()), oneLineString)
+						<< operateString(QString("%1").arg(meshDoc()->selBBox().DimZ()), oneLineString)
+						<< QString("%1(x)\n%2(y)\n%3(z) mm").arg(meshDoc()->selBBox().DimX(), 0, 'f', 1).arg(meshDoc()->selBBox().DimY(), 0, 'f', 1).arg(meshDoc()->selBBox().DimZ(), 0, 'f', 1)
+						<< operateString(QString("%1 ").arg(meshDoc()->selvn()), oneLineString)
+						<< operateString(QString("%1 ").arg(meshDoc()->selfn()), oneLineString)
+						<< QString("%1(x)\n%2(y)\n%3 (z) mm ").arg(meshDoc()->selBBox().min.X() + halfDim.X(), 0, 'f', 1).arg(meshDoc()->selBBox().min.Y() + halfDim.Y(), 0, 'f', 1).arg(meshDoc()->selBBox().min.Z() + halfDim.Z(), 0, 'f', 1);
+					//<< QString("%1(x)\n%2(y)\n%3 (z) ").arg((meshDoc()->selBBox().min.X() + meshDoc()->selBBox().max.X()) / 2, 0, 'f', 1).arg((meshDoc()->selBBox().min.Y() + meshDoc()->selBBox().max.Y()) / 2, 0, 'f', 1).arg(meshDoc()->selBBox().min.Z() + meshDoc()->groove.DimZ() / 2., 0, 'f', 1);
+
+					dockInformationWidget2->updateUi(tempSL, false);
+				}
+				else if (meshDoc()->multiSelectID.size() == 1)
+				{
+					MeshModel *abc = meshDoc()->mm();
+					QStringList tempSL;
+					tempSL << operateString(QString("%1").arg(meshDoc()->mm()->label()), oneLineString)
+						<< operateString(QString("%1").arg(meshDoc()->mm()->cm.bbox.DimZ()), oneLineString)
+						<< QString("%1(x)\n%2(y)\n%3(z) mm").arg(meshDoc()->mm()->cm.bbox.DimX(), 0, 'f', 1).arg(meshDoc()->mm()->cm.bbox.DimY(), 0, 'f', 1).arg(meshDoc()->mm()->cm.bbox.DimZ(), 0, 'f', 1)
+						<< operateString(QString("%1 ").arg(meshDoc()->mm()->cm.vn), oneLineString)
+						<< operateString(QString("%1 ").arg(meshDoc()->mm()->cm.fn), oneLineString)
+						<< QString("%1(x)\n%2(y)\n%3 (z) mm").arg(meshDoc()->mm()->cm.bbox.min.X() + halfDim.X(), 0, 'f', 1).arg(meshDoc()->mm()->cm.bbox.min.Y() + halfDim.Y(), 0, 'f', 1).arg(meshDoc()->mm()->cm.bbox.min.Z() + halfDim.Z(), 0, 'f', 1);
+					//<< QString("%1(x)\n%2(y)\n%3 (z) ").arg((meshDoc()->selBBox().min.X() + meshDoc()->selBBox().max.X()) / 2, 0, 'f', 1).arg((meshDoc()->selBBox().min.Y() + meshDoc()->selBBox().max.Y()) / 2, 0, 'f', 1).arg(meshDoc()->selBBox().min.Z() + meshDoc()->groove.DimZ() / 2., 0, 'f', 1);
+
+					dockInformationWidget2->updateUi(tempSL, true);
+				}
 			}
+			else
+			{
+				if (meshDoc()->multiSelectID.size() > 1)
+				{
+					QStringList tempSL;
+					tempSL << operateString(QString("%1").arg(meshDoc()->multiSelectID.size()), oneLineString)
+						<< operateString(QString("%1").arg(meshDoc()->selBBox().DimZ() / DSP_inchmm), oneLineString)
+						<< QString("%1(x)\n%2(y)\n%3(z) in").arg(meshDoc()->selBBox().DimX() / DSP_inchmm, 0, 'f', 2).arg(meshDoc()->selBBox().DimY() / DSP_inchmm, 0, 'f', 2).arg(meshDoc()->selBBox().DimZ() / DSP_inchmm, 0, 'f', 2)
+						<< operateString(QString("%1 ").arg(meshDoc()->selvn()), oneLineString)
+						<< operateString(QString("%1 ").arg(meshDoc()->selfn()), oneLineString)
+						<< QString("%1(x)\n%2(y)\n%3 (z) in").arg((meshDoc()->selBBox().min.X() + halfDim.X()) / DSP_inchmm, 0, 'f', 2).arg((meshDoc()->selBBox().min.Y() + halfDim.Y()) / DSP_inchmm, 0, 'f', 2).arg((meshDoc()->selBBox().min.Z() + halfDim.Z()) / DSP_inchmm, 0, 'f', 1);
+					//<< QString("%1(x)\n%2(y)\n%3 (z) ").arg((meshDoc()->selBBox().min.X() + meshDoc()->selBBox().max.X()) / 2, 0, 'f', 1).arg((meshDoc()->selBBox().min.Y() + meshDoc()->selBBox().max.Y()) / 2, 0, 'f', 1).arg(meshDoc()->selBBox().min.Z() + meshDoc()->groove.DimZ() / 2., 0, 'f', 1);
+
+					dockInformationWidget2->updateUi(tempSL, false);
+				}
+				else if (meshDoc()->multiSelectID.size() == 1)
+				{
+					QStringList tempSL;
+					tempSL << operateString(QString("%1").arg(meshDoc()->mm()->label()), oneLineString)
+						<< operateString(QString("%1").arg(meshDoc()->mm()->cm.bbox.DimZ()), oneLineString)
+						<< QString("%1(x)\n%2(y)\n%3(z) in").arg(meshDoc()->mm()->cm.bbox.DimX() / DSP_inchmm, 0, 'f', 2).arg(meshDoc()->mm()->cm.bbox.DimY() / DSP_inchmm, 0, 'f', 2).arg(meshDoc()->mm()->cm.bbox.DimZ() / DSP_inchmm, 0, 'f', 2)
+						<< operateString(QString("%1 ").arg(meshDoc()->mm()->cm.vn), oneLineString)
+						<< operateString(QString("%1 ").arg(meshDoc()->mm()->cm.fn), oneLineString)
+						<< QString("%1(x)\n%2(y)\n%3 (z) in").arg((meshDoc()->mm()->cm.bbox.min.X() + halfDim.X()) / DSP_inchmm, 0, 'f', 2).arg((meshDoc()->mm()->cm.bbox.min.Y() + halfDim.Y()) / DSP_inchmm, 0, 'f', 2).arg((meshDoc()->mm()->cm.bbox.min.Z() + halfDim.Z()) / DSP_inchmm, 0, 'f', 2);
+					//<< QString("%1(x)\n%2(y)\n%3 (z) ").arg((meshDoc()->selBBox().min.X() + meshDoc()->selBBox().max.X()) / 2, 0, 'f', 1).arg((meshDoc()->selBBox().min.Y() + meshDoc()->selBBox().max.Y()) / 2, 0, 'f', 1).arg(meshDoc()->selBBox().min.Z() + meshDoc()->groove.DimZ() / 2., 0, 'f', 1);
+
+					dockInformationWidget2->updateUi(tempSL, true);
+				}
+			}
+
+
 		}
 		else
 		{
-			if (meshDoc()->multiSelectID.size() > 1)
-			{
-				QStringList tempSL;
-				tempSL << operateString(QString("%1").arg(meshDoc()->multiSelectID.size()), oneLineString)
-					<< operateString(QString("%1").arg(meshDoc()->selBBox().DimZ() / DSP_inchmm), oneLineString)
-					<< QString("%1(x)\n%2(y)\n%3(z) in").arg(meshDoc()->selBBox().DimX() / DSP_inchmm, 0, 'f', 2).arg(meshDoc()->selBBox().DimY() / DSP_inchmm, 0, 'f', 2).arg(meshDoc()->selBBox().DimZ() / DSP_inchmm, 0, 'f', 2)
-					<< operateString(QString("%1 ").arg(meshDoc()->selvn()), oneLineString)
-					<< operateString(QString("%1 ").arg(meshDoc()->selfn()), oneLineString)
-					<< QString("%1(x)\n%2(y)\n%3 (z) in").arg((meshDoc()->selBBox().min.X() + halfDim.X()) / DSP_inchmm, 0, 'f', 2).arg((meshDoc()->selBBox().min.Y() + halfDim.Y()) / DSP_inchmm, 0, 'f', 2).arg((meshDoc()->selBBox().min.Z() + halfDim.Z()) / DSP_inchmm, 0, 'f', 1);
-				//<< QString("%1(x)\n%2(y)\n%3 (z) ").arg((meshDoc()->selBBox().min.X() + meshDoc()->selBBox().max.X()) / 2, 0, 'f', 1).arg((meshDoc()->selBBox().min.Y() + meshDoc()->selBBox().max.Y()) / 2, 0, 'f', 1).arg(meshDoc()->selBBox().min.Z() + meshDoc()->groove.DimZ() / 2., 0, 'f', 1);
-
-				dockInformationWidget2->updateUi(tempSL, false);
-			}
-			else if (meshDoc()->multiSelectID.size() == 1)
-			{
-				QStringList tempSL;
-				tempSL << operateString(QString("%1").arg(meshDoc()->mm()->label()), oneLineString)
-					<< operateString(QString("%1").arg(meshDoc()->mm()->cm.bbox.DimZ()), oneLineString)
-					<< QString("%1(x)\n%2(y)\n%3(z) in").arg(meshDoc()->mm()->cm.bbox.DimX() / DSP_inchmm, 0, 'f', 2).arg(meshDoc()->mm()->cm.bbox.DimY() / DSP_inchmm, 0, 'f', 2).arg(meshDoc()->mm()->cm.bbox.DimZ() / DSP_inchmm, 0, 'f', 2)
-					<< operateString(QString("%1 ").arg(meshDoc()->mm()->cm.vn), oneLineString)
-					<< operateString(QString("%1 ").arg(meshDoc()->mm()->cm.fn), oneLineString)
-					<< QString("%1(x)\n%2(y)\n%3 (z) in").arg((meshDoc()->mm()->cm.bbox.min.X() + halfDim.X()) / DSP_inchmm, 0, 'f', 2).arg((meshDoc()->mm()->cm.bbox.min.Y() + halfDim.Y()) / DSP_inchmm, 0, 'f', 2).arg((meshDoc()->mm()->cm.bbox.min.Z() + halfDim.Z()) / DSP_inchmm, 0, 'f', 2);
-				//<< QString("%1(x)\n%2(y)\n%3 (z) ").arg((meshDoc()->selBBox().min.X() + meshDoc()->selBBox().max.X()) / 2, 0, 'f', 1).arg((meshDoc()->selBBox().min.Y() + meshDoc()->selBBox().max.Y()) / 2, 0, 'f', 1).arg(meshDoc()->selBBox().min.Z() + meshDoc()->groove.DimZ() / 2., 0, 'f', 1);
-
-				dockInformationWidget2->updateUi(tempSL, true);
-			}
+			QStringList tempSL;
+			tempSL << " "
+				<< " "
+				<< " "
+				<< " "
+				<< " "
+				<< " ";
+			dockInformationWidget2->updateUi(tempSL, false);
 		}
-
-
-	}
-	else
-	{
-		QStringList tempSL;
-		tempSL << " "
-			<< " "
-			<< " "
-			<< " "
-			<< " "
-			<< " ";
-		dockInformationWidget2->updateUi(tempSL, false);
-	}
 
 	importMeshAct->setEnabled(activeDoc);
 	ioToolBar->setEnabled((activeDoc));
@@ -569,6 +569,7 @@ void MainWindow::updateMenus()
 
 	topTagAction->setEnabled((activeDoc));
 	genZXAct->setEnabled(notEmptyActiveDoc);
+	testDMSlicerAct->setEnabled(notEmptyActiveDoc);
 	//viewFromGroupActTB->setEnabled((activeDoc));	
 	//viewCustomToolButton->setEnabled((activeDoc));	
 	//lockViewAct->setEnabled((activeDoc));
@@ -1298,12 +1299,12 @@ void MainWindow::pasteSelectMeshes()
 	// modified by (R&D-I-SW, Mark)
 	if (currentViewContainer()->meshDoc.copiedMeshList.isEmpty() == false)
 	{
-		int i = 0; 
+		int i = 0;
 		foreach(MeshModel *cmp, meshDoc()->copiedMeshList)
 		{
-			
+
 			currentViewContainer()->meshDoc.copyMesh(cmp);
-			
+
 
 			//testFuncFunc();
 
@@ -1313,7 +1314,7 @@ void MainWindow::pasteSelectMeshes()
 
 
 			bool x = QCallBack(((i + 1) * 100) / meshDoc()->copiedMeshList.size(), "");
-			if ((!filterResult) ||(!x))
+			if ((!filterResult) || (!x))
 				break;
 			//toCenter();
 			//GLA()->update();
@@ -1787,9 +1788,9 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 	MeshFilterInterface  *iFilter = qobject_cast<MeshFilterInterface *>(action->parent());
-	
+
 	qb->show();
-	
+
 	iFilter->setLog(&meshDoc()->Log);
 	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
 	// Ask for filter requirements (eg a filter can need topology, border flags etc)
@@ -1890,7 +1891,7 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 		//else if (action->text().contains("Auto Packing"))
 		else if (action->text().contains("FP_TEST_SEARCH_SPACE_ALL_IMAGE") || action->text().contains("Auto Packing"))
 		{
-			
+
 			QMap<int, Matrix44m> savematrix;
 			QMap<int, Point3f> savePos;
 			QSet<int> selmeshid;
@@ -1937,40 +1938,40 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 						{
 						case 0:
 						{
-								  if (dimX == dimY)
-								  {
-									  firstRotation.insert(tmm->id(), Point3d(0.00, 0.00, 0.00));
-									  break;
-								  }
-								  else
-								  {
-									  firstRotation.insert(tmm->id(), Point3d(0.00, 90.00, 0.00));
-									  float temp = dimZ;
-									  dimZ = dimX;
-									  dimX = temp;
-								  }
-								  break;
+							if (dimX == dimY)
+							{
+								firstRotation.insert(tmm->id(), Point3d(0.00, 0.00, 0.00));
+								break;
+							}
+							else
+							{
+								firstRotation.insert(tmm->id(), Point3d(0.00, 90.00, 0.00));
+								float temp = dimZ;
+								dimZ = dimX;
+								dimX = temp;
+							}
+							break;
 						}
 						case 1:
 						{
-								  if (dimX == dimY)
-								  {
-									  firstRotation.insert(tmm->id(), Point3d(0.00, 0.00, 0.00));
-									  break;
-								  }
-								  else
-								  {
-									  firstRotation.insert(tmm->id(), Point3d(90.00, 0.00, 0.00));
-									  float temp = dimZ;
-									  dimZ = dimY;
-									  dimY = temp;
-								  }
-								  break;
+							if (dimX == dimY)
+							{
+								firstRotation.insert(tmm->id(), Point3d(0.00, 0.00, 0.00));
+								break;
+							}
+							else
+							{
+								firstRotation.insert(tmm->id(), Point3d(90.00, 0.00, 0.00));
+								float temp = dimZ;
+								dimZ = dimY;
+								dimY = temp;
+							}
+							break;
 						}
 						default:
 						{
-								   firstRotation.insert(tmm->id(), Point3d(0.00, 0.00, 0.00));
-								   break;
+							firstRotation.insert(tmm->id(), Point3d(0.00, 0.00, 0.00));
+							break;
 						}
 						}
 					}
@@ -1991,34 +1992,34 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 					case 1:
 						//case 0:
 					{
-							  if (dimX == dimZ)
-							  {
-								  secondRotation.insert(tmm->id(), Point3d(0.00, 0.00, 0.00));
-								  break;
-							  }
-							  else
-							  {
-								  secondRotation.insert(tmm->id(), Point3d(0.00, 0.00, 90.00));
-							  }
-							  break;
+						if (dimX == dimZ)
+						{
+							secondRotation.insert(tmm->id(), Point3d(0.00, 0.00, 0.00));
+							break;
+						}
+						else
+						{
+							secondRotation.insert(tmm->id(), Point3d(0.00, 0.00, 90.00));
+						}
+						break;
 					}
 					case 2:
 					{
-							  if (dimX == dimZ)
-							  {
-								  secondRotation.insert(tmm->id(), Point3d(0.00, 0.00, 0.00));
-								  break;
-							  }
-							  else
-							  {
-								  secondRotation.insert(tmm->id(), Point3d(90.00, 0.00, 0.00));
-							  }
-							  break;
+						if (dimX == dimZ)
+						{
+							secondRotation.insert(tmm->id(), Point3d(0.00, 0.00, 0.00));
+							break;
+						}
+						else
+						{
+							secondRotation.insert(tmm->id(), Point3d(90.00, 0.00, 0.00));
+						}
+						break;
 					}
 					default:
 					{
-							   secondRotation.insert(tmm->id(), Point3d(0.00, 0.00, 0.00));
-							   break;
+						secondRotation.insert(tmm->id(), Point3d(0.00, 0.00, 0.00));
+						break;
 					}
 					}
 				}
@@ -2288,15 +2289,15 @@ void MainWindow::executeFilter(QAction *action, RichParameterSet &params, bool i
 				//print not complete
 				QMessageBox::warning(this, tr("Error"), QString("Transfer not complete "));
 			}
-				
+
 
 		}
-		else if (action->text().contains("FP_SAVE_DEFAULT_SNAP_SHOT") )
+		else if (action->text().contains("FP_SAVE_DEFAULT_SNAP_SHOT"))
 		{
 			WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("executefilter"));
-			
+
 			ret = iFilter->applyFilter(action, *(meshDoc()), MergedEnvironment, QCallBack2, GLA(), QCallBackdata);
-			
+
 
 
 		}
@@ -2628,8 +2629,8 @@ void MainWindow::initDocumentRasterRenderState(MeshLabXMLFilterContainer* mfc)
 	if (ar == MLXMLElNames::variableRasterArity)
 	{
 		for (int ii = 0; meshDoc()->rasterList.size(); ++ii)
-		if (meshDoc()->rasterList[ii] != NULL)
-			meshDoc()->renderState().add(meshDoc()->rasterList[ii]->id(), *meshDoc()->rasterList[ii]);
+			if (meshDoc()->rasterList[ii] != NULL)
+				meshDoc()->renderState().add(meshDoc()->rasterList[ii]->id(), *meshDoc()->rasterList[ii]);
 		return;
 	}
 }
@@ -4185,12 +4186,12 @@ bool MainWindow::loadMesh(const QString& fileName, MeshIOInterface *pCurrentIOPl
 
 	/*for (int i = 0; i < fileName.length(); i++)
 	{
-		bool isUnicode = fileName.at(i).unicode()>127;
-		if (isUnicode)
-		{
-			QMessageBox::information(NULL, tr("File Name error"), tr("File Name contain unicode"));
-			return false;
-		}
+	bool isUnicode = fileName.at(i).unicode()>127;
+	if (isUnicode)
+	{
+	QMessageBox::information(NULL, tr("File Name error"), tr("File Name contain unicode"));
+	return false;
+	}
 	}*/
 
 
@@ -4476,23 +4477,23 @@ bool MainWindow::loadMesh(const QString& fileName, MeshIOInterface *pCurrentIOPl
 						qDebug() << mm->cm.bbox.DimY();
 						if (largest == mm->cm.bbox.DimX())
 						{
-							float resize = (DSP_grooveBigX-10) / largest;
+							float resize = (DSP_grooveBigX - 10) / largest;
 							ScaleN = Point3f(resize, resize, resize);
 							meshDoc()->scaleMesh(mm, ScaleN);
 						}
-						else if (largest == mm->cm.bbox.DimY() )
+						else if (largest == mm->cm.bbox.DimY())
 						{
-							float resize = (DSP_grooveY-10) / largest;
+							float resize = (DSP_grooveY - 10) / largest;
 							ScaleN = Point3f(resize, resize, resize);
 							meshDoc()->scaleMesh(mm, ScaleN);
 						}
 						else if (largest == mm->cm.bbox.DimZ())
 						{
-							float resize = (DSP_grooveZ-10)/ largest;
+							float resize = (DSP_grooveZ - 10) / largest;
 							ScaleN = Point3f(resize, resize, resize);
 							meshDoc()->scaleMesh(mm, ScaleN);
 						}
-						
+
 					} while (mm->cm.bbox.DimZ() > DSP_grooveZ || mm->cm.bbox.DimX() > DSP_grooveX || mm->cm.bbox.DimY() > DSP_grooveY);
 				}
 
@@ -5787,7 +5788,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 	e->accept();
 	}*/
 	if (e->key() == Qt::Key_Slash && e->modifiers() == Qt::AltModifier)
-	//if (e->key() == Qt::Key_0)
+		//if (e->key() == Qt::Key_0)
 	{
 		if (programmerTest->menuAction()->isVisible())
 			programmerTest->menuAction()->setVisible(false);
@@ -5917,11 +5918,11 @@ bool MainWindow::QCallBack2(const int pos, const char * str)
 				{
 				case Comm3DP::printer3dpString::printStatus::Paused://pause 
 				{
-																		statusLabel->setText(temp);
-																		statusLabel->repaint();
-																		return true;
+					statusLabel->setText(temp);
+					statusLabel->repaint();
+					return true;
 				}
-					break;
+				break;
 				case Comm3DP::printer3dpString::printStatus::WiperSetting:
 				case Comm3DP::printer3dpString::printStatus::BinderRecovering:
 				case Comm3DP::printer3dpString::printStatus::Poweroff:
@@ -5931,48 +5932,48 @@ bool MainWindow::QCallBack2(const int pos, const char * str)
 				case Comm3DP::printer3dpString::printStatus::Fill_INK_To_Resume://pause
 				case Comm3DP::printer3dpString::printStatus::PanelControl://pause				
 				{
-																			  statusLabel->setText(temp);
-																			  statusLabel->repaint();
-																			  return true;
+					statusLabel->setText(temp);
+					statusLabel->repaint();
+					return true;
 				}
-					break;
+				break;
 				case Comm3DP::printer3dpString::printStatus::Printing://Printing
 				{
-																		  statusLabel->setText(temp);
-																		  statusLabel->repaint();
-																		  return true;
+					statusLabel->setText(temp);
+					statusLabel->repaint();
+					return true;
 				}
-					break;
+				break;
 				case Comm3DP::printer3dpString::printStatus::Online://????
 				{
-																		statusLabel->setText(temp);
-																		statusLabel->repaint();
-																		//return true;
-																		return false;
+					statusLabel->setText(temp);
+					statusLabel->repaint();
+					//return true;
+					return false;
 				}
-					break;
+				break;
 				case Comm3DP::printer3dpString::printStatus::PostPrinting:
 				{
-																			 statusLabel->setText(temp);
-																			 statusLabel->repaint();
-																			 return false;
+					statusLabel->setText(temp);
+					statusLabel->repaint();
+					return false;
 				}break;
 				case Comm3DP::printer3dpString::printStatus::DoorOpened:
 				{
-																		   statusLabel->setText(temp);
-																		   statusLabel->repaint();
+					statusLabel->setText(temp);
+					statusLabel->repaint();
 				}break;
 				case Comm3DP::printer3dpString::printStatus::GettingError:
 				{
-																			 statusLabel->setText(temp);
-																			 statusLabel->setStyleSheet(WidgetStyleSheet::statusLabel());
-																			 statusLabel->repaint();
-																			 return false;
+					statusLabel->setText(temp);
+					statusLabel->setStyleSheet(WidgetStyleSheet::statusLabel());
+					statusLabel->repaint();
+					return false;
 				}
-					break;
+				break;
 				default:
 				{
-						   return true;
+					return true;
 				}break;
 
 				}
@@ -6598,13 +6599,24 @@ void MainWindow::startsetting()
 		int x = currentGlobalParams.getEnum("TARGET_PRINTER");
 		if (x == 0)
 		{
+			//350
+			qWarning() << "threeDPrintAct visible ";
 			threeDPrintAct->setVisible(true);
+			genZXAct->setVisible(true);
+			//352
+			qWarning() << "printfunctionMono invisible ";
 			printfunctionMono->setVisible(false);
+			testDMSlicerAct->setVisible(false);
+
 		}
 		else if (x == 1)
 		{
+			//350
 			threeDPrintAct->setVisible(false);
+			genZXAct->setVisible(false);
+			//mono 352
 			printfunctionMono->setVisible(true);
+			testDMSlicerAct->setVisible(true);
 		}
 	}
 
@@ -7173,7 +7185,7 @@ bool MainWindow::GenZXFunc()
 	std::stringbuf *pbuf = ssd.rdbuf();
 	string delimiter = "=";
 	//ssd << "name=" << zxFilename.toStdString();
-	
+
 	QMap<QString, QString>tempQMap;
 	GenPrintInfo::genPrinterInfo(currentGlobalParams, tempQMap);
 	QMapIterator<QString, QString> i(tempQMap);
@@ -7191,7 +7203,7 @@ bool MainWindow::GenZXFunc()
 
 	QFileInfoList filenin_zx_file = zx_dir.entryInfoList(QStringList() << "*.zx" << "*.txt");
 
-	QProcess process;	
+	QProcess process;
 	/*extract file*/
 	QStringList arguments;
 	arguments.append("a");
@@ -7230,12 +7242,12 @@ bool MainWindow::GenZXFunc()
 	//zipfile.closeZip();
 	/*
 		********
-	*/
+		*/
 
 	return true;
 
 }
-bool MainWindow::printFunctionMono()
+bool MainWindow::printFunctionMono()//deprecated
 {
 	bool Channel_control_mode = currentGlobalParams.getBool("CHANNEL_CONTROL");
 	detectOverlappingFunc();
@@ -7338,7 +7350,7 @@ bool MainWindow::printFunctionMono()
 	cmdd.append(std::to_string(pumpValue));
 	cmdd.append(" HTTP/1.1\r\n\r\n");
 	comm->sendSCICommand(cmdd, s_result);
-	
+
 	/*
 	======
 	*/
@@ -7435,9 +7447,9 @@ bool MainWindow::printFunctionMono()
 					qb->show();
 
 					executeFilter(PM.actionFilterMap.value("FP_PRINT_DM_SLICER"), pjpGenZX.getprintJobParam(), false);
-					
 
-					
+
+
 				}
 				else
 				{
@@ -7500,23 +7512,23 @@ bool MainWindow::printFunction352()//
 	}
 	else{
 		//return false;
-		
+
 	}
 	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 
 	PrintOption printOption_(PrintOption::optionMode::MONO_PRINT_MODE, this, meshDoc());
 
-	
-	bool twoSidePrint = false;// currentGlobalParams.getBool("STIFF_PRIN_V2");
-	PrinterJobInfo *pjii = new PrinterJobInfo(this, meshDoc(), &currentGlobalParams, &cmyusage, PrinterJobInfo::printInfoMode::PrintOptionMode, twoSidePrint);
-	
+
+	bool layerPrintMode = currentGlobalParams.getBool("DM_TWICE_IN_ONE_LAYER");
+	PrinterJobInfo *pjii = new PrinterJobInfo(this, meshDoc(), &currentGlobalParams, &cmyusage, PrinterJobInfo::printInfoMode::PrintOptionMode, layerPrintMode);
+
 	int startPage = currentGlobalParams.getInt("START_PRINT_PAGE");
 	if (startPage != 0)
 		pjii->setSMLayers(startPage);
 	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 	printOption_.updatePrintSummaryLabel(pjii->getPJI());
 	printOption_.exec();
-	
+
 
 	int wiperFrequency = currentGlobalParams.getInt("MIDJOB_FREQUENCY");//printOption_.getWiperFrequency();
 	int wiperIndex = currentGlobalParams.getInt("WIPER_INDEX"); //printOption_.getWiperIndex();
@@ -7550,7 +7562,7 @@ bool MainWindow::printFunction352()//
 	int fanSpeed = currentGlobalParams.getInt("FAN_SPEED");
 	int pumpValue = currentGlobalParams.getInt("PUMP_VALUE");
 	bool dynamicSwitch = currentGlobalParams.getBool("DYNAMIC_WIPE");
-	bool layerPrintMode =  currentGlobalParams.getBool("DM_TWICE_IN_ONE_LAYER");
+	bool ir_On_Off_Setting = currentGlobalParams.getBool("IR_On_Off");
 	pause_button->setVisible(false);
 	s_pushbutton->setVisible(false);
 
@@ -7560,18 +7572,18 @@ bool MainWindow::printFunction352()//
 	cmdd.append(" HTTP/1.1\r\n\r\n");
 	comm->sendSCICommand(cmdd, s_result);
 
-	
+
 	switch (1)
 	{
 	case 0:
 	{
-	
+
 	}
 	break;
 	case 1:
 	{
-		//if (printOption_.result() || DSP_TEST_MODE)
-		if (true)
+		if (printOption_.result() || DSP_TEST_MODE)
+			//if (true)
 		{//backup
 			/*
 			count mesh top pages
@@ -7579,6 +7591,17 @@ bool MainWindow::printFunction352()//
 			recordRollerPage();
 			QString rollerCMDToServer = SKT::createJsonStringCommand("Other", "Mesh_Top", rollerPageToServer);
 			comm->SendJSONCmd(rollerCMDToServer.toStdString());
+
+			QEventLoop loop;
+			QTimer::singleShot(500, &loop, SLOT(quit()));
+			loop.exec();
+
+			QString irCommand;
+			if (ir_On_Off_Setting)
+				irCommand = SKT::createJsonStringCommand("FPGA", "@HTO", QStringList());
+			else
+				irCommand = SKT::createJsonStringCommand("FPGA", "@HTC", QStringList());
+			comm->SendJSONCmd(irCommand.toStdString());
 
 
 			CheckListWidget  checkListWidget(&pjii->getPJI());
@@ -7604,14 +7627,14 @@ bool MainWindow::printFunction352()//
 				comm->PrintMode(2);
 			checkListWidget.exec();
 			if (checkListWidget.result() == QDialog::Accepted || DSP_TEST_MODE)
-			//if (true)
+				//if (true)
 			{
 				//assert(checkListWidget.sendHeader(pjii->getPJI()));
 				pjii->genCSVFile();
 
 				int xlayerHeight = (currentGlobalParams.getFloat("DM_MONO_LAYER_HEIGHT") * 10000 + 0.5);
 				int layer = qCeil(meshDoc()->bbox().DimZ() / currentGlobalParams.getFloat("DM_MONO_LAYER_HEIGHT")) + 1;
-				bool headt = comm->sendPrintjobHeader(layer, xlayerHeight, 'L', fanSpeed);				
+				bool headt = comm->sendPrintjobHeader(layer, xlayerHeight, 'L', fanSpeed);
 
 				//bool headt = checkListWidget.sendHeader(pjii->getPJI(), fanSpeed, xlayerHeight);
 
@@ -7650,7 +7673,7 @@ bool MainWindow::printFunction352()//
 						//executeFilter(PM.actionFilterMap.value("FP_PRINT_FOUR_IN_ONE"), pjpGenZX.getprintJobParam(), false);
 						executeFilter(PM.actionFilterMap.value("FP_PRINT_DM_SLICER_ALPHA"), pjpGenZX.getprintJobParam(), false);
 
-					
+
 				}
 				else
 				{
@@ -7672,14 +7695,14 @@ bool MainWindow::printFunction352()//
 }
 bool MainWindow::printFunction()//
 {
-	/*thumbNail Test*/	
+	/*thumbNail Test*/
 	auto genThnumbnail = [&](){
 		QString projectThumbnailName;
 		if (!meshDoc()->getFileName().isEmpty())
 		{
-			QFileInfo prjectNameInfo(meshDoc()->getFileName());			
+			QFileInfo prjectNameInfo(meshDoc()->getFileName());
 			projectThumbnailName = BCPwareFileSystem::projectThumbnailFolder().filePath(QString("%1_%2.png").arg(prjectNameInfo.completeBaseName()).arg(QUuid::createUuid().toString().mid(1, 36)));
-			
+
 		}
 		else
 		{
@@ -7705,14 +7728,14 @@ bool MainWindow::printFunction()//
 		ParamOp::updateToHistory(false, "JOB_THUMBNAIL_NAME", projectThumbnailName);
 		//upadte project Name
 		meshDoc()->getFileName().isEmpty() ? NULL : ParamOp::updateToHistory(false, "PROJECT_NAME", meshDoc()->getFileName());
-		
+
 		//GENERAL
 		ParamOp::updateSliceSettingToHistory(false, 0, currentGlobalParams.getFloat("SLIGHT_HEIGHT"));
 		ParamOp::updateSliceSettingToHistory(false, 1, currentGlobalParams.getBool("ADD_PATTERN"));
 		ParamOp::updateSliceSettingToHistory(false, 2, currentGlobalParams.getFloat("PLUS_PRINT_LENGTH"));
 		ParamOp::updateSliceSettingToHistory(false, 3, currentGlobalParams.getBool("LINE_OR_RECT"));
 		////slice 
-		ParamOp::updateSliceSettingToHistory(false, 4, currentGlobalParams.getBool("STIFF_PRIN_V2")); 
+		ParamOp::updateSliceSettingToHistory(false, 4, currentGlobalParams.getBool("STIFF_PRIN_V2"));
 		ParamOp::updateSliceSettingToHistory(false, 5, currentGlobalParams.getInt("STIFF_PRINT_VALUE"));
 		ParamOp::updateSliceSettingToHistory(false, 6, currentGlobalParams.getInt("SHELL_PERCENT"));
 
@@ -7722,7 +7745,7 @@ bool MainWindow::printFunction()//
 		ParamOp::updateSliceSettingToHistory(false, 10, currentGlobalParams.getInt("PP_BOTTOM_LIGHTER_PERCENTAGE"));
 		ParamOp::updateSliceSettingToHistory(false, 11, currentGlobalParams.getFloat("HORIZONE_LINE_WIDTH"));
 		ParamOp::updateSliceSettingToHistory(false, 12, currentGlobalParams.getFloat("VERTICAL_LINE_WIDTH"));
-		
+
 		ParamOp::updateSliceSettingToHistory(false, 13, currentGlobalParams.getBool("PROFILE_ON"));
 		ParamOp::updateSliceSettingToHistory(false, 14, currentGlobalParams.getString("COLOR_PROFILE"));
 		//spitton
@@ -7741,7 +7764,7 @@ bool MainWindow::printFunction()//
 		ParamOp::updateSliceSettingToHistory(false, 26, currentGlobalParams.getInt("PP_POST_HEATING_MINUTES"));
 		ParamOp::updateSliceSettingToHistory(false, 27, currentGlobalParams.getInt("PUMP_VALUE"));
 
-		
+
 
 
 	};
@@ -7766,7 +7789,7 @@ bool MainWindow::printFunction()//
 			return false;
 		}
 	}
-	
+
 
 	//==language=//
 	QTranslator translator;
@@ -7779,7 +7802,7 @@ bool MainWindow::printFunction()//
 	//QMessageBox estimateBox(QMessageBox::NoIcon, "Estimate Usage", "Do you want to estimate usage? \n ", QMessageBox::Ok | QMessageBox::No, this);
 	//QMessageBox estimateBox(QMessageBox::NoIcon, "Estimate Usage", "Do you want to estimate usage? \n ", QMessageBox::Ok | QMessageBox::No);
 
-	
+
 	JobEstimateDialog *estimateBox = new JobEstimateDialog();
 	int ret = estimateBox->exec();
 
@@ -7803,7 +7826,7 @@ bool MainWindow::printFunction()//
 	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("printFunction"));
 
 	PrintOption printOption_(PrintOption::optionMode::NORMAL_PRINT_MODE, this, meshDoc());
-	
+
 	//float *cmyusage = getCmyusage();
 	//QVector<float> *cmyusage = getCmyusage();
 
@@ -7828,7 +7851,7 @@ bool MainWindow::printFunction()//
 	printOption_.getHeatStuffParam(tempHeatParam);
 	if (postHeating)
 		tempHeatParam.replace(4, currentGlobalParams.getInt("PP_POST_HEATING_MINUTES"));
-	else 
+	else
 		tempHeatParam.replace(4, 0);
 	tempHeatParam.replace(5, currentGlobalParams.getInt("PP_POST_HEATING_UPPER_LIMIT"));
 	tempHeatParam.replace(6, currentGlobalParams.getInt("PP_POST_HEATING_LOWER_LIMIT"));
@@ -7847,7 +7870,7 @@ bool MainWindow::printFunction()//
 	pjpGenZX.setColorBinding(currentGlobalParams.getBool("COLOR_BINDING"));
 
 
-	int fanSpeed =  currentGlobalParams.getInt("FAN_SPEED");
+	int fanSpeed = currentGlobalParams.getInt("FAN_SPEED");
 	int pumpValue = currentGlobalParams.getInt("PUMP_VALUE");
 	bool dynamicSwitch = currentGlobalParams.getBool("DYNAMIC_WIPE");
 	bool layerPrintMode = currentGlobalParams.getBool("STIFF_PRIN_V2");
@@ -7896,160 +7919,160 @@ bool MainWindow::printFunction()//
 	{
 	case 0:
 	{
-			  /*WidgetMonitor widget_p_monitor(printParam);
-			  widget_p_monitor.exec();
-			  if (widget_p_monitor.result() == QDialog::Accepted)
-			  {
-			  qb->show();
-			  executeFilter(PM.actionFilterMap.value("Print_Flow_2"), printParam, false);
-			  }
+		/*WidgetMonitor widget_p_monitor(printParam);
+		widget_p_monitor.exec();
+		if (widget_p_monitor.result() == QDialog::Accepted)
+		{
+		qb->show();
+		executeFilter(PM.actionFilterMap.value("Print_Flow_2"), printParam, false);
+		}
 
-			  qb->reset();
-			  int nextfile = 0;*/
+		qb->reset();
+		int nextfile = 0;*/
 
 
-			  //sendZXfile(meshDoc()->jobname.at(nextfile));
+		//sendZXfile(meshDoc()->jobname.at(nextfile));
 	}
-		break;
+	break;
 	case 1:
 	{
-			  if (printOption_.result() || DSP_TEST_MODE)
-			  //if (true)
-			  {//backup
-				  /*
-					count mesh top pages
-				  */
-				  recordRollerPage();
-				  QString rollerCMDToServer = SKT::createJsonStringCommand("Other", "Mesh_Top", rollerPageToServer);
-				  //comm->SendJSONCmd(rollerCMDToServer.toStdString());
+		if (printOption_.result() || DSP_TEST_MODE)
+			//if (true)
+		{//backup
+			/*
+			  count mesh top pages
+			  */
+			recordRollerPage();
+			QString rollerCMDToServer = SKT::createJsonStringCommand("Other", "Mesh_Top", rollerPageToServer);
+			//comm->SendJSONCmd(rollerCMDToServer.toStdString());
 
-				  QEventLoop loop;
-				  QTimer::singleShot(500, &loop, SLOT(quit()));
-				  loop.exec();
-				  QString irCommand;
-				  if (ir_On_Off_Setting)
-					  irCommand = SKT::createJsonStringCommand("FPGA", "@HTO", QStringList());
-				  else
-					  irCommand = SKT::createJsonStringCommand("FPGA", "@HTC", QStringList());
-				  comm->SendJSONCmd(irCommand.toStdString());
-				  
-				  QTimer::singleShot(500, &loop, SLOT(quit()));
-				  loop.exec();
+			QEventLoop loop;
+			QTimer::singleShot(500, &loop, SLOT(quit()));
+			loop.exec();
+			QString irCommand;
+			if (ir_On_Off_Setting)
+				irCommand = SKT::createJsonStringCommand("FPGA", "@HTO", QStringList());
+			else
+				irCommand = SKT::createJsonStringCommand("FPGA", "@HTC", QStringList());
+			comm->SendJSONCmd(irCommand.toStdString());
 
-				  CheckListWidget  checkListWidget(&pjii->getPJI());
-				  comm->PreAndPrintingHeated(tempHeatParam.at(0), tempHeatParam.at(1), tempHeatParam.at(2), tempHeatParam.at(3));
-				  comm->PostHeated(tempHeatParam.at(4), tempHeatParam.at(5), tempHeatParam.at(6));
+			QTimer::singleShot(500, &loop, SLOT(quit()));
+			loop.exec();
 
-				  bool setsuc = comm->setDynamicMidjob_Mode(1);//mode 0 midjob every 4, 1 ,2 send by comm
-				  setsuc = comm->setDynamicMidjob_PageInterval(wiperFrequency);//mode 0 midjob every 4, 1 ,2 send by comm
-				  QString setsucs = "setDynamicMidjob_Mode : " + QString::number(setsuc) + "\n";
-				  fprintf(dbgff, setsucs.toStdString().c_str()); //@@@
-				  fflush(dbgff);
+			CheckListWidget  checkListWidget(&pjii->getPJI());
+			comm->PreAndPrintingHeated(tempHeatParam.at(0), tempHeatParam.at(1), tempHeatParam.at(2), tempHeatParam.at(3));
+			comm->PostHeated(tempHeatParam.at(4), tempHeatParam.at(5), tempHeatParam.at(6));
 
-				  comm->WiperIndex(wiperIndex);
-				  comm->WiperClick(wiperClick);
+			bool setsuc = comm->setDynamicMidjob_Mode(1);//mode 0 midjob every 4, 1 ,2 send by comm
+			setsuc = comm->setDynamicMidjob_PageInterval(wiperFrequency);//mode 0 midjob every 4, 1 ,2 send by comm
+			QString setsucs = "setDynamicMidjob_Mode : " + QString::number(setsuc) + "\n";
+			fprintf(dbgff, setsucs.toStdString().c_str()); //@@@
+			fflush(dbgff);
 
-				  /*
-					send Roller_stop_page
-				  */
+			comm->WiperIndex(wiperIndex);
+			comm->WiperClick(wiperClick);
 
-				  if (!layerPrintMode)
-					  comm->PrintMode(1);
-				  else
-					  comm->PrintMode(2);
-				  checkListWidget.exec();
-				  if (checkListWidget.result() == QDialog::Accepted || DSP_TEST_MODE)
-					  //if (true)
-				  {
-					  //assert(checkListWidget.sendHeader(pjii->getPJI()));
-					  pjii->genCSVFile();
+			/*
+			  send Roller_stop_page
+			  */
+
+			if (!layerPrintMode)
+				comm->PrintMode(1);
+			else
+				comm->PrintMode(2);
+			checkListWidget.exec();
+			if (checkListWidget.result() == QDialog::Accepted || DSP_TEST_MODE)
+				//if (true)
+			{
+				//assert(checkListWidget.sendHeader(pjii->getPJI()));
+				pjii->genCSVFile();
 
 
-					  bool headt = checkListWidget.sendHeader(pjii->getPJI(), fanSpeed, pjpGenZX.getprintJobParam().getFloat("slice_height"));
-					  if (headt || DSP_TEST_MODE)
-					  {
-						  //QMessageBox::information(this, "Info", "header transfer successful");
-						  int waitTime = 0;
-						  while (true && (!DSP_TEST_MODE))
-						  {
-							  Sleep(500);
-							  std::string s, e;
-							  comm->printerStatus(s, e);
+				bool headt = checkListWidget.sendHeader(pjii->getPJI(), fanSpeed, pjpGenZX.getprintJobParam().getFloat("slice_height"));
+				if (headt || DSP_TEST_MODE)
+				{
+					//QMessageBox::information(this, "Info", "header transfer successful");
+					int waitTime = 0;
+					while (true && (!DSP_TEST_MODE))
+					{
+						Sleep(500);
+						std::string s, e;
+						comm->printerStatus(s, e);
 
-							  QString temp = QString::fromStdString(s);
-							  fprintf(dbgff, temp.toStdString().c_str()); //@@@
-							  fflush(dbgff);
-							  if (temp == "Printing")
-								  //if (temp == "Online")
-							  {
-								  genThnumbnail();
-								  break;
-							  }
-							  waitTime += 500;
-							  if (waitTime > 600000)
-							  {
-								  QMessageBox::information(this, "Info", "Timeout");
-								  return false;
-							  }
+						QString temp = QString::fromStdString(s);
+						fprintf(dbgff, temp.toStdString().c_str()); //@@@
+						fflush(dbgff);
+						if (temp == "Printing")
+							//if (temp == "Online")
+						{
+							genThnumbnail();
+							break;
+						}
+						waitTime += 500;
+						if (waitTime > 600000)
+						{
+							QMessageBox::information(this, "Info", "Timeout");
+							return false;
+						}
 
-						  }
-						  /*
-						  Create Snap Shot
-						  */
-						  //executeFilter(PM.actionFilterMap.value("FP_SAVE_DEFAULT_SNAP_SHOT"), pjpGenZX.getprintJobParam(), false);
-						  /**/
-						  openDashboard(true);
-						  qb->show();
-						  if (!Channel_control_mode)
-							  executeFilter(PM.actionFilterMap.value("FP_PRINT_FLOW_2_V3"), pjpGenZX.getprintJobParam(), false);
-						  else
-							  executeFilter(PM.actionFilterMap.value("FP_PRINT_FOUR_IN_ONE"), pjpGenZX.getprintJobParam(), false);
+					}
+					/*
+					Create Snap Shot
+					*/
+					//executeFilter(PM.actionFilterMap.value("FP_SAVE_DEFAULT_SNAP_SHOT"), pjpGenZX.getprintJobParam(), false);
+					/**/
+					openDashboard(true);
+					qb->show();
+					if (!Channel_control_mode)
+						executeFilter(PM.actionFilterMap.value("FP_PRINT_FLOW_2_V3"), pjpGenZX.getprintJobParam(), false);
+					else
+						executeFilter(PM.actionFilterMap.value("FP_PRINT_FOUR_IN_ONE"), pjpGenZX.getprintJobParam(), false);
 
-						  /*RichParameterSet tt;
-						  executeFilter(PM.actionFilterMap.value("count_hole"), tt, false);
-						  int x = tt.getInt("holeNum");
+					/*RichParameterSet tt;
+					executeFilter(PM.actionFilterMap.value("count_hole"), tt, false);
+					int x = tt.getInt("holeNum");
 
-						  if (tt.getInt("holeNum") > 0)
-						  {
-						  QMessageBox mb(QMessageBox::NoIcon, "Mesh contain Hole!", "Mesh contain Hole! \nPrint may not successful !\nStill want to print? ", QMessageBox::NoButton, this);
-						  QPushButton *ok = mb.addButton("OK", QMessageBox::AcceptRole);
-						  mb.addButton(QMessageBox::Cancel);
-						  //mb.setInformativeText(tr( "Press button to retry connect printer\n") );
-						  mb.exec();
+					if (tt.getInt("holeNum") > 0)
+					{
+					QMessageBox mb(QMessageBox::NoIcon, "Mesh contain Hole!", "Mesh contain Hole! \nPrint may not successful !\nStill want to print? ", QMessageBox::NoButton, this);
+					QPushButton *ok = mb.addButton("OK", QMessageBox::AcceptRole);
+					mb.addButton(QMessageBox::Cancel);
+					//mb.setInformativeText(tr( "Press button to retry connect printer\n") );
+					mb.exec();
 
-						  if (mb.clickedButton() == ok)
-						  {
-						  openDashboard(true);
-						  qb->show();
-						  executeFilter(PM.actionFilterMap.value("Print_Flow_2"), pjpGenZX.getprintJobParam(), false);
-						  }
-						  else
-						  {
-						  openDashboard(true);
-						  return false;
-						  }
-						  }
-						  else
-						  {
-						  openDashboard(true);
-						  qb->show();
-						  executeFilter(PM.actionFilterMap.value("Print_Flow_2"), pjpGenZX.getprintJobParam(), false);
-						  }*/
-					  }
-					  else
-					  {
-						  QMessageBox::information(this, "Info", "Printer header transfer false");
-						  /*qb->show();
-						  executeFilter(PM.actionFilterMap.value("Print_Flow_2"), printParam, false);*/
-						  return false;
-					  }
-				  }
-				  qb->reset();
-				  delOl(MeshModel::meshsort::slice_item);
-			  }
-			  //checkListWidget.~CheckListWidget();
+					if (mb.clickedButton() == ok)
+					{
+					openDashboard(true);
+					qb->show();
+					executeFilter(PM.actionFilterMap.value("Print_Flow_2"), pjpGenZX.getprintJobParam(), false);
+					}
+					else
+					{
+					openDashboard(true);
+					return false;
+					}
+					}
+					else
+					{
+					openDashboard(true);
+					qb->show();
+					executeFilter(PM.actionFilterMap.value("Print_Flow_2"), pjpGenZX.getprintJobParam(), false);
+					}*/
+				}
+				else
+				{
+					QMessageBox::information(this, "Info", "Printer header transfer false");
+					/*qb->show();
+					executeFilter(PM.actionFilterMap.value("Print_Flow_2"), printParam, false);*/
+					return false;
+				}
+			}
+			qb->reset();
+			delOl(MeshModel::meshsort::slice_item);
+		}
+		//checkListWidget.~CheckListWidget();
 	}
-		break;
+	break;
 	}
 
 	return true;
@@ -8110,7 +8133,7 @@ bool MainWindow::print_test_page_function()
 
 	//pjpGenZX.setPlusSpitton(true);
 	//executeFilter(PM.actionFilterMap.value("FP_PRINT_TEST_PAGE"), pjpGenZX.getprintJobParam(), false);
-	
+
 	/*if (DSP_TEST_MODE)
 		pjpGenZX.setPrintStart(false);
 		else*/
@@ -8119,7 +8142,7 @@ bool MainWindow::print_test_page_function()
 		executeFilter(PM.actionFilterMap.value("FP_PRINT_TEST_PAGE"), pjpGenZX.getprintJobParam(), false);*/
 
 	if (printOption_->result() || DSP_TEST_MODE) //backup	
-	//if (1)
+		//if (1)
 	{
 		/*bool headt = comm->sendPrintjobHeader(1, 10, 'S');
 		if (true)
@@ -8178,55 +8201,55 @@ bool MainWindow::print_test_page_function()
 				case Comm3DP::printer3dpString::printStatus::Poweroff:
 				case Comm3DP::printer3dpString::printStatus::Paused://pause 
 				{
-																		statusLabel->setText(temp);
-																		statusLabel->repaint();
+					statusLabel->setText(temp);
+					statusLabel->repaint();
 				}
-					break;
+				break;
 				case Comm3DP::printer3dpString::printStatus::Pausing://pause
 				{
-																		 statusLabel->setText(temp);
-																		 statusLabel->repaint();
+					statusLabel->setText(temp);
+					statusLabel->repaint();
 				}break;
 				case Comm3DP::printer3dpString::printStatus::Printing://Printing
 				{
-																		  statusLabel->setText(temp);
-																		  statusLabel->repaint();
+					statusLabel->setText(temp);
+					statusLabel->repaint();
 
 
 				}break;
 				case Comm3DP::printer3dpString::printStatus::Online://????
 				{
-																		statusLabel->setText(temp);
-																		statusLabel->repaint();
-																		//bool re = comm->printTestPage();
-																		if (headerSendOnce)
-																		{
-																			/*bool headt = comm->sendPrintjobHeader(1, 10, 'S', 0);
-																			QMessageBox::information(this, "Info", "header transfer successful");
-																			executeFilter(PM.actionFilterMap.value("FP_PRINT_TEST_PAGE"), pjpGenZX.getprintJobParam(), false);*/
-																			headerSendOnce = false;
-																		}
+					statusLabel->setText(temp);
+					statusLabel->repaint();
+					//bool re = comm->printTestPage();
+					if (headerSendOnce)
+					{
+						/*bool headt = comm->sendPrintjobHeader(1, 10, 'S', 0);
+						QMessageBox::information(this, "Info", "header transfer successful");
+						executeFilter(PM.actionFilterMap.value("FP_PRINT_TEST_PAGE"), pjpGenZX.getprintJobParam(), false);*/
+						headerSendOnce = false;
+					}
 
 
 				}break;
 				case Comm3DP::printer3dpString::printStatus::PostPrinting:
 				{
-																			 statusLabel->setText(temp);
-																			 statusLabel->repaint();
+					statusLabel->setText(temp);
+					statusLabel->repaint();
 				}break;
 				case Comm3DP::printer3dpString::printStatus::DoorOpened:
 				{
-																		   statusLabel->setText(temp);
-																		   statusLabel->repaint();
+					statusLabel->setText(temp);
+					statusLabel->repaint();
 				}break;
 				case Comm3DP::printer3dpString::printStatus::GettingError:
 				{
-																			 statusLabel->setText(temp);
-																			 statusLabel->setStyleSheet(WidgetStyleSheet::statusLabel());
-																			 statusLabel->repaint();
-																			 return false;
+					statusLabel->setText(temp);
+					statusLabel->setStyleSheet(WidgetStyleSheet::statusLabel());
+					statusLabel->repaint();
+					return false;
 				}
-					break;
+				break;
 				default:
 				{
 
@@ -8339,69 +8362,69 @@ bool MainWindow::printFunction2()//picasso JR
 	{
 	case 0:
 	{
-			  /*WidgetMonitor widget_p_monitor(printParam);
-			  widget_p_monitor.exec();
-			  if (widget_p_monitor.result() == QDialog::Accepted)
-			  {
-			  qb->show();
-			  executeFilter(PM.actionFilterMap.value("Print_Flow_2"), printParam, false);
-			  }
+		/*WidgetMonitor widget_p_monitor(printParam);
+		widget_p_monitor.exec();
+		if (widget_p_monitor.result() == QDialog::Accepted)
+		{
+		qb->show();
+		executeFilter(PM.actionFilterMap.value("Print_Flow_2"), printParam, false);
+		}
 
-			  qb->reset();
-			  int nextfile = 0;*/
+		qb->reset();
+		int nextfile = 0;*/
 
 
-			  //sendZXfile(meshDoc()->jobname.at(nextfile));
+		//sendZXfile(meshDoc()->jobname.at(nextfile));
 	}
-		break;
+	break;
 	case 1:
 	{
-			  if (printOption_.result()) {
+		if (printOption_.result()) {
 
-				  CheckListWidget  checkListWidget;
-				  checkListWidget.exec();
-				  if (checkListWidget.result() == QDialog::Accepted)
-				  {
-					  //assert(checkListWidget.sendHeader(pjii->getPJI()));
-					  if (checkListWidget.sendHeader(pjii->getPJI()))
-					  {
-						  QMessageBox::information(this, "Info", "header transfer unsuccessful");
+			CheckListWidget  checkListWidget;
+			checkListWidget.exec();
+			if (checkListWidget.result() == QDialog::Accepted)
+			{
+				//assert(checkListWidget.sendHeader(pjii->getPJI()));
+				if (checkListWidget.sendHeader(pjii->getPJI()))
+				{
+					QMessageBox::information(this, "Info", "header transfer unsuccessful");
 
-					  }
-					  RichParameterSet tt;
-					  executeFilter(PM.actionFilterMap.value("count_hole"), tt, false);
-					  int x = tt.getInt("holeNum");
+				}
+				RichParameterSet tt;
+				executeFilter(PM.actionFilterMap.value("count_hole"), tt, false);
+				int x = tt.getInt("holeNum");
 
-					  if (tt.getInt("holeNum") > 0)
-					  {
-						  QMessageBox mb(QMessageBox::NoIcon, "Mesh contain Hole!", "Mesh contain Hole! \nPrint may not successful !\nStill want to print? ", QMessageBox::NoButton, this);
-						  QPushButton *ok = mb.addButton("OK", QMessageBox::AcceptRole);
-						  mb.addButton(QMessageBox::Cancel);
-						  //mb.setInformativeText(tr( "Press button to retry connect printer\n") );
-						  mb.exec();
+				if (tt.getInt("holeNum") > 0)
+				{
+					QMessageBox mb(QMessageBox::NoIcon, "Mesh contain Hole!", "Mesh contain Hole! \nPrint may not successful !\nStill want to print? ", QMessageBox::NoButton, this);
+					QPushButton *ok = mb.addButton("OK", QMessageBox::AcceptRole);
+					mb.addButton(QMessageBox::Cancel);
+					//mb.setInformativeText(tr( "Press button to retry connect printer\n") );
+					mb.exec();
 
-						  if (mb.clickedButton() == ok)
-						  {
-							  qb->show();
-							  executeFilter(PM.actionFilterMap.value("FP_PRINT_JR"), printParam, false);
-						  }
-						  else
-						  {
-							  return false;
-						  }
-					  }
-					  else
-					  {
-						  qb->show();
-						  executeFilter(PM.actionFilterMap.value("FP_PRINT_JR"), printParam, false);
-					  }
-				  }
-				  qb->reset();
-				  delOl(MeshModel::meshsort::slice_item);
-			  }
-			  //checkListWidget.~CheckListWidget();
+					if (mb.clickedButton() == ok)
+					{
+						qb->show();
+						executeFilter(PM.actionFilterMap.value("FP_PRINT_JR"), printParam, false);
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					qb->show();
+					executeFilter(PM.actionFilterMap.value("FP_PRINT_JR"), printParam, false);
+				}
+			}
+			qb->reset();
+			delOl(MeshModel::meshsort::slice_item);
+		}
+		//checkListWidget.~CheckListWidget();
 	}
-		break;
+	break;
 	}
 
 
@@ -8786,7 +8809,7 @@ void MainWindow::testslicefunc(MeshDocument &md, float sliceheight)
 	if (view_outline->isChecked())
 		foreach(MeshModel *tmm, md.meshList)
 	{
-			if (tmm->getMeshSort() == MeshModel::meshsort::print_item)
+		if (tmm->getMeshSort() == MeshModel::meshsort::print_item)
 			if (vcg::tri::HasPerWedgeTexCoord(tmm->cm) || vcg::tri::HasPerVertexColor(tmm->cm))
 			{
 				MeshModel *cap = md.addNewMesh("", olMName, false, RenderMode(GLW::DMTexWire));//backup	
@@ -8819,7 +8842,7 @@ void MainWindow::testslicefunc(MeshDocument &md, float sliceheight)
 				//tri::Clean<CMeshO>::RemoveDuplicateVertex(cap->cm);
 
 			}
-		}
+	}
 
 }
 void MainWindow::contextMenuEvent(QContextMenuEvent *event)
@@ -9232,7 +9255,7 @@ void MainWindow::changeCurrentMeshRenderMode()
 		{
 			MeshModel *m = meshDoc()->getMesh(i);
 
-			
+
 
 			m->Enable(tri::io::Mask::IOM_FACECOLOR);
 
@@ -9284,96 +9307,9 @@ void MainWindow::copyNumber()
 	s_pushbutton->setVisible(false);
 	qb->reset();
 }
-//void MainWindow::genByDMSlicer()
-//{
-//	/*=======================================================
-//	DM_FUNC_TEST
-//	==========================================================*/
-//	QString zxaFilename = QFileDialog::getSaveFileName(this, tr("Save ZX File"), QDir::currentPath(), tr("ZXA File (*.zxa)"));
-//	if (zxaFilename.isEmpty())return;
-//
-//	PrintjobParam pjpGenZX;
-//	pjpGenZX.setCommonPrintValue(meshDoc());
-//	pjpGenZX.setGenZxParam(true);
-//	pjpGenZX.genDebugPic(false);//Test
-//	pjpGenZX.setZXFilePath(zxaFilename);
-//
-//	pjpGenZX.setPrintStart(false);
-//	pjpGenZX.setStartPrintEstimate(true);
-//	pjpGenZX.setColorProfile(currentGlobalParams.getString("COLOR_PROFILE"));
-//	pjpGenZX.setStiffPrint(currentGlobalParams.getBool("STIFF_PRINT"));
-//	pjpGenZX.setDilateBinder(currentGlobalParams.getBool("DILATE_BINDER"));
-//	pjpGenZX.setDialteBinderValue(currentGlobalParams.getInt("DILATE_BINDER_VALUE"));
-//	pjpGenZX.setDynamicWipe(currentGlobalParams.getBool("DYNAMIC_WIPE"));
-//	pjpGenZX.setColorBinding(currentGlobalParams.getBool("COLOR_BINDING"));
-//
-//	//executeFilter(PM.actionFilterMap.value("FP_PRINT_DM_SLICER"), pjpGenZX.getprintJobParam(), false);//	
-//	executeFilter(PM.actionFilterMap.value("FP_PRINT_DM_SLICER_ALPHA"), pjpGenZX.getprintJobParam(), false);//	
-//	
-//	/*add 7zip*/
-//
-//	QString zxtemp = PicaApplication::getRoamingDir();
-//	QDir zx_dir(zxtemp);
-//	zx_dir.setPath(zxtemp + "/zx_file");
-//	/*
-//	gen dynamic info
-//	*/
-//	PrinterJobInfo *pjii = new PrinterJobInfo(this, meshDoc(), &currentGlobalParams);
-//
-//	stringstream ssd;
-//	std::stringbuf *pbuf = ssd.rdbuf();
-//	string delimiter = "=";
-//	//ssd << "name=" << zxFilename.toStdString();
-//	//QMap<QString, QVariant>tempQMap;
-//	QList<QPair<QString, QVariant>> tempQList;
-//	GenPrintInfo::genPrinterInfoDM(currentGlobalParams, tempQList, *pjii);
-//	for (int i = 0; i < tempQList.size(); i++)
-//	{
-//		ssd << tempQList[i].first.toStdString() << delimiter << tempQList[i].second.toString().toStdString() << "\n";
-//	}
-//
-//
-//	QFileInfo tempFileInfo(zxaFilename);
-//	QString strNewName = zx_dir.absolutePath() + "/" + tempFileInfo.completeBaseName() + ".txt";
-//	SKT::WriteToAFile<bool>(ssd, strNewName.toStdString());
-//	const std::string tmp = ssd.str();
-//	int ttt = tmp.size();
-//
-//	QFileInfoList filenin_zx_file = zx_dir.entryInfoList(QStringList() << "*.zx" << "*.txt");
-//
-//	QProcess process;
-//	bool ret = false;
-//	bool ret2 = false;
-//	/*extract file*/
-//	QStringList arguments;
-//	arguments.append("a");
-//	arguments.append(zxaFilename);
-//	foreach(QFileInfo info, filenin_zx_file)
-//		arguments.append(info.absoluteFilePath());
-//	int iReturnCode = QProcess::execute("7z", arguments);
-//
-//
-//
-//	/**/
-//	
-//	//int xd = pbuf->in_avail();
-//
-//	/*string tempZipFilename = zxaFilename.toStdString();
-//	ZipIO zipfile(tempZipFilename.c_str());
-//	zipfile.appendZipFile(tempFileInfo.completeBaseName().toStdString().append(".txt").c_str());
-//	zipfile.writeBuffertoEntry(tmp.c_str(), tmp.size());
-//	zipfile.closeEntry();
-//	zipfile.closeZip();*/
-//	/*
-//	********
-//	*/
-//
-//	/*===========================================================================*/
-//	GLA()->setHastoRefreshVBO();
-//	//GLA()->setHastoUpdatePartVBO();
-//	meshDoc()->setBusy(false);
-//	/*end*/
-//}
+
+
+
 void MainWindow::genByDMSlicer()
 {
 	/*=======================================================
@@ -9383,7 +9319,108 @@ void MainWindow::genByDMSlicer()
 	if (zxaFilename.isEmpty())return;
 	if (QFileInfo(zxaFilename).exists())
 	{
-		QProcess process;		
+		QProcess process;
+		/*extract file*/
+		QStringList arguments;
+		arguments.append("d");
+		arguments.append("-r");
+		arguments.append(zxaFilename);
+		arguments.append("*.*");
+		int iReturnCode = QProcess::execute("7z", arguments);
+	}
+	PrintjobParam pjpGenZX;
+	pjpGenZX.setCommonPrintValue(meshDoc());
+	pjpGenZX.setGenZxParam(true);
+	pjpGenZX.genDebugPic(false);//Test
+	pjpGenZX.setZXFilePath(zxaFilename);
+
+	pjpGenZX.setPrintStart(false);
+	pjpGenZX.setStartPrintEstimate(true);
+	pjpGenZX.setColorProfile(currentGlobalParams.getString("COLOR_PROFILE"));
+	pjpGenZX.setStiffPrint(currentGlobalParams.getBool("STIFF_PRINT"));
+	pjpGenZX.setDilateBinder(currentGlobalParams.getBool("DILATE_BINDER"));
+	pjpGenZX.setDialteBinderValue(currentGlobalParams.getInt("DILATE_BINDER_VALUE"));
+	pjpGenZX.setDynamicWipe(currentGlobalParams.getBool("DYNAMIC_WIPE"));
+	pjpGenZX.setColorBinding(currentGlobalParams.getBool("COLOR_BINDING"));
+
+	//executeFilter(PM.actionFilterMap.value("FP_PRINT_DM_SLICER"), pjpGenZX.getprintJobParam(), false);//	
+	executeFilter(PM.actionFilterMap.value("FP_PRINT_DM_SLICER_ALPHA"), pjpGenZX.getprintJobParam(), false);//	
+
+	/*add 7zip*/
+
+	QString zxtemp = PicaApplication::getRoamingDir();
+	QDir zx_dir(zxtemp);
+	zx_dir.setPath(zxtemp + "/zx_file");
+	/*
+	gen dynamic info
+	*/
+	PrinterJobInfo *pjii = new PrinterJobInfo(this, meshDoc(), &currentGlobalParams);
+
+	stringstream ssd;
+	std::stringbuf *pbuf = ssd.rdbuf();
+	string delimiter = "=";
+	//ssd << "name=" << zxFilename.toStdString();
+	//QMap<QString, QVariant>tempQMap;
+	QList<QPair<QString, QVariant>> tempQList;
+	GenPrintInfo::genPrinterInfoDM(currentGlobalParams, tempQList, *pjii);
+	for (int i = 0; i < tempQList.size(); i++)
+	{
+		ssd << tempQList[i].first.toStdString() << delimiter << tempQList[i].second.toString().toStdString() << "\n";
+	}
+
+
+	QFileInfo tempFileInfo(zxaFilename);
+	QString strNewName = zx_dir.absolutePath() + "/" + tempFileInfo.completeBaseName() + ".txt";
+	SKT::WriteToAFile<bool>(ssd, strNewName.toStdString());
+	const std::string tmp = ssd.str();
+	int ttt = tmp.size();
+
+	QFileInfoList filenin_zx_file = zx_dir.entryInfoList(QStringList() << "*.zx" << "*.txt");
+
+	QProcess process;
+	bool ret = false;
+	bool ret2 = false;
+	/*extract file*/
+	QStringList arguments;
+	arguments.append("a");
+	arguments.append(zxaFilename);
+	foreach(QFileInfo info, filenin_zx_file)
+		arguments.append(info.absoluteFilePath());
+	int iReturnCode = QProcess::execute("7z", arguments);
+
+
+
+	/**/
+
+	//int xd = pbuf->in_avail();
+
+	/*string tempZipFilename = zxaFilename.toStdString();
+	ZipIO zipfile(tempZipFilename.c_str());
+	zipfile.appendZipFile(tempFileInfo.completeBaseName().toStdString().append(".txt").c_str());
+	zipfile.writeBuffertoEntry(tmp.c_str(), tmp.size());
+	zipfile.closeEntry();
+	zipfile.closeZip();*/
+	/*
+	********
+	*/
+
+	/*===========================================================================*/
+	GLA()->setHastoRefreshVBO();
+	//GLA()->setHastoUpdatePartVBO();
+	meshDoc()->setBusy(false);
+	/*end*/
+}
+
+void MainWindow::genByDMSlicer_BJM()
+{
+	/*=======================================================
+	DM_FUNC_TEST
+	==========================================================*/
+	QString zxaFilename = QFileDialog::getSaveFileName(this, tr("Save ZX File"), QDir::currentPath(), tr("ZXA File (*.zxa)"));
+	if (zxaFilename.isEmpty())return;
+	if (QFileInfo(zxaFilename).exists())
+	{
+		QProcess process;
 		/*extract file*/
 		QStringList arguments;
 		arguments.append("d");
@@ -9418,24 +9455,24 @@ void MainWindow::genByDMSlicer()
 	zx_dir.setPath(zxtemp + "/zx_file");
 
 
-	
+
 
 	/*
 	gen dynamic info
 	*/
 	PrinterJobInfo *pjii = new PrinterJobInfo(this, meshDoc(), &currentGlobalParams, NULL, PrinterJobInfo::PrintOptionMode);
 
-	
-	
+
+
 	QFileInfo tempFileInfo(zxaFilename);
 	QString strNewName = zx_dir.absolutePath() + "/" + "metadata.json";
 	QString zxFileName = /*zx_dir.absolutePath() + "/" + */tempFileInfo.completeBaseName() + ".zx";
 	QString thumbNailFileName = /*zx_dir.absolutePath() + "/" +*/ tempFileInfo.completeBaseName() + ".png";
 	QString stlStr = zx_dir.absolutePath() + "/" + tempFileInfo.completeBaseName() + ".stl";
-	
+
 	/*
 	Create Snap Shot
-	*/	
+	*/
 	executeFilter(PM.actionFilterMap.value("FP_SAVE_DEFAULT_SNAP_SHOT"), pjpGenZX.getprintJobParam(), false);
 
 	/*
@@ -9447,11 +9484,12 @@ void MainWindow::genByDMSlicer()
 	/*
 	save STL
 	*/
-	
+
 	MeshModel *newMesh = new MeshModel(meshDoc(), "", "b");
-	newMesh->updateDataMask(meshDoc()->mm()->dataMask());
+	//newMesh->updateDataMask(meshDoc()->mm()->dataMask());
 	foreach(MeshModel *mm, meshDoc()->meshList)
 	{
+		newMesh->updateDataMask(mm->dataMask());
 		vcg::tri::Append<CMeshO, CMeshO>::Mesh(newMesh->cm, mm->cm);
 		tri::UpdateNormal<CMeshO>::PerVertex(newMesh->cm);
 	}
@@ -9466,12 +9504,12 @@ void MainWindow::genByDMSlicer()
 
 		QString extension = "stl";// stlStr;
 		//extension.remove(0, stlStr.lastIndexOf('.') + 1);
-		
+
 
 		MeshIOInterface *pCurrentIOPlugin = PM.allKnowOutputFormats[extension.toLower()];
 		if (pCurrentIOPlugin == 0)
 		{
-			QMessageBox::warning(this, "Unknown type", "File extension not supported!");			
+			QMessageBox::warning(this, "Unknown type", "File extension not supported!");
 		}
 		//MeshIOInterface* pCurrentIOPlugin = meshIOPlugins[idx-1];
 		pCurrentIOPlugin->setLog(&meshDoc()->Log);
@@ -9485,7 +9523,7 @@ void MainWindow::genByDMSlicer()
 		pCurrentIOPlugin->initSaveParameter(extension, *(newMesh), savePar);
 		//***20160711***
 		int mask = 256;// maskDialog.GetNewMask();
-		
+
 		re4t = pCurrentIOPlugin->save(extension, stlStr, *newMesh, mask, savePar, QCallBack, this);//****save function	
 
 
@@ -9502,8 +9540,8 @@ void MainWindow::genByDMSlicer()
 
 
 
-	QFileInfoList filenin_zx_file = zx_dir.entryInfoList(QStringList() << "*.zx" << "*.json"<<"*.png"<<"*.stl");
-	
+	QFileInfoList filenin_zx_file = zx_dir.entryInfoList(QStringList() << "*.zx" << "*.json" << "*.png" << "*.stl");
+
 
 
 
@@ -9586,7 +9624,7 @@ void MainWindow::testFuncFunc()
 
 	//int iReturnCode = QProcess::execute("7z", arguments);
 
-	
+
 	/*get file name*/
 	/*arguments.clear();
 	arguments.append("l");
@@ -9612,7 +9650,8 @@ void MainWindow::testFuncFunc()
 	/*========================================================================================
 	test save snap shot
 	========================================================================================*/
-	
+
+
 	//PrintjobParam pjpGenZX;
 	//pjpGenZX.setCommonPrintValue(meshDoc());
 	//pjpGenZX.setGenZxParam(true);
@@ -9636,7 +9675,7 @@ void MainWindow::testFuncFunc()
 	test seperate
 	========================================================================================*/
 	RichParameterSet printParam;
-	executeFilter(PM.actionFilterMap.value("FP_SEPERATE_TEST"), printParam, false);	
+	executeFilter(PM.actionFilterMap.value("FP_SEPERATE_TEST"), printParam, false);
 	/*
 	========================================================================================
 	========================================================================================
@@ -9656,7 +9695,7 @@ void MainWindow::testFuncFunc()
 	x.Zero();
 	x.X() = 1;
 
-	
+
 
 
 	/*
@@ -10608,7 +10647,7 @@ void MainWindow::transferFilterNameSlot()
 		PM.actionFilterMap.value("JUSTIFY_BACK")->trigger();
 		currentViewContainer()->undoStack->push(new justify_command(this, meshDoc(), meshDoc()->multiSelectID, savePos, false));
 	}
-	else if(action->text() == "Right")
+	else if (action->text() == "Right")
 	{
 		PM.actionFilterMap.value("JUSTIFY_RIGHT")->trigger();
 		currentViewContainer()->undoStack->push(new justify_command(this, meshDoc(), meshDoc()->multiSelectID, savePos, false));
@@ -10718,7 +10757,7 @@ void MainWindow::transferFilterNameSlot()
 	else if (action->text() == "Reset View")
 		viewOriginalAct->trigger();
 
-	else if (action->text() == "Auto Placement")		
+	else if (action->text() == "Auto Placement")
 		PM.actionFilterMap.value("FP_TEST_SEARCH_SPACE_ALL_IMAGE")->trigger();
 	else if (action->text() == "Auto Placement(Bounding Box)")
 	{
@@ -11075,13 +11114,13 @@ bool MainWindow::testReadZX(QString zxFilename)
 	int pageCount = zx->getZxNPage(zxFilename.toStdString().c_str());
 	QMessageBox::information(this, tr("ZX File Reader"), tr("There are %1 pages in this file.").arg(pageCount));
 	//***********************
-	PrintOption printOption_(PrintOption::optionMode::PRINT_ZXA_FLE,this, meshDoc());
+	PrintOption printOption_(PrintOption::optionMode::PRINT_ZXA_FILE, this, meshDoc());
 
 	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("testReadZX"));
 
 	//float *cmyusage = getCmyusage();
 	cmyusage.clear();
-	PrinterJobInfo *pjii = new PrinterJobInfo(this, meshDoc(), &currentGlobalParams,&cmyusage);
+	PrinterJobInfo *pjii = new PrinterJobInfo(this, meshDoc(), &currentGlobalParams, &cmyusage);
 	pjii->setLayers(pageCount);
 	//WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T("testReadZX"));
 	printOption_.updatePrintSummaryLabel(pjii->getPJI());
@@ -11103,7 +11142,7 @@ bool MainWindow::testReadZX(QString zxFilename)
 	pjpGenZX.setMono(printOption_.getMonoParam());
 	pjpGenZX.setPrintStart(true);
 
-	int fanSpeed =  currentGlobalParams.getInt("FAN_SPEED");
+	int fanSpeed = currentGlobalParams.getInt("FAN_SPEED");
 	int pumpValue = currentGlobalParams.getInt("PUMP_VALUE");
 	bool dynamicSwitch = currentGlobalParams.getBool("DYNAMIC_WIPE");
 	pause_button->setVisible(false);
@@ -11119,106 +11158,106 @@ bool MainWindow::testReadZX(QString zxFilename)
 	{
 	case 0:
 	{
-			  /*WidgetMonitor widget_p_monitor(printParam);
-			  widget_p_monitor.exec();
-			  if (widget_p_monitor.result() == QDialog::Accepted)
-			  {
-			  qb->show();
-			  executeFilter(PM.actionFilterMap.value("Print_Flow_2"), printParam, false);
-			  }
+		/*WidgetMonitor widget_p_monitor(printParam);
+		widget_p_monitor.exec();
+		if (widget_p_monitor.result() == QDialog::Accepted)
+		{
+		qb->show();
+		executeFilter(PM.actionFilterMap.value("Print_Flow_2"), printParam, false);
+		}
 
-			  qb->reset();
-			  int nextfile = 0;*/
+		qb->reset();
+		int nextfile = 0;*/
 
 
-			  //sendZXfile(meshDoc()->jobname.at(nextfile));
+		//sendZXfile(meshDoc()->jobname.at(nextfile));
 	}
-		break;
+	break;
 	case 1:
 	{
-			  if (printOption_.result()) {//backup
-				  //if (1){
+		if (printOption_.result()) {//backup
+			//if (1){
 
-				  //if (!printOption_.result()){
-				  comm->PreAndPrintingHeated(tempHeatParam.at(0), tempHeatParam.at(1), tempHeatParam.at(2), tempHeatParam.at(3));
-				  comm->PostHeated(tempHeatParam.at(4), tempHeatParam.at(5), tempHeatParam.at(6));
-				  comm->WiperIndex(wiperIndex);
-				  comm->WiperClick(wiperClick);
-				  bool setsuc = comm->setDynamicMidjob_Mode(1);//mode 0 midjob every 4, 1 ,2 send by comm
-				  setsuc = comm->setDynamicMidjob_PageInterval(wiperFrequency);//mode 0 midjob every 4, 1 ,2 send by comm
-				  CheckListWidget  checkListWidget(&pjii->getPJI());
+			//if (!printOption_.result()){
+			comm->PreAndPrintingHeated(tempHeatParam.at(0), tempHeatParam.at(1), tempHeatParam.at(2), tempHeatParam.at(3));
+			comm->PostHeated(tempHeatParam.at(4), tempHeatParam.at(5), tempHeatParam.at(6));
+			comm->WiperIndex(wiperIndex);
+			comm->WiperClick(wiperClick);
+			bool setsuc = comm->setDynamicMidjob_Mode(1);//mode 0 midjob every 4, 1 ,2 send by comm
+			setsuc = comm->setDynamicMidjob_PageInterval(wiperFrequency);//mode 0 midjob every 4, 1 ,2 send by comm
+			CheckListWidget  checkListWidget(&pjii->getPJI());
 
-				  checkListWidget.exec();
-				  if (checkListWidget.result() == QDialog::Accepted)
-				  {
-					  //assert(checkListWidget.sendHeader(pjii->getPJI()));
-					  //bool headt = checkListWidget.sendHeader(pjii->getPJI());
-					  bool headt = checkListWidget.sendHeader(pjii->getPJI(), fanSpeed, pjpGenZX.getprintJobParam().getFloat("slice_height"));
-					  if (headt)
-					  {
-						  //QMessageBox::information(this, "Info", "header transfer successful");
-						  int waitTime = 0;
-						  while (true)
-						  {
-							  Sleep(500);
-							  std::string s, e;
-							  comm->printerStatus(s, e);
-							  QString temp = QString::fromStdString(s);
-							  if (temp == "Printing")
-							  {
-								  //if (dynamicWipewfile.exists())
-								  //{
-								  // bool setsuc = comm->setDynamicMidjob_Mode(2);//mode 0 midjob every 4, 1 ,2 send by comm
-								  // QMapIterator<int, int> imap(dynamicWipe);
-								  // while (imap.hasNext()) {
-								  //  imap.next();
-								  //  comm->setDynamicMidjob_Page(imap.key(), imap.value());										  
-								  // }
-								  //}
-								  //else
-								  //{
-								  //bool setsuc = comm->setDynamicMidjob_Mode(0);//mode 0 midjob every 4, 1 ,2 send by comm
+			checkListWidget.exec();
+			if (checkListWidget.result() == QDialog::Accepted)
+			{
+				//assert(checkListWidget.sendHeader(pjii->getPJI()));
+				//bool headt = checkListWidget.sendHeader(pjii->getPJI());
+				bool headt = checkListWidget.sendHeader(pjii->getPJI(), fanSpeed, pjpGenZX.getprintJobParam().getFloat("slice_height"));
+				if (headt)
+				{
+					//QMessageBox::information(this, "Info", "header transfer successful");
+					int waitTime = 0;
+					while (true)
+					{
+						Sleep(500);
+						std::string s, e;
+						comm->printerStatus(s, e);
+						QString temp = QString::fromStdString(s);
+						if (temp == "Printing")
+						{
+							//if (dynamicWipewfile.exists())
+							//{
+							// bool setsuc = comm->setDynamicMidjob_Mode(2);//mode 0 midjob every 4, 1 ,2 send by comm
+							// QMapIterator<int, int> imap(dynamicWipe);
+							// while (imap.hasNext()) {
+							//  imap.next();
+							//  comm->setDynamicMidjob_Page(imap.key(), imap.value());										  
+							// }
+							//}
+							//else
+							//{
+							//bool setsuc = comm->setDynamicMidjob_Mode(0);//mode 0 midjob every 4, 1 ,2 send by comm
 
-								  //}
+							//}
 
-								  break;
-							  }
-							  waitTime += 500;
-							  if (waitTime > 600000)
-							  {
-								  QMessageBox::information(this, "Info", "Timeout");
-								  return false;
-							  }
+							break;
+						}
+						waitTime += 500;
+						if (waitTime > 600000)
+						{
+							QMessageBox::information(this, "Info", "Timeout");
+							return false;
+						}
 
-						  }
-						  RichParameterSet tt;
-						  openDashboard(true);
+					}
+					RichParameterSet tt;
+					openDashboard(true);
 
 
 
-						  sendZXfile(zxFilename);
-						  /*int i = (int)ShellExecuteA(0, ("open"), "USBSend.exe", zxFilename.toStdString().c_str(), 0, SW_SHOWNORMAL);
-						  qDebug() << "shell value: " << i;
-						  if (i > 32)
-						  QMessageBox::information(this, tr("USBSend.EXE"), tr("file %1 successfuly opened by USBSend.exe").arg(fi.fileName()));
-						  else
-						  QMessageBox::information(this, tr("USBSend.EXE"), tr("file %1 failed to open by USBSend.exe").arg(fi.fileName()));*/
+					sendZXfile(zxFilename);
+					/*int i = (int)ShellExecuteA(0, ("open"), "USBSend.exe", zxFilename.toStdString().c_str(), 0, SW_SHOWNORMAL);
+					qDebug() << "shell value: " << i;
+					if (i > 32)
+					QMessageBox::information(this, tr("USBSend.EXE"), tr("file %1 successfuly opened by USBSend.exe").arg(fi.fileName()));
+					else
+					QMessageBox::information(this, tr("USBSend.EXE"), tr("file %1 failed to open by USBSend.exe").arg(fi.fileName()));*/
 
-					  }
-					  else
-					  {
-						  QMessageBox::information(this, "Info", "Printer header transfer false");
-						  /*qb->show();
-						  executeFilter(PM.actionFilterMap.value("Print_Flow_2"), printParam, false);*/
-						  return false;
-					  }
-				  }
-				  qb->reset();
-				  delOl(MeshModel::meshsort::slice_item);
-			  }
-			  //checkListWidget.~CheckListWidget();
+				}
+				else
+				{
+					QMessageBox::information(this, "Info", "Printer header transfer false");
+					/*qb->show();
+					executeFilter(PM.actionFilterMap.value("Print_Flow_2"), printParam, false);*/
+					return false;
+				}
+			}
+			qb->reset();
+			delOl(MeshModel::meshsort::slice_item);
+		}
+		//checkListWidget.~CheckListWidget();
 	}
-		break;
+	break;
 	}
 
 	return true;
@@ -11332,12 +11371,12 @@ bool MainWindow::testReadZip(QString zxaAFilename)
 	}
 	else {
 		qDebug() << "can't get printJob";
-		
+
 	}
 	(void)iReturnCode;
 
 	//***get zx file and txt
-	
+
 	QString zxfile, dynamicfile;
 
 	zxfile = QString::fromStdString(extract_zxa_dirName) + "/" + printJob;
@@ -11360,7 +11399,28 @@ bool MainWindow::testReadZip(QString zxaAFilename)
 		dynamicWipe = tempmap;
 
 	}
-
+	int monomode = 0;
+	double layer_Height = 0;
+	QString stiff_mode;
+	int layer_Mode = 1;
+	if (dynamicWipewfile.exists())
+	{
+		QSettings settings(dynamicfile, QSettings::IniFormat);
+		monomode = settings.value("MONO_MODE").toInt();
+		layer_Height = settings.value("Layer_Height").toInt() / 10000.;
+		stiff_mode = settings.value("Print_Mode").toString();
+	}
+	if (monomode == 1 && layer_Height == 0)
+	{
+		QMessageBox::critical(this, tr("Can't get layer_Height "), tr("layer_Height = 0"));
+		return 0;
+	}
+	if (stiff_mode == "1Layer1Page")
+		layer_Mode = 1;
+	else if (stiff_mode == "1Layer2Page")
+		layer_Mode = 2;
+	qWarning() << "Print_Mode" << stiff_mode;
+	qWarning() << "layer_Mode" << layer_Mode;
 	/*QFileInfo fi(zxaAFilename);
 	if (fi.suffix().toLower() != "zx")
 	{
@@ -11371,7 +11431,15 @@ bool MainWindow::testReadZip(QString zxaAFilename)
 	int pageCount = zx->getZxNPage(zxfile.toStdString().c_str());
 	QMessageBox::information(this, tr("ZX File Reader"), tr("There are %1 pages in this file.").arg(pageCount));
 	//***********************
-	PrintOption printOption_(PrintOption::optionMode::PRINT_ZXA_FLE, this, meshDoc());
+	//PrintOption printOption_(PrintOption::optionMode::PRINT_ZXA_FILE, this, meshDoc());
+	PrintOption *printOption_;// (PrintOption::optionMode::PRINT_ZXA_FILE, this, meshDoc());
+
+	if (!monomode)
+	{
+		printOption_ = new PrintOption(PrintOption::optionMode::PRINT_ZXA_FILE, this, meshDoc());
+	}
+	else
+		printOption_ = new PrintOption(PrintOption::optionMode::PRINT_ZXA_MONO_FILE, this, meshDoc());
 
 	WRITELOG(logger, framework::Diagnostics::LogLevel::Info, _T(""));
 
@@ -11380,22 +11448,24 @@ bool MainWindow::testReadZip(QString zxaAFilename)
 	PrinterJobInfo *pjii = new PrinterJobInfo(this, meshDoc(), &currentGlobalParams, &cmyusage);
 	pjii->setLayers(pageCount);
 
-	printOption_.updatePrintSummaryLabel(pjii->getPJI());
-	printOption_.exec();
+	printOption_->updatePrintSummaryLabel(pjii->getPJI());
+	printOption_->exec();
 	int wiperFrequency = currentGlobalParams.getInt("MIDJOB_FREQUENCY"); //printOption_.getWiperFrequency();
 	int wiperIndex = currentGlobalParams.getInt("WIPER_INDEX");// printOption_.getWiperIndex();
 	int wiperClick = currentGlobalParams.getInt("WIPER_CLICK"); //printOption_.getWiperClick();
-
+	bool ir_On_Off_Setting = currentGlobalParams.getBool("IR_On_Off");
 	QVector<int> tempHeatParam;
-	printOption_.getHeatStuffParam(tempHeatParam);
+	printOption_->getHeatStuffParam(tempHeatParam);
 	PrintjobParam pjpGenZX;
 	pjpGenZX.setCommonPrintValue(meshDoc());
 	pjpGenZX.setGenZxParam(true);
-	pjpGenZX.setMono(printOption_.getMonoParam());
+	pjpGenZX.setMono(printOption_->getMonoParam());
 	pjpGenZX.setPrintStart(true);
 
 
-	int fanSpeed =  currentGlobalParams.getInt("FAN_SPEED");
+	float x = pjpGenZX.getprintJobParam().getFloat("slice_height");
+
+	int fanSpeed = currentGlobalParams.getInt("FAN_SPEED");
 	int pumpValue = currentGlobalParams.getInt("PUMP_VALUE");
 	pause_button->setVisible(false);
 	s_pushbutton->setVisible(false);
@@ -11407,110 +11477,197 @@ bool MainWindow::testReadZip(QString zxaAFilename)
 	comm->sendSCICommand(cmdd, s_result);
 
 
-	switch (1)
+
+	switch (monomode)
 	{
 	case 0:
 	{
-			  /*WidgetMonitor widget_p_monitor(printParam);
-			  widget_p_monitor.exec();
-			  if (widget_p_monitor.result() == QDialog::Accepted)
-			  {
-			  qb->show();
-			  executeFilter(PM.actionFilterMap.value("Print_Flow_2"), printParam, false);
-			  }
-
-			  qb->reset();
-			  int nextfile = 0;*/
+		if (printOption_->result()) {//backup
+			//if (1){
+			QString irCommand;
+			if (ir_On_Off_Setting)
+				irCommand = SKT::createJsonStringCommand("FPGA", "@HTO", QStringList());
+			else
+				irCommand = SKT::createJsonStringCommand("FPGA", "@HTC", QStringList());
+			comm->SendJSONCmd(irCommand.toStdString());
 
 
-			  //sendZXfile(meshDoc()->jobname.at(nextfile));
+			comm->PreAndPrintingHeated(tempHeatParam.at(0), tempHeatParam.at(1), tempHeatParam.at(2), tempHeatParam.at(3));
+			comm->PostHeated(tempHeatParam.at(4), tempHeatParam.at(5), tempHeatParam.at(6));
+			comm->WiperIndex(wiperIndex);
+			comm->WiperClick(wiperClick);
+			bool setsuc = comm->setDynamicMidjob_Mode(1);//mode 0 midjob every 4, 1 ,2 send by comm
+			setsuc = comm->setDynamicMidjob_PageInterval(wiperFrequency);//mode 0 midjob every 4, 1 ,2 send by comm
+
+			comm->PrintMode(layer_Mode);
+
+			//if (!printOption_.result()){
+			CheckListWidget  checkListWidget(&pjii->getPJI());
+
+			checkListWidget.exec();
+			if (checkListWidget.result() == QDialog::Accepted)
+				//if (1)
+			{
+				//assert(checkListWidget.sendHeader(pjii->getPJI()));
+				bool headt = checkListWidget.sendHeader(pjii->getPJI(), fanSpeed, pjpGenZX.getprintJobParam().getFloat("slice_height"));
+				if (headt)
+				{
+					//QMessageBox::information(this, "Info", "header transfer successful");
+					int waitTime = 0;
+					while (true)
+					{
+						Sleep(500);
+						std::string s, e;
+						comm->printerStatus(s, e);
+						QString temp = QString::fromStdString(s);
+						if (temp == "Printing")
+						{
+							if (dynamicWipewfile.exists())
+							{
+								//bool setsuc = comm->setDynamicMidjob_Mode(2);//mode 0 midjob every 4, 1 ,2 send by comm
+
+								QMapIterator<int, int> imap(dynamicWipe);
+								while (imap.hasNext()) {
+									imap.next();
+									comm->setDynamicMidjob_Page(imap.key(), imap.value());
+								}
+							}
+							else
+							{
+								bool setsuc = comm->setDynamicMidjob_Mode(0);//mode 0 midjob every 4, 1 ,2 send by comm
+							}
+
+							break;
+						}
+						waitTime += 500;
+						if (waitTime > 600000)
+						{
+							QMessageBox::information(this, "Info", "Timeout");
+							return false;
+						}
+
+					}
+					RichParameterSet tt;
+					openDashboard(true);
+
+
+
+					sendZXfile(zxfile);
+					/*int i = (int)ShellExecuteA(0, ("open"), "USBSend.exe", zxFilename.toStdString().c_str(), 0, SW_SHOWNORMAL);
+					qDebug() << "shell value: " << i;
+					if (i > 32)
+					QMessageBox::information(this, tr("USBSend.EXE"), tr("file %1 successfuly opened by USBSend.exe").arg(fi.fileName()));
+					else
+					QMessageBox::information(this, tr("USBSend.EXE"), tr("file %1 failed to open by USBSend.exe").arg(fi.fileName()));*/
+
+				}
+				else
+				{
+					QMessageBox::information(this, "Info", "Printer header transfer false");
+					/*qb->show();
+					executeFilter(PM.actionFilterMap.value("Print_Flow_2"), printParam, false);*/
+					return false;
+				}
+			}
+			qb->reset();
+			delOl(MeshModel::meshsort::slice_item);
+		}
+		//checkListWidget.~CheckListWidget();
 	}
-		break;
+	break;
 	case 1:
 	{
-			  //if (printOption_.result()) {//backup
-				  if (1){
-				  comm->PreAndPrintingHeated(tempHeatParam.at(0), tempHeatParam.at(1), tempHeatParam.at(2), tempHeatParam.at(3));
-				  comm->PostHeated(tempHeatParam.at(4), tempHeatParam.at(5), tempHeatParam.at(6));
-				  comm->WiperIndex(wiperIndex);
-				  comm->WiperClick(wiperClick);
-				  bool setsuc = comm->setDynamicMidjob_Mode(1);//mode 0 midjob every 4, 1 ,2 send by comm
-				  setsuc = comm->setDynamicMidjob_PageInterval(wiperFrequency);//mode 0 midjob every 4, 1 ,2 send by comm
+		if (printOption_->result()) {//backup
+			//if (1){
+			QString irCommand;
+			if (ir_On_Off_Setting)
+				irCommand = SKT::createJsonStringCommand("FPGA", "@HTO", QStringList());
+			else
+				irCommand = SKT::createJsonStringCommand("FPGA", "@HTC", QStringList());
+			comm->SendJSONCmd(irCommand.toStdString());
 
-				  //if (!printOption_.result()){
-				  CheckListWidget  checkListWidget(&pjii->getPJI());
+			comm->PreAndPrintingHeated(tempHeatParam.at(0), tempHeatParam.at(1), tempHeatParam.at(2), tempHeatParam.at(3));
+			comm->PostHeated(tempHeatParam.at(4), tempHeatParam.at(5), tempHeatParam.at(6));
+			comm->WiperIndex(wiperIndex);
+			comm->WiperClick(wiperClick);
+			bool setsuc = comm->setDynamicMidjob_Mode(1);//mode 0 midjob every 4, 1 ,2 send by comm
+			setsuc = comm->setDynamicMidjob_PageInterval(wiperFrequency);//mode 0 midjob every 4, 1 ,2 send by comm
 
-				  checkListWidget.exec();
-				  //if (checkListWidget.result() == QDialog::Accepted)
-				  if (1)
-				  {
-					  //assert(checkListWidget.sendHeader(pjii->getPJI()));
-					  bool headt = checkListWidget.sendHeader(pjii->getPJI(), fanSpeed, pjpGenZX.getprintJobParam().getFloat("slice_height"));
-					  if (headt)
-					  {
-						  //QMessageBox::information(this, "Info", "header transfer successful");
-						  int waitTime = 0;
-						  while (true)
-						  {
-							  Sleep(500);
-							  std::string s, e;
-							  comm->printerStatus(s, e);
-							  QString temp = QString::fromStdString(s);
-							  if (temp == "Printing")
-							  {
-								  if (dynamicWipewfile.exists())
-								  {
-									  //bool setsuc = comm->setDynamicMidjob_Mode(2);//mode 0 midjob every 4, 1 ,2 send by comm
+			comm->PrintMode(layer_Mode);
+			//if (!printOption_.result()){
+			CheckListWidget  checkListWidget(&pjii->getPJI());
 
-									  QMapIterator<int, int> imap(dynamicWipe);
-									  while (imap.hasNext()) {
-										  imap.next();
-										  comm->setDynamicMidjob_Page(imap.key(), imap.value());
-									  }
-								  }
-								  else
-								  {
-									  bool setsuc = comm->setDynamicMidjob_Mode(0);//mode 0 midjob every 4, 1 ,2 send by comm
-								  }
+			checkListWidget.exec();
+			if (checkListWidget.result() == QDialog::Accepted)
+				//if (1)
+			{
+				//assert(checkListWidget.sendHeader(pjii->getPJI()));
+				bool headt = checkListWidget.sendHeader(pjii->getPJI(), fanSpeed, layer_Height);
+				if (headt)
+				{
+					//QMessageBox::information(this, "Info", "header transfer successful");
+					int waitTime = 0;
+					while (true)
+					{
+						Sleep(500);
+						std::string s, e;
+						comm->printerStatus(s, e);
+						QString temp = QString::fromStdString(s);
+						if (temp == "Printing")
+						{
+							if (dynamicWipewfile.exists())
+							{
+								//bool setsuc = comm->setDynamicMidjob_Mode(2);//mode 0 midjob every 4, 1 ,2 send by comm
 
-								  break;
-							  }
-							  waitTime += 500;
-							  if (waitTime > 600000)
-							  {
-								  QMessageBox::information(this, "Info", "Timeout");
-								  return false;
-							  }
+								QMapIterator<int, int> imap(dynamicWipe);
+								while (imap.hasNext()) {
+									imap.next();
+									comm->setDynamicMidjob_Page(imap.key(), imap.value());
+								}
+							}
+							else
+							{
+								bool setsuc = comm->setDynamicMidjob_Mode(0);//mode 0 midjob every 4, 1 ,2 send by comm
+							}
 
-						  }
-						  RichParameterSet tt;
-						  openDashboard(true);
+							break;
+						}
+						waitTime += 500;
+						if (waitTime > 600000)
+						{
+							QMessageBox::information(this, "Info", "Timeout");
+							return false;
+						}
+
+					}
+					RichParameterSet tt;
+					openDashboard(true);
 
 
 
-						  sendZXfile(zxfile);
-						  /*int i = (int)ShellExecuteA(0, ("open"), "USBSend.exe", zxFilename.toStdString().c_str(), 0, SW_SHOWNORMAL);
-						  qDebug() << "shell value: " << i;
-						  if (i > 32)
-						  QMessageBox::information(this, tr("USBSend.EXE"), tr("file %1 successfuly opened by USBSend.exe").arg(fi.fileName()));
-						  else
-						  QMessageBox::information(this, tr("USBSend.EXE"), tr("file %1 failed to open by USBSend.exe").arg(fi.fileName()));*/
+					sendZXfile(zxfile);
+					/*int i = (int)ShellExecuteA(0, ("open"), "USBSend.exe", zxFilename.toStdString().c_str(), 0, SW_SHOWNORMAL);
+					qDebug() << "shell value: " << i;
+					if (i > 32)
+					QMessageBox::information(this, tr("USBSend.EXE"), tr("file %1 successfuly opened by USBSend.exe").arg(fi.fileName()));
+					else
+					QMessageBox::information(this, tr("USBSend.EXE"), tr("file %1 failed to open by USBSend.exe").arg(fi.fileName()));*/
 
-					  }
-					  else
-					  {
-						  QMessageBox::information(this, "Info", "Printer header transfer false");
-						  /*qb->show();
-						  executeFilter(PM.actionFilterMap.value("Print_Flow_2"), printParam, false);*/
-						  return false;
-					  }
-				  }
-				  qb->reset();
-				  delOl(MeshModel::meshsort::slice_item);
-			  }
-			  //checkListWidget.~CheckListWidget();
+				}
+				else
+				{
+					QMessageBox::information(this, "Info", "Printer header transfer false");
+					/*qb->show();
+					executeFilter(PM.actionFilterMap.value("Print_Flow_2"), printParam, false);*/
+					return false;
+				}
+			}
+			qb->reset();
+			delOl(MeshModel::meshsort::slice_item);
+		}
+		//checkListWidget.~CheckListWidget();
 	}
-		break;
+	break;
 	}
 
 	return true;
@@ -11632,30 +11789,30 @@ void MainWindow::recordRollerPage()
 	bool doublePrint_V2 = currentGlobalParams.getBool("STIFF_PRIN_V2");
 
 	/*
-		foreach every object 
-		get mesh top mm, 
+		foreach every object
+		get mesh top mm,
 		if(two pages in one layer)
-			(height/layer_height)*2
-	*/
+		(height/layer_height)*2
+		*/
 	rollerPage.clear();
 	rollerPageToServer.clear();
 	foreach(MeshModel *mm, meshDoc()->meshList)
 	{
-		double top = mm->cm.bbox.max.Z()+ meshDoc()->groove.max.Z()/2. ;
-		int record = ((top + DSP_grooveZ/2.) / unit + 0.5);
-		assert(record >5);
+		double top = mm->cm.bbox.max.Z() + meshDoc()->groove.max.Z() / 2.;
+		int record = ((top + DSP_grooveZ / 2.) / unit + 0.5);
+		assert(record > 5);
 		if (doublePrint_V2)
 		{
-			for (int i = 5; i >=0; i--)
-				rollerPage.insert(record-i);
+			for (int i = 5; i >= 0; i--)
+				rollerPage.insert(record - i);
 		}
 		else
 		{
-			for (int i = 2; i >=0; i--)
+			for (int i = 2; i >= 0; i--)
 				rollerPage.insert(record - i);
 		}
 
-		
+
 	}
 
 	//QStringList rollerMessageToServer;

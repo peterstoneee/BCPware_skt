@@ -214,7 +214,7 @@ void GenPrintInfo::genPrinterInfo(RichParameterSet &printParam, QMap<QString, QS
 	else
 		printerInfo.insert("Print_Mode", "1Layer2Page");
 	printerInfo.insert("Layer_Height", QString::number(int(unit*10000)));
-
+	printerInfo.insert("MONO_MODE", QString::number(0));
 	//TBD Add DM All Slicer Parameter
 	//printerInfo.insert("Page_Size", printParam.getBool("STIFF_PRIN_V2"));
 
@@ -222,14 +222,15 @@ void GenPrintInfo::genPrinterInfo(RichParameterSet &printParam, QMap<QString, QS
 void GenPrintInfo::genPrinterInfoDM(RichParameterSet &printParam, QList<QPair<QString, QVariant>> &printerInfo, PrinterJobInfo &pji)
 {
 	Print_Job_Information pjii = pji.getPJI();
-	bool layerPrintMode = printParam.getBool("STIFF_PRIN_V2");
-	float unit = printParam.getFloat("SLIGHT_HEIGHT");
+	bool layerPrintMode = printParam.getBool("DM_TWICE_IN_ONE_LAYER");
+	float unit = printParam.getFloat("DM_MONO_LAYER_HEIGHT");
 
 	if (!layerPrintMode)
 		printerInfo.append(QPair<QString, QVariant>("Print_Mode", "1Layer1Page"));
 	else
 		printerInfo.append(QPair<QString, QVariant>("Print_Mode", "1Layer2Page"));
 	printerInfo.append(QPair<QString, QVariant>("Layer_Height", QString::number(int(unit * 10000))));
+	printerInfo.append(QPair<QString, QVariant>("MONO_MODE", 1));
 
 	//TBD Add DM All Slicer Parameter
 	printerInfo.append(QPair<QString, QVariant>("Page_Size", printParam.getEnum("PAGE_SIZE")));

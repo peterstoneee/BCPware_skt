@@ -107,6 +107,7 @@ bool BCPwareFileSystem::encryptParam(QString inputString, QString &outputString)
 
 	QByteArray encodeText = encryption->encode(inputString.toUtf8(), hashKey, iv);
 	outputString = QString(encodeText.toHex());
+	
 	return true;
 	
 }
@@ -126,6 +127,43 @@ bool BCPwareFileSystem::encryptParam(QString inputString, QFileInfo filepath)
 	QByteArray encodeText = encryption->encode(inputString.toUtf8(), hashKey, iv);
 	QString outputString = QString(encodeText.toHex());
 
+
+	//=====Test ouput hex to file
+	QByteArray test = encodeText.toHex();
+	qDebug() << "list file Size : " << encodeText.size();
+	/*QStringList temptest;
+	for (char c : encodeText) {
+		temptest << QString("0x%1").arg((ushort)c, 2, 16, QChar{ '0' });
+	}
+
+	QFile outfile22("C:/Users/TB495076/Documents/XYZprint AM-3DP/outputfile.txt");
+	
+	if (outfile22.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text))
+	{
+		QTextStream stream(&outfile22);
+		int i = 1; 
+		foreach(QString listString, temptest)
+		{
+			stream << listString << ",";
+			if (i % 10 == 0)
+				stream << endl;
+			i++;
+		}
+		outfile22.close();
+		
+	}*/
+	
+	//=============================================================================================
+
+
+
+	if (outputString.isEmpty())
+	{
+		qWarning() << "ouputString is empty";
+		return false;
+	}
+
+
 	QFile outfile(filepath.absoluteFilePath());
 
 	if (outfile.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text))
@@ -133,12 +171,13 @@ bool BCPwareFileSystem::encryptParam(QString inputString, QFileInfo filepath)
 		QTextStream stream(&outfile);
 		stream << outputString << endl;
 		outfile.close();
+		return true;
 	}
-	return true;
+	else return false;
 
 
 
-	return true;
+	
 
 }
 bool BCPwareFileSystem::decodeParam(QString &outputString, QString inputString,QString filePath )
@@ -162,15 +201,18 @@ bool BCPwareFileSystem::decodeParam(QString &outputString, QString inputString,Q
 				qDebug() << "file open Error";
 			}
 			QTextStream stringStream(&outfile);
+			
 			QString fileString = stringStream.readAll();
+			if (fileString.isEmpty())
+				return false;
 			outfile.close();
 			QByteArray testbya = QByteArray::fromHex(fileString.toLatin1());
 			outputString = QString(encryption->removePadding(encryption->decode(testbya, hashKey, iv)));
+			if (outputString.isEmpty())return false;
 			return true;
 		}return false;
 
-	}else
-	if (!inputString.isEmpty())
+	}else if (!inputString.isEmpty())
 	{ 
 		QByteArray testbya = QByteArray::fromHex(inputString.toLatin1());
 		outputString = QString(encryption->removePadding(encryption->decode(testbya, hashKey, iv)));

@@ -53,7 +53,7 @@ class PrintOption: public QDialog
 {
 	Q_OBJECT
 public:
-	enum optionMode{MONO_PRINT_MODE,NORMAL_PRINT_MODE, TEST_PRINT_PAGE_MODE,PRINT_ZXA_FLE, START_POINT_MEASUREMENT};
+	enum optionMode{ MONO_PRINT_MODE, NORMAL_PRINT_MODE, TEST_PRINT_PAGE_MODE, PRINT_ZXA_FILE, PRINT_ZXA_MONO_FILE, START_POINT_MEASUREMENT };
 	PrintOption(optionMode mode,QWidget *parent = 0,MeshDocument *meshdoc = 0);
 	~PrintOption();
 public:

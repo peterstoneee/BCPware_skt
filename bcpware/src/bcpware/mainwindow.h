@@ -1461,6 +1461,7 @@ private:
 
 	QAction *tempPicassoJRPrintingAct;
 	QAction *testDMSlicerAct;
+	QAction *testDMSlicerAct_BJM;
 	QAction *testFuncAct;
 	QAction *testFuncAct2;
 	QAction *detectOverlapping;
@@ -1501,6 +1502,7 @@ private:
 	void executeSliceFunc(double);
 	void testFuncFunc();
 	void genByDMSlicer();
+	void genByDMSlicer_BJM();
 	void copyNumber();
 	void detectOverlappingFunc();
 	void testFuncFunc2();

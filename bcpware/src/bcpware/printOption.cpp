@@ -62,6 +62,35 @@ PrintOption::PrintOption(optionMode mode, QWidget *parent, MeshDocument *_meshdo
 	switch (mode)
 	{
 	case MONO_PRINT_MODE:
+	{
+		setWindowTitle("Prepare for Printing");
+		ui->printListCB->setEditable(true);
+		connect(ui->prepareBtn, SIGNAL(clicked()), this, SLOT(gotoCheckListDialog()));
+		
+		ui->webView->hide();
+		ui->printScrollArea->setWidget(ui->printSummaryFrame);
+		ui->printSummaryFrame->setMinimumHeight(760);
+
+		initPOL();
+		initItem();
+
+		showHeatSetting(false);
+		
+
+		ui->heatLE5->setText(QString::number(120));
+		ui->heatLE6->setText(QString::number(45));
+		ui->heatLE7->setText(QString::number(40));
+
+		bool uselsessForMono = false;
+		ui->mono_or_color->setVisible(uselsessForMono);
+		ui->ColorModeL->setVisible(uselsessForMono);
+		ui->line->setVisible(uselsessForMono);
+		ui->line_3->setVisible(uselsessForMono);
+		ui->frame_2->setVisible(uselsessForMono);
+
+		//fprintf(dbgf, "0\n");//@@@
+		//fflush(dbgf);
+	}break;
 	case NORMAL_PRINT_MODE:
 	{
 		setWindowTitle("Prepare for Printing");
@@ -100,7 +129,36 @@ PrintOption::PrintOption(optionMode mode, QWidget *parent, MeshDocument *_meshdo
 
 	}
 	break;
-	case PRINT_ZXA_FLE:
+	case PRINT_ZXA_MONO_FILE:
+	{
+		setWindowTitle("Prepare for Printing");
+		ui->printListCB->setEditable(true);
+		connect(ui->prepareBtn, SIGNAL(clicked()), this, SLOT(gotoCheckListDialog()));
+	
+		ui->webView->hide();
+		ui->printScrollArea->setWidget(ui->printSummaryFrame);
+		ui->printSummaryFrame->setMinimumHeight(760);
+
+		initPOL();//set style sheet
+		//ui->comboBox->currentText
+		initItem();
+					  
+		showHeatSetting(false);
+		
+		ui->heatLE5->setText(QString::number(120));
+		ui->heatLE6->setText(QString::number(45));
+		ui->heatLE7->setText(QString::number(40));
+
+
+		bool uselsessForMono = false;
+		ui->mono_or_color->setVisible(uselsessForMono);
+		ui->ColorModeL->setVisible(uselsessForMono);
+		ui->line->setVisible(uselsessForMono);
+		ui->line_3->setVisible(uselsessForMono);
+		
+
+	}break;
+	case PRINT_ZXA_FILE:
 	{
 		setWindowTitle("Prepare for Printing");
 		ui->printListCB->setEditable(true);
@@ -261,7 +319,8 @@ void PrintOption::updatePrintSummaryLabel(Print_Job_Information &pJI)
 		ui->totalNumberOfVerticesVaLB->setText(QString::number(pJI.totalNumOfVertices.value) + pJI.totalNumOfVertices.unit);
 	}
 	break;
-	case PRINT_ZXA_FLE:
+	case PRINT_ZXA_MONO_FILE:
+	case PRINT_ZXA_FILE:
 	{
 		QString unknowST = "Unknow";
 		ui->estimatedPrintTimeVaLB->setText(pJI.currenttime.currenttime.toString(QString("yyyy/MM/dd hh:mm:ss")) + "\n" +
@@ -328,7 +387,7 @@ void PrintOption::initItem()
 				//ui->label_2->setText(tr("PartPro350 xBC ") + tempStatus);
 				//ui->printListCB->removeItem(1);
 				QString qss = QString("  border: 0px solid #8f8f91;	border-radius: 2px; background-color: rgb(54, 187, 155);");
-				if (om == optionMode::NORMAL_PRINT_MODE || optionMode::PRINT_ZXA_FLE || optionMode::MONO_PRINT_MODE)
+				if (om == optionMode::NORMAL_PRINT_MODE || optionMode::PRINT_ZXA_FILE || PRINT_ZXA_MONO_FILE || optionMode::MONO_PRINT_MODE)
 				{
 					ui->prepareBtn->setStyleSheet(qss);
 					ui->prepareBtn->setText(tr("Prepare"));
@@ -446,13 +505,13 @@ void PrintOption::getPrintStatus()
 			//ui->label_2->setText("PartPro350 xBC " + tempStatus);
 			//ui->printListCB->removeItem(1);
 			QString qss = QString("  border: 0px solid #8f8f91;	border-radius: 2px; background-color: rgb(54, 187, 155);");
-			if (om == optionMode::NORMAL_PRINT_MODE || optionMode::MONO_PRINT_MODE)
+			if (om == (optionMode::NORMAL_PRINT_MODE || optionMode::MONO_PRINT_MODE || PRINT_ZXA_MONO_FILE || PRINT_ZXA_FILE))
 			{
 				ui->prepareBtn->setStyleSheet(qss);
 				ui->prepareBtn->setText(tr("Prepare"));
 				ui->prepareBtn->setEnabled(true);
 			}
-			else if (om == optionMode::TEST_PRINT_PAGE_MODE || om == optionMode::START_POINT_MEASUREMENT || om == optionMode::PRINT_ZXA_FLE)
+			else if (om == optionMode::TEST_PRINT_PAGE_MODE || om == optionMode::START_POINT_MEASUREMENT )
 			{
 				ui->prepareBtn->setStyleSheet(qss);
 				ui->prepareBtn->setText(tr("StartPrinting"));

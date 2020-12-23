@@ -661,7 +661,11 @@ static QString WidgetStyleSheet::settingComboBoxStyleSheet(const QString &name =
 	const QString thisItemStyle
 		(
 
-		"QLabel {  color : blue; }"
+		//"QLabel {  color : blue; }"
+		"QComboBox{"
+		"font: 14px \"Arial\";"
+		"color : #2c3d50; "
+		"}"
 		);
 	return thisItemStyle;
 }

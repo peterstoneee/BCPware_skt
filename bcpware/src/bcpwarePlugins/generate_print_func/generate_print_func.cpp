@@ -15793,7 +15793,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 		//}
 
 
-
+		qWarning() << "tempProfilePath : 3" << tempProfilePath.filePath();
 		if (!tempProfilePath.exists()){
 			QMessageBox mBox;
 			mBox.setIcon(QMessageBox::Critical);
@@ -15802,6 +15802,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 			mBox.setStandardButtons(QMessageBox::Ok);
 			mBox.setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint);
 			mBox.exec();
+			return false;
 		}
 		assert(tempProfilePath.exists());
 		//float meCorrectPercent = 0.97;
