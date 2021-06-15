@@ -14821,7 +14821,7 @@ bool GenSliceJob::applyFilter(QAction * a, MeshDocument & md, RichParameterSet &
 
 
 #ifndef GEN_SURFACE
-						/*volumn*/
+						/*volume*/
 
 						Point3m dir(lineLength, lineLength, lineLength);
 

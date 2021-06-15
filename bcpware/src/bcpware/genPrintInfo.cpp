@@ -312,7 +312,7 @@ void GenPrintInfo::genPrinterInfoDMJson(RichParameterSet &printParam, PrinterJob
 	Print_Job_Information pjii = pji.getPJI();
 
 	bool layerPrintMode = printParam.getBool("DM_TWICE_IN_ONE_LAYER");
-	float unit = printParam.getFloat("SLIGHT_HEIGHT");
+	float unit = printParam.getFloat("DM_MONO_LAYER_HEIGHT");
 
 	//estimate Ink Usage
 	double totalMeshVolume = pjii.volumn.value;

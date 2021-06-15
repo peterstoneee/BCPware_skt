@@ -4475,24 +4475,17 @@ bool MainWindow::loadMesh(const QString& fileName, MeshIOInterface *pCurrentIOPl
 					{
 						qDebug() << mm->cm.bbox.DimX();
 						qDebug() << mm->cm.bbox.DimY();
-						if (largest == mm->cm.bbox.DimX())
-						{
-							float resize = (DSP_grooveBigX - 10) / largest;
-							ScaleN = Point3f(resize, resize, resize);
-							meshDoc()->scaleMesh(mm, ScaleN);
-						}
-						else if (largest == mm->cm.bbox.DimY())
-						{
-							float resize = (DSP_grooveY - 10) / largest;
-							ScaleN = Point3f(resize, resize, resize);
-							meshDoc()->scaleMesh(mm, ScaleN);
-						}
-						else if (largest == mm->cm.bbox.DimZ())
-						{
-							float resize = (DSP_grooveZ - 10) / largest;
-							ScaleN = Point3f(resize, resize, resize);
-							meshDoc()->scaleMesh(mm, ScaleN);
-						}
+						float tempX = mm->cm.bbox.DimX();
+						float tempY = mm->cm.bbox.DimY();
+						float tempZ = mm->cm.bbox.DimZ();
+						largest = (tempX>tempY)?(tempX>tempZ?tempX : tempZ) :(tempY>tempZ? tempY : tempZ);
+
+						float resize = (DSP_grooveZ - 10.) / largest;
+						ScaleN = Point3f(resize, resize, resize);
+						meshDoc()->scaleMesh(mm, ScaleN);
+
+
+
 
 					} while (mm->cm.bbox.DimZ() > DSP_grooveZ || mm->cm.bbox.DimX() > DSP_grooveX || mm->cm.bbox.DimY() > DSP_grooveY);
 				}
@@ -5796,21 +5789,21 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 			programmerTest->menuAction()->setVisible(true);
 		e->accept();
 	}
-	//else if (e->key() == Qt::Key_A)
-	//{
-	//	float qqtemp = currentGlobalParams.getFloat("Quarternion_test_param");
-	//	//qqtemp += 0.1;
-	//	currentGlobalParams.setValue("Quarternion_test_param", FloatValue(qqtemp));
-	//	RichParameterSet printParamt;
-	//	//printParamt
-	//	executeFilter(PM.actionFilterMap.value("FP_Test_Quaternion"), printParamt, false);
-	//	GLA()->setHastoRefreshVBO();
-	//	//GLA()->setHastoUpdatePartVBO();
-	//	meshDoc()->setBusy(false);
+	else if (e->key() == Qt::Key_A)
+	{
+		float qqtemp = currentGlobalParams.getFloat("Quarternion_test_param");
+		//qqtemp += 0.1;
+		currentGlobalParams.setValue("Quarternion_test_param", FloatValue(qqtemp));
+		RichParameterSet printParamt;
+		//printParamt
+		executeFilter(PM.actionFilterMap.value("FP_Test_Quaternion"), printParamt, false);
+		GLA()->setHastoRefreshVBO();
+		//GLA()->setHastoUpdatePartVBO();
+		meshDoc()->setBusy(false);
 
 
-	//	e->accept();
-	//}
+		e->accept();
+	}
 	//else if (e->key() == Qt::Key_Z)
 	//{
 	//	float qqtemp = currentGlobalParams.getFloat("Quarternion_test_param");
@@ -9589,6 +9582,13 @@ void MainWindow::genByDMSlicer_BJM()
 
 void MainWindow::testFuncFunc()
 {
+	/*========================================================================================
+	FP_TEST_OCTREE
+	========================================================================================*/
+	RichParameterSet printParamt;
+	
+	executeFilter(PM.actionFilterMap.value("FP_TEST_OCTREE"), printParamt, false);
+
 
 
 	/*========================================================================================

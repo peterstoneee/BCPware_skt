@@ -93,7 +93,8 @@ public:
 		FP_JUSTIFY_TOP,
 		FP_Test_Quaternion,
 		FP_COUNT_HOLES,
-		FP_SEPERATE_TEST
+		FP_SEPERATE_TEST,
+		FP_TEST_OCTREE
 	};
 	void initParameterSet(QAction *action, MeshDocument &md, RichParameterSet & parlst);
 	QString filterName(FilterIDType filterID) const;

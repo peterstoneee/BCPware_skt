@@ -2031,7 +2031,7 @@ void MainWindow::createActions()//實體化action，與函示連結上
 	threeDPrintAct2 = new QAction(tr("PicassoJR"), this);//***20150831	PicassoJR
 	connect(threeDPrintAct2, SIGNAL(triggered()), this, SLOT(printFunction2()));
 
-	printfunctionMono = new QAction(tr("Prepare Mono Print"), this);//***20150831	PicassoJR
+	printfunctionMono = new QAction(QIcon(":/images/icons/btn_printing_2x.png"),tr("Prepare Mono Print"), this);//***20150831	PicassoJR
 	connect(printfunctionMono, SIGNAL(triggered()), this, SLOT(printFunction352()));
 
 	genZXAct = new QAction(tr("Export to Printable File"), this);
@@ -2235,6 +2235,7 @@ void MainWindow::createToolBars()//工具欄圖示
 
 	// Printing Toolbar
 	mainToolBar->addAction(this->threeDPrintAct);
+	mainToolBar->addAction(this->printfunctionMono);
 	mainToolBar->addAction(this->showPrintDashBoardAct);
 	mainToolBar->addSeparator();
 
@@ -3456,7 +3457,7 @@ void MainWindow::loadPicassoSettings()
 		}
 	}
 	//testqqq
-	currentGlobalParams.addParam(new RichFloat("Quarternion_test_param", 0.1, "quaternion", "")); 
+	//currentGlobalParams.addParam(new RichFloat("Quarternion_test_param", 0.1, "quaternion", "")); 
 	string desProfilePath = currentGlobalParams.getString("COLOR_PROFILE").toStdString();
 	qWarning() << " "<<currentGlobalParams.getString("COLOR_PROFILE");
 	/********************************************************************************/

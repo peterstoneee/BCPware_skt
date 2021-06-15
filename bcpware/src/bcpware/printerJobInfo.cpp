@@ -619,6 +619,8 @@ float PrinterJobInfo::estimateBinderInkUsage()
 	double inkDropVolumn = 1.2e-9;//ml
 	float secondB = param->getFloat("SPITTOON_SECOND_B");
 
+	int stiff_print_value = param->getInt("STIFF_PRINT_VALUE");
+
 	int boxy_dim = qCeil((mdd->selBBox().max.Z() - mdd->selBBox().min.Z()) / sliceHeight) + 1;
 	double dropsize = 1200 * 1e-12;
 	//double uselessPrintUsage = printHeadNozzle * (printHeadNozzle*uselessPrintWidth / printHeadLength) * boxy_dim * inkDropVolumn;
@@ -678,7 +680,7 @@ float PrinterJobInfo::estimateBinderInkUsage()
 
 		maint_Wiper_B = (DSP_WIPER_B + nMidJob2 * DSP_WIPER_B + DSP_WIPER_B) + nMidJobFordouble_fuck_slow_wipe2 * DSP_SLOW_WIPER_B;
 		//***builder area
-		binder_PrintUsage = 2*pJI.volumn.value * oneCCbinderUsage;
+		binder_PrintUsage = (1 + stiff_print_value/100.)*pJI.volumn.value * oneCCbinderUsage;
 	}
 	else
 	{

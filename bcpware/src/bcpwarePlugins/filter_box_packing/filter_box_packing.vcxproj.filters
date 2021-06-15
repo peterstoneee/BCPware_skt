@@ -59,6 +59,9 @@
     <ClCompile Include="GeneratedFiles\qrc_filter_box_packing.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="OctreeTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="boxpacking.h">
@@ -95,5 +98,10 @@
     <Image Include="images\btn_auto_packing%402x.png">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="OctreeTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

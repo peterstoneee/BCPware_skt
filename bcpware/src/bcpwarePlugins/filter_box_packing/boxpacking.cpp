@@ -46,6 +46,11 @@
 ****************************************************************************/
 #include "boxpacking.h"
 #include <bcpware/glarea.h>
+#include <vcg/space/intersection3.h>
+#include <vcg/complex/algorithms/create/ball_pivoting.h>
+#include <vcg/complex/algorithms/create/platonic.h>
+#include <vcg/complex/algorithms/create/extended_marching_cubes.h>
+#include <vcg/complex/algorithms/create/marching_cubes.h>
 using namespace vcg;
 
 
@@ -55,7 +60,7 @@ BoxPacking::BoxPacking()
 	typeList << FP_LOEST_HEIGHT << FP_AUTO_PACKING << FP_GROUND << FP_AUTO_LANDING << FP_CURRENT_SELECT_MESH_LANDING << FP_AUTO_ALL_LANDING << FP_AUTO_CENTER << FP_COUNT_VOLUMN << FP_TEST_AREA << FP_TEST_ALIGN_OTHER_AXIS
 		<< FP_TEST_COPY_PACKING << FP_CHANGE_COLOR << FP_MIRROR << FP_MIRROR_X << FP_MIRROR_Y << FP_MIRROR_Z
 		<< FP_JUSTIFY_FRONT << FP_JUSTIFY_BACK << FP_JUSTIFY_LEFT << FP_JUSTIFY_RIGHT << FP_JUSTIFY_BOTTOM << FP_JUSTIFY_TOP << FP_Test_Quaternion << FP_COUNT_HOLES
-		<< FP_SEPERATE_TEST;
+		<< FP_SEPERATE_TEST << FP_TEST_OCTREE;
 	foreach(FilterIDType tt, types())
 	{
 		actionList << new QAction(filterName(tt), this);
@@ -100,6 +105,7 @@ BoxPacking::FilterClass BoxPacking::getClass(QAction *a)
 	case FP_JUSTIFY_TOP:	return  MeshFilterInterface::MovePos;
 	case FP_Test_Quaternion: return MeshFilterInterface::MovePos;
 	case FP_COUNT_HOLES: return MeshFilterInterface::MovePos;
+	case FP_TEST_OCTREE: return MeshFilterInterface::MovePos;
 	case FP_SEPERATE_TEST: return MeshFilterInterface::MeshCreation;
 	default: assert(0);
 	}
@@ -192,6 +198,7 @@ QString BoxPacking::filterName(FilterIDType filterID)const
 	case FP_Test_Quaternion:return tr("FP_Test_Quaternion");
 	case FP_COUNT_HOLES:return tr("count_hole");
 	case FP_SEPERATE_TEST:return tr("FP_SEPERATE_TEST");
+	case FP_TEST_OCTREE:return tr("FP_TEST_OCTREE");
 	}
 	return tr("error!");
 }
@@ -223,6 +230,7 @@ QString BoxPacking::filterInfo(FilterIDType filterID) const
 	case FP_Test_Quaternion:return tr("test_quaternion");
 	case FP_COUNT_HOLES:return tr("count_hole");
 	case FP_SEPERATE_TEST:return tr("FP_SEPERATE_TEST");
+	case FP_TEST_OCTREE:return tr("FP_TEST_OCTREE");
 	}
 	return tr("error!");
 }
@@ -2720,7 +2728,7 @@ bool BoxPacking::applyFilter(QAction * filter, MeshDocument &md, RichParameterSe
 		tri::UpdatePosition<CMeshO>::Matrix(m.cm, moveToCenter, true);
 		tri::UpdateBounding<CMeshO>::Box(m.cm);*/
 
-		
+
 		float testValue = par.getFloat("Quarternion_test_param");
 		float start_radian = par.getFloat("QUATENION_START_RADIAN");
 		float end_radian = par.getFloat("QUATENION_END_RADIAN");
@@ -2737,7 +2745,7 @@ bool BoxPacking::applyFilter(QAction * filter, MeshDocument &md, RichParameterSe
 		qfrom2.FromAxis(end_radian, end_Axis);
 		//qfrom2.ToMatrix(testmatrix);
 
-		
+
 		vcg::Quaternion<float> qfromInter;
 		vcg::Quaternionf::Construct(qfromInter);
 		//qfromInter.slerp(qfrom, qfrom2, 0.5);
@@ -2752,8 +2760,8 @@ bool BoxPacking::applyFilter(QAction * filter, MeshDocument &md, RichParameterSe
 		for (int i = 0; i < interpolate; i++)
 		{
 			QString name = "slerp_" + QString::number(i);
-			
-			
+
+
 			RenderMode *newMRM = new RenderMode(GLW::DMFlat);
 			if (tri::HasPerWedgeTexCoord(m.cm))
 			{
@@ -2772,7 +2780,7 @@ bool BoxPacking::applyFilter(QAction * filter, MeshDocument &md, RichParameterSe
 			currentMesh->updateDataMask(m.dataMask());//½Æ»smask;
 			currentMesh->clearDataMask(MeshModel::MM_COLOR);
 
-			
+
 			vcg::tri::Append<CMeshO, CMeshO >::MeshCopy(currentMesh->cm, m.cm, false);
 			tri::UpdateBounding<CMeshO>::Box(currentMesh->cm);
 			currentMesh->cm.Tr = m.cm.Tr;
@@ -2780,7 +2788,7 @@ bool BoxPacking::applyFilter(QAction * filter, MeshDocument &md, RichParameterSe
 			currentMesh->glw.curr_hints = m.glw.curr_hints;
 
 			vcg::qqInterpolate(qfrom, qfrom2, i / interpolate).ToMatrix(testmatrix);
-			
+
 
 			tri::UpdatePosition<CMeshO>::Matrix(currentMesh->cm, testmatrix, true);
 			tri::UpdateBounding<CMeshO>::Box(currentMesh->cm);
@@ -2791,11 +2799,11 @@ bool BoxPacking::applyFilter(QAction * filter, MeshDocument &md, RichParameterSe
 			tri::UpdateBounding<CMeshO>::Box(currentMesh->cm);
 
 		}
-		
 
 
 
-		
+
+
 
 
 	}
@@ -2813,18 +2821,18 @@ bool BoxPacking::applyFilter(QAction * filter, MeshDocument &md, RichParameterSe
 
 		CMeshO::FaceIterator fii = m.cm.face.begin();
 		int count = 0;
-		
+
 
 
 		while (1)
-		//for (int i = 0; i < 10; i++)
+			//for (int i = 0; i < 10; i++)
 		{
 			int count = 0;
 			tri::UpdateSelection<CMeshO>::Clear(m.cm);
 			for (CMeshO::FaceIterator fi = m.cm.face.begin(); fi != m.cm.face.end(); ++fi)
 			{
 				if ((!(*fi).IsD()) && (!(*fi).IsUserBit(0x00400000)))
-				{					
+				{
 					(*fi).SetS();//select a face					
 					break;
 				}
@@ -2838,7 +2846,7 @@ bool BoxPacking::applyFilter(QAction * filter, MeshDocument &md, RichParameterSe
 			{
 				if ((!(*fi).IsD()) && ((*fi).IsS()))
 				{
-					(*fi).SetUserBit(0x00400000);					
+					(*fi).SetUserBit(0x00400000);
 				}
 			}
 			if (count == m.cm.face.size())break;
@@ -2855,11 +2863,11 @@ bool BoxPacking::applyFilter(QAction * filter, MeshDocument &md, RichParameterSe
 			temp->glw.curr_hints = m.glw.curr_hints;
 			fii++;
 		}
-		
 
 
 
-		
+
+
 
 
 		//vcg::tri::Append<CMeshO, CMeshO >::MeshCopy(cap->cm,m.cm,true);
@@ -2897,11 +2905,11 @@ bool BoxPacking::applyFilter(QAction * filter, MeshDocument &md, RichParameterSe
 
 		VertexIterator vi = in.vert.begin();
 		ivp[0] = &*vi;
-		(*vi).P() = CoordType(0, -h / 2.0, 0); 
+		(*vi).P() = CoordType(0, -h / 2.0, 0);
 		++vi;
 
 		ivp[1] = &*vi;
-		(*vi).P() = CoordType(0, h / 2.0, 0); 
+		(*vi).P() = CoordType(0, h / 2.0, 0);
 		++vi;
 
 		FaceIterator fi=in.face.begin();
@@ -2926,6 +2934,91 @@ bool BoxPacking::applyFilter(QAction * filter, MeshDocument &md, RichParameterSe
 
 	}break;
 #pragma endregion FP_SEPERATE_TEST
+#pragma region FP_TEST_OCTREE
+	case FP_TEST_OCTREE:
+	{
+		//350*220*200 
+		//voxel size : 1*1*1
+		//go through all voxel 
+		//if it's inside the mesh, then we add the box origin in the octree
+
+		double voxelHalfSizeUnit = 0.5;
+		Box3f voxelSize(Point3f(-voxelHalfSizeUnit, -voxelHalfSizeUnit, -voxelHalfSizeUnit), Point3f(voxelHalfSizeUnit, voxelHalfSizeUnit, voxelHalfSizeUnit));
+		Box3f probeBox;
+		probeBox.min.X() = floor(md.mm()->cm.bbox.min.X());
+		probeBox.min.Y() = floor(md.mm()->cm.bbox.min.Y());
+		probeBox.min.Z() = floor(md.mm()->cm.bbox.min.Z());
+
+		probeBox.max.X() = ceil(md.mm()->cm.bbox.max.X());
+		probeBox.max.Y() = ceil(md.mm()->cm.bbox.max.Y());
+		probeBox.max.Z() = ceil(md.mm()->cm.bbox.max.Z());
+
+
+
+
+		voxelSize.Translate(probeBox.min - voxelSize.min);
+		//auto intersectionTest = [=]
+		CMeshO::FaceIterator fii = m.cm.face.begin();
+		//for ()
+		MeshModel *alCubeVolumn = md.addNewMesh("a", "alShadow", false, RenderMode(GLW::DMFlat));//backup		
+		int count = 0; 
+		int count2 = 0;
+		bool intersectBool = false;
+		for (CMeshO::FaceIterator fi = m.cm.face.begin(); fi != m.cm.face.end(); ++fi)
+		{
+			count2++;
+			intersectBool = false;
+			/*qDebug() << fi->P(0).X() << " : " << fi->P(0).Y() << " : " << fi->P(0).Z();
+			qDebug() << fi->P(1).X() << " : " << fi->P(1).Y() << " : " << fi->P(1).Z();
+			qDebug() << fi->P(2).X() << " : " << fi->P(2).Y() << " : " << fi->P(2).Z();*/
+			probeBox.min.X() = floor((fi->P(0).X() > fi->P(1).X()) ? (fi->P(1).X() > fi->P(2).X() ? fi->P(2).X() : fi->P(1).X()) : (fi->P(0).X() > fi->P(2).X() ? fi->P(2).X() : fi->P(0).X()));
+			probeBox.min.Y() = floor((fi->P(0).Y() > fi->P(1).Y()) ? (fi->P(1).Y() > fi->P(2).Y() ? fi->P(2).Y() : fi->P(1).Y()) : (fi->P(0).Y() > fi->P(2).Y() ? fi->P(2).Y() : fi->P(0).Y()));
+			probeBox.min.Z() = floor((fi->P(0).Z() > fi->P(1).Z()) ? (fi->P(1).Z() > fi->P(2).Z() ? fi->P(2).Z() : fi->P(1).Z()) : (fi->P(0).Z() > fi->P(2).Y() ? fi->P(2).Z() : fi->P(0).Z()));
+
+
+			probeBox.max.X() = ceil((fi->P(0).X() < fi->P(1).X()) ? (fi->P(1).X() < fi->P(2).X() ? fi->P(2).X() : fi->P(1).X()) : (fi->P(0).X() < fi->P(2).X() ? fi->P(2).X() : fi->P(0).X()));
+			probeBox.max.Y() = ceil((fi->P(0).Y() < fi->P(1).Y()) ? (fi->P(1).Y() < fi->P(2).Y() ? fi->P(2).Y() : fi->P(1).Y()) : (fi->P(0).Y() < fi->P(2).Y() ? fi->P(2).Y() : fi->P(0).Y()));
+			probeBox.max.Z() = ceil((fi->P(0).Z() < fi->P(1).Z()) ? (fi->P(1).Z() < fi->P(2).Z() ? fi->P(2).Z() : fi->P(1).Z()) : (fi->P(0).Z() < fi->P(2).Z() ? fi->P(2).Z() : fi->P(0).Z()));
+
+			for (double i = probeBox.min.X(); i < probeBox.max.X(); i += voxelSize.DimX())
+			{
+				//if (intersectBool == true)break;
+				voxelSize.Translate(Point3f(i - voxelSize.min.X(), 0, 0));
+				for (double j = probeBox.min.Y(); j < probeBox.max.Y(); j += voxelSize.DimY())
+				{
+					//if (intersectBool == true)break;
+					voxelSize.Translate(Point3f(0, j - voxelSize.min.Y(), 0));
+					for (double k = probeBox.min.Z(); k < probeBox.max.Z(); k += voxelSize.DimZ())
+					{
+						voxelSize.Translate(Point3f(0, 0, k - voxelSize.min.Z()));
+						intersectBool = vcg::IntersectionTriangleBox<float>(voxelSize, fi->P(0), fi->P(1), fi->P(2));
+
+						//if box is in, add a cube mesh
+						//can't break to other face, need to build Octree, and search the existing cube, if exist go to next
+						//Need to lower the search size
+						if (intersectBool)
+						{
+							count++;
+							MeshModel* mmm = md.addNewMesh("", "temp");
+							tri::Box<CMeshO>(mmm->cm, voxelSize);
+							mmm->updateDataMask(MeshModel::MM_POLYGONAL);
+							mmm->UpdateBoxAndNormals();
+							vcg::tri::Append<CMeshO, CMeshO>::Mesh(alCubeVolumn->cm, mmm->cm);
+							md.delMesh(mmm);
+							break;
+						}
+
+
+					}
+				}
+			}
+		}
+		//int total_size = (tempbox.DimX() / half_cellSize)*(tempbox.DimY() / half_cellSize)*(tempbox.DimZ() / half_cellSize);
+		qDebug() << count;
+
+
+	}
+#pragma endregion FP_TEST_OCTREE
 	}
 	return true;
 

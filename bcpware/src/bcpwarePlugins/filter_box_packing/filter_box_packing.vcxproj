@@ -259,6 +259,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="boxpacking.cpp" />
+    <ClCompile Include="OctreeTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="boxpacking.h">
@@ -279,6 +280,7 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
+    <ClInclude Include="OctreeTest.h" />
     <ClInclude Include="three_d_packing.h" />
   </ItemGroup>
   <ItemGroup>
