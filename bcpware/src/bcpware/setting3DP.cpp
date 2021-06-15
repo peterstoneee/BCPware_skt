@@ -11137,7 +11137,7 @@ bool Setting3DP::updateUIToJsonFile(JsonfileCategory type)
 	QString errorResult = (errortt.error == QJsonParseError::NoError) ? "good" : "error";
 	qDebug() << "errorResult"<<errorResult;
 
-	if (!(errortt.error == QJsonParseError::NoError))
+	if (!(errortt.error == QJsonParseError::NoError) || !result)
 	{
 		return false;
 	}

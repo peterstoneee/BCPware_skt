@@ -207,7 +207,8 @@ bool BCPwareFileSystem::decodeParam(QString &outputString, QString inputString,Q
 				return false;
 			outfile.close();
 			QByteArray testbya = QByteArray::fromHex(fileString.toLatin1());
-			outputString = QString(encryption->removePadding(encryption->decode(testbya, hashKey, iv)));
+			//outputString = QString(encryption->removePadding(encryption->decode(testbya, hashKey, iv)));
+			outputString = QString((encryption->decode(testbya, hashKey, iv)));
 			if (outputString.isEmpty())return false;
 			return true;
 		}return false;
@@ -215,7 +216,8 @@ bool BCPwareFileSystem::decodeParam(QString &outputString, QString inputString,Q
 	}else if (!inputString.isEmpty())
 	{ 
 		QByteArray testbya = QByteArray::fromHex(inputString.toLatin1());
-		outputString = QString(encryption->removePadding(encryption->decode(testbya, hashKey, iv)));
+		//outputString = QString(encryption->removePadding(encryption->decode(testbya, hashKey, iv)));
+		outputString = QString((encryption->decode(testbya, hashKey, iv)));
 		return true;
 	}
 
