@@ -8687,9 +8687,9 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 		item = ui->listWidget->item(6);
 		item->setHidden(true);
 
-
+		//haven't check yet, hidden for user.
 		item = ui->listWidget->item(5);
-		item->setHidden(false);
+		item->setHidden(true);
 
 
 	}
@@ -8782,7 +8782,7 @@ Setting3DP::Setting3DP(MainWindow *_mw, RichParameterSet *currParm, QWidget *par
 	//ParamOp::transformJsonToRichParameter(tempSet, QString());
 
 	
-
+	
 
 }
 
