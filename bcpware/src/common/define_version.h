@@ -3,12 +3,12 @@
 #define TEST_VERSION_1 1
 #define TEST_VERSION_2 0
 #define TEST_VERSION_3 3
-#define TEST_VERSION_4 3
+#define TEST_VERSION_4 4
 #define TEST_P_VERSION_1 1
 #define TEST_P_VERSION_2 0
 #define TEST_P_VERSION_3 3
-#define TEST_P_VERSION_4 3
-#define DSP_SOFTWARE_VERSION "1.0.3.3\0"
+#define TEST_P_VERSION_4 4
+#define DSP_SOFTWARE_VERSION "1.0.3.4\0"
 #define DSP_PRODUCTION_NAME "XYZprint AM³ᴰᴾ\0"
 #define DSP_ORIGINAL_FILE_NAME "XYZprint AM³ᴰᴾ.exe\0"
 #endif
