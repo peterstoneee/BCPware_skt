@@ -219,7 +219,7 @@ CComPtr<ILib3MFModel> ThreeMF_Manip::create_3mf(MeshDocument *md, CallBackPos *c
 		CMeshO::FaceIterator fi;
 		QMap<int, MODELMESHTEXTURE2D> faceTexture;
 		QMap<int, int> testTexId;
- 		//QMap<int, MODELMESH_TRIANGLECOLOR_SRGB> faceColor;
+		//QMap<int, MODELMESH_TRIANGLECOLOR_SRGB> faceColor;
 		QMap<int, MODELMESH_TRIANGLECOLOR_SRGB> vertexColorMap;//SetGradientColor
 		//QMap<int, MODELMESHCOLOR_SRGB> singleFaceColor;
 		QMap<int, int> faceMaterial;
@@ -246,7 +246,7 @@ CComPtr<ILib3MFModel> ThreeMF_Manip::create_3mf(MeshDocument *md, CallBackPos *c
 		}
 
 
-		
+
 
 
 		int j = 0;
@@ -254,7 +254,7 @@ CComPtr<ILib3MFModel> ThreeMF_Manip::create_3mf(MeshDocument *md, CallBackPos *c
 		{
 			if (!fi->IsD())
 			{
-				
+
 				for (int k = 0; k < 3; k++)
 				{
 					pTriangles[j].m_nIndices[k] = VertexID[vcg::tri::Index(mm->cm, (*fi).V(k))];
@@ -292,7 +292,7 @@ CComPtr<ILib3MFModel> ThreeMF_Manip::create_3mf(MeshDocument *md, CallBackPos *c
 							else if (mm->hasDataMask(MeshModel::MM_FACECOLOR) && !mm->hasDataMask(MeshModel::MM_COLOR) && mm->rmm.colorMode == GLW::CMPerFace)
 							{
 
-								
+
 								if (materialMap.contains(fi->C()))
 									faceMaterial.insert(j, materialMap.value(fi->C()));
 
@@ -503,13 +503,13 @@ CComPtr<ILib3MFModel> ThreeMF_Manip::create_3mf(MeshDocument *md, CallBackPos *c
 			//Set texture parameters of triangles	
 			/*for (int i = 0; i < mm->cm.FN(); i++)
 			{
-				pPropertyHandler->SetTexture(i, &(MODELMESHTEXTURE2D)faceTexture.value(i));
+			pPropertyHandler->SetTexture(i, &(MODELMESHTEXTURE2D)faceTexture.value(i));
 			}*/
 			QMapIterator<int, MODELMESHTEXTURE2D> ift(faceTexture);
 			while (ift.hasNext()) {
 				ift.next();
 				pPropertyHandler->SetTexture(ift.key(), &(MODELMESHTEXTURE2D)ift.value());
-				
+
 			}
 
 		}
@@ -803,7 +803,10 @@ HRESULT ThreeMF_Manip::addComponent(MeshDocument *md, ILib3MFModelComponentsObje
 		hResult = pComponent->GetObjectResourceID(&objectID);
 		if (hResult != S_OK) return hResult;
 
-		MeshModel *mm = meshObjectPerID.value(objectID);
+		MeshModel *mm = new MeshModel(md, "", meshName);
+		vcg::tri::Append<CMeshO, CMeshO >::MeshCopy(mm->cm, meshObjectPerID.value(objectID)->cm);
+		//MeshModel *mm = meshObjectPerID.value(objectID);
+
 		BOOL pbHasTransform;
 		hResult = pComponent->HasTransform(&pbHasTransform);
 		if (hResult != S_OK) return hResult;
@@ -862,10 +865,10 @@ HRESULT ThreeMF_Manip::addComponent(MeshDocument *md, ILib3MFModelComponentsObje
 		}
 	}
 
-	for (int i = 0; i < idList.size(); i++)
+	/*for (int i = 0; i < idList.size(); i++)
 	{
-		meshObjectPerID.remove(idList[i]);
-	}
+	meshObjectPerID.remove(idList[i]);
+	}*/
 
 	meshObjectPerID.insert(pCompResourceID, compObjects[0]);
 	return hResult;
@@ -1394,7 +1397,6 @@ bool ThreeMF_Manip::open_3mf(MainWindow *mw, MeshDocument *md, LPCWSTR project_n
 
 	//pModel->GetMeshObjects();
 
-
 	QList<int> printedMesh;
 
 	hResult = pModel->GetBuildItems(&pBuildItemIterator);
@@ -1506,66 +1508,7 @@ bool ThreeMF_Manip::open_3mf(MainWindow *mw, MeshDocument *md, LPCWSTR project_n
 		if (hResult != S_OK) return false;
 	}
 
-	if (!printedMesh.isEmpty())
-	{
-		foreach(int i, printedMesh)
-		{
-			meshObjectPerID.remove(i);
-		}
-	}
-
-	if (!meshObjectPerID.isEmpty())
-	{
-		//SYDNY 10/04/2017---------------------
-		if (md->multiSelectID.count() != NULL)
-		{
-			md->multiSelectID.clear();
-		}
-
-		foreach(MeshModel *mm, meshObjectPerID)
-		{
-			mm->is3mf = true;
-			//tri::Clean<CMeshO>::RemoveDuplicateVertex(mm->cm);
-			md->meshList.push_back(mm);
-
-			//test vbo
-			mm->glw.SetHint(vcg::GLW::Hint::HNUseVBO);
-			//if (mm->cm.textures.size() >= 0 /*&& mm->cm.textures.size() < 2*/ && mm->rmm.colorMode != vcg::GLW::ColorMode::CMPerFace)
-			//{
-			//	
-			//	//mw->GLA()->refreshVBO();
-			//}
-
-			MeshModel *forResetMesh = new MeshModel(md, "", mm->label());
-			forResetMesh->updateDataMask(mm->dataMask());
-			vcg::tri::Append<CMeshO, CMeshO >::MeshCopy(forResetMesh->cm, mm->cm);
-			forResetMesh->cm.Tr = mm->cm.Tr;
-			forResetMesh->rmm = mm->rmm;
-			forResetMesh->setMeshSort(mm->getMeshSort());
-			forResetMesh->is3mf = true;
-			forResetMesh->glw.SetHint(vcg::GLW::Hint::HNUseVBO);
-
-			//if ( /*forResetMesh->glw.TMIdd[0].size() < 2 &&*/ mm->rmm.colorMode != vcg::GLW::ColorMode::CMPerFace)
-			//{
-			//	
-			//	//mw->GLA()->refreshVBO();
-			//}
-
-			md->resetMeshList.insert(mm->id(), forResetMesh);
-			emit md->meshSetChanged();
-			emit md->meshAdded(mm->id(), mm->rmm);
-			md->setCurrentMesh(mm->id());
-
-			if (isImport == true)
-			{
-				imported3mfList.push_back(mm->id());
-
-
-			}
-			//SYDNY 10/04/2017---------------
-			md->multiSelectID.insert(mm->id());
-		}
-	}
+	
 
 	if (isImport == true)
 		mw->currentViewContainer()->undoStack->push(new importFrom_command(mw, imported3mfList, false));
