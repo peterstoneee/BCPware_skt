@@ -804,7 +804,32 @@ HRESULT ThreeMF_Manip::addComponent(MeshDocument *md, ILib3MFModelComponentsObje
 		if (hResult != S_OK) return hResult;
 
 		MeshModel *mm = new MeshModel(md, "", meshName);
+
+		/*RenderMode *newMRM = new RenderMode(GLW::DMFlat);
+		if (tri::HasPerWedgeTexCoord(meshObjectPerID.value(objectID)->cm))
+		{
+			newMRM->setTextureMode(GLW::TMPerWedgeMulti);
+			newMRM->setColorMode(meshObjectPerID.value(objectID)->rmm.colorMode);
+			newMRM->setDrawMode(GLW::DMFlat);
+		}
+		else if (tri::HasPerVertexColor(meshObjectPerID.value(objectID)->cm))
+		{
+			newMRM->setTextureMode(GLW::TMNone);
+			newMRM->setColorMode(meshObjectPerID.value(objectID)->rmm.colorMode);
+			newMRM->setDrawMode(GLW::DMFlat);
+		}*/
+
+		mm->updateDataMask(meshObjectPerID.value(objectID)->dataMask());//½Æ»smask;
+		mm->clearDataMask(MeshModel::MM_COLOR);
 		vcg::tri::Append<CMeshO, CMeshO >::MeshCopy(mm->cm, meshObjectPerID.value(objectID)->cm);
+		
+		mm->cm.Tr = meshObjectPerID.value(objectID)->cm.Tr;
+		mm->rmm = meshObjectPerID.value(objectID)->rmm;
+		mm->glw.curr_hints = meshObjectPerID.value(objectID)->glw.curr_hints;
+		mm->setMeshSort(meshObjectPerID.value(objectID)->getMeshSort());
+		qDebug() << "wewe" << meshObjectPerID.value(objectID)->hasDataMask(MeshModel::MM_WEDGTEXCOORD);
+		qDebug() << "wewe des"<< mm->hasDataMask(MeshModel::MM_WEDGTEXCOORD);
+
 		//MeshModel *mm = meshObjectPerID.value(objectID);
 
 		BOOL pbHasTransform;
